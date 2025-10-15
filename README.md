@@ -21,3 +21,5 @@ Canvas-first GCSE/KS3 maths you can deploy tomorrow for learners who can’t att
 ## Licences
 - **Code/docs:** MIT (see `LICENSE`)
 - **Curriculum content (packs, lesson text, media):** CC BY-NC-ND 4.0 (see `CONTENT_LICENSE.md`)
+
+**Buy the live packs:** https://thenovacenepress.gumroad.com/l/novacene-maths
