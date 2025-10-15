@@ -1,0 +1,15 @@
+# OS & editors
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Build/output
+dist/
+*.log
+
+# Binaries we won’t store here (packs live on Gumroad)
+*.imscc
+*.zip
+*.pdf
+*.mp4
+*.mov
