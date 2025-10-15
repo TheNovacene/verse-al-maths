@@ -23,3 +23,8 @@ Canvas-first GCSE/KS3 maths you can deploy tomorrow for learners who can’t att
 - **Curriculum content (packs, lesson text, media):** CC BY-NC-ND 4.0 (see `CONTENT_LICENSE.md`)
 
 **Buy the live packs:** https://thenovacenepress.gumroad.com/l/novacene-maths
+
+Governance: This repo hosts public docs and templates.
+Paid curriculum files are distributed via Gumroad and must not be uploaded here.
+We welcome issues, discussions, and small PRs that improve docs, accessibility,
+and helper scripts. All contributions are reviewed by the CODEOWNERS.
