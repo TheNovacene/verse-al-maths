@@ -1,0 +1,147 @@
+manifest_version: "0.1"
+domain: "maths"
+owner: "The Novacene"
+repo_visibility: "private"
+licensing:
+  content_license: "proprietary"
+  tooling_license: "commercial"
+  notes: "Lesson objects remain stable; views and orchestration can be licensed separately."
+
+principles:
+  - "truth_grade_content"           # human-designed, research-based, not generated slop
+  - "learner_sovereignty_default"   # learner chooses route; no coercive nudges
+  - "data_minimisation"             # only collect what is needed; prefer local/session signals
+  - "no_covert_profiling"           # avoid inference from demographics by default
+  - "auditability"                  # decisions trace back to manifest fields, not model vibes
+  - "fallback_without_agent"        # everything navigable without AI
+
+# ---- taxonomy used throughout ----
+taxonomies:
+  strands: [number, algebra, geometry, probability, statistics, functions_graphs]
+  ways_of_knowing: [concept, procedure, application, proof, reflection]   # your five ways
+  practice_types: [explore, drill, create, explain, prove, reflect, play]
+  evidence_types: [self_report, micro_quiz, artefact, teach_back, attempt_log, observation]
+  sensory_load: [low, medium, high]
+  interaction_modes: [solo, paired, mentor_supported, class]
+
+# ---- core objects ----
+objects:
+  - id: "M-STAT-HIST-001"
+    type: "lesson"                 # lesson | tool | assessment | pathway | reference
+    title: "Histograms: What they are and why bar widths matter"
+    strand: "statistics"
+    key_stage: ["KS3", "KS4"]
+    level:
+      gcse_tier: ["foundation", "higher"]
+      difficulty_1to5: 2
+    synopsis: "Learner meets frequency density and the meaning of area in a histogram."
+
+    # ---- topology ----
+    prerequisites:
+      - "M-STAT-FREQ-001"           # frequency tables
+      - "M-NUM-RATIO-001"           # basic ratios
+    supports:
+      - "M-STAT-HIST-002"           # interpreting histograms
+      - "M-STAT-HIST-003"           # exam-style questions
+      - "M-STAT-DIST-001"           # distributions & skew
+    related_concepts:
+      - "frequency density"
+      - "class interval"
+      - "area represents frequency"
+      - "normalising counts"
+    common_misconceptions:
+      - "treating histogram like bar chart"
+      - "ignoring class width"
+      - "thinking height equals frequency"
+
+    # ---- learner sovereignty ----
+    learner_choice_prompts:
+      - "Do you want a gentle visual explanation or an exam-style route?"
+      - "Do you want to build one from data or interpret an existing one?"
+    regulation_options:
+      camera_optional: true
+      pacing_options: ["slow", "standard", "fast"]
+      sensory_load: "low"
+      interaction_modes: ["solo", "mentor_supported"]
+
+    # ---- lesson object pointers ----
+    assets:
+      html_path: "lessons/statistics/histograms/M-STAT-HIST-001.html"
+      companion_tool_ids:
+        - "T-STAT-HIST-BUILDER-001"
+      printable_pdf: null
+      captions_transcript: null
+
+    # ---- practice + evidence ----
+    practice:
+      ways_of_knowing: ["concept", "procedure", "application"]
+      practice_types: ["explore", "play", "explain"]
+      estimated_time_minutes: [15, 35]   # min, max
+    evidence:
+      what_counts_as_got_it:
+        - type: "teach_back"
+          prompt: "Explain to someone why bar width matters."
+        - type: "micro_quiz"
+          prompt: "Convert frequency table to histogram using density."
+        - type: "artefact"
+          prompt: "Create a histogram and annotate density + intervals."
+      evidence_types_allowed: ["self_report", "micro_quiz", "artefact", "teach_back"]
+
+    # ---- orchestration safety hooks (for agents) ----
+    orchestration:
+      allowed_inputs:
+        - "learner_stated_goal"
+        - "learner_selected_route"
+        - "recent_attempts_on_related_ids"
+      forbidden_inputs_by_default:
+        - "gender"
+        - "diagnosis"
+        - "socioeconomic_status"
+      memory_policy:
+        default: "session_only"
+        upgrade_only_if: "explicit_consent"
+
+    # ---- stewardship ----
+    author: "Gerry Docherty"
+    last_updated: "2026-02-02"
+    tags: ["histograms", "frequency_density", "visual_reasoning"]
+
+  - id: "T-STAT-HIST-BUILDER-001"
+    type: "tool"
+    title: "Histogram Builder: Frequency Density Sandbox"
+    strand: "statistics"
+    key_stage: ["KS3", "KS4"]
+    level:
+      gcse_tier: ["foundation", "higher"]
+      difficulty_1to5: 2
+    synopsis: "Interactive tool to build histograms from grouped data."
+
+    prerequisites: ["M-STAT-HIST-001"]
+    supports: ["M-STAT-HIST-002", "M-STAT-HIST-003"]
+    related_concepts: ["frequency density", "grouped data", "class width"]
+
+    assets:
+      html_path: "tools/statistics/histograms/T-STAT-HIST-BUILDER-001.html"
+      api_hooks: []                 # keep empty unless needed
+
+    practice:
+      ways_of_knowing: ["procedure", "application"]
+      practice_types: ["play", "create"]
+      estimated_time_minutes: [10, 25]
+
+    evidence:
+      what_counts_as_got_it:
+        - type: "artefact"
+          prompt: "Export or screenshot a correctly labelled histogram."
+      evidence_types_allowed: ["artefact", "self_report"]
+
+    orchestration:
+      allowed_inputs: ["learner_selected_route", "recent_attempts_on_related_ids"]
+      forbidden_inputs_by_default: ["gender", "diagnosis"]
+      memory_policy:
+        default: "session_only"
+        upgrade_only_if: "explicit_consent"
+
+    author: "Gerry Docherty"
+    last_updated: "2026-02-02"
+    tags: ["tool", "sandbox", "histograms"]
