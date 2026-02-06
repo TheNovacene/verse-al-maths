@@ -1,0 +1,315 @@
+{
+  "schema_version": "1.0",
+  
+  "core_identity": {
+    "id": "stats_histograms_frequency_density_v2",
+    "title": "Histograms and Frequency Density",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2024-12-10",
+    "updated": "2025-01-15",
+    "status": "published"
+  },
+  
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "statistics",
+    "topic": "data_representation",
+    "subtopic": "histograms",
+    "level": "KS4_GCSE",
+    "exam_boards": ["AQA", "Edexcel", "OCR"],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Construct and interpret diagrams for grouped continuous data, including histograms with unequal class intervals; interpret and compare distributions"
+  },
+  
+  "verse_ality": {
+    "driving_question": "How can histograms show who gets more – and who gets less – in our world?",
+    
+    "knowing_world": {
+      "present": true,
+      "focus": "Drawing and interpreting histograms using frequency density so bar area (not height) represents frequency",
+      "key_concepts": [
+        "class intervals",
+        "class width",
+        "frequency",
+        "frequency density = frequency ÷ class width",
+        "bar area ∝ frequency"
+      ],
+      "tools": [
+        {
+          "name": "Histogram & Frequency Density Explorer (SDG Contexts)",
+          "type": "canva_embed",
+          "url": "https://www.canva.com/design/DAG_IQuhw_E/7rfQy6lsHLxw0PURNRBQAg/view?embed",
+          "purpose": "Explore how frequency, class width and frequency density work together with SDG contexts"
+        },
+        {
+          "name": "Histogram Story Matcher (SDG Contexts)",
+          "type": "canva_embed",
+          "url": "https://www.canva.com/design/DAG_IeYqifY/NnpfX4BS7Id57jda9NZL1A/view?embed",
+          "purpose": "Practice reading histograms and matching to real SDG stories"
+        },
+        {
+          "name": "Interactive SDG Frequency Density Comparison",
+          "type": "canva_embed",
+          "url": "https://www.canva.com/design/DAG_IrD_oEk/oPIvZE61Ell9ljbJUElFCw/view?embed",
+          "purpose": "Compare two histograms (two groups) on same axes"
+        }
+      ],
+      "activities": [
+        "Explore SDG contexts (water use, electricity, commute times)",
+        "Study tables of intervals, frequencies, frequency densities",
+        "Notice how wider bars with lower height can have same area as narrow high bars",
+        "Try 'My SDG Scenario' to design own variable and data"
+      ]
+    },
+    
+    "human_story": {
+      "present": true,
+      "focus": "Histograms show how a whole group's experiences are spread out, revealing inequality and resource pressure",
+      "sdg_contexts": [
+        {
+          "sdg": 6,
+          "title": "Clean Water and Sanitation",
+          "description": "Water use spread across households in two communities",
+          "justice_dimension": "If one community's histogram shows most area at low use and another has long tail of high users, that tells story of inequality and pressure on resources"
+        },
+        {
+          "sdg": 7,
+          "title": "Affordable and Clean Energy",
+          "description": "Electricity use varies between two regions",
+          "justice_dimension": "Distribution patterns reveal energy equity issues"
+        },
+        {
+          "sdg": 11,
+          "title": "Sustainable Cities and Communities",
+          "description": "Commute times before and after new bus or cycle route",
+          "justice_dimension": "Changes in distribution show impact of infrastructure on accessibility"
+        }
+      ],
+      "justice_prompts": [
+        "Imagine these histograms being shown to city council or charity deciding where to focus support. What might they conclude from the shapes?",
+        "What might they miss if they only look at graphs and not the people?"
+      ],
+      "activities": [
+        "Compare histograms of two communities on same axes",
+        "Identify which group has more area in low ranges",
+        "Notice which stretches into very high values",
+        "Observe which looks more concentrated",
+        "Use bar information (interval, density, area) to support ideas"
+      ]
+    },
+    
+    "expressive_self": {
+      "present": true,
+      "focus": "Histogram as skyline of a city made from data",
+      "metaphors": [
+        "Short squat bars = lots of people with similar experiences",
+        "Tall spikes = big differences or 'crowds' at certain values",
+        "Long tails = few people experiencing extreme values"
+      ],
+      "activities": [
+        {
+          "type": "visual",
+          "prompt": "Sketch simple histogram by hand and label with words like 'most people here', 'few people here', 'extreme cases here'"
+        },
+        {
+          "type": "writing",
+          "prompt": "Write mini-story starting with: 'If you walked along the base of this histogram, you would see...'"
+        }
+      ],
+      "reflection_prompts": [
+        "Which feels easier for you – looking at histogram and describing story, or starting with story and building histogram to match?"
+      ]
+    },
+    
+    "designed_world": {
+      "present": true,
+      "focus": "Engineers, planners and campaigners use histograms to design fairer systems",
+      "real_world_applications": [
+        "Designing bus timetables based on commute time distributions",
+        "Planning water supply or storage based on household usage patterns",
+        "Setting sensible targets for screen time, sleep or exercise"
+      ],
+      "design_challenges": [
+        {
+          "context": "Transport, water, or lifestyle intervention",
+          "steps": [
+            "Pick variable (e.g. commute time, water litres, screen time)",
+            "Imagine change (e.g. more buses, conservation campaign)",
+            "Describe how you'd want histogram to change: shift left (shorter times/lower use), become more concentrated (more equal), lose extreme tails",
+            "Optionally build 'before and after' in Activity 3 custom mode"
+          ]
+        }
+      ],
+      "ethical_prompts": [
+        "If you redesigned a system based on histograms, how would you check that changes really help people in the 'worst' part of distribution, not just improve the average?"
+      ]
+    },
+    
+    "living_body": {
+      "present": true,
+      "emotional_awareness": [
+        "Seeing data about sleep, commute, water or energy can bring up feelings: 'That's unfair', 'I'm one of unlucky ones', 'I'm using too much'",
+        "It's okay to notice these feelings. You are not a bar on a graph."
+      ],
+      "regulation_supports": [
+        {
+          "type": "regulation_pause",
+          "trigger": "When data brings up difficult feelings about inequality or self-judgment",
+          "instructions": [
+            "Look away from screen and find 3 objects in room that are calm or comforting",
+            "Take slow in-breath for 4 counts and imagine drawing gentle curve",
+            "Exhale for 6 counts and imagine smoothing out tension in shoulders",
+            "Roll neck gently, unclench jaw",
+            "Return to maths when ready"
+          ]
+        }
+      ],
+      "wellbeing_prompts": [
+        "How can you use what you learn from histograms to support your own wellbeing – for example, by noticing patterns in your sleep or screen time without judging yourself?"
+      ]
+    }
+  },
+  
+  "learning_experience": {
+    "estimated_time": 45,
+    "time_flexible": true,
+    "interaction_types": [
+      "interactive_exploration",
+      "comparative_analysis",
+      "creative_expression",
+      "design_thinking",
+      "reflection"
+    ],
+    "sensory_load": "medium",
+    "regulation_level": "calm_focus",
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true,
+    "neurodivergent_considerations": [
+      "Multiple entry points via 5 Ways of Knowing",
+      "Choice in assessment pathway",
+      "Regulation pause embedded when data might trigger difficult feelings",
+      "No timed pressure",
+      "Can work solo or collaboratively",
+      "Interactive tools allow experimentation"
+    ]
+  },
+  
+  "assessment": {
+    "type": "pathway_choice",
+    "submission_platform": "Canvas Assignment",
+    "pathways": [
+      {
+        "id": "pathway_a",
+        "name": "One Histogram, Deep Dive",
+        "focus": "Single context analysis",
+        "steps": [
+          "Use Activity 1 to build histogram for one SDG data set",
+          "Write down grouped table with: class intervals, frequencies, frequency densities",
+          "Write paragraph (6-8 sentences) describing what histogram shows: where most values lie, any long tails or extremes, what this means in SDG context"
+        ],
+        "products": [
+          "Screenshot or copied table/values from histogram app",
+          "Grouped frequency table including frequency densities",
+          "Written explanation paragraph"
+        ]
+      },
+      {
+        "id": "pathway_b",
+        "name": "Two Histograms Compared",
+        "focus": "Comparative analysis",
+        "steps": [
+          "Use Activity 3 to compare two groups (Community A vs B, before vs after change)",
+          "Record key features of each histogram: ranges with most area, differences in spread and extremes",
+          "Write comparison paragraph explaining: which group has 'better' outcomes, which shows more variability, what questions this raises about fairness or access"
+        ],
+        "products": [
+          "Screenshot(s) or copied tables from histogram apps",
+          "Grouped frequency tables for both distributions",
+          "Written comparison paragraph"
+        ]
+      }
+    ],
+    "rubric_criteria": [
+      {
+        "dimension": "Conceptual Understanding",
+        "focus": "Correctly explain histograms, class width, frequency density, and interpret shapes"
+      },
+      {
+        "dimension": "Fluency & Accuracy",
+        "focus": "Calculations (class width, frequency density) and descriptions of histogram are accurate"
+      },
+      {
+        "dimension": "Application to Problems",
+        "focus": "Use histogram to answer meaningful questions in SDG context, not just restate numbers"
+      },
+      {
+        "dimension": "Independence & Reflection",
+        "focus": "Reflect thoughtfully on what distribution suggests about fairness or inequality, in own words"
+      }
+    ]
+  },
+  
+  "prerequisites": {
+    "required": [
+      "stats_frequency_tables_v2",
+      "stats_bar_charts_v2",
+      "number_division_decimals_v1"
+    ],
+    "helpful": [
+      "stats_mean_median_mode_v2",
+      "number_rounding_estimation_v1"
+    ]
+  },
+  
+  "connections": {
+    "builds_toward": [
+      "stats_cumulative_frequency_v2",
+      "stats_box_plots_v2",
+      "stats_comparing_distributions_v2"
+    ],
+    "related_contexts": [
+      "geography_development_indicators_v1",
+      "science_experimental_data_analysis_v1"
+    ],
+    "real_world_applications": [
+      "Public health data analysis",
+      "Economic inequality measurement",
+      "Environmental monitoring",
+      "Urban planning and transport",
+      "Social justice research"
+    ]
+  },
+  
+  "content_assets": {
+    "interactive_tools": 3,
+    "embedded_media": 3,
+    "regulation_pauses": 1,
+    "justice_prompts": 2,
+    "ethical_design_prompts": 1,
+    "assessment_pathways": 2,
+    "sdg_contexts": 3
+  },
+  
+  "technical": {
+    "file_path": "lessons/7-statistics/histograms-frequency-density-v2.html",
+    "file_size_kb": 38,
+    "dependencies": [
+      "Canva embed: Histogram & Frequency Density Explorer",
+      "Canva embed: Histogram Story Matcher",
+      "Canva embed: SDG Frequency Density Comparison"
+    ],
+    "offline_compatible": false,
+    "mobile_friendly": true,
+    "accessibility_notes": "All Canva tools include keyboard navigation; screen reader testing recommended"
+  },
+  
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true,
+    "modification_allowed": "with_attribution",
+    "safeguarding_notes": "SDG contexts may raise feelings about inequality; regulation pause provided to support learners processing these emotions"
+  }
+}
