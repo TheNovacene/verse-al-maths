@@ -1,0 +1,99 @@
+{
+  "_comment": "Copy this template for each lesson. Delete this comment. See histograms-frequency-density-v2.json for a complete example.",
+  
+  "schema_version": "1.0",
+  
+  "core_identity": {
+    "id": "",
+    "title": "",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2024-",
+    "updated": "2025-",
+    "status": "published"
+  },
+  
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "",
+    "topic": "",
+    "subtopic": "",
+    "level": "KS4_GCSE",
+    "exam_boards": ["AQA", "Edexcel", "OCR"],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": ""
+  },
+  
+  "verse_ality": {
+    "driving_question": "",
+    
+    "knowing_world": {
+      "present": true,
+      "focus": "",
+      "key_concepts": [],
+      "tools": []
+    },
+    
+    "human_story": {
+      "present": true,
+      "focus": "",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    
+    "expressive_self": {
+      "present": true,
+      "focus": "",
+      "activities": []
+    },
+    
+    "designed_world": {
+      "present": true,
+      "focus": "",
+      "design_challenges": []
+    },
+    
+    "living_body": {
+      "present": true,
+      "regulation_supports": [],
+      "wellbeing_prompts": []
+    }
+  },
+  
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": []
+  },
+  
+  "prerequisites": {
+    "required": []
+  },
+  
+  "connections": {
+    "builds_toward": []
+  },
+  
+  "content_assets": {
+    "interactive_tools": 0,
+    "embedded_media": 0,
+    "regulation_pauses": 0
+  },
+  
+  "technical": {
+    "file_path": "lessons/",
+    "dependencies": []
+  },
+  
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}
