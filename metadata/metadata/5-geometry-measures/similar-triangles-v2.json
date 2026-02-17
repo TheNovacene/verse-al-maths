@@ -1,0 +1,134 @@
+{
+  "_comment": "Source: :contentReference[oaicite:0]{index=0}",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "similar_triangles_v2",
+    "title": "Similar Triangles",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "congruence_and_similarity",
+    "subtopic": "similar triangles (dilation, equal angles, proportional sides)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Identify similar triangles by matching equal corresponding angles and showing corresponding side lengths are in a constant ratio, using dilation to justify why shape stays the same as size changes."
+  },
+  "verse_ality": {
+    "driving_question": "How can we know two triangles are similar, and what stays the same when one is a scaled version of the other?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Define similar triangles as same shape (not necessarily same size) and investigate dilation from a fixed point to observe equal corresponding angles and constant ratios of corresponding sides.",
+      "key_concepts": [
+        "Similarity (same shape, different size possible)",
+        "Corresponding angles are equal",
+        "Corresponding sides are proportional (same ratio)",
+        "Dilation (enlargement) from a fixed point",
+        "Scale factor"
+      ],
+      "tools": [
+        "Interactive: Similar Triangles Dilation Tool (canva_embed): https://www.canva.com/design/DAG5DeTkP6o/A8HuVIMT5hBNuty6T6UXyQ/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore how similarity supports accurate scaling in architecture, engineering, and art—helping people build models, plan structures, and replicate designs with precision at different sizes.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use intuition and visual cues to notice what changes (size) and what remains the same (shape), building confidence in recognising similarity.",
+      "activities": [
+        "Predict how the triangle will look when scaled up or down before moving the slider.",
+        "Name the visual cues that show the shape stays the same (angle matching, proportional sides).",
+        "Describe in your own words what “same shape” means in this context."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive dilation tool to test invariants under scaling and build a reliable method for checking similarity using angle equality and side ratios.",
+      "design_challenges": [
+        "Drag vertex A and observe how the triangle scales from that point.",
+        "Adjust the scale factor using the slider and compare the original and image triangles.",
+        "Check whether angles change when the triangle is dilated.",
+        "Record and analyse ratios of corresponding sides—are they always equal?",
+        "Write a rule: what must be true for two triangles to be similar?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Notice how your physical interactions (dragging points, moving sliders) support spatial reasoning and proportional thinking."
+      ],
+      "wellbeing_prompts": [
+        "How did moving the points help you understand proportionality and transformation?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Similarity Rule and Evidence",
+        "focus": "Create a short explanation or diagram showing how you know two triangles are similar based on observations from dilation, and state a clear rule for triangle similarity.",
+        "products": [
+          "A labelled diagram (or screenshots) of an original triangle and its dilated image",
+          "A statement of the similarity rule (equal corresponding angles and proportional corresponding sides)",
+          "Evidence from at least one example: matching angles and a constant side-length ratio"
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Observations",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic angle knowledge and triangle vocabulary",
+      "Comfort comparing side lengths and forming ratios",
+      "Understanding that scaling multiplies lengths by a constant factor"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Scale drawings and maps",
+      "Enlargement in transformations",
+      "Similar triangles problem solving (indirect measurement)",
+      "Trigonometry links (invariant ratios for a fixed angle)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/congruence_similarity/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

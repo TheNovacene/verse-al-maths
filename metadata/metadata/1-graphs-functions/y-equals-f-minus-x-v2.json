@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_y_equals_f_minus_x_v2",
+    "title": "y = f(-x)",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "reflections of exponential functions (in the x-axis and y-axis)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Explain and apply reflections of exponential graphs, recognising reflection in the y-axis as y = a^(-x) and reflection in the x-axis as y = -a^x, and connect symmetry/reflection to ideas of balance and fairness. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "What does it mean for a graph to reflect?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore how an exponential function changes when reflected in the x-axis or y-axis, using function forms and transformation language.",
+      "key_concepts": [
+        "Reflection as a transformation (flip over a line)",
+        "x-axis (horizontal axis)",
+        "y-axis (vertical axis)",
+        "Exponential function y = a^x (a > 0)",
+        "Reflection in the x-axis: y = -a^x",
+        "Reflection in the y-axis: y = a^(-x)"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Reflection models equality and balance. In design, architecture, and music, symmetry can create beauty; in social systems, reflection can represent fairness, justice, and mirroring another person’s experience.",
+      "sdg_contexts": [
+        "SDG 10: Reduced Inequalities"
+      ],
+      "justice_prompts": [
+        "How does the world reflect us — and how do we reflect the world?",
+        "Just like a graph reflects across a line, our world needs systems that mirror dignity and opportunity for everyone."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use reflection as a metaphor for emotion, balance, and perspective-taking while practising transformation language.",
+      "activities": [
+        "Sketch a graph that reflects your emotions today — which side feels heavier?",
+        "Create a metaphor: “Reflecting in the y-axis is like...”",
+        "Write a short poem about balance, symmetry, or seeing things from another side."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive sketchpad to explore reflections of exponential graphs and connect reflection to ethical design ideas about restoring fairness in systems.",
+      "design_challenges": [
+        "Use the animation button to change the value of a in f(x) = a^x.",
+        "Show f(x) = a^(-x). What transformation maps f(x) onto f(-x)?",
+        "Show f(x) = -a^x. What transformation maps f(x) onto -f(x)?",
+        "Ethical design prompt: If a system is out of balance, how can reflection help restore fairness? Think of a design (a ramp, a signal, a voting system, etc.) where reflection makes it more equal."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Sit up tall and breathe in.",
+        "Reach one arm to the side — then mirror with the other.",
+        "Notice how balance feels in your spine and shoulders."
+      ],
+      "wellbeing_prompts": [
+        "Just like in maths, we find clarity when both sides reflect one another."
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option 1: Reflection Diagram",
+        "focus": "Create a clear visual diagram showing reflections of y = a^x in both axes.",
+        "products": [
+          "A diagram showing y = a^x and its reflection in the y-axis (y = a^(-x))",
+          "A diagram showing y = a^x and its reflection in the x-axis (y = -a^x)",
+          "Labels identifying the axis of reflection and the transformed equation"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      },
+      {
+        "name": "Option 2: Reflection and Fairness Writing",
+        "focus": "Write a short reflection on how the world treats fairness and how maths models it through reflection.",
+        "products": [
+          "A short written reflection linking symmetry/reflection to fairness or justice",
+          "A mathematical reference to reflecting in the x-axis and/or y-axis"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding",
+          "Application to Problems",
+          "Independence & Reflection",
+          "Communication"
+        ]
+      },
+      {
+        "name": "Option 3: Ethical Design Using Reflection",
+        "focus": "Design a system or structure that uses reflection (mirrors, light paths, voting fairness, signals, etc.) and explain how reflection improves equality or balance.",
+        "products": [
+          "A design sketch, diagram, or explanation of the system/structure",
+          "A short justification describing how reflection supports fairness or equality (SDG 10 link)",
+          "Optional: a mathematical reflection link (x-axis or y-axis) to show transformation thinking"
+        ],
+        "assessment_criteria": [
+          "Application to Problems",
+          "Independence & Reflection",
+          "Communication",
+          "Conceptual Understanding"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confidence reading x-axis and y-axis on a coordinate grid",
+      "Basic understanding of exponential graphs in the form y = a^x (a > 0)",
+      "Understanding of reflection as a geometric transformation"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "The wider set of graph transformations (translations, stretches, reflections)",
+      "Function notation and transformations (including y = f(-x) and y = -f(x))",
+      "Interpreting exponential models in real contexts",
+      "Symmetry and transformations in geometry and design"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation

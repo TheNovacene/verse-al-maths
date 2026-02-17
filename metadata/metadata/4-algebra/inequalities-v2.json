@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_inequalities_v2",
+    "title": "Inequalities",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "inequalities",
+    "subtopic": "solve and represent inequalities on a number line (including negatives and compound inequalities)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Solve one- and two-step inequalities, represent solution sets clearly on a number line (open/closed circles), and remember to reverse the inequality when multiplying or dividing by a negative, linking inequality thinking to real-world ranges such as limits, costs, and eligibility. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How do inequalities help us describe ranges of possible values, not just one exact answer?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Inequalities describe a set of solutions (a range) rather than a single value. Students learn the meaning of <, ≤, >, ≥, solve inequalities using inverse operations, and represent solutions accurately on a number line, with extra care when multiplying/dividing by negative numbers.",
+      "key_concepts": [
+        "Inequality symbols: <, ≤, >, ≥",
+        "Solution set as a range of values",
+        "Solving inequalities like equations (inverse operations)",
+        "Reverse the inequality when multiplying/dividing by a negative",
+        "Number line representation (open vs closed circles)",
+        "Compound inequalities (e.g., 2 < x ≤ 5)"
+      ],
+      "activities": [
+        "Solve and represent: x + 3 < 7.",
+        "Solve and explain what changes when solving: -2x ≥ 6 (including reversing the symbol).",
+        "Write a compound inequality for: \"Between 2 and 5, not including 2\"."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Inequalities mirror everyday rules and constraints such as speed limits, price ranges, and age restrictions. Many real decisions happen inside boundaries rather than at a single exact value.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "How often do we make decisions within a range rather than a single number?",
+        "Where do you see boundaries (limits, rules, thresholds) in daily life?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students communicate the meaning of inequality symbols and boundaries through posters, stories, and short creative pieces that make open/closed endpoints memorable.",
+      "activities": [
+        "Create a poster showing how each inequality symbol works, including open/closed circles on a number line.",
+        "Write a short comic or skit where characters argue using inequalities.",
+        "Write an “Inequality Poem” exploring boundaries and limits."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive tool to practise inequalities at multiple challenge levels, matching solutions to number lines and selecting the correct inequality symbol, using feedback and resets to improve fluency and accuracy.",
+      "tools": [
+        "Canva embed: Interactive Inequalities tool (3 levels; number line; symbol toggle; Check and Reset)"
+      ],
+      "activities": [
+        "Choose a level (1–3) and solve the generated inequality.",
+        "Drag and drop solution values to the number line with correct open/closed endpoint.",
+        "Use the toggle to select the correct inequality symbol.",
+        "Click “Check” for feedback and “Reset” for new problems.",
+        "Solve the same inequality in at least two different ways and compare your working."
+      ],
+      "design_challenges": [
+        "Design 6 inequalities (mix: <, ≤, >, ≥; include at least 2 that require reversing the symbol) and provide correct number line representations and solutions."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Use arm gestures to show open (not included) and closed (included) circles.",
+        "Create a human number line: step forward if you’re part of the solution set."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Real-Life Inequalities Worksheet or Interactive Slide",
+        "focus": "Create a worksheet or interactive slide with at least four real-life inequalities, solve each one, and represent each solution set correctly.",
+        "products": [
+          "At least four inequalities taken from real-life contexts (e.g., speed limits, age restrictions, budget ranges)",
+          "Correct solutions for each inequality with clear working",
+          "Accurate number line representations (including open/closed circles and arrows)",
+          "A short reflection answering: “What do inequalities reveal that equations do not?”"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Uses inequality symbols correctly and explains their meaning",
+          "Fluency — Solves one- and two-step inequalities accurately",
+          "Application — Links inequalities to real-world scenarios",
+          "Reflection — Explains what inequalities show that equations do not"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Solve one-step equations using inverse operations",
+      "Confidence with integers (including negatives)",
+      "Understand number lines and ordering"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Compound inequalities and interval notation",
+      "Graphing linear inequalities on coordinate axes",
+      "Inequality regions and simultaneous inequalities",
+      "Problem-solving with constraints and optimisation"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/inequalities/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

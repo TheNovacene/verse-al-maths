@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "sine_graph_v2",
+    "title": "Sine Graphs: Understanding Periodic Waves",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs_of_functions",
+    "subtopic": "sine graphs, radians, and transformations",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Generate and interpret the sine graph from the unit circle using radians, then model real periodic phenomena with y = a sin(bx) + k by identifying and explaining amplitude, period, and vertical shift."
+  },
+  "verse_ality": {
+    "driving_question": "How do sine graphs grow from the unit circle, and how can we use them to model real waves that matter to life below water?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Introduce radians as a natural angle measure, then trace the sine graph from the unit circle by following the y-coordinate of a rotating point.",
+      "key_concepts": [
+        "Radians and degree–radian equivalence (360° = 2π)",
+        "Arc length and the unit circle",
+        "Sine as the y-coordinate on the unit circle",
+        "Periodicity and wave behaviour",
+        "Maxima and minima on the sine curve"
+      ],
+      "tools": [
+        "Interactive: Unit Circle Activity - Tracing the Sine Graph (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020088/download"
+      ],
+      "activities": [
+        "Convert key angles between degrees and radians (π/2, π, 3π/2, 2π).",
+        "Use the unit circle sketch to observe how height changes and how that becomes the sine wave.",
+        "Respond to prompts: where is the maximum/minimum, and why does the shape match vertical movement?"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect sine waves to ocean tides, sound waves, and sonar used in underwater exploration and marine protection.",
+      "sdg_contexts": [
+        "SDG 14: Life Below Water"
+      ],
+      "justice_prompts": [
+        "Many communities rely on ocean tides for food and energy. How can understanding wave graphs support fairer access to resources?",
+        "What patterns might fish, divers, or whales experience below water?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use creative reflection to connect repeating rhythms in mathematics to rhythms in personal experience (music, emotion, energy, motion).",
+      "activities": [
+        "Complete: “A sine wave reminds me of…”",
+        "Sketch your own repeating rhythm (visual, emotional, or musical).",
+        "Record a short reflection on how rhythm shapes your days or relationships.",
+        "Reflect: When have you experienced “waves” of energy, emotion, or motion?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Model real tidal behaviour by transforming a sine graph using y = a sin(bx) + k, matching height, frequency, and baseline to a simplified tide cycle.",
+      "design_challenges": [
+        "Use the interactive model to adjust a, b, and k to fit a simplified tide pattern.",
+        "Explain how amplitude, period, and vertical shift connect to the real tide cycle.",
+        "Consider how modelling could support underwater mapping or marine energy design."
+      ],
+      "tools": [
+        "Interactive: Tidal Modeling with Sine Transformations (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020083/download"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Move: Rock gently side to side like a sine wave. Inhale as you rise, exhale as you dip.",
+        "Reflect: Notice how predictable patterns calm or energise you."
+      ],
+      "wellbeing_prompts": [
+        "How does your body respond to predictable patterns? When do waves calm or energise you?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Mapping Ocean Waves (SDG 14 – Life Below Water)",
+        "focus": "Use sine graphs and transformations to model a wave or sonar behaviour that supports sustainable marine research or energy generation.",
+        "products": [
+          "A graph using y = a sin(bx) + k to model a wave, with labelled amplitude, period, and vertical shift.",
+          "Written explanations for how a, b, and k affect the model (and what each means in context).",
+          "A written or voice reflection linking the model to ocean sustainability (e.g., sonar mapping or tidal research).",
+          "Optional: creative output from the Expressive Self section."
+        ],
+        "criteria": [
+          "Conceptual Understanding – Explain the function and transformations clearly.",
+          "Fluency & Accuracy – Correct graphing and correct use of parameters.",
+          "Application to Problems – Realistic application of the graph to an SDG context.",
+          "Independence & Reflection – Evidence of thoughtful design and reasoning."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic understanding of coordinates and reading graphs",
+      "Comfort with angle measure in degrees (and readiness to convert to radians)",
+      "Use of a calculator for π approximations where needed"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Graphs of trig functions (cosine and tangent)",
+      "Further transformations of functions",
+      "Modelling periodic phenomena and solving trig equations"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs_of_functions/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

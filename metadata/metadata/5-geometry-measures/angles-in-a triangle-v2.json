@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "angles_in_a_triangle_v2",
+    "title": "The Sum of the Angles in a Triangle",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "angle_facts",
+    "subtopic": "sum of interior angles in a triangle",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Prove and apply that the interior angles of any triangle sum to 180° using parallel-line reasoning, and use the theorem to solve missing-angle problems and check designs for accuracy."
+  },
+  "verse_ality": {
+    "driving_question": "Why do the three interior angles of any triangle always add up to 180°?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Investigate and understand why the three interior angles of any triangle always add up to 180° (two right angles), using the parallel line proof and angle facts on a straight line.",
+      "key_concepts": [
+        "Angle sum of a triangle: ∠A + ∠B + ∠C = 180°",
+        "Straight line equals 180°",
+        "Parallel line proof (corresponding/alternate angles)",
+        "Works for acute, right-angled, and obtuse triangles (Euclidean geometry)"
+      ],
+      "activities": [
+        "Quick check: if two angles are 50° and 60°, calculate the third angle.",
+        "Explain why angles 90°, 60°, 40° cannot form a triangle (sum too large).",
+        "Sketch a triangle and add a line parallel to one side; label alternate/corresponding angles to show the 180° sum."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect the triangle angle-sum theorem to architecture, symmetry, stability in structures, and modern uses like triangulation in navigation and GPS.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Represent the 180° angle sum across different triangle types using art, story, or physical manipulation to make the invariant relationship memorable.",
+      "activities": [
+        "Draw acute, right, and obtuse triangles and show the angles adding to 180° using colour bands.",
+        "Create a short story or animation where a triangle’s angles ‘meet’ at 180°.",
+        "Use coloured paper or ribbons to cut/move angles and test the sum physically."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use a web sketchpad to dynamically explore how changing triangle shapes changes individual angles while keeping the total at 180°, and use the tool to recreate the parallel-line proof.",
+      "design_challenges": [
+        "Drag a vertex and observe angles changing while the sum stays 180°.",
+        "Make an obtuse triangle and confirm the sum remains 180°; explain why.",
+        "Draw a line parallel to one side through the opposite vertex and explore the proof pathway.",
+        "Challenge: try to create a triangle with two right angles; explain why it cannot exist."
+      ],
+      "tools": [
+        "Interactive: Angles in a Triangle (web_sketchpad) (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/318265514/download"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stand in a triangle shape with two classmates (or mimic with arms): change two ‘angles’ and notice the third adjusts to keep the total constant."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Prove the Triangle Angle Sum",
+        "focus": "Write a short proof (words and diagrams) showing why the interior angles of a triangle always sum to 180°, using a method observed in the sketch or from class.",
+        "products": [
+          "A diagram of a triangle with a parallel line construction (or equivalent proof structure).",
+          "A written explanation of why the angles sum to 180° using correct angle facts and labels.",
+          "One real-life example where this matters (e.g., architecture, design, checking drawing accuracy).",
+          "A short reflection on what surprised you and how the sketchpad supported your thinking."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Angle facts on a straight line (180°)",
+      "Basic understanding of parallel lines and alternate/corresponding angles",
+      "Confidence identifying and labelling angles in triangles"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Exterior angles of a triangle",
+      "Angles in parallel line diagrams",
+      "Polygon interior and exterior angle sums",
+      "Reasoning and proof in geometry"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/angle_facts/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

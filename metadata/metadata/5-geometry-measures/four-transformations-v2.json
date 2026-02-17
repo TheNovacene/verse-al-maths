@@ -1,0 +1,176 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "four_transformations_emmy_noether_v2",
+    "title": "Symmetry & Structure: A Lesson Inspired by Emmy Noether",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "transformations",
+    "subtopic": "reflections, rotations, translations, enlargements (invariants)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Identify what stays the same (invariants) and what changes under reflections, rotations, translations and enlargements, and use this idea to reason about symmetry and structure."
+  },
+  "verse_ality": {
+    "driving_question": "What remains invariant when we transform a shape, and why does that idea matter for understanding symmetry and structure?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Use the four core transformations to test what changes and what stays the same, building the habit of naming invariants (e.g., lengths, angles, orientation, scale).",
+      "key_concepts": [
+        "Transformation",
+        "Invariant (what stays the same)",
+        "Reflection (mirror line)",
+        "Rotation (centre and angle)",
+        "Translation (vector)",
+        "Enlargement (scale factor and centre)",
+        "Congruence vs similarity",
+        "Orientation and direction"
+      ],
+      "tools": [
+        "Web Sketchpad: Reflections (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020074/download",
+        "Web Sketchpad: Rotations (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020075/download",
+        "Web Sketchpad: Translations (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020076/download",
+        "Web Sketchpad: Enlargements (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020072/download"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Learn about Emmy Noether and how her work connected symmetry to deep structure in mathematics and physics, while reflecting on justice and gender equality in education.",
+      "sdg_contexts": [
+        "SDG 5: Gender Equality",
+        "SDG 4: Quality Education"
+      ],
+      "justice_prompts": [
+        "Why is it important to learn about mathematicians like Emmy Noether?",
+        "How do her struggles and achievements relate to gender equality in education and careers today?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Play creatively with invariants and symmetry by inventing characters, diagrams, and stories that highlight what changes and what stays the same.",
+      "activities": [
+        "Invent a character called “Invariant” — describe their power and weakness.",
+        "Draw a diagram showing what changes and what doesn’t in one transformation.",
+        "Write a short story where a character is stuck in a loop of symmetry.",
+        "Cayley table interactive (canva_embed): https://www.canva.com/design/DAGwrh2-qY8/VD5m3z05VrFnvT3DBxAgwA/view?utm_content=DAGwrh2-qY8&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Spot symmetry in society and design, and apply transformations to create or analyse patterns, logos, and systems where structure and consistency matter (including coding and encryption).",
+      "design_challenges": [
+        "Take a photo of something symmetrical in your environment and identify which transformations map it onto itself.",
+        "Design a logo or pattern using at least two transformations (e.g., reflect then rotate).",
+        "Research how symmetry and algebra are used in encryption, coding, or game design and summarise one example."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Mirror a friend’s movement exactly (hand gestures, posture, steps), then reverse roles and notice what stayed the same or changed."
+      ],
+      "wellbeing_prompts": [
+        "When do you feel most balanced or symmetrical in your thinking or routine?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Poster: What Remains?",
+        "focus": "Create a poster showing the four transformations and clearly state what remains invariant (and what changes) in each.",
+        "products": [
+          "At least one worked example for each transformation (reflection, rotation, translation, enlargement).",
+          "A short invariant list for each transformation (e.g., lengths, angles, orientation, scale).",
+          "One paragraph linking invariants to the idea of symmetry."
+        ],
+        "criteria": [
+          "Conceptual Understanding – Shows what is invariant and why",
+          "Fluency & Accuracy – Applies transformations accurately",
+          "Application – Connects invariants to symmetry in real systems",
+          "Creativity & Reflection – Clear, personal communication"
+        ]
+      },
+      {
+        "name": "Creative Reflection: Fairness and Consistency",
+        "focus": "Write a creative reflection responding to: “What does symmetry teach us about fairness or consistency?”",
+        "products": [
+          "A creative response (story, poem, spoken reflection, or illustrated writing).",
+          "At least two mathematical examples of invariants that support your reflection.",
+          "A short note on Emmy Noether and why her story matters."
+        ],
+        "criteria": [
+          "Conceptual Understanding – Uses invariants correctly",
+          "Application – Links symmetry to fairness/consistency",
+          "Creativity & Reflection – Original, thoughtful expression",
+          "Clarity – Communicates ideas accessibly"
+        ]
+      },
+      {
+        "name": "Design a Code or Puzzle",
+        "focus": "Design a code, game mechanic, or puzzle based on modular arithmetic and symmetry-inspired structure.",
+        "products": [
+          "A puzzle or code mechanic with rules/instructions.",
+          "A short explanation of the symmetry/structure or invariants involved (e.g., modular patterns, repeated transformations).",
+          "Optional: test it on a classmate and improve it based on feedback."
+        ],
+        "criteria": [
+          "Fluency & Accuracy – Correct logic and mathematical structure",
+          "Application – Links maths to coding/game design",
+          "Conceptual Understanding – Identifies invariants or preserved structure",
+          "Creativity & Reflection – Interesting, well-explained design"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic understanding of 2D shapes and coordinates",
+      "Simple angle facts and length measurement ideas",
+      "Comfort describing and naming transformations at an intuitive level"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Congruence and similarity",
+      "Symmetry and tessellations",
+      "Transformations on coordinate grids",
+      "Group structure ideas (composition of transformations)",
+      "Links between symmetry and conservation laws (Noether’s Theorem, as enrichment)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 5,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/transformations/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

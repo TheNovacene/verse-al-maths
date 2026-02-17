@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_multiplying_out_brackets_v2",
+    "title": "Expanding Brackets",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "expanding_brackets",
+    "subtopic": "distributive law; expanding single and double brackets",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use the distributive law to expand single and double brackets accurately, including handling negative terms and powers carefully, and communicate a clear step-by-step method for expanding and simplifying expressions. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we remove brackets reliably and explain each step so our algebra stays accurate?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Expanding brackets means removing brackets by distributing multiplication across addition/subtraction. Students practise single and double brackets, keeping careful track of signs and exponents.",
+      "key_concepts": [
+        "Distributive law: a(b + c) = ab + ac",
+        "Expanding a single bracket",
+        "Expanding double brackets by multiplying every term in one bracket by every term in the other",
+        "Recognising common patterns such as (x + a)(x + b) = x^2 + (a + b)x + ab",
+        "Attention to negative signs and indices when expanding",
+        "Simplifying by collecting like terms after expanding"
+      ],
+      "activities": [
+        "Quick Check: Expand 2(x + 3).",
+        "Quick Check: Expand (x + 5)(x - 2).",
+        "Quick Check: Expand and simplify -3(x - 4)."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Distributive thinking appears in real practices like architecture and textile patterning: we break a complex whole into parts, work each part, then recombine results—like “unpacking” brackets in algebra.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Where else in real life do people “unpack” a big task into parts and then recombine the outcomes?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students use visual and narrative methods to make expansion steps memorable and communicable, emphasising clarity of each multiplication link.",
+      "activities": [
+        "Use colour and arrows to show each multiplication step when expanding.",
+        "Create a graphic or short animation that explains the FOIL process.",
+        "Write a story or comic strip that personifies brackets being “expanded” into individual terms."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students practise expanding brackets using an interactive tool at multiple difficulty levels, using resets for fresh examples and optionally racing/challenging peers.",
+      "tools": [
+        "Canva embed: Interactive Expanding Brackets activity (three levels with reset/new challenges)"
+      ],
+      "activities": [
+        "Complete all three levels of the interactive expanding brackets tool.",
+        "Use the reset button to generate new expressions and repeat until fluent.",
+        "Create a timed challenge for yourself or a partner and track improvement."
+      ],
+      "design_challenges": [
+        "Design 6 expanding problems (mix of single and double brackets, including negatives) and provide full worked solutions with arrows/colour-coding."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stand and stretch arms outward in an “expanding” motion each time you distribute a term.",
+        "Choreograph a FOIL movement pattern using arm directions for each multiplication arrow."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Expanding Brackets Tutorial",
+        "focus": "Create a short video tutorial or slide deck showing how to expand brackets step by step, explaining reasoning clearly at each stage and including varied examples.",
+        "products": [
+          "A short video tutorial or slide deck",
+          "Step-by-step expansions for multiple bracket types (single and double)",
+          "At least one example involving a negative factor or negative term",
+          "At least one example where you expand then simplify by collecting like terms",
+          "One real-world or modelling link where bracket expansion is used to create/simplify an algebraic model"
+        ],
+        "assessment_criteria": [
+          "Understanding: Accurately applies the distributive law",
+          "Fluency: Works through multiple bracket types without error",
+          "Application: Uses bracket expansion in a real-world algebraic model",
+          "Creativity: Presents explanation using visual, physical, or spoken forms"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Fluency with integer operations (including negatives)",
+      "Understanding that multiplication distributes over addition/subtraction",
+      "Ability to simplify by collecting like terms",
+      "Comfort with basic index notation (e.g., x × x = x^2)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Factorising and expanding quadratic expressions",
+      "Completing the square and quadratic manipulation",
+      "Solving equations that require expansion",
+      "Algebraic proof and simplifying rational expressions"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/expanding_brackets/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "trigonometry_sine_cos_tan_v2",
+    "title": "Exploring Sine, Cosine & Tangent Ratios",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "trigonometry",
+    "subtopic": "sine, cosine and tangent ratios in right-angled triangles (invariance under scaling)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Understand and explain sin, cos and tan as side-length ratios in right-angled triangles, and show that these ratios stay constant when similar triangles are scaled."
+  },
+  "verse_ality": {
+    "driving_question": "Why do sine, cosine and tangent stay the same even when a right-angled triangle gets bigger or smaller?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore sine, cosine and tangent as ratios of side lengths in right-angled triangles and investigate how these ratios remain constant when the triangle is scaled.",
+      "key_concepts": [
+        "Right-angled triangles",
+        "Opposite, adjacent and hypotenuse (relative to an angle)",
+        "sin θ = opposite ÷ hypotenuse",
+        "cos θ = adjacent ÷ hypotenuse",
+        "tan θ = opposite ÷ adjacent",
+        "Similarity and scale factor",
+        "Invariant ratios for a fixed angle"
+      ],
+      "tools": [
+        "Interactive: Sine Ratio Sketch (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020097/download",
+        "Interactive: Cosine Ratio Sketch (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020093/download",
+        "Interactive: Tangent Ratio Sketch (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020099/download"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect trigonometry to navigation and exploration: using triangles to measure what can’t be reached directly, from sea voyages to mapping and astronomy.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Imagine an ancient navigator using just triangles for voyages. What could she measure and why would it matter?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Create a personal interpretation of a trig ratio and communicate the idea of a constant relationship as a triangle scales.",
+      "activities": [
+        "Create your own interpretation of a trigonometric ratio (doodle, metaphor, storyboard, or poem).",
+        "If cosine could speak, what story would it tell about its relationship to angle and structure?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Apply triangle ratios to design and engineering contexts (ramps, camera angles, sound modelling) and think about how to make maths tools accessible for different learners.",
+      "design_challenges": [
+        "Buddy challenge: Design a ramp rising 0.5 m over 6 m horizontally. What angle does that ratio imply?",
+        "Ethical design question: How might you adapt your sketches or explanations to support someone with low vision or color-blindness?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Breathe deeply: as you breathe in, imagine drawing a triangle’s first side; hold, draw the next; breathe out, draw the third."
+      ],
+      "wellbeing_prompts": [
+        "Can you feel the ratio staying balanced even as the shape expands?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Trigonometry Presentation",
+        "focus": "Create and share a presentation, diagram, or creative reflection that explains one trig ratio, demonstrates invariance under scaling, and links it to a real-world or creative context.",
+        "products": [
+          "Explanation of one ratio (sine, cosine, or tangent) with correct notation.",
+          "Evidence (screenshots/diagrams) showing the ratio stays the same as the triangle scales.",
+          "A link to a real-world design context or a creative interpretation.",
+          "Optional self-reflection and peer feedback."
+        ],
+        "criteria": [
+          "Conceptual Understanding: depth of grasp on ratio ideas.",
+          "Fluency & Accuracy: precision in notation and calculations.",
+          "Application to Contexts: effectiveness using maths in real-world design.",
+          "Independence & Reflection: thoughtfulness and self-assessment."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Identify the hypotenuse in a right-angled triangle",
+      "Basic ratio and division skills",
+      "Comfort labelling opposite and adjacent relative to a chosen angle"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Trig ratios to find missing sides",
+      "Inverse trig to find missing angles",
+      "Trig ratios for larger angles (unit circle/quadrants)",
+      "Sine, cosine and tangent graphs"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 3,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/trigonometry/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

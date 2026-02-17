@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_square_roots_and_cube_roots_v2",
+    "title": "Square Roots & Cube Roots",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "roots_and_powers",
+    "subtopic": "square roots and cube roots (exact and approximate)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Understand square and cube roots as inverse operations to squaring and cubing, find exact roots of perfect squares/cubes, and estimate non-perfect roots using known reference values and reasoning. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How do roots help us reverse powers and make sense of size in 2D and 3D?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Square roots find the side length of a square from its area, and cube roots find the edge length of a cube from its volume. Students practise exact and approximate roots and connect roots to inverse operations.",
+      "key_concepts": [
+        "Square root (√n) as the number that squares to n",
+        "Cube root (∛n) as the number that cubes to n",
+        "Roots as inverses of powers",
+        "Perfect squares",
+        "Perfect cubes",
+        "Estimating roots using nearby known squares/cubes",
+        "Rounding/approximating to a given decimal place"
+      ],
+      "activities": [
+        "Quick check: What is √49?",
+        "Estimate √20 to 1 decimal place.",
+        "Find ∛8 and ∛64."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Roots have been used in geometry since ancient building and surveying, and are still essential for modern engineering and science when scaling materials and measurements and reversing squared/cubed relationships.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "What would life be like if we couldn’t reverse powers?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students explain and represent roots creatively to deepen understanding and communication.",
+      "activities": [
+        "Design a visual poster comparing squares and cubes with their roots.",
+        "Write a metaphor: “Roots are like…”",
+        "Create a voiceover explaining the difference to someone in Year 7."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive visualiser to explore perfect squares and cubes and practise estimating unknown roots by comparing with known shapes and using feedback to refine estimates.",
+      "tools": [
+        "Canva embed: Perfect Squares and Cubes visualiser with drag-and-drop roots and check answers"
+      ],
+      "activities": [
+        "Drag the correct root values onto the perfect square and cube shapes.",
+        "Estimate and place roots for non-perfect areas and volumes.",
+        "Use the “Check answers” button to reveal correct estimates and refine your thinking."
+      ],
+      "design_challenges": [
+        "Create your own set of square/cube area/volume cards and include a mix of perfect and non-perfect values with estimated roots."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stand and stretch into a square shape (2D), then a cube shape (add depth with a crouch) to represent dimensions."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Roots Explainer (Slide or Poster)",
+        "focus": "Create a clear explainer showing the difference between square and cube roots, including exact roots, approximate roots, and at least two real-world examples.",
+        "products": [
+          "A short slide deck or poster explaining square and cube roots",
+          "Correct use of symbols √ and ∛ and clear difference between 2D area and 3D volume interpretations",
+          "Examples of exact roots (perfect squares/cubes)",
+          "Examples of approximate roots (non-perfect values) with sensible estimates",
+          "At least two real-world examples (e.g., scaling materials, geometry/engineering contexts)",
+          "Reflection: Which feels easier to estimate—squares or cubes? Why?"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Uses correct symbols and explains the difference between square and cube roots",
+          "Fluency & Accuracy — Includes exact and approximate roots accurately",
+          "Application — Applies roots to real-world scaling/materials/measurement contexts",
+          "Independence & Reflection — Thoughtful reflection on estimation difficulty and strategy"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Know square numbers and cube numbers (at least common ones)",
+      "Understand multiplication and powers (squaring and cubing)",
+      "Be able to round/estimate to a given decimal place"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Indices laws and inverse operations",
+      "Surds and simplifying roots (higher GCSE extension)",
+      "Pythagoras’ theorem and distance problems",
+      "Scientific/engineering scaling relationships"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/roots_and_powers/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

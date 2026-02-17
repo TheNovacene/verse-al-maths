@@ -1,0 +1,127 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_making_formulae_from_words_v2",
+    "title": "Creating & Solving Formulae from Word Problems",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "forming_equations",
+    "subtopic": "translate word problems into equations; solve linear and quadratic equations",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Translate real-world stories into algebra by defining unknowns, forming equations that represent relationships, and solving to find unknown values, including creating your own linear and quadratic word problems and swapping for peer assessment. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we turn a story into an equation we can solve?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Algebra is a translation tool: identify the unknown, represent it with a letter, turn relationships into expressions, then build and solve equations that match the story.",
+      "key_concepts": [
+        "Identify the unknown and represent it with a letter",
+        "Translate relationships into mathematical expressions",
+        "Form an equation from a word problem",
+        "Solve equations to find unknown values",
+        "Linear equations from word statements",
+        "Quadratic equations from area/geometry constraints"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Humans created algebra to solve real problems such as measuring land and designing structures. Today, formulae help us plan budgets, track fitness, and organise information for better decisions.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Create word problems from your own interests and communicate your algebraic translation clearly so someone else can solve it and learn from your choices.",
+      "activities": [
+        "Write your own word problem about something meaningful to you (sports, games, cooking).",
+        "Challenge a peer to turn it into an equation and solve it.",
+        "Explain your steps visually or through a short video or slide."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive practice tool to translate word problems into equations across levels, defining variables, writing equations, checking answers, and generating new variations for deliberate practice.",
+      "design_challenges": [
+        "Use the tool to practise multiple levels, then create your own word problem variations and write the matching equations with a clear variable definition."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Act out a simple story (e.g., buying items and spending money) and ask others to build and solve the equation from the performance."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Create and Solve Two Word Problems",
+        "focus": "Create and solve at least two original word problems—one linear and one quadratic—clearly defining variables, forming correct equations, and solving accurately, then swap with a peer for feedback.",
+        "products": [
+          "One original linear word problem with a clearly stated variable, equation, and full solution",
+          "One original quadratic word problem with a clearly stated variable, equation, and full solution",
+          "A clear explanation of your translation steps (written, visual, slide, or short video)",
+          "Peer assessment evidence (someone else solves one of your problems, or you solve theirs)"
+        ],
+        "assessment_criteria": [
+          "Clarity: Variable defined clearly and the problem statement is unambiguous",
+          "Precision: Correct equations formed and solved accurately",
+          "Creativity: Problems are relatable and original",
+          "Peer Assessment: Work is checked through solving/swapping and feedback is used"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic understanding of using letters to represent unknowns",
+      "Confidence rearranging and solving simple linear equations",
+      "Familiarity with forming expressions from worded statements",
+      "Awareness that some geometry/area stories can lead to quadratic equations"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Algebraic modelling and problem solving",
+      "Rearranging formulae",
+      "Simultaneous equations from word contexts",
+      "Quadratic equations from geometry and optimisation contexts"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/forming_equations/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "distance_time_graphs_v2",
+    "title": "Exploring Distance-Time Graphs",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "distance-time graphs (speed and journeys)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Interpret and construct distance–time graphs, linking gradient to speed and identifying stops, changes of speed and total distance travelled from a journey graph."
+  },
+  "verse_ality": {
+    "driving_question": "How can a distance–time graph tell the story of a journey — including speed changes and stops?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Construct and interpret a distance–time graph for a journey, using the slope of each segment to describe speed and identifying intervals of constant speed, acceleration-like change (via changing gradients), and rest (flat sections).",
+      "key_concepts": [
+        "Distance–time graph",
+        "Gradient as speed",
+        "Constant speed segments (straight sloping lines)",
+        "Stopped intervals (horizontal lines)",
+        "Comparing steepness to compare speeds",
+        "Total distance travelled vs position from start",
+        "Time intervals and interpreting segments"
+      ],
+      "tools": [
+        "Interactive: Journey Builder & Distance-Time Graph Web App (canva_embed): https://www.canva.com/design/DAG5UQ0Y9nk/Qjl71KGEfDbuykOgH_36IQ/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect graphs to everyday movement: routines, commutes, deliveries, and travel patterns, and consider how different people experience journeys differently.",
+      "justice_prompts": [
+        "Imagine this journey is a daily routine. What real-world contexts could this graph represent?",
+        "Who might experience such movement (and what might make the journey easier or harder for them)?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Turn a graph into a narrative by matching segments to events and emotions, using time and movement creatively to tell a coherent story.",
+      "activities": [
+        "Create a story that matches your graph (what happens during each segment?).",
+        "Use dramatic moments: sudden stops, rushing, steady travel, delays.",
+        "Describe how the pace of movement could reflect mood or energy."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use distance–time graphs as a design tool for analysing motion in systems like transport and robotics, where efficiency, timing and planning depend on reading and communicating movement accurately.",
+      "design_challenges": [
+        "Design a journey that minimises travel time without increasing maximum speed too much.",
+        "Design a robot delivery route with planned stops and speed changes, then represent it on a distance–time graph.",
+        "Explain how a transport engineer could use your graph to improve efficiency or scheduling."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "focus": "Link graph features to bodily effort: walking, running, resting, and changes in energy, and notice how different paces feel across time.",
+      "regulation_supports": [
+        "Notice the difference between a walking pace and a running pace and how each would look on a distance–time graph.",
+        "Add a rest interval to your journey and describe what your body would need during that time."
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Design and Explain a Journey Graph",
+        "focus": "Design your own distance–time graph journey with stops and speed changes, then explain what the graph shows using correct graph language (including slope as speed).",
+        "products": [
+          "A completed journey graph (screenshot or exported image from the interactive).",
+          "A written, audio, or video explanation describing each interval (moving/stopped, faster/slower).",
+          "At least three questions answered about your graph (e.g., fastest segment, total time, total distance, where you stopped).",
+          "Optional: peer review or comparison with a classmate’s journey."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Read scales on axes and interpret coordinates",
+      "Understand time intervals and distance units",
+      "Basic idea of gradient/steepness as a rate of change (informal is fine)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Speed calculations (speed = distance ÷ time)",
+      "Velocity–time graphs and acceleration ideas",
+      "Interpreting real-world graphs and rates of change",
+      "Linear graphs and gradient in algebra"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

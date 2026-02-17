@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "statistics_sets_and_venn_diagrams_v2",
+    "title": "Introduction to Sets",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "statistics",
+    "topic": "sets_and_venn_diagrams",
+    "subtopic": "set notation, union, intersection, complement, subsets, Venn diagrams",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use correct set notation and symbols (∈, ∉, ⊆, ⊂, ∪, ∩, complement) to describe membership and relationships, and represent unions/intersections/complements accurately using Venn diagrams to support clear reasoning about categories and fairness in real-world grouping decisions. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can set logic help us group, compare, and make fair decisions about who belongs where?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Sets are collections of distinct elements. Students learn membership and subset symbols, and use union, intersection, and complement to reason about groups, representing relationships clearly with Venn diagrams.",
+      "key_concepts": [
+        "Set as a collection of distinct elements",
+        "Element/member notation: ∈ and ∉",
+        "Empty set: ∅ or {}",
+        "Subset: A ⊆ B",
+        "Strict subset: A ⊂ B",
+        "Union: A ∪ B",
+        "Intersection: A ∩ B",
+        "Universal set (U) and complement: A′ (or A−)",
+        "Venn diagrams as visual representations of set relationships"
+      ],
+      "activities": [
+        "Quick check: write whether 3 ∈ {1, 3, 5}.",
+        "Identify subsets: decide whether {2,4} ⊂ {2,4,6} and whether {2,5} ⊂ {2,4,6}.",
+        "Compute unions and intersections: {1,2} ∪ {2,3} and {1,2,3} ∩ {2,4,5}."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Set logic supports real decisions about categories (clubs, voting groups, eco-certified products, eligibility rules). Students consider how set-based policy rules can support fairness and clarity in public decisions.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "A city council offers free public transport to residents earning < £20,000 (Set A) and students (Set B). Is someone in both groups counted twice or once, and how can set logic help ensure fairness in policy design?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students express set thinking by making their own real-life Venn diagrams, writing dialogues using set language, and creating metaphors for sets and elements.",
+      "activities": [
+        "Draw a real-life Venn diagram (e.g., people who like tea / coffee / both) and label sets and elements using names.",
+        "Write a short dialogue using set language: A = club members, B = volunteers; discuss A ∩ B and A ∪ B.",
+        "Create a set metaphor (e.g., set = bookshelf; elements = books) and record a 20-second explanation with an added twist."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use an interactive tool to choose set properties and drag numbers 0–25 into the correct Venn regions, testing understanding through multiple configurations and peer challenges.",
+      "tools": [
+        "Canva embed: Interactive Venn Diagram Tool (choose properties for sets A and B; drag numbers 0–25; use Check)"
+      ],
+      "activities": [
+        "Set A = Prime numbers; Set B = Multiples of 3. Place 2, 3, 6, 9 and justify each region choice.",
+        "Try Set A = Square numbers; Set B = Odd numbers. Describe what you notice.",
+        "Challenge a peer: swap your dropdown settings and see if they can solve your version correctly.",
+        "Use the Check button to test your understanding; note any surprises or misconceptions."
+      ],
+      "design_challenges": [
+        "Create your own set-property configuration and write a short justification for at least 5 numbers placed in different regions."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "3-step box breath (inhale 4 • hold 4 • exhale 4).",
+        "Wrist stretches and a neck tilt to each side.",
+        "Eye refresh: alternate focus between a close object and a distant object for 30 seconds."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Set Logic Puzzle",
+        "focus": "Design a set logic puzzle for others using two set properties and Venn diagram placement for numbers 0–25, plus symbolic statements to test membership and reasoning.",
+        "products": [
+          "Two chosen set properties for A and B (e.g., Squares and Odds)",
+          "A completed Venn diagram placing each number 0–25 into the correct region",
+          "Three true/false set statements using symbols (e.g., 9 ∈ A ∩ B, 8 ∈ A′, 12 ∈ A ∪ B)",
+          "A short reflection describing one misconception caught using Check answers and how you fixed it"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Explains region logic; interprets union/intersection/complement statements correctly",
+          "Fluency & Accuracy — Numbers placed correctly; consistent and correct use of ∈, ∪, ∩, ⊂/⊆ and complement notation",
+          "Application — Connects sets to real-world sorting/eligibility/grouping contexts",
+          "Independence & Reflection — Identifies and corrects logic errors; reflects on learning"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confidence with basic number properties (e.g., primes, multiples, squares, odd/even)",
+      "Comfort reading and writing lists of numbers",
+      "Willingness to check and revise placements when errors are found"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Probability using Venn diagrams",
+      "Set notation in algebra and functions (domains and ranges)",
+      "Logical reasoning with categories and constraints",
+      "Data classification and fairness in eligibility rules"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/statistics/sets_and_venn_diagrams/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

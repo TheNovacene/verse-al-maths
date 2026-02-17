@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_powers_and_roots_v2",
+    "title": "Powers and Roots",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "roots_and_powers",
+    "subtopic": "index laws and roots (including negative and fractional indices)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use index laws to simplify expressions, interpret and calculate negative and fractional powers, and connect roots as inverse operations to powers through real contexts like exponential growth, scientific notation, and geometry. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How do powers and roots relate to one another?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Powers describe repeated multiplication and roots reverse this process. Students practise index laws for multiplying/dividing powers, powers of powers, negative indices, and writing roots as fractional powers.",
+      "key_concepts": [
+        "Base and exponent (index)",
+        "Repeated multiplication: a^n",
+        "Multiplying powers: a^m × a^n = a^(m+n)",
+        "Dividing powers: a^m ÷ a^n = a^(m−n)",
+        "Power of a power: (a^m)^n = a^(m×n)",
+        "Square roots and cube roots",
+        "Roots as fractional powers: √a = a^(1/2), ∛a = a^(1/3)",
+        "Negative powers: a^(−n) = 1/a^n",
+        "Zero power: a^0 = 1 (a ≠ 0)"
+      ],
+      "activities": [
+        "Evaluate 2^3, 5^2 and 10^0.",
+        "Simplify x^4 × x^3 and x^5 ÷ x^2.",
+        "Find √81, ∛27 and 9^(−2)."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "From ancient Babylonian square methods to modern exponential growth in science and data, powers and roots help us describe scale, change, and structure across architecture, technology, and measurement.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "What might we have misunderstood in science or design without powers and roots?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students express connections between powers and roots through mind maps, metaphor, and story/comic, making the relationships memorable and explainable to others.",
+      "activities": [
+        "Design a mind map showing how powers and roots connect different areas of maths.",
+        "Write a metaphor: “A power is like…” and “A root is like…”.",
+        "Make a comic strip about a number going on a journey to become a power and then return via a root."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use an interactive tool to match power/root expressions to values, estimate non-perfect cases, and observe patterns when bases change, building intuition for exponential behaviour.",
+      "tools": [
+        "Canva embed: interactive Powers & Roots tool (match expressions to values; estimate; compare bases)"
+      ],
+      "activities": [
+        "Match expressions like 2^3, 3^(−2), and ∛64 to their values.",
+        "Estimate powers and roots for non-perfect cases.",
+        "Compare base changes and observe exponential patterns."
+      ],
+      "design_challenges": []
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Use your arms to show exponential growth: start small and double each time.",
+        "Mimic square and cube roots by shrinking back toward 1.",
+        "Use body movement to represent abstract change and reset attention."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Powers & Roots Explainer",
+        "focus": "Create a short video, slide, or poster explaining powers and roots, including at least one real-life application.",
+        "products": [
+          "A short video, slide deck, or poster",
+          "Correct use of symbols such as a^n and √[n]{a} (or fractional index form)",
+          "At least three worked examples that include powers, roots, and a negative or fractional index example",
+          "At least one real-life application (e.g., scientific notation, growth/decay, geometry/physics)"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Uses powers/roots notation correctly and explains how they relate",
+          "Fluency & Accuracy — Calculates integer, negative, and fractional powers/roots accurately",
+          "Application — Connects the maths to a meaningful real-life use",
+          "Independence & Reflection — Reflects on when each concept is useful and why"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confident multiplication facts and repeated multiplication",
+      "Basic understanding of squares and cubes",
+      "Comfort rearranging and simplifying expressions with numbers/letters"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Index laws with algebraic expressions",
+      "Standard form and scientific notation",
+      "Surds and simplifying roots (extension)",
+      "Exponential graphs and growth/decay models"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/roots_and_powers/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

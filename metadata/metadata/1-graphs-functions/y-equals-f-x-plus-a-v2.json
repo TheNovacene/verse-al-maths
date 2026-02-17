@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_y_equals_f_x_plus_a_v2",
+    "title": "y = f(x) + a",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "vertical translations of functions",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Understand and apply vertical translation rules y = f(x) + a and y = f(x) - a, explain transformations using correct language, and connect vertical shifts to modelling elevation and accessible design in resilient cities. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "What happens when we lift or lower a graph, and how can that help us design more accessible, resilient places?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore vertical shifts (translations) by adding or subtracting a constant to a function, recognising that the shape stays the same while every y-value changes by a units.",
+      "key_concepts": [
+        "Translation as a shift without changing shape",
+        "Function as a rule mapping each input x to a single output y",
+        "Function notation f(x)",
+        "Vertical shift",
+        "y = f(x) + a shifts up by a units",
+        "y = f(x) - a shifts down by a units"
+      ],
+      "activities": [
+        "Explain in words what happens to a graph when you add a positive number to the function.",
+        "Explain in words what happens to a graph when you subtract a positive number from the function."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Vertical shifts model real changes like elevation, signal strength, prices, and population growth. Urban design uses vertical translations to plan flood defenses, building heights, and ramps that must work for everyone.",
+      "sdg_contexts": [
+        "SDG 11: Sustainable Cities and Communities"
+      ],
+      "justice_prompts": [
+        "In a changing world, what must rise—and what must hold steady?",
+        "What risks appear if we don’t think mathematically about what needs to be raised?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use metaphor and sketching to express the feeling of a graph rising or sinking, connecting transformation language to lived experience.",
+      "activities": [
+        "Sketch a graph being lifted like a balloon.",
+        "Describe what part of life feels like rising or sinking.",
+        "Write a metaphor: “The graph rose like…”"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive sketchpad to test values of a in y = f(x) + a and observe how key features move (like the vertex), then connect vertical change to ethical design decisions such as ramps and inclusive building access.",
+      "tools": [
+        "Web Sketchpad interactive: explore how changing a moves the graph in y = f(x) + a"
+      ],
+      "activities": [
+        "Set f(x) = x^2 and try a = 2, 5, -3.",
+        "Describe what happens to the vertex of the parabola as a changes."
+      ],
+      "design_challenges": [
+        "Use vertical shifts to reason about ramp height changes and fairness for different users."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Breathing visualisation: inhale as the graph rises, exhale as it lowers, repeating steadily."
+      ],
+      "wellbeing_prompts": [
+        "A graph’s movement mirrors our own highs and lows—what shift do you notice in yourself today?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Pathway A: Vertical Translation Sketch",
+        "focus": "Create your own vertical translation sketch and describe the transformation clearly.",
+        "products": [
+          "A labelled sketch (or digital graph) showing an original function and its vertical translation",
+          "A written or spoken description using correct transformation language"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Clear explanation of the transformation rule",
+          "Fluency & Accuracy: Correct sketching and correct terminology",
+          "Independence & Reflection: Personal clarity and ownership of explanation"
+        ]
+      },
+      {
+        "name": "Pathway B: Real-World Rising Model",
+        "focus": "Find a real-world example of something that rises (or falls) and model it with a function and vertical shifts.",
+        "products": [
+          "A real-world context described clearly (e.g., elevation, signal strength, price, population)",
+          "A function model and at least one vertical translation",
+          "A short interpretation of what the shift represents"
+        ],
+        "assessment_criteria": [
+          "Application to Problems: Real-life scenario connected meaningfully",
+          "Conceptual Understanding: Correct mapping between shift and meaning",
+          "Fluency & Accuracy: Correct graph/notation and interpretation"
+        ]
+      },
+      {
+        "name": "Pathway C: Design Poster or Video (SDG 11)",
+        "focus": "Explain how vertical translations help us design better environments, linking to accessible and resilient city planning.",
+        "products": [
+          "A poster or short video explaining y = f(x) ± a",
+          "One design connection (e.g., ramps, flood defenses, building heights)",
+          "An explicit SDG 11 link to accessibility, resilience, and inclusion"
+        ],
+        "assessment_criteria": [
+          "Communication: Explanation is clear and well-structured",
+          "Application to Problems: Design scenario is convincing and relevant",
+          "Independence & Reflection: Unique interpretation and voice"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application to Problems",
+      "Independence & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot and interpret points on a coordinate grid",
+      "Understand basic function outputs as y-values",
+      "Work with integers (including negative values)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Other graph transformations (horizontal shifts, reflections, stretches)",
+      "Using transformations to sketch graphs quickly",
+      "Interpreting function notation in GCSE and beyond",
+      "Modelling change in real contexts using functions"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

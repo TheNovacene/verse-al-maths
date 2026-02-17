@@ -1,0 +1,159 @@
+{
+  "_comment": "Source: :contentReference[oaicite:0]{index=0}",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "frequency_tables_v2",
+    "title": "Frequency Tables: From Raw Data to Clear Stories",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "statistics",
+    "topic": "representing_data",
+    "subtopic": "frequency tables (including relative and cumulative frequency; grouped intervals; comparing groups)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Construct and interpret frequency tables (including relative and cumulative frequency) and use them to describe patterns and compare distributions, while recognising what tables reveal and what they can hide."
+  },
+  "verse_ality": {
+    "driving_question": "How can a table turn messy data into a clear story?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Organise raw data into frequency tables and extend this to relative frequency and cumulative frequency so patterns become visible and describable.",
+      "key_concepts": [
+        "Raw data",
+        "Frequency",
+        "Relative frequency (fraction/percentage of total)",
+        "Cumulative frequency (running total)",
+        "Patterns in distributions",
+        "Accuracy and totals (checking sums)"
+      ],
+      "tools": [
+        "Interactive: Frequency Table Builder (canva_embed): https://www.canva.com/design/DAG-8jrkWGw/DFNH0wU6K2V5L7mH3Lc5Ag/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore how frequency tables are used to summarise real situations (bus punctuality, clinic waiting times, exam grades, shopping baskets), and consider how summarising can support decisions but also hide individual stories when experiences get grouped.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "When we only look at frequencies, whose story might be lost?",
+        "What extra information would you want to see before making decisions that affect people?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Turn your own daily patterns into data, then use a frequency table to reflect on how a summary can feel calmer or more intense than lived experience.",
+      "activities": [
+        "Choose a repeating daily behaviour (messages per hour, steps in time blocks, songs each evening).",
+        "Sketch a small “raw data diary” across a day.",
+        "Create a simple frequency table on paper (values or grouped values, and frequencies).",
+        "Decorate or annotate the table with colour/emojis to show how the day felt (busy, chilled, spiky, flat).",
+        "Reflect: Does your table make your day look calmer or more intense than it feels from the inside?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use frequency tables as design tools: group continuous data using class intervals and compare two groups using side-by-side tables and bar-chart summaries, noticing how design choices (like class width) change what people perceive.",
+      "design_challenges": [
+        "Activity 2 (Grouped data): Use the Grouped Frequency Explorer to choose a data set (or enter your own), pick a class width, generate a grouped frequency table, and observe how the display changes with narrow vs wide intervals. (canva_embed): https://www.canva.com/design/DAG-83wuB_o/TqQxqbqF2AXSC6PkiIVtoA/view?embed",
+        "Describe what stays the same when you change class width (total frequency) and what changes (apparent shape/detail).",
+        "Activity 3 (Comparing groups): Use the Comparing Frequency Tables app to build tables and charts for two groups (e.g., Class A vs Class B), then answer: which group has more high values, and which is more consistent/varied? (canva_embed): https://www.canva.com/design/DAG-9BdHBeo/MU4heGrY6MocV8GmyJm4jw/view?embed",
+        "Buddy challenge: Choose one scenario and each write a short summary answering: “Which group appears to perform better overall, and how do you know from the tables and charts?”",
+        "Ethical design: If you were using this tool to compare groups of students, what options or warnings would you add so it supports improvement instead of shaming or labelling?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Breathe in for 4 counts and say in your head: “These are just numbers.”",
+        "Breathe out for 6 counts and say: “I can learn to read them.”",
+        "Shake out your hands and gently stretch your shoulders before returning to the task."
+      ],
+      "wellbeing_prompts": [
+        "What helps you stay grounded when working with lots of numbers (music, breaks, doodling, movement)? How could you build that into your study routine?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Pathway A – One Group in Detail",
+        "focus": "Create or collect one data set and use a frequency table to describe the story of the group clearly and honestly.",
+        "products": [
+          "At least 20 data values on a topic you care about (real or fictional).",
+          "A completed frequency table generated from your raw data (include relative and/or cumulative frequency if used).",
+          "A 6–8 sentence description of what the table shows (most common values, surprises, overall pattern)."
+        ],
+        "criteria": [
+          "Conceptual Understanding: uses frequency/relative/cumulative frequency appropriately to describe data.",
+          "Fluency & Accuracy: correct frequencies, totals, and clear layout.",
+          "Application to Problems: sensible statements supported by the table (not vague claims).",
+          "Independence & Reflection: explains what the data suggests in your own words and notes any limitations."
+        ]
+      },
+      {
+        "name": "Pathway B – Two Groups Compared",
+        "focus": "Use frequency tables and charts to compare two groups and write an evidence-based comparison of performance and consistency.",
+        "products": [
+          "Two data sets (at least 12 values each) representing two groups.",
+          "Completed frequency tables/charts for both groups (from the comparing tool or your own tables).",
+          "A comparison paragraph answering: which group appears to perform better overall, which has more high values, and which is more consistent/varied."
+        ],
+        "criteria": [
+          "Conceptual Understanding: compares distributions using frequency patterns and clear reasoning.",
+          "Fluency & Accuracy: correct tables/totals and accurate reading of charts.",
+          "Application to Problems: comparison statements are supported by evidence from the tables/charts.",
+          "Independence & Reflection: avoids shaming language and explains what can/can’t be concluded fairly."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Read and write lists of numerical data (raw data)",
+      "Count occurrences of values accurately",
+      "Basic fraction/percentage skills for relative frequency",
+      "Add running totals for cumulative frequency",
+      "Use clear table headings and check totals"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Histograms and grouped frequency",
+      "Cumulative frequency graphs and estimating medians/quartiles",
+      "Comparing distributions using box plots",
+      "Data interpretation and fairness in statistical summaries"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 3,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/statistics/frequency_tables/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

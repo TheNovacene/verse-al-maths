@@ -1,0 +1,128 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "geometrical_constructions_bisectors_v2",
+    "title": "Geometrical Constructions: Bisectors",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "geometrical_constructions",
+    "subtopic": "perpendicular bisector and angle bisector",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Construct perpendicular and angle bisectors accurately using compass-and-straightedge methods, and explain why each construction works using symmetry and circle properties."
+  },
+  "verse_ality": {
+    "driving_question": "How can we create perfectly accurate bisectors using only a compass and straightedge — and why do these constructions work?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Use classical compass-and-straightedge rules to construct a perpendicular bisector of a line segment and an angle bisector, focusing on precision without measuring.",
+      "key_concepts": [
+        "Compass-and-straightedge constructions (no measuring)",
+        "Perpendicular bisector: splits a segment into two equal parts at 90°",
+        "Angle bisector: splits an angle into two equal angles",
+        "Circle properties and symmetry in constructions",
+        "Intersection of arcs as a logic tool"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore how ancient builders and engineers used constructions with simple tools (string, sticks, chalk) to create straight roads, walls, and temples with reliable precision long before digital tools.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why do you think compass-and-straightedge methods have endured for thousands of years?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use constructed geometry as a creative constraint: build patterns and imagine worlds where only constructed lines and arcs are allowed.",
+      "activities": [
+        "Draw your own geometric pattern using only a ruler and compass (or digital equivalent).",
+        "Write a creative description of a world where only constructed geometry is allowed."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use interactive Web Sketchpad tools to practise and test constructions, then explore how bisectors behave as you move points and reshape the diagram.",
+      "design_challenges": [
+        "Construct the perpendicular bisector of a line segment by drawing equal-radius arcs from each endpoint and joining the arc intersections.",
+        "Open Perpendicular Bisector Sketch (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/319098073/download",
+        "Construct the angle bisector by drawing an arc from the vertex, then intersecting arcs from the two points where the first arc meets the angle arms; join the vertex to the arc intersection.",
+        "Open Angle Bisector Sketch (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/319098103/download",
+        "Test what happens when you move the endpoints—does the bisector still behave the same?",
+        "Construct both bisectors in a triangle. What do you notice?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Hold both arms out to represent an angle. Use your other hand to bisect it by placing it directly in the middle. Try it with different angles formed by your limbs or friends."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Bisectors Poster",
+        "focus": "Create a poster or digital drawing that shows both constructions with clear step-by-step diagrams and explanations of why they work.",
+        "products": [
+          "A perpendicular bisector construction with labelled steps.",
+          "An angle bisector construction with labelled steps.",
+          "Short explanations for each step and why the construction is valid.",
+          "An artistic pattern or flourish created using only compass-based geometry."
+        ],
+        "criteria": [
+          "Accuracy: bisectors are exact and lines/arcs are constructed correctly.",
+          "Explanation: steps are clear and reasoning is sound (symmetry/circle logic).",
+          "Creativity: an original compass-geometry design element is included."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Use a compass and ruler (or digital equivalents) safely and accurately",
+      "Basic understanding of angles and line segments"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Loci and perpendicular bisector applications",
+      "Triangle centres (incentre and circumcentre)",
+      "Geometric proof using constructions and symmetry"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 0,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/constructions/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

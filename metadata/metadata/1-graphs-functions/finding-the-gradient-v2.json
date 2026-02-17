@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_finding_the_gradient_v2",
+    "title": "Finding the Gradient",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "gradient (rise/run) of a straight line",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use rise/run to calculate the gradient of a straight line, reason about how changing x- and y-values changes steepness, and connect gradient to real-world rates of change and accessible design. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How does gradient help us describe, compare, and design slopes and rates of change in the world?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Gradient measures steepness and direction of a line and can be calculated as rise/run (change in y divided by change in x). Students explore how moving points changes the gradient in real time.",
+      "key_concepts": [
+        "Gradient as steepness",
+        "Rise/run",
+        "Change in y over change in x",
+        "Positive and negative gradients",
+        "Effect of horizontal distance on gradient",
+        "Effect of vertical change on gradient"
+      ],
+      "tools": [
+        "Interactive sketchpad: drag two points and observe gradient updating"
+      ],
+      "activities": [
+        "Investigate how moving one point up/down affects gradient.",
+        "Investigate how changing horizontal distance affects gradient.",
+        "Find examples of lines with gradient 1 and -2 and justify how you know."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Gradient connects to real-world flight paths and the history of mathematical contributions, highlighting Katherine Johnson’s NASA work and questions of access to powerful mathematical ideas.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why is it important that everyone gets access to powerful maths ideas like this?",
+        "Who benefits when we all understand?"
+      ],
+      "activities": [
+        "Watch a linked scene from Hidden Figures (in Canvas) and connect gradient to flight-path calculation."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students express what gradient feels and looks like through metaphor, art, or speaking, linking mathematical slope to personal energy and experience.",
+      "activities": [
+        "Complete: “Gradient is like ___ because ___.”",
+        "Sketch a gradient-inspired image (e.g., in Pencil Spaces).",
+        "Record a short voice note or video about how it feels to see a gradient move.",
+        "Reflect: What kind of slope matches your current energy (steep climb, slow rise, downward glide)?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Gradient supports design decisions in the built world, especially safe and accessible slopes. Students use interactive tools to test constraints and model scenarios like ramps and cycles.",
+      "tools": [
+        "Interactive sketchpad: explore constraints and build real-world scenarios using gradient values"
+      ],
+      "design_challenges": [
+        "Decide what gradient would work for a safe wheelchair ramp.",
+        "Decide what slope would be too steep for a hand-powered bike.",
+        "Model a real-world slope using the sketch and explain which constraints you changed and why."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Inhale slowly as if climbing a steep slope; exhale like gliding down.",
+        "Trace a line with your finger or draw a slope in the air and notice how your body reacts."
+      ],
+      "wellbeing_prompts": [
+        "Where did you feel flow in this lesson?",
+        "Where was it hard?",
+        "What helped you stay engaged?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Gradient Investigator",
+        "focus": "Demonstrate understanding of gradient through interactive exploration evidence, creative expression, a design application, and reflection.",
+        "products": [
+          "3 screenshots or recordings from sketchpad explorations",
+          "A creative piece (drawing, simile, voice note, or video)",
+          "A ramp or slope design (sketch and/or calculation)",
+          "A reflection: “Where might I use this skill in the real world?”"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot and read points on a coordinate grid",
+      "Work confidently with positive and negative numbers",
+      "Understand subtraction as ‘change’ between two values"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Equation of a line (y = mx + c)",
+      "Parallel and perpendicular lines (using gradients)",
+      "Rate-of-change interpretation in graphs",
+      "Linear modelling in real contexts"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

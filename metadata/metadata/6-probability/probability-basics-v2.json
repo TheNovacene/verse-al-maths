@@ -1,0 +1,146 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "probability_basics_v2",
+    "title": "Probability Basics: The Horse Race (Two Dice)",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "probability",
+    "topic": "theoretical_and_experimental_probability",
+    "subtopic": "two dice probability space and relative likelihood",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Compare theoretical and experimental probability for two dice by completing a 6×6 probability space, explaining why some totals are more likely, and evaluating how experimental data matches theory over time."
+  },
+  "verse_ality": {
+    "driving_question": "Why are some totals more likely than others when we roll two dice, and how does experimental data compare to the theoretical model?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Distinguish theoretical vs experimental probability using the two-dice sample space, counting outcomes for each total and explaining why 7 is the most common sum.",
+      "key_concepts": [
+        "Theoretical probability",
+        "Experimental probability",
+        "Sample space (36 equally likely outcomes for two fair dice)",
+        "Probability space diagram (6×6 grid)",
+        "Frequency and expected frequency",
+        "Why some outcomes are more likely (number of combinations)",
+        "Fairness and randomness"
+      ],
+      "activities": [
+        "Complete the 6×6 probability space by adding the two dice in each cell.",
+        "Count how many ways each total (2 to 12) can occur and compare likelihoods.",
+        "Explain the pattern in the sums (why totals near 7 are more common)."
+      ],
+      "tools": [
+        "Interactive: Horse Race Web App (two dice) (canva_embed): https://www.canva.com/design/DAG6Xuh_wBA/qvvIquyQgbouDylLe3iRVw/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore how probability is used to design fair systems and make decisions (weather, medicine, games), and how misunderstanding probability can lead to unfair or biased outcomes in real-world systems.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Whose lives are affected when real-world outcomes don’t reflect theoretical models?",
+        "How can we design systems that are fair, transparent, and evidence-based?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use story and metaphor to explain why outcomes differ in likelihood even in a fair system, building an intuitive feel for ‘common’ and ‘long shot’ events.",
+      "activities": [
+        "Imagine each total has a personality (e.g., Horse 7 vs Horse 2). What kind of ‘person’ is each one?",
+        "Draw a comic or write a short story about the race and how the horses feel about their chances.",
+        "Explain (in your own words) why some outcomes are more likely than others, even when everything is fair."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Run an experiment using the interactive horse race, record frequencies of totals, and compare the experimental results to the theoretical probabilities from the probability space.",
+      "design_challenges": [
+        "Before starting, make a prediction: Which horse (total) will win?",
+        "As you play, record how many times each total appears.",
+        "Compare the experimental results to the theoretical probabilities and describe what changes over time.",
+        "Buddy challenge: compare predictions and outcomes with a classmate; discuss why results differ.",
+        "Design prompt: how would you redesign the game for someone who can’t use a mouse or who uses a screen reader?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Breathing reset: breathe in for “Expect”, breathe out for “Observe”; focus on noticing patterns rather than outcomes.",
+        "Body check-in: notice how you feel when your prediction is wrong and what shows up in your body.",
+        "Finger tap: tap from 2 to 12 slowly; which totals feel stable and which feel like long shots?"
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: The Race Report",
+        "focus": "Complete a two-dice probability model and compare it to experimental results from the horse race, then suggest an inclusive design improvement.",
+        "products": [
+          "A completed probability space diagram showing all 36 dice combinations.",
+          "A table showing the number of times each total appeared during your race.",
+          "A short explanation comparing experimental results to theoretical probabilities.",
+          "A design idea to make the game more inclusive or informative."
+        ],
+        "criteria": [
+          "Conceptual Understanding – Explain the difference between theoretical and experimental probability and why totals have different likelihoods.",
+          "Fluency & Accuracy – Complete the probability space and track results accurately.",
+          "Application to Problems – Analyse outcomes and interpret patterns in the data.",
+          "Independence & Reflection – Reflect on unpredictability and propose a realistic improvement."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Add two single-digit numbers (dice sums)",
+      "Understand that a fair die has equally likely outcomes",
+      "Basic fraction/ratio thinking (e.g., outcomes out of 36)",
+      "Ability to record frequencies in a simple table"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Relative frequency and convergence with more trials",
+      "Expected frequency and probability models",
+      "Tree diagrams and compound events",
+      "Risk, bias, and fairness when probability is used in real systems"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/probability/basics/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

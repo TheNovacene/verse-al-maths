@@ -1,0 +1,141 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "congruence_similarity_koch_snowflake_v2",
+    "title": "Exploring Congruence and Similarity: The Koch Snowflake",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "congruence_and_similarity",
+    "subtopic": "fractal construction, similarity scaling, congruent shapes across iterations",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use the iterative Koch Snowflake construction to identify congruent components and similarity scaling, and derive formulas for side count and perimeter length after n iterations."
+  },
+  "verse_ality": {
+    "driving_question": "How do congruence and similarity show up when we build a Koch Snowflake — and what patterns can we prove about its perimeter after n iterations?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Build a Koch Snowflake iteratively and notice how each new step replaces segments with smaller, similar segments, creating congruent triangles at each iteration and a predictable scaling pattern.",
+      "key_concepts": [
+        "Congruence (same shape and size)",
+        "Similarity (same shape, scaled size)",
+        "Scale factor",
+        "Iteration / recursion",
+        "Fractals",
+        "Perimeter growth by repeated replacement",
+        "Powers and exponential growth (powers of 4 and 3)"
+      ],
+      "tools": [
+        "Interactive: Koch Snowflake Generator (canva_embed): https://www.canva.com/design/DAG5Df7aUy4/xCVeGrtbP8ZCFskJMMbuVQ/view?embed"
+      ],
+      "activities": [
+        "Use the tool to generate the snowflake for multiple iterations and record what changes each time.",
+        "Identify which shapes are congruent within a single iteration (e.g., repeated triangles/segments).",
+        "Explain why the new pieces are similar to earlier pieces (same angles/shape, scaled by a constant factor).",
+        "Track the number of sides/segments after each iteration and look for a pattern."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect fractals like the Koch Snowflake to patterns in nature (snowflakes, coastlines, plant growth) and reflect on why humans are drawn to complexity emerging from simple rules.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Create an artistic version of the snowflake that shows the iterative process through colour, pattern or rhythm, and describe what the repeating structure makes you think or feel.",
+      "activities": [
+        "Create your own artistic Koch Snowflake (digital or hand-drawn).",
+        "Use colours or patterns to represent each iteration layer.",
+        "Write or record a short reflection: what does the repeating pattern evoke for you?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Explore how recursive fractal patterns are used in computer graphics, modelling and design, and connect the iteration rule to how algorithms build complexity.",
+      "design_challenges": [
+        "Describe one way a recursive fractal could be useful in technology (graphics, terrain, textures).",
+        "Explain how an algorithm can generate complexity from a simple repeated rule.",
+        "Optional: propose a design idea (logo/pattern/texture) inspired by the Koch construction."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "focus": "Notice how fractal-like repetition appears in biology (lungs, blood vessels) and how repeating similar shapes can support efficient function by increasing surface area or reach.",
+      "regulation_supports": [],
+      "wellbeing_prompts": [
+        "Where do you notice branching or repeating patterns in nature or in your own body, and what might those patterns help the system do?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Koch Snowflake Perimeter Formula",
+        "focus": "Derive a formula for the number of sides and the total perimeter length after n iterations, and communicate your reasoning clearly using powers of 4 and 3.",
+        "products": [
+          "A table of results for iterations 0 to at least 4 showing number of sides and perimeter scale.",
+          "A general formula for number of sides after n iterations (using powers).",
+          "A general formula for perimeter after n iterations (in terms of the starting perimeter and powers of 4/3).",
+          "A short explanation of why the pattern works (replacement rule and similarity scaling)."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Understanding of congruence and similarity",
+      "Comfort with fractions and scale factors",
+      "Powers and exponential growth basics",
+      "Perimeter of polygons (sum of side lengths)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Similarity and scale factor problems",
+      "Sequences and geometric growth",
+      "Fractals and iteration in mathematics/computing",
+      "Area and perimeter reasoning in complex shapes"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/congruence_similarity/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

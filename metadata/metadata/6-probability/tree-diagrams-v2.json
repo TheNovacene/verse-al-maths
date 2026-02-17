@@ -1,0 +1,144 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "tree_diagrams_v2",
+    "title": "Tree Diagrams: Independent and Conditional Probability",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "probability",
+    "topic": "compound_probability",
+    "subtopic": "tree diagrams (independent and conditional probability)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use probability tree diagrams to model multi-step events, distinguish independent from conditional situations (with/without replacement), and calculate combined and total probabilities by multiplying along branches and adding across relevant outcomes."
+  },
+  "verse_ality": {
+    "driving_question": "How can tree diagrams help us map multi-step uncertainty, and how do we know when probabilities should change from one stage to the next?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Represent multi-stage events with tree diagrams and calculate probabilities of combined outcomes, comparing independent events (unchanged probabilities each stage) with conditional events (probabilities change after an outcome).",
+      "key_concepts": [
+        "Tree diagrams for multi-stage events",
+        "Independent events (probabilities stay the same)",
+        "Conditional events (probabilities change)",
+        "With replacement vs without replacement",
+        "Multiplying probabilities along a branch",
+        "Adding probabilities across outcomes",
+        "Outcome probability for a path"
+      ],
+      "tools": [
+        "Interactive: Build-A-Tree Probability Tree Diagram Generator (canva_embed): https://www.canva.com/design/DAG6iR3iIyw/pst6TydLEowVrX2Bg_3byA/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Use probability trees to plan for uncertainty in real systems (e.g., medical testing, climate forecasting, risk analysis and AI modelling), while reflecting on how false independence assumptions can create mistakes or bias.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Assuming independence when events are actually linked can lead to unfair decisions. Where might that happen in real life?",
+        "Think of a situation where one event clearly affects what comes next. How would a tree diagram help you anticipate outcomes?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Create a tree diagram for a personal routine or choice system and describe how it feels when outcomes depend on each other; explain in your own words when to multiply vs add probabilities.",
+      "activities": [
+        "Draw a tree diagram for a daily routine (e.g., on time/late, then bus early/delayed).",
+        "Explain: What is the difference between multiplying and adding probabilities? When do you do each?",
+        "Identify which steps in your routine feel independent and which feel conditional."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use the interactive app to build and analyse both an independent and a conditional probability tree, clicking branches to view path probabilities and adapting the scenario to model a real system.",
+      "design_challenges": [
+        "Select a context (Counters or Custom Event).",
+        "Choose with replacement or without replacement to explore independence vs conditionality.",
+        "Build your tree diagram using the visual editor.",
+        "Click branches to see total outcome probabilities.",
+        "Calculate the probability of a specific path (e.g., Red then Green).",
+        "Calculate the total probability of all paths ending with a specific result.",
+        "Buddy challenge: build two trees (one independent, one conditional) and compare how probabilities change.",
+        "Adapt the scenario to model a real-world system (names, teams, meals, etc.)."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Pause and notice tension or confusion when the tree gets complex; name where you feel it.",
+        "Breath cue: inhale for “Step one”, exhale for “Step two” to break the process into parts.",
+        "Stretch your arms like branches and imagine possibilities expanding."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Build and Analyse a Probability Tree",
+        "focus": "Build a complete probability tree (independent or conditional), answer probability questions using the diagram, and explain how you know whether probabilities should change between stages.",
+        "products": [
+          "A screenshot of your completed tree diagram from the interactive app.",
+          "Worked solutions for at least two probability questions based on your tree.",
+          "A short explanation: “How do we know if the events are independent or conditional?”",
+          "A suggestion for a real-world situation you could model with a tree diagram."
+        ],
+        "criteria": [
+          "Conceptual Understanding – clearly identifies stages and models them correctly.",
+          "Fluency & Accuracy – correct branch probabilities and calculations.",
+          "Application to Problems – interprets outcome probabilities and totals appropriately.",
+          "Independence & Reflection – reflects thoughtfully and adapts the scenario."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic fraction/probability language",
+      "Multiply fractions/decimals to get a combined probability",
+      "Add probabilities to combine outcomes",
+      "Comfort reading and interpreting simple diagrams"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Conditional probability and sampling without replacement",
+      "Probability with Venn diagrams and set notation",
+      "Expected frequency and modelling",
+      "Risk, bias, and decision-making with probabilistic assumptions"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/probability/tree_diagrams/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

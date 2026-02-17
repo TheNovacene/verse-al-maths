@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "pythagoras_theorem_v2",
+    "title": "Pythagoras' Theorem: Right Triangles and Hidden Squares",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "pythagoras_theorem",
+    "subtopic": "right-angled triangles, applications, and proof",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use and prove Pythagoras’ Theorem (a² + b² = c²) to find unknown lengths in right-angled triangles and justify solutions in applied design contexts."
+  },
+  "verse_ality": {
+    "driving_question": "How can Pythagoras’ Theorem help us prove a relationship in right triangles and uncover hidden lengths in the world around us?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore the area relationship in a right-angled triangle, form the equation a² + b² = c², identify the hypotenuse, and practise solving for missing sides (including challenges).",
+      "key_concepts": [
+        "Right-angled triangles",
+        "Squares on the sides (area model)",
+        "Hypotenuse and legs (a, b, c)",
+        "Pythagoras’ Theorem: a² + b² = c²",
+        "Rearranging to find an unknown side",
+        "Square roots and exact/decimal answers",
+        "Applications (e.g., finding heights in triangles)"
+      ],
+      "tools": [
+        "Video: Discover the square-area relationship (canva_embed): https://www.canva.com/design/DAGrVzBhBgg/AXzlBNfDY7_Us12b98dCmw/watch?embed",
+        "Video: Building the formula a² + b² = c² (canva_embed): https://www.canva.com/design/DAGrWhKDHX0/yY02fHT4G4s3gv2nyAUVhg/watch?embed",
+        "Interactive: Label a, b and c on right triangles (canva_embed): https://www.canva.com/design/DAGsHAeyaq0/Pld8UYIYrLIaOV7ctWn21w/view?embed",
+        "Video: Application to find the height of an isosceles triangle (canva_embed): https://www.canva.com/design/DAGrW0FYw3g/RT8XMP2G4OQp2FUt4lwNzQ/watch?embed",
+        "Practice + challenge set (canva_embed): https://www.canva.com/design/DAGsHUp4vtw/neKLc6APIOgJGLxoKMceOw/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Place the theorem in its historical journey (Babylonian/Egyptian evidence, Greek proof culture) and explore related ideas like Pythagorean triples, dissection proofs, and irrationality (√2).",
+      "justice_prompts": [
+        "Was Hippasus treated justly? What does his story make you think about mathematics?"
+      ],
+      "sdg_contexts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Explain Pythagoras’ Theorem in your own voice and represent it visually, noticing how confidence and emotion shift as understanding grows.",
+      "activities": [
+        "Explain what Pythagoras’ Theorem means (choose: voice note, short paragraph, or a poem such as a haiku).",
+        "Sketch a right triangle, label a, b, and c, and show the squares on each side with arrows/colour to represent the relationship.",
+        "Check in: How do you feel using this idea (curious, confused, clear)?",
+        "Watch an exploration/investigation video (canva_embed): https://www.canva.com/design/DAGrceLFkX8/e_lJEwoTKGAr5pwDjOk5Xw/watch?embed"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use Pythagoras’ Theorem to solve design problems where lengths must be accurate and inclusive, and test understanding by creating and checking triangles with peers.",
+      "design_challenges": [
+        "Playground design: a 3 m vertical post and 4 m base—find the diagonal rope length.",
+        "Buddy challenge: draw a right triangle, swap with a classmate, and calculate the missing side; verify results together.",
+        "Accessible ramp: building height 90 cm, minimum slope ratio 1:12—find the shortest horizontal distance and ramp length; reflect on inclusive design."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Pause: slow breath and notice how you feel right now.",
+        "Move: stretch your arms into a triangle shape and notice the angles.",
+        "Breathe: trace a right triangle in the air—inhale 3, hold 2, exhale 4."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Proof Submission - Photo",
+        "focus": "Create the Tilted Square Proof of Pythagoras’ Theorem using the given diagram, showing clear reasoning and correct calculations.",
+        "products": [
+          "Photo of your diagram and working out",
+          "Self-assessment note on confidence and next steps"
+        ]
+      },
+      {
+        "name": "Proof Submission - Written Explanation",
+        "focus": "Write a structured proof using the given diagram information, explaining each step and calculation clearly.",
+        "products": [
+          "Written explanation with calculations",
+          "Self-assessment note on confidence and next steps"
+        ]
+      },
+      {
+        "name": "Proof Submission - Voice/Video Walkthrough",
+        "focus": "Talk through your proof of the theorem using the tilted square diagram, explaining decisions and checking accuracy.",
+        "products": [
+          "Voice note or video walkthrough",
+          "Self-assessment note on confidence and next steps"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Square numbers and square roots",
+      "Area of squares",
+      "Basic algebraic rearranging",
+      "Identifying right angles and triangle parts"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Distance on coordinate grids",
+      "Trigonometry in right triangles",
+      "Surds and irrational numbers (e.g., √2)",
+      "3D Pythagoras and bearings"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 4,
+    "embedded_media": 10,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/pythagoras/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

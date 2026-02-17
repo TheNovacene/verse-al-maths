@@ -1,0 +1,131 @@
+{
+  "_comment": "Source: :contentReference[oaicite:0]{index=0}",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "surface_area_nets_volumes_v2",
+    "title": "Exploring Nets, Surface Area & Volume of 3D Solids",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "surface_area_and_volume",
+    "subtopic": "nets, surface area and volume of 3D solids",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use nets to connect 3D solids to 2D faces, and calculate surface area and volume accurately by identifying faces, dimensions and consistent methods."
+  },
+  "verse_ality": {
+    "driving_question": "What is the relationship between a 3D shape and its 2D net, and how can nets help us understand surface area and volume?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore how 2D nets fold into 3D solids, and use this link to reason about surface area and how building a solid relates to volume.",
+      "key_concepts": [
+        "3D solids and 2D nets",
+        "Faces, edges and vertices",
+        "Surface area as total area of all faces",
+        "Volume as space inside a solid",
+        "Comparing solids (e.g., cube vs triangular prism)"
+      ],
+      "tools": [
+        "Interactive builder (canva_embed): https://www.canva.com/design/DAG5OLmNChw/Ml4OdQIzMhpBUMY4tSdaFw/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect nets, surface area and volume to human building and design—from pyramids and architecture to modern packaging—where geometry supports efficiency, strength and cost.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use the net-building tool creatively, noticing how different nets ‘feel’ to fold, which solids are easier/harder to visualise, and how visual surface area supports understanding.",
+      "activities": [
+        "Build your own solids and describe which nets were easiest or most challenging to mentally fold.",
+        "Reflect on how seeing faces laid out in a net changes the way you think about surface area."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Experiment with building solids (e.g., cube, triangular prism), compare surface areas and volumes, and look for patterns that designers/engineers could use.",
+      "design_challenges": [
+        "Build a cube, then build a triangular prism; compare surface area and volume.",
+        "Change dimensions and record what happens to surface area vs volume.",
+        "Explain how this tool could help a designer or engineer make better decisions (materials, packaging, efficiency)."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Pause to sketch or trace your mental image of the solid you built, then compare it to the net.",
+        "Notice how your hands and eyes support visualising the net folding into a 3D form."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Build, Record, Explain",
+        "focus": "Use the interactive tool to build at least three different solids, record faces/surface area/volume, and explain a consistent method for calculating each measure.",
+        "products": [
+          "Three different solids built in the tool (screenshots or sketches).",
+          "For each solid: number of faces, total surface area, and volume recorded.",
+          "A written or spoken explanation of a consistent method used to calculate surface area and volume.",
+          "Optional comparison: what patterns did you notice across shapes?"
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Area of rectangles and triangles (and other faces used)",
+      "Basic volume knowledge for prisms/cuboids (or readiness to learn from the tool)",
+      "Accurate use of units (cm², m², cm³, m³)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Surface area of prisms and cylinders (including curved surfaces)",
+      "Volume of prisms and composite solids",
+      "Scale factors for area and volume",
+      "Real-world optimisation (packaging/material use)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/3d_measure/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_order_of_operations_bodmas_v2",
+    "title": "BODMAS — Order of Operations",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "order_of_operations",
+    "subtopic": "BODMAS (brackets, orders, division/multiplication, addition/subtraction)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Apply BODMAS accurately so that expressions are evaluated consistently, including using brackets and powers, and perform calculations fluently while checking that each step follows the correct left-to-right rule for multiplication/division and addition/subtraction. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we make sure everyone gets the same answer when we calculate an expression?",
+    "knowing_world": {
+      "present": true,
+      "focus": "BODMAS provides a shared convention for evaluating expressions so different people don’t get different answers. Learners practise identifying the correct first step and applying left-to-right rules for multiplication/division and addition/subtraction.",
+      "key_concepts": [
+        "BODMAS order",
+        "Brackets first",
+        "Orders (powers and roots)",
+        "Division and multiplication left to right",
+        "Addition and subtraction left to right",
+        "Expression vs calculation",
+        "Consistency in mathematical conventions"
+      ],
+      "activities": [
+        "Use BODMAS rules to decide which operation happens first in a given expression.",
+        "Work through examples showing how brackets and powers change outcomes (e.g., 5 + 4 × 3 vs (5 + 4) × 3; 2 + 3^2).",
+        "Create your own pair of expressions that look similar but give different answers because of brackets or orders."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Order of operations matters in coding, science, finance, and everyday decision-making: one small change in the order can change results and consequences. Shared rules like BODMAS reduce confusion and errors.",
+      "sdg_contexts": [],
+      "justice_prompts": [],
+      "activities": [
+        "Discuss a real situation where a calculation order mistake could cause a problem (e.g., coding, science measurement, splitting a bill)."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Learners create memorable ways to recall the order (comic, poem, mnemonic) and reflect on how structure prevents confusion.",
+      "activities": [
+        "Make a comic showing what happens when BODMAS is ignored.",
+        "Write a poem where each line follows a BODMAS rule.",
+        "Create a mnemonic/acronym poster for BODMAS (e.g., 'Big Owls Don’t Make Awful Sounds')."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive practice tool to solve expressions with instant feedback, seeing how small changes (especially brackets) can transform the answer.",
+      "tools": [
+        "Canva embed: interactive BODMAS practice tool (difficulty levels and instant feedback)"
+      ],
+      "activities": [
+        "Choose a difficulty level (Easy/Medium/Hard) and solve expressions using BODMAS.",
+        "Drag numbers or brackets to build the correct solution.",
+        "Use 'Check Answers' for feedback and 'Reset' to try new questions."
+      ],
+      "design_challenges": [
+        "Design 6 expressions (mixed difficulty) where changing brackets changes the final answer; provide both answers and explain which BODMAS rule caused the change."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Make “human BODMAS”: learners role-play Brackets, Orders, Division/Multiplication, Addition/Subtraction and act out an expression step-by-step in the correct order."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - BODMAS Revision Sheet or Mini Video",
+        "focus": "Create a revision resource that teaches BODMAS and shows how changing brackets, powers, and operation order changes answers.",
+        "products": [
+          "A BODMAS revision sheet or mini video",
+          "At least 6 solved expressions without a calculator",
+          "At least two paired expressions where bracket placement changes the result",
+          "Visuals/metaphors/colour-coding to support memory",
+          "A short reflection answering: 'What was the most surprising result when the order changed?'"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Correctly apply BODMAS rules",
+          "Fluency — Solve expressions accurately without a calculator",
+          "Creativity — Use visuals, metaphors, or colour-coding effectively",
+          "Reflection — Identify and explain a surprising outcome when the order changed"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Fluency with the four operations",
+      "Understanding of brackets as grouping",
+      "Basic familiarity with squares/powers (e.g., 3^2)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Algebraic simplification and substitution",
+      "Expanding and factorising with brackets",
+      "Calculations involving indices and roots",
+      "Multi-step problem solving and checking strategies"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/order_of_operations/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

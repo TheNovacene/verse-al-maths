@@ -1,0 +1,184 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_solving_equations_v2",
+    "title": "Solving Linear Equations: Balancing Both Sides",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "solving_equations",
+    "subtopic": "solving linear equations using inverse operations and balancing",
+    "level": "KS4_GCSE",
+    "exam_boards": [],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Solve linear equations by treating both sides as a balance, using inverse operations to isolate the variable, and applying the method to real-world contexts while reflecting on fairness and support in learning (SDG 4). :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we keep both sides balanced while we isolate the unknown?",
+    "knowing_world": {
+      "present": true,
+      "focus": "An equation is like a balance scale: both sides must stay equal. To solve, undo operations in a sensible order (addition/subtraction first, then multiplication/division) while doing the same thing to both sides until the variable is isolated.",
+      "key_concepts": [
+        "Equation as a statement showing two expressions are equal",
+        "Variable as a letter standing for a number",
+        "Inverse operations",
+        "Isolating the variable",
+        "Balancing: doing the same operation to both sides",
+        "Solving multi-step linear equations",
+        "Rearranging when the variable appears on both sides"
+      ],
+      "activities": [
+        "Explain why an equation can be compared to a balance scale.",
+        "Describe the typical solving order: undo addition/subtraction, then undo multiplication/division.",
+        "Solve example equations using inverse operations and show each balancing step."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Equations model change and comparison, and the idea of balancing connects to fairness: making sure support and resources are distributed so everyone can succeed.",
+      "sdg_contexts": [
+        "SDG 4: Quality Education"
+      ],
+      "justice_prompts": [
+        "How is solving equations like creating fairness in a classroom or society?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use metaphor and creativity to express the idea of balance and “freeing” the unknown, strengthening intuitive understanding of equation-solving steps.",
+      "activities": [
+        "Write or draw how a balanced scale helps you feel what is happening in an equation.",
+        "Create a visual metaphor: What else in life feels like solving an equation?",
+        "Invent a character called “X” and describe what they need to get free.",
+        "Reflect: How do you relate to the idea of balance and solving for the unknown?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive pan balance tool to solve equations visually by subtracting, dividing, and rearranging while keeping the model balanced, then connect the method to real-world problem types.",
+      "tools": [
+        "Canva embed: Interactive pan balance tool for solving equations"
+      ],
+      "activities": [
+        "Level 1: x + 4 = 10 (subtract 4).",
+        "Level 2: 3x = 12 (divide by 3).",
+        "Level 3: 2x + 3 = 11 (subtract 3, then divide).",
+        "Level 4: 2x + 4 = x + 7 (rearrange terms to isolate x).",
+        "Link to contexts: perimeter, budgeting, recipes, or sharing fairly."
+      ],
+      "design_challenges": [
+        "Create a set of 4 balance-style equations (increasing difficulty) and provide a clear step-by-step solving guide for each, using the balancing idea."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Sit with feet flat and imagine your body as a balance scale.",
+        "Take 3 deep breaths — equal sides, steady mind."
+      ],
+      "wellbeing_prompts": [
+        "What helps you reset when things feel out of balance?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Project A: Design an Equation Balance Puzzle",
+        "focus": "Create your own balance-style equation puzzle(s) and provide solutions that show balanced steps clearly.",
+        "products": [
+          "At least 3 original linear equations (increasing difficulty)",
+          "Full step-by-step solutions showing operations applied to both sides",
+          "A short explanation of how you designed the difficulty progression"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Explains how operations affect both sides of an equation",
+          "Fluency & Accuracy – Uses inverse operations and correct steps",
+          "Application – Puzzles are coherent and solvable with clear reasoning",
+          "Creativity & Reflection – Thoughtful design and reflection on mistakes/choices"
+        ]
+      },
+      {
+        "name": "Project B: Colour-Coded Solving Guide / Metaphor",
+        "focus": "Create a colour-coded guide or metaphor resource that teaches equation solving with balancing and inverse operations.",
+        "products": [
+          "A guide/poster/slide with a clear method for solving",
+          "At least 4 worked examples (including one with x on both sides)",
+          "A metaphor or visual model that reinforces the balancing idea"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Explains how and why balancing works",
+          "Fluency & Accuracy – Correct steps and final answers",
+          "Communication – Clear layout, helpful visuals/colour coding",
+          "Creativity & Reflection – Engaging metaphor and personal learning notes"
+        ]
+      },
+      {
+        "name": "Project C: Real-World Example of Equation Clarity or Fairness",
+        "focus": "Find or create a real-world situation where forming and solving a linear equation helps bring clarity or fairness, and solve it fully.",
+        "products": [
+          "A real-world context (budgeting, perimeter, recipe scaling, sharing fairly, etc.)",
+          "A clearly defined variable and a correctly formed equation",
+          "A full solution with interpretation in context",
+          "A short reflection linking the maths to clarity or fairness (SDG 4 connection optional)"
+        ],
+        "assessment_criteria": [
+          "Application – Context and equation match well and are interpreted correctly",
+          "Conceptual Understanding – Variable choice and equation formation are explained",
+          "Fluency & Accuracy – Correct solving steps and final answer",
+          "Creativity & Reflection – Thoughtful connection to fairness/clarity"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application",
+      "Creativity & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confidence with the four operations (including negatives)",
+      "Understanding of inverse operations (add/subtract; multiply/divide)",
+      "Basic algebra familiarity (using x to represent an unknown)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Rearranging formulae",
+      "Solving equations with brackets and collecting like terms",
+      "Simultaneous equations and modelling",
+      "Inequalities and balancing reasoning"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/solving_equations/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_factorising_monic_quadratics_v2",
+    "title": "Factorising Monic Quadratics",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "factorising_quadratics",
+    "subtopic": "factorising monic quadratics x^2 + bx + c using sum-and-product (integer factors)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Factorise monic quadratics of the form x^2 + bx + c by finding integers m and n with m + n = b and m·n = c; recognise when a quadratic does not factorise over the integers; and communicate reasoning clearly using factor-pair evidence and checking by expansion. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "When can a quadratic x^2 + bx + c be written as (x + m)(x + n), and how can we prove it?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Investigate when x^2 + bx + c factorises into (x + m)(x + n) by testing integer factor pairs of c and checking which pair sums to b, leading to the sum-and-product condition for factorisation (and spotting when no integer factorisation exists). :contentReference[oaicite:1]{index=1}",
+      "key_concepts": [
+        "Monic quadratic: x^2 + bx + c",
+        "Factorisation into (x + m)(x + n)",
+        "Sum-and-product condition: m + n = b and m·n = c",
+        "Integer factor pairs of c",
+        "Not factorisable over the integers (no integer pair sums to b)",
+        "Checking by expanding (distributive law)"
+      ],
+      "tools": [
+        "Interactive factor-pair matcher for monic quadratics (choose/randomise b and c, test m and n, check answer)"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Factorising polynomials has long supported solving equations and understanding roots, from historical algebraic methods to modern applications where polynomial structure matters (e.g., modelling, signal processing, cryptography foundations). :contentReference[oaicite:2]{index=2}",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Make factorising visible and explainable by mapping factor pairs, scripting mathematical dialogue, and recording a clear reasoning narrative for one quadratic. :contentReference[oaicite:3]{index=3}",
+      "activities": [
+        "Create a “factor map”: choose a quadratic and list all integer factor pairs of c, then highlight the pair that sums to b (or explain why none works).",
+        "Write a short dialogue where one student argues it factors and another tests m, n pairs using evidence.",
+        "Record a brief explanation of your reasoning for one quadratic, including a final check by expansion."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Practise factorising by selecting or randomising b and c, generating candidate factor pairs for c, and using a check feature to confirm (or rule out) integer factorisation, building speed and accuracy through repetition. :contentReference[oaicite:4]{index=4}",
+      "design_challenges": [
+        "Use an interactive tool to test quadratics (including cases that do not factorise over the integers), then design your own set of examples that intentionally vary b and c to change factorability."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stand and balance: for each tested integer pair (m, n), step m times and n times (or balance on alternate feet), then reflect on how the pair combines to make the b value."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - 6 Monic Quadratics Challenge Set",
+        "focus": "Create a set of 6 monic quadratics (some factorisable over the integers, some not) and challenge a peer to identify factor pairs and justify decisions using the sum-and-product condition.",
+        "products": [
+          "A set of 6 monic quadratics x^2 + bx + c (mixed: factorisable and not factorisable over the integers)",
+          "For each quadratic: factor pair evidence (m·n = c) and sum check (m + n = b), or a clear explanation that no integer pair works",
+          "An answer key with fully factorised forms where possible and a brief check by expansion",
+          "A short reflection: which examples were hardest and why"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains why m + n = b and m·n = c is necessary for (x + m)(x + n)",
+          "Fluency & Accuracy: Factorises correctly or correctly identifies non-factorisable cases over the integers",
+          "Application: Includes examples that connect to area/rectangle models or equation-solving contexts",
+          "Independence & Reflection: Reflects on difficulty, strategy, and error-checking"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confidence with integer factors and factor pairs",
+      "Fluency with addition and multiplication of integers (including negatives)",
+      "Basic understanding of expanding brackets to check factorisations"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Solving quadratic equations by factorising",
+      "Expanding and factorising algebraic expressions",
+      "Quadratic graph features linked to roots/factors",
+      "Non-integer factorisation methods (completing the square, quadratic formula)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/factorising_quadratics/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

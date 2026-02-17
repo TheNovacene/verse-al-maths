@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "3d_trigonometry_v2",
+    "title": "3D Trigonometry",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "trigonometry",
+    "subtopic": "3D trigonometry in cuboids and prisms",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Apply right-triangle trigonometry inside 3D shapes by identifying right-angled triangles formed by faces and diagonals, and use these to calculate angles of incline and projections in rectangular prisms."
+  },
+  "verse_ality": {
+    "driving_question": "How can right-angled triangle trigonometry help us calculate angles and directions inside 3D shapes like cuboids?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore how 2D right triangles appear inside 3D shapes (cuboids/prisms) and how trigonometric ratios still apply as long as the triangle is right-angled, often linking two connected 2D triangles through the 3D object.",
+      "key_concepts": [
+        "3D shapes (cuboids, rectangular prisms, triangular prisms)",
+        "Space diagonal and face diagonal",
+        "Right-angled triangles within 3D shapes",
+        "Projection onto a base plane",
+        "Angle of incline vs angle of projection",
+        "Using two linked 2D triangles to solve a 3D problem",
+        "Choosing the correct trig ratio (sin, cos, tan)"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect 3D trigonometry to navigation, architecture, engineering, and aerospace trajectories, where calculating rises, tilts, and directions in three dimensions enables safe, accurate design and travel.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Reflect on what felt surprising about ‘finding the triangle inside the cuboid’ and communicate your understanding through metaphor or a first-person ‘journey’ description along a ramp.",
+      "activities": [
+        "Create a metaphor or image for how a 3D right triangle sits inside a cuboid.",
+        "Record an audio log describing what it feels like to ‘travel’ along the ramp and how the angles show up."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive ramp-in-a-cuboid model to vary height and calculate two angles (incline and base projection), then generalise a repeatable method for any rectangular prism.",
+      "design_challenges": [
+        "Adjust ramp height and calculate the angle of incline of the space diagonal (base to top far corner).",
+        "Calculate the angle of the ramp’s projection onto the base.",
+        "Generalise a method that works for any rectangular prism by identifying the two right triangles you need."
+      ],
+      "tools": [
+        "Interactive: Ramp in a Cuboid (web_sketchpad) (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020091/download",
+        "Video Challenge: Ramp Design Challenge (canva_embed): https://www.canva.com/design/DAGwCF7XAaY/B0S3wLoQxLr2pE4sqIsFfw/watch?embed"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stretch: reach your arms up as if climbing a ramp and notice the triangle formed between your arms, body, and the floor.",
+        "Breathe: take one slow breath, then return to the sketch refreshed."
+      ],
+      "wellbeing_prompts": [
+        "How would you describe the angle you feel when your body becomes the ramp?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Ramp Angles in 3D (SDG 9)",
+        "focus": "Use the interactive sketch to calculate the angle of incline of the space diagonal and the angle of its projection onto the base, showing clear reasoning and generalising your approach for rectangular prisms.",
+        "products": [
+          "Angle of incline calculation (with labelled diagram).",
+          "Angle of projection calculation (with labelled diagram).",
+          "One chosen format: labelled diagram, voice/video explanation, or slide deck walkthrough.",
+          "Self-assessment using the GCSE Maths Rubric."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Pythagoras’ Theorem in 2D",
+      "Using sin, cos and tan in right-angled triangles",
+      "Identifying opposite, adjacent and hypotenuse relative to a chosen angle",
+      "Confidence with 3D shapes: faces, edges, and diagonals"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "3D Pythagoras and multi-step geometry problems",
+      "Bearings and navigation in 3D contexts",
+      "Further trigonometry problem solving in engineering and design"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 2,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/trigonometry/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

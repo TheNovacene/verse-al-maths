@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_rearranging_formulae_v2",
+    "title": "Rearranging Formulae",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "rearranging_formulae",
+    "subtopic": "changing the subject of a formula using inverse operations",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Rearrange formulae to change the subject by using inverse operations and maintaining equality on both sides, progressing from simple products/quotients to multi-step formulas used in science and geometry. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we change the subject of a formula without breaking the equality?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Rearranging a formula means isolating a chosen variable by undoing operations in a logical order while keeping both sides balanced (doing the same thing to each side). :contentReference[oaicite:1]{index=1}",
+      "key_concepts": [
+        "Subject of a formula",
+        "Inverse operations",
+        "Balance principle (do the same to both sides)",
+        "Isolate the chosen variable",
+        "Undo operations step-by-step",
+        "Simplify after rearranging"
+      ],
+      "activities": [
+        "Start simple: rearrange A = bh to make h the subject.",
+        "Moderate example: rearrange s = ut + (1/2)at^2 to make a chosen variable the subject.",
+        "Quick check: rearrange v = u + at to make t the subject.",
+        "Quick check: make r the subject in V = πr^2h."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "From calculating interest rates to finding heights from volume, rearranging formulae helps solve real problems by treating equations like puzzles: you have relationships, and you find a path to the unknown. :contentReference[oaicite:2]{index=2}",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students make the logic visible through colour, visuals, and storytelling so rearranging feels like a traceable sequence rather than a mystery. :contentReference[oaicite:3]{index=3}",
+      "activities": [
+        "Create a poster showing a rearranged formula step-by-step using visuals.",
+        "Design a character who rearranges formulas to solve mysteries.",
+        "Use colour coding to track steps in your rearrangement."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use a drag-and-drop tool to rearrange real-world formulas, reset for new examples, and optionally turn it into a timed challenge. :contentReference[oaicite:4]{index=4}",
+      "tools": [
+        "Canva embed: drag-and-drop rearranging formulae tool (with reset)"
+      ],
+      "activities": [
+        "Start simple and level up through harder formulae.",
+        "Use the reset button to generate fresh formulae for practice.",
+        "Challenge a peer to beat your time while staying accurate."
+      ],
+      "design_challenges": [
+        "Create a set of 6 formulae to rearrange (mixed difficulty) and provide an answer key with clear steps and signposting of inverse operations."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Rearrange your body: stand for variables, crouch for numbers.",
+        "Move as if shifting terms across an invisible '=' sign to reinforce “balance both sides.” :contentReference[oaicite:5]{index=5}"
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Create and Rearrange a Real-World Formula",
+        "focus": "Create a real-world formula problem and rearrange it in at least two different ways, explaining each step and using the new formula in context. :contentReference[oaicite:6]{index=6}",
+        "products": [
+          "One real-world formula problem you created (e.g., speed, volume, finance)",
+          "Two different rearrangements (two different subjects) with clear steps",
+          "A worked example using your rearranged formula in a practical context",
+          "A reflection on what made certain formulas harder to rearrange than others"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains each step and why inverse operations are valid",
+          "Application: Uses the rearranged formula correctly in a practical context",
+          "Independence & Reflection: Reflects on difficulty, strategy, and mistakes caught"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Solve linear equations using inverse operations",
+      "Confidence with fractions and dividing by terms",
+      "Comfort with basic algebra notation and simplifying expressions"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Rearranging more complex multi-step formulae in science and maths",
+      "Substitution into formulae and evaluation",
+      "Algebraic manipulation for modelling and problem solving",
+      "Simultaneous equations and formula-based reasoning"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/rearranging_formulae/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

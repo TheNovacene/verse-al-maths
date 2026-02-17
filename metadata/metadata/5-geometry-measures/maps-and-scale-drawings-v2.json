@@ -1,0 +1,138 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "maps_and_scale_drawings_v2",
+    "title": "Map–Scale Design Challenge",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "ratio",
+    "topic": "scale",
+    "subtopic": "maps and scale drawings",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use scale factors, ratio and unit conversion to translate between map distances and real-world distances, designing a clear scaled representation others can use to solve distance problems."
+  },
+  "verse_ality": {
+    "driving_question": "How can scale turn real places into accurate maps and designs that others can trust?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore how scale represents real-world distances on maps and drawings, using ratios, proportions, and conversion factors to move between map measurements and real measurements.",
+      "key_concepts": [
+        "Scale (e.g., 1:n)",
+        "Scale factor",
+        "Ratio and proportion",
+        "Unit conversion (e.g., cm to m, m to km)",
+        "Interpreting and creating scale drawings",
+        "Accuracy and checking reasonableness"
+      ],
+      "tools": [
+        "Interactive: Map–Scale Design Challenge (canva_embed): https://www.canva.com/design/DAG5VR4LdvE/Ge7CRykl0Sf5tMAgeB0l3g/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Consider how cartographers, engineers, and explorers use scale drawings and maps to navigate, plan, and build, and why accuracy matters when decisions depend on distances and layouts.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why is accuracy in maps and plans crucial, and who is affected when scaled representations are wrong?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Connect maps and journeys to personal meaning by creating a scaled map of a place that matters to you, thinking about clarity, labelling, and visual communication.",
+      "activities": [
+        "Design a scaled map of a place meaningful to you (real or imagined).",
+        "Choose clear symbols and labels so someone else can understand your map quickly.",
+        "Reflect on how scale changes the way you ‘see’ a place."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use the interactive challenge to practise converting between map and real distances, applying scale factors and strategies to solve unknowns and check accuracy.",
+      "design_challenges": [
+        "Convert a map distance into a real-world distance using the given scale.",
+        "Convert a real-world distance into a map distance using the given scale.",
+        "Create your own conversion tasks and test them on a classmate.",
+        "Identify and explain a strategy you used to avoid errors (units, ratio set-up, estimation checks)."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Use simple gestures (measuring with fingers, pointing, tracing routes) to support spatial reasoning and scale visualisation.",
+        "Notice how hand-eye coordination and body positioning affect how you interpret distance and direction on a map."
+      ],
+      "wellbeing_prompts": [
+        "Do physical gestures help you visualise and construct scale drawings more clearly?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Design a Scaled Town Map",
+        "focus": "Create a detailed scaled map of a fictional town or environment that others can use to calculate distances accurately.",
+        "products": [
+          "A scaled map with a clear scale statement (e.g., 1 cm represents 200 m).",
+          "Labeled landmarks and a clear layout (key/legend optional).",
+          "At least three viewer tasks requiring calculation of real-world or map distances from the scale.",
+          "Short reflection: what strategies helped you keep conversions accurate?"
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Understanding of ratio as a multiplicative relationship",
+      "Comfort converting between common units of length (mm, cm, m, km)",
+      "Ability to multiply and divide by scale factors"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Similarity and enlargement",
+      "Scale factors for area and volume",
+      "Bearings and navigation problems",
+      "Plans and elevations in geometry"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/ratio/scale/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

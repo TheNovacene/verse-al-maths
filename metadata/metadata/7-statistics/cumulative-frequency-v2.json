@@ -1,0 +1,172 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "cumulative_frequency_v2",
+    "title": "Cumulative Frequency: Who Is Most Affected?",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "statistics",
+    "topic": "distributions",
+    "subtopic": "cumulative frequency tables and graphs (estimating median and quartiles)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Construct and interpret cumulative frequency tables and graphs; use them to estimate and interpret medians and quartiles in real-world (SDG) contexts."
+  },
+  "verse_ality": {
+    "driving_question": "How can cumulative frequency help us see who is most affected?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Using cumulative frequency to show how data accumulates and to estimate median and quartiles (Q1, Q3) from tables and cumulative frequency graphs (ogives), using SDG-themed data.",
+      "key_concepts": [
+        "Frequency and cumulative frequency (running total)",
+        "Total frequency N",
+        "Cumulative frequency table from a frequency table",
+        "Cumulative frequency graph (ogive): plotting (upper class boundary, cumulative frequency)",
+        "Median position at N/2",
+        "Quartile positions at N/4 (Q1) and 3N/4 (Q3)",
+        "Interquartile range (IQR = Q3 − Q1) interpretation"
+      ],
+      "tools": [
+        "Interactive: Cumulative Frequency Table Builder (SDG Data) (canva_embed): https://www.canva.com/design/DAG_Cw4F2PY/tSSOM6iJAfCeCa0jWxqzGg/view?embed",
+        "Interactive: Cumulative Frequency Graph Explorer (SDG Contexts) (canva_embed): https://www.canva.com/design/DAG_DMG94f0/tqBkcZQgZVpXEI0X2YoUuA/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Cumulative frequency helps us see how many people are at or below each value, which can reveal inequality and who sits in the 'tail' of a distribution in SDG contexts like sleep, water use, energy use, and commute times.",
+      "sdg_contexts": [
+        "SDG 3: Good Health and Well-being",
+        "SDG 6: Clean Water and Sanitation",
+        "SDG 7: Affordable and Clean Energy",
+        "SDG 11: Sustainable Cities and Communities"
+      ],
+      "justice_prompts": [
+        "Who might be most affected by being in the tail of the distribution (e.g., longest commutes, lowest sleep, highest water use), and how might that impact health, learning or wellbeing?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Treat the cumulative frequency curve as a 'journey' where more people are included as you move along the x-axis, and communicate meaning using sketches, labels, and personification.",
+      "activities": [
+        "At the start, almost nobody is included.",
+        "As we move along the x-axis (time, hours, usage), more and more people join the total.",
+        "Eventually, everyone is included at the top of the curve (total frequency N).",
+        "Draw a sketch of the cumulative frequency curve and label where the median and quartiles are. Add speech bubbles like: “Half of us are here by this point” or “Most of us are included by here.”",
+        "Write a short paragraph or poem that personifies the curve (e.g. “I climb steadily as more teenagers get enough sleep…”).",
+        "💬 If you think of yourself as a point on the curve in one context (e.g. sleep time), where would you like to be, and why?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use a comparator to place two cumulative frequency curves on the same axes, estimate medians and quartiles for each group, and write evidence-based comparison statements about typical experience and variation in SDG contexts.",
+      "design_challenges": [
+        "Interactive: Cumulative Frequency Graph Comparator (SDG Stories) (canva_embed): https://www.canva.com/design/DAG_DNaIojg/hTDNH3DV8SgEMVmKR0CEUQ/view?embed",
+        "Select an SDG scenario comparing two groups (e.g., water use, commute times, study hours).",
+        "Estimate each group’s median from the curves at cumulative frequency N/2.",
+        "Estimate Q1 and Q3 for each group at N/4 and 3N/4, then compute IQR (Q3 − Q1).",
+        "Compare: which group has the higher median and which has the larger IQR (more variation).",
+        "Compare early parts of the curves: for ‘better’ lower values (e.g., shorter commutes, more sleep), which group reaches higher cumulative frequency sooner?",
+        "Buddy challenge: write a joint comparison statement using median and quartiles as evidence.",
+        "Ethical design: what extra context should decision-makers see so they don’t oversimplify or blame a group based only on one graph?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Look away from the screen and name 3 things you can see in the room.",
+        "Take a slow breath in for 4 counts, and out for 6 counts.",
+        "Gently stretch your shoulders and hands, then return to the graph."
+      ],
+      "wellbeing_prompts": [
+        "How can you use data about your life (sleep, movement, travel) to support your wellbeing, rather than judge yourself?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option A – One Group, Deep Dive",
+        "focus": "Use one SDG context to build/interpret a cumulative frequency table or graph and explain what the median and IQR say about the group’s experience.",
+        "products": [
+          "Screenshot(s) or copied values from the cumulative frequency table/graph used.",
+          "Total frequency N.",
+          "Positions for Q1, median and Q3 (N/4, N/2, 3N/4).",
+          "Estimated values of Q1, median and Q3 from the table/graph, plus IQR (Q3 − Q1).",
+          "A 6–8 sentence paragraph explaining what the median and IQR show in the chosen SDG context."
+        ],
+        "criteria": [
+          "Conceptual Understanding: correct use of cumulative frequency, median and quartiles to describe a distribution.",
+          "Fluency & Accuracy: positions (N/4, N/2, 3N/4) and readings from the graph/table are clear and sensible.",
+          "Application to Problems: interprets results in the SDG context (not just abstract numbers).",
+          "Independence & Reflection: explains in own words who is most affected and what the data suggests for action or change."
+        ]
+      },
+      {
+        "name": "Option B – Two Groups Compared (SDG Story)",
+        "focus": "Compare two groups using cumulative frequency curves, estimating median and IQR for each and writing an evidence-based comparison about ‘better’ outcomes and variation.",
+        "products": [
+          "Screenshot(s) or copied values from the cumulative frequency comparison graph used.",
+          "Estimated median for Group A and Group B.",
+          "Estimated Q1 and Q3 for each group and each IQR.",
+          "A comparison paragraph stating which group generally has the better outcome in context (e.g., shorter commutes/more sleep) and which shows more variation, with evidence from medians and quartiles."
+        ],
+        "criteria": [
+          "Conceptual Understanding: compares distributions using median and quartiles appropriately.",
+          "Fluency & Accuracy: estimates are consistent with the curves and calculations are clear.",
+          "Application to Problems: connects comparisons to what the SDG context means for people.",
+          "Independence & Reflection: avoids blame; suggests what extra context would support fair interpretation."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Read and interpret frequency tables",
+      "Add running totals to build a cumulative frequency column",
+      "Understand median and quartiles as positions in ordered data (N/2, N/4, 3N/4)",
+      "Read values from a graph using horizontal/vertical tracing",
+      "Subtract to find IQR (Q3 − Q1)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Cumulative frequency graphs to estimate median and quartiles in exam questions",
+      "Box plots and comparing distributions using median and IQR",
+      "Histograms and grouped data representations",
+      "Data interpretation and fairness when comparing groups"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 3,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/statistics/cumulative_frequency/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

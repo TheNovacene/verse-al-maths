@@ -1,0 +1,142 @@
+{
+  "_comment": "Source: :contentReference[oaicite:0]{index=0}",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "probabilities_from_venn_diagrams_v2",
+    "title": "Probability from Venn Diagrams: Playing Cards Edition",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "probability",
+    "topic": "set_notation_and_probability",
+    "subtopic": "probabilities from Venn diagrams (addition rule, union and intersection)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use Venn diagrams to model overlapping events and apply the addition rule P(A ∪ B) = P(A) + P(B) − P(A ∩ B) accurately, avoiding double-counting."
+  },
+  "verse_ality": {
+    "driving_question": "How do Venn diagrams help us calculate probabilities when events overlap, and why must we subtract the intersection?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Model events with a Venn diagram using a 52-card deck and apply the addition rule for probability, interpreting union and intersection in context.",
+      "key_concepts": [
+        "Universal set (52-card deck)",
+        "Set A and set B",
+        "Union (A ∪ B) as “A or B”",
+        "Intersection (A ∩ B) as “A and B”",
+        "Addition rule: P(A ∪ B) = P(A) + P(B) − P(A ∩ B)",
+        "Overlap and double-counting",
+        "Complement and outside region (neither A nor B)"
+      ],
+      "tools": [
+        "Interactive: Venn Diagram Probability Game – Playing Cards Edition (canva_embed): https://www.canva.com/design/DAG6dFY0wQU/kTbV8ZNGGwf0v07jF6j9HA/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Understand why overlaps matter when interpreting real data: people can belong to more than one group, and misreading intersections can lead to double-counting and unfair decisions.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Where in your life might groups overlap? Why is it important to notice the intersection?",
+        "How could misinterpreting overlaps lead to flawed policies or unfair decisions?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use story and personal examples to make set membership and overlap feel meaningful, linking intersection to belonging, visibility, and fairness.",
+      "activities": [
+        "Create a visual story of a card’s journey: imagine you are the King of Spades—what does it feel like to belong to both sets? What is it like to be outside both?",
+        "Sketch your own Venn diagram using two groups from your life (e.g., “likes music” and “plays a sport”) and identify the overlap.",
+        "In your own words: What does this lesson teach you about fairness, visibility, or belonging?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive sorting game to classify all 52 cards into the four Venn regions, then calculate key probabilities from your completed diagram and test new set combinations.",
+      "design_challenges": [
+        "Click “Deal Card” to reveal a card, then drag it into the correct region of the Venn diagram.",
+        "Sort into: A only (King but not black), B only (Black but not King), A ∩ B (Black Kings), Outside (neither King nor black).",
+        "After sorting all cards, calculate: P(King), P(Black), P(Black ∩ King), and P(Black ∪ King).",
+        "Use “Check Answers” for feedback and “Try Another” to explore new combinations (e.g., Queens and Red Cards).",
+        "Design prompt: How could this activity be redesigned for someone using a screen reader or voice controls?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Sorting check-in: notice how your body feels as the diagram fills (calm, tense, rushed).",
+        "Breath pattern: inhale for “Place”, exhale for “Predict”.",
+        "When you feel confused about sets or overlaps, notice where you feel it and name one strategy that helps you get unstuck."
+      ],
+      "wellbeing_prompts": [
+        "How does your body respond to sorting and decision-making tasks? What helps you stay steady when you’re uncertain?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Probability from Venn Diagrams",
+        "focus": "Complete the interactive Venn diagram sort and use your diagram to calculate union and intersection probabilities accurately, then reflect and extend by changing the sets.",
+        "products": [
+          "A screenshot of your completed Venn diagram (all cards sorted).",
+          "Answers to the four probability questions: P(King), P(Black), P(Black ∩ King), P(Black ∪ King).",
+          "A short reflection: Which part of the Venn was hardest to fill? Why?",
+          "One idea to change the sets and test a new rule (e.g., Queens and Red Cards)."
+        ],
+        "criteria": [
+          "Conceptual Understanding: applies the addition rule correctly and interprets overlap as intersection.",
+          "Fluency & Accuracy: sorts cards correctly into all four regions and calculates probabilities accurately.",
+          "Application to Problems: uses the completed diagram to justify answers and avoid double-counting.",
+          "Independence & Reflection: reflects thoughtfully and suggests meaningful extensions or improvements."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic fraction/probability language (out of 52)",
+      "Understanding of simple events and counting outcomes",
+      "Familiarity with playing cards (or quick introduction: suits/colours and face cards)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Probability with unions, intersections, and complements",
+      "Tree diagrams and compound probability",
+      "Set notation in probability and algebraic reasoning",
+      "Data interpretation where categories overlap (avoiding double-counting)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/probability/venn_diagrams/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "_comment": "Source: :contentReference[oaicite:0]{index=0}",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "areas_of_compound_shapes_v2",
+    "title": "Areas of Compound Shapes",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "area",
+    "subtopic": "areas of compound shapes",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Calculate the area of compound 2D shapes by dissecting them into familiar shapes, finding each area accurately, and combining results using clear reasoning and correct units."
+  },
+  "verse_ality": {
+    "driving_question": "How can we find the area of a complex shape by breaking it into simpler parts?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Understand area as space inside a 2D shape and learn how to find the total area of compound figures by splitting them into simpler shapes and adding areas together.",
+      "key_concepts": [
+        "Area as a measure of 2D space",
+        "Compound (composite) shapes",
+        "Dissection into simpler shapes",
+        "Summing areas (and subtracting cut-outs when needed)",
+        "Using dimensions accurately",
+        "Units of area (cm², m²)"
+      ],
+      "tools": [
+        "Interactive: Areas of Compound Shapes (canva_embed): https://www.canva.com/design/DAG5OVDeg0w/8n_RdiRYxU7tZ4Z3My21tQ/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect compound-area reasoning to real work in architecture, engineering, design, landscaping, and art—where accurate area estimates support planning, costing, and building.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Explore playful, creative ways to decompose shapes and notice that multiple valid dissections can lead to the same total area.",
+      "activities": [
+        "Find more than one way to split a compound shape into simpler parts.",
+        "Describe which shapes feel most familiar to you (rectangles, triangles, circles) and why.",
+        "Compare two different decompositions that produce the same total area and explain how you know they match."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive tool to build compound figures from simple shapes, calculate the total area from visible dimensions, and use feedback to refine accuracy and reasoning.",
+      "design_challenges": [
+        "Drag and arrange simple geometric shapes to create a compound figure.",
+        "Manually calculate the total area based on the visible dimensions.",
+        "Enter your area estimate into the answer box and click “Check Answer”.",
+        "Use feedback to identify errors and improve your method.",
+        "Explain how your dissection choice made the calculation easier or harder."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Sketch the compound shape on paper and label dimensions clearly before calculating.",
+        "Trace the edges with your finger and mentally ‘walk’ the boundary to understand the structure.",
+        "Pause and re-check units and dimensions before adding areas together."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Create and Verify a Compound Shape",
+        "focus": "Create your own compound shape, break it into smaller shapes, calculate and record each area, then verify solutions with a peer and reflect on strategies used.",
+        "products": [
+          "A compound shape created using the interactive tool (screenshot or sketch).",
+          "A breakdown into smaller shapes with labelled dimensions.",
+          "Individual area calculations for each part and a correct total area.",
+          "A peer challenge: your peer’s estimate and a comparison/verification of methods.",
+          "A short reflection on which strategies helped you stay accurate."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Area of rectangles and triangles (and other basic shapes used in the task)",
+      "Add and subtract to combine areas",
+      "Accurate reading of lengths and dimensions",
+      "Correct use of area units (cm², m²)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Area and perimeter problem solving in real contexts",
+      "Surface area of 3D shapes (breaking into faces)",
+      "Scale drawings and similarity (area scaling)",
+      "More complex composite areas involving circles and sectors"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/area/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

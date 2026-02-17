@@ -1,0 +1,130 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_solving_quadratic_equations_by_factorisation_v2",
+    "title": "Solving Quadratic Equations by Factorisation",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "solving_quadratics",
+    "subtopic": "solving quadratic equations by factorisation (zero product rule)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Factorise quadratic expressions to solve quadratic equations by applying the zero product rule, solving the resulting linear factors, and recognising when a quadratic does not have real integer solutions by factorisation. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "Given a quadratic like x^2 + 5x + 6 = 0, how do we find the values of x — and how does factorisation help us “undo” the equation?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Students connect factorisation to solving by rewriting a quadratic in bracket form and using the zero product rule: if (x + m)(x + n) = 0 then x = -m or x = -n. They practise the formal method: write ax^2 + bx + c = 0, factorise, set each factor to zero, and solve the two linear equations.",
+      "key_concepts": [
+        "Quadratic equation in standard form: ax^2 + bx + c = 0",
+        "Factorisation of quadratics",
+        "Zero product rule: if a × b = 0 then a = 0 or b = 0",
+        "Roots/solutions of a quadratic",
+        "Solving linear equations from factors",
+        "Not all quadratics factorise over the integers"
+      ],
+      "tools": [
+        "Interactive factorise-and-solve tool (Canva embed)"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Factorisation-based solving has deep roots in the history of algebra: translating geometric problems into equations and breaking expressions into factors helped unlock solutions that powered advances in science, engineering, and economics.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students explain and represent the zero product rule and the factorise-then-solve process using visuals, dialogue, or teaching, making the logic memorable and easy to communicate.",
+      "activities": [
+        "Illustrate the zero product rule (if a × b = 0, then a = 0 or b = 0) using a visual metaphor (e.g., a broken chain link).",
+        "Write a short dialogue between two learners solving a quadratic, including reasoning and common pitfalls.",
+        "Record yourself teaching someone how to factor and solve a quadratic by factorisation."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use an interactive tool to factorise and solve quadratics, test factor pairs, check answers, and reset to explore fresh examples, extending from monic to non-monic equations when ready. :contentReference[oaicite:1]{index=1}",
+      "design_challenges": [
+        "Use the interactive tool to solve a variety of monic quadratics, then use “New Question”/“Reset” to generate fresh examples and build fluency.",
+        "Extend to non-monic quadratics once monic solving feels secure, noting what changes about factorisation and the solving steps."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Use your arms to act out two factors (e.g., “x + 2” and “x + 3”) coming together to multiply to 0, then open your hands as you reveal the two solutions."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Solve Quadratics by Factorisation",
+        "focus": "Solve a set of quadratic equations by factorising, including examples with negative solutions and examples that do not have integer roots, then reflect on what makes a quadratic “nice” to factor and what you do when it isn’t. :contentReference[oaicite:2]{index=2}",
+        "products": [
+          "At least 5 solved monic quadratics by factorisation (showing factorisation, zero product rule, and both linear solutions)",
+          "A mix including negative solutions and at least one example with no integer roots by factorisation (explain why it doesn’t factorise over the integers)",
+          "At least 5 attempted non-monic quadratics after monic practice (with working and notes on strategy)",
+          "A short reflection on patterns and challenges: what makes a quadratic “nice” to factor, and your strategy when it’s not"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Shows the link between factorisation and solving for roots via the zero product rule",
+          "Fluency & Accuracy — Factorises and solves correctly with clear, accurate steps",
+          "Application — Describes how factorisation can support real-world modelling (e.g., area problems)",
+          "Independence & Reflection — Identifies patterns, challenges, and strategies (including when factorisation is not straightforward)"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Factorising monic quadratics (x^2 + bx + c)",
+      "Solving linear equations using inverse operations",
+      "Expanding brackets to check a factorisation",
+      "Confidence working with negative numbers"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Solving quadratic equations by other methods (completing the square, quadratic formula)",
+      "Linking factors to roots and x-intercepts of quadratic graphs",
+      "Non-monic factorisation methods and factoring by grouping",
+      "Quadratic modelling in geometry (area) and real-world optimisation"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/solving_quadratics/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

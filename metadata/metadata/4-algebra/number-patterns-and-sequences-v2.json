@@ -1,0 +1,128 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_number_patterns_and_sequences_v2",
+    "title": "Number Patterns & Sequences",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "number_patterns_and_sequences",
+    "subtopic": "arithmetic and geometric sequences; nth term rule",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Recognise and describe arithmetic and geometric sequences, generate terms, and form/use an nth-term rule to predict any term and compare growth patterns. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we spot, describe, and predict patterns in numbers—and what do different patterns tell us about growth?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Learn to recognise arithmetic sequences (constant difference) and geometric sequences (constant multiplier), and use an nth-term rule to describe and predict any term in a sequence.",
+      "key_concepts": [
+        "Arithmetic sequences: increase/decrease by a constant value (common difference)",
+        "Geometric sequences: multiply/divide by a constant value (common ratio)",
+        "nth-term rule (e.g., a_n = 3n + 1) for predicting any term",
+        "Using a term-to-term rule to continue a sequence",
+        "Comparing growth: linear vs multiplicative"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Humans have always noticed patterns—in nature, architecture, music, and time. Mathematicians from Babylon to India explored sequences long before calculators, showing how pattern-spotting is a powerful human skill.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use creativity to create, represent, and communicate number patterns.",
+      "activities": [
+        "Create an abstract artwork using number patterns—colour by multiples or powers.",
+        "Write a short story where a hidden pattern helps solve a mystery.",
+        "Make a sequence playlist: each song must follow a pattern in duration or title numbers!"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive tool to explore, extend, and analyse different types of sequences, including patterns that are not purely arithmetic or geometric.",
+      "design_challenges": [
+        "How do you know if a sequence is arithmetic or geometric?",
+        "Can you find a pattern that is neither?",
+        "What happens when you reverse or alternate a pattern?",
+        "Which sequences grow faster and why?",
+        "Create your own “mystery pattern” and test whether others can identify the rule."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Clap, step, or drum a pattern out loud; alternate fast and slow beats and challenge a partner to guess the rule."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Mystery Pattern Challenge",
+        "focus": "Design your own “Mystery Pattern” and challenge a classmate to continue it and describe the rule.",
+        "products": [
+          "A sequence you created (at least 8 terms), with a clear term-to-term rule or nth-term rule",
+          "A short set of instructions/questions for a classmate (e.g., “find the next 3 terms”, “find the 10th term”)",
+          "An answer key explaining the rule and showing how to find a later term"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Explains the difference between arithmetic (linear) and geometric growth",
+          "Fluency & Accuracy — Finds later terms (e.g., 10th term) quickly and correctly",
+          "Application — Describes where patterns like these appear in real life",
+          "Independence & Reflection — Identifies which type of sequence was trickiest and why"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confident with addition/subtraction and multiplication/division",
+      "Can spot simple patterns and describe a rule in words",
+      "Basic algebra awareness that n can represent the term number"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Linear sequences and graphs (linking nth term to y = mx + c)",
+      "Quadratic sequences and second differences",
+      "Geometric growth and exponential models",
+      "Series and summation notation"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/number_patterns_and_sequences/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

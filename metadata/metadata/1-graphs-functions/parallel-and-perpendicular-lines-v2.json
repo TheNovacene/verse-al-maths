@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_parallel_and_perpendicular_lines_v2",
+    "title": "Parallel and Perpendicular Lines",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "parallel and perpendicular gradients",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use gradient rules to identify and construct parallel and perpendicular lines, write equations of lines meeting given conditions, and connect line relationships to design choices in real-world infrastructure and navigation. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can gradient rules help us design and explain lines that stay aligned or intersect safely in the real world?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Parallel lines share the same gradient, while perpendicular lines have gradients that multiply to -1 (negative reciprocals). Students explore these rules by manipulating lines and writing equations.",
+      "key_concepts": [
+        "Parallel lines have the same gradient",
+        "Perpendicular gradients multiply to -1",
+        "Negative reciprocal relationship",
+        "Equation of a line y = mx + c",
+        "Effect of changing intercept while keeping gradient constant",
+        "Constructing equations from conditions"
+      ],
+      "tools": [
+        "Interactive sketch: Explore Parallel Lines (manipulate slope and intercepts, compare lines, write equations)"
+      ],
+      "activities": [
+        "Change the intercept but keep the gradient the same and describe what changes and what stays the same.",
+        "Write an equation for each line shown in the sketch."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Engineers use parallel and perpendicular line rules in city planning (roads, pavements, railways) so structures stay aligned or intersect safely, affecting access and navigation for people with different needs.",
+      "sdg_contexts": [
+        "SDG 11: Sustainable Cities and Communities"
+      ],
+      "justice_prompts": [
+        "Why might perpendicular and parallel lines matter more than curves when designing a metro map for access and navigation?",
+        "When infrastructure is poorly planned, who is most affected, and how can maths support fairer spaces?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students use metaphor, sketching, and reflection to express what parallel and perpendicular lines feel like in mood, movement, and everyday life.",
+      "activities": [
+        "Write: “A parallel line is like…” or “Perpendicular lines remind me of…”",
+        "Sketch examples of these lines as they appear in your daily world.",
+        "Record a short reflection on what these line relationships feel like.",
+        "Reflect: Which feels more like you today—consistent and aligned, or shifting and intersecting?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students investigate perpendicular line relationships by dragging points to see gradients change, then apply the rules to design safe intersections and city-grid systems.",
+      "tools": [
+        "Interactive sketch: Explore Perpendicular Lines (drag a point, observe slopes, check m1 × m2)"
+      ],
+      "design_challenges": [
+        "Design a corner crossing between two paths using perpendicular lines and label the gradients.",
+        "Create a system of parallel and perpendicular paths and test whether it could work as a city grid."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Body map: Stretch arms straight out (parallel), then rotate one arm 90° (perpendicular) and notice how it feels.",
+        "Breathe: Inhale as one arm lifts, exhale as the other rotates, noticing the transition between aligned and rotated states."
+      ],
+      "wellbeing_prompts": [
+        "How did your energy move today—what moments felt aligned or surprising?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Lines That Align",
+        "focus": "Create and justify a design using parallel and perpendicular lines, then construct equations for lines parallel and perpendicular to a given line through given points.",
+        "products": [
+          "A design using 2 parallel and 2 perpendicular lines (graph or sketch)",
+          "Equations of each line in the design",
+          "For y = 3x + 2: equation of a parallel line through (0, -4)",
+          "For y = 3x + 2: equation of a perpendicular line through (2, 1)",
+          "An explanation (writing, drawing, or voice) of why perpendicular gradients multiply to -1, optionally with a geometric argument"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains gradient relationships clearly",
+          "Fluency & Accuracy: Equations and calculations are correct and clearly shown",
+          "Application to Problems: Applies gradient rules in design/modelling tasks",
+          "Independence & Reflection: Makes creative or thoughtful choices, optional expressive reflection included"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot coordinates on a Cartesian grid",
+      "Find gradient using rise/run",
+      "Understand and use y = mx + c",
+      "Work with negative numbers and fractions (for negative reciprocals)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Finding equations of parallel/perpendicular lines through points",
+      "Solving geometric problems using gradients",
+      "Coordinate geometry proofs",
+      "Modelling design constraints with linear graphs"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

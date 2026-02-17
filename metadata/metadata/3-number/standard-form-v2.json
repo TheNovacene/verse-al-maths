@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_standard_form_v2",
+    "title": "Standard Form: From Galaxies to Cells",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "standard_form",
+    "subtopic": "scientific notation and calculations using powers of 10",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Write very large and very small numbers in standard form a × 10^n with 1 ≤ |a| < 10, convert between ordinary and standard form reliably, and perform calculations (×, ÷, +, −) in standard form while interpreting scale across science contexts (space to cells). :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can standard form help us make sense of the biggest and smallest measurements in the universe?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Standard form (scientific notation) expresses very large or very small numbers concisely using powers of 10. Learners practise converting, and applying operation rules for multiplication, division, and addition/subtraction while keeping the coefficient a between 1 and 10.",
+      "key_concepts": [
+        "Standard form (scientific notation) a × 10^n",
+        "Constraint 1 ≤ |a| < 10",
+        "Positive powers for large numbers",
+        "Negative powers for small numbers",
+        "Converting by moving the decimal point and counting places",
+        "Multiplying in standard form: multiply a parts, add exponents",
+        "Dividing in standard form: divide a parts, subtract exponents",
+        "Adding/subtracting in standard form: match exponents before combining",
+        "Renormalising to keep a in range (adjusting a and n)",
+        "Calculator entry using EE / ×10^"
+      ],
+      "activities": [
+        "Convert 5,600,000 into standard form.",
+        "Convert 0.000042 into standard form.",
+        "Multiply 3.2 × 10^5 by 4.5 × 10^3 and express the result in standard form.",
+        "Add 7.5 × 10^4 + 2.3 × 10^3 and express the result in standard form."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Scientists and engineers use standard form daily to work with astronomical distances, microscopic sizes, engineering tolerances, and data scales. Standard form can support clearer communication and decision-making where access to advanced tools is limited.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "In places with limited computing tools, people may struggle to interpret large/small numbers. How could standard form democratize access to scientific data and equitable decision-making (e.g., climate science, medicine)?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Learners connect scale to imagination by representing space- and cell-scale measurements side-by-side, and by explaining standard form as a ‘power of ten’ language.",
+      "activities": [
+        "Sketch two scenes side by side: solar-system distances and cell organelles; label key measurements using standard form.",
+        "Write a short metaphor/poem about powers of ten (e.g., from galaxy to atom).",
+        "Record a short voice note explaining why standard form is ‘superpower notation’."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive matching tool to connect real-world measurements (planets to particles) with their standard form equivalents, then extend to calculation and comparison tasks.",
+      "tools": [
+        "Canva embed: real-life measurement to standard form matching tool"
+      ],
+      "activities": [
+        "Match 149,600,000 km (Earth → Sun) to its standard form equivalent.",
+        "Match 0.000012 m (cell organelle diameter) to its standard form equivalent.",
+        "Multiply 2.5 × 10^6 by 4 × 10^3 and convert the result to standard form.",
+        "Add 5.0 × 10^4 + 2.3 × 10^5 and give the answer in standard form.",
+        "Compare which is larger: 3.0 × 10^-4 vs 2.0 × 10^-3, and explain in words."
+      ],
+      "design_challenges": [
+        "Create a mini ‘scale set’ of 10 measurements (mix of space and cell scale), convert each into standard form, and write a one-line justification for the exponent choice."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Box breath: inhale 4, hold 4, exhale 4.",
+        "Stretch arms wide for 5 seconds, relax.",
+        "Eye reset: look far (about 20 m) for 20 seconds, then near focus for 20 seconds."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Power of Ten Portfolio",
+        "focus": "Create a two-page portfolio demonstrating conversions, calculations, and interpretation of scale using standard form.",
+        "products": [
+          "Page 1: Five real-world measurements (space and/or cell scale) with standard form equivalents",
+          "Page 2: Five random numbers (large and small) converted to/from standard form with working",
+          "Short reflection: when standard form feels easiest/trickiest and why"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Explains why exponents move decimals; interprets positive/negative exponents",
+          "Fluency & Accuracy — Correct conversions, consistent notation, final answers with 1 ≤ |a| < 10",
+          "Application — Uses real-life scale data and justifies exponent choices",
+          "Independence & Reflection — Identifies an error to avoid next time and a strategy to prevent it"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Secure place value with decimals",
+      "Comfort multiplying/dividing by powers of 10",
+      "Basic index/power awareness (10^n meaning repeated factors of 10)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Indices laws (including negative indices)",
+      "Calculations with standard form in science contexts",
+      "Upper/lower bounds and measurement error",
+      "Exponential graphs and growth/decay models"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/standard_form/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

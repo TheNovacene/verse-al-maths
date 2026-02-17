@@ -1,0 +1,135 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "relative_frequency_v2",
+    "title": "Relative Frequency: Experimental Probability with Dice",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "probability",
+    "topic": "experimental_probability",
+    "subtopic": "relative frequency and convergence to theoretical probability",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Calculate relative frequency from repeated trials and explain why, as trials increase, experimental results tend to get closer to the theoretical probability."
+  },
+  "verse_ality": {
+    "driving_question": "What happens to relative frequency as the number of trials increases, and how does it compare to the theoretical probability?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore experimental probability using relative frequency, and investigate how repeated trials make outcomes settle closer to the theoretical probability (e.g., 1/6 for a fair die).",
+      "key_concepts": [
+        "Probability as chance",
+        "Experimental probability",
+        "Relative frequency",
+        "Theoretical probability (fair die outcomes: 1/6 each)",
+        "Variation in small samples",
+        "Convergence with more trials"
+      ],
+      "tools": [
+        "Interactive: Relative Frequency Dice Roll Web App (canva_embed): https://www.canva.com/design/DAG6W23DLRw/lo_7-BcLpoCQzZa0ULXalg/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore how probability and risk inform decisions in healthcare, climate science, insurance, and justice, including how biased data or flawed tools can lead to unfair outcomes.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "How can experimental probability help us challenge assumptions or make decisions based on evidence?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use metaphor and reflection to connect uncertainty, fairness, and expectation to your own experiences while building a clearer intuition for randomness.",
+      "activities": [
+        "Create a metaphor or sketch for probability (e.g., balancing scales, a spinning wheel, a wave).",
+        "In your own words, explain how you feel when the dice roll doesn’t go the way you expected. What do you think is “fair”?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive dice tool to run repeated trials, build a frequency/relative frequency table, and compare results across sample sizes and between people.",
+      "design_challenges": [
+        "Use the interactive dice app to roll repeatedly and record outcomes for 10, 20, 30, and up to 100 rolls.",
+        "Calculate relative frequency for a chosen outcome (or each outcome) and observe how it changes as trials increase.",
+        "Compare your results with a partner. Did you both get similar relative frequencies? Why or why not?",
+        "Ethical design: How would you redesign this tool to support someone who cannot use a mouse or who sees colours differently?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Pause: check in with how you feel when outcomes are uncertain.",
+        "Movement: tap your hand six times (one for each face) and notice the rhythm.",
+        "Breathing: breathe in for “Try” and out for “Observe” for six rolls; notice how breathing helps you focus on patterns instead of outcomes."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Experimental Probability Report",
+        "focus": "Run repeated dice trials, calculate frequencies and relative frequencies, describe what changes as the number of rolls increases, and propose one accessibility improvement for the tool.",
+        "products": [
+          "Completed frequency and relative frequency table (from the interactive tool).",
+          "Short reflection: “What did I notice as the number of rolls increased?”",
+          "One idea to improve or redesign the dice experiment for accessibility."
+        ],
+        "criteria": [
+          "Conceptual Understanding – Explain why relative frequency changes and why it tends toward the theoretical probability with more trials.",
+          "Fluency & Accuracy – Correctly calculate and update frequencies and relative frequencies.",
+          "Application to Problems – Use the data to draw meaningful conclusions about fairness and randomness.",
+          "Independence & Reflection – Reflect thoughtfully and propose a realistic accessibility improvement."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic fraction understanding (e.g., 1/6)",
+      "Division to calculate a ratio (frequency ÷ trials)",
+      "Reading and completing simple tables"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Probability distributions and expected frequency",
+      "Comparing experimental and theoretical probability",
+      "Relative frequency graphs and larger sample investigations",
+      "Risk, bias, and data ethics in real-world decision-making"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/probability/experimental_probability/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

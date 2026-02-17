@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "geometry_coordinates_quadrants_v2",
+    "title": "Coordinates and Quadrants",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "coordinates",
+    "subtopic": "plotting points and quadrants",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Read and write coordinates in the form (x, y), plot points accurately on a Cartesian grid, and use quadrant signs to reason about location while applying coordinate thinking to real-world mapping and design. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can coordinates help us describe location accurately and design spaces that are safe, accessible, and inclusive?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Coordinates as a precise way to locate points using x (horizontal) and y (vertical), including understanding the four quadrants and the sign patterns for each.",
+      "key_concepts": [
+        "Coordinate notation (x, y)",
+        "x-coordinate as horizontal position",
+        "y-coordinate as vertical position",
+        "Four quadrants",
+        "Positive and negative values on axes",
+        "Quadrant sign patterns: I (+,+), II (-,+), III (-,-), IV (+,-)"
+      ],
+      "tools": [
+        "Canva embed: interactive coordinate plotting activity (enter points to reveal a shape)"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Coordinates as the language of position in navigation, mapping, astronomy/cartography history, and modern systems like cities and video games, with an equity lens on how spaces are planned and accessed.",
+      "sdg_contexts": [
+        "SDG 11: Sustainable Cities and Communities"
+      ],
+      "justice_prompts": [
+        "How do we use coordinates to build equitable, accessible spaces in our communities today?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Using the coordinate plane creatively to invent shapes, describe movement and direction, and communicate spatial ideas through narrative and clues.",
+      "activities": [
+        "Invent your own shape and list its coordinates.",
+        "Write a story about a character following a path on a coordinate grid.",
+        "Describe a shape using only directional clues."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Applying coordinate plotting to design and planning in contexts like city layouts, games, animation, robotics, and mapping safe spaces with accessibility in mind.",
+      "design_challenges": [
+        "Use coordinates to plot the layout of a park, garden, or city grid that supports well-being and accessibility for all.",
+        "Map a school or safe space using coordinates and explain key placement decisions."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stand and act out coordinates with steps (x then y) and identify the quadrant you land in."
+      ],
+      "wellbeing_prompts": [
+        "Use a coordinate grid as a mindfulness map: where do you feel calm and where do you feel focused?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Inclusive Space Coordinate Map (SDG 11)",
+        "focus": "Design a simple coordinate map of an inclusive city, park, or safe space, using quadrant thinking and clear coordinate labels.",
+        "products": [
+          "A labelled coordinate diagram (or animation / voice-narrated walk-through) showing key places with coordinates",
+          "A short explanation of how quadrant thinking was used to place spaces"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Accurate use of coordinate notation (x, y)",
+          "Fluency & Accuracy: Correct quadrant placement and sign reasoning",
+          "Application: Real-world relevance and inclusivity of the city/space plan",
+          "Independence & Reflection: Creative choices and personal insight"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Understand positive and negative integers",
+      "Recognise and use horizontal and vertical directions",
+      "Read scales on number lines or axes"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Graphing linear relationships",
+      "Geometric transformations on the coordinate plane",
+      "Distance and midpoint on coordinate grids",
+      "Equation of a line and interpreting intercepts"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/coordinates/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_proportion_direct_inverse_scaling_v2",
+    "title": "Understanding Proportion: Direct, Inverse & Scaling",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "proportion",
+    "subtopic": "direct proportion, inverse proportion, scaling and similar shapes",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Identify and model direct and inverse proportion using y = kx and y = k/x, interpret graphs and constants of proportionality, and apply scaling rules (length, area, volume) to real-world contexts to support accurate and fair representation. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can proportion help us model change, scale the world accurately, and represent people and places fairly?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Proportion compares linked quantities. Students distinguish direct vs inverse proportion, use k as the constant of proportionality, connect each to its graph shape, and apply scaling rules for similar shapes (length, area, volume).",
+      "key_concepts": [
+        "Direct proportion",
+        "Inverse proportion",
+        "Constant of proportionality (k)",
+        "Direct proportion formula: y = kx",
+        "Inverse proportion formula: y = k/x",
+        "Direct proportion graph: straight line through the origin",
+        "Inverse proportion graph: hyperbola curve",
+        "Scaling and similar shapes",
+        "Area scale factor = (length scale factor)^2",
+        "Volume scale factor = (length scale factor)^3",
+        "Compound proportion (chaining changes)"
+      ],
+      "activities": [
+        "Quick check: If y = 3x and x = 5, find y.",
+        "Reasoning: In direct proportion, if x doubles, what happens to y?",
+        "Reasoning: In inverse proportion, if x doubles, what happens to y?",
+        "Scaling: A model is 1/25 of real size. If a building is 100 m tall, find the model height."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Proportion supports recipes, maps, density, speed/time and economics, and helps us judge fairness in representation. Students consider how distorted scaling in maps can introduce bias and misunderstanding.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Suppose a map shrinks a region disproportionately, exaggerating distances for some areas. What biases or misunderstandings could that introduce?",
+        "How does accurate proportional scaling support fairness in representation?"
+      ],
+      "activities": [
+        "Discussion: collect real examples where proportion errors cause real consequences (maps, dosage, pricing, building plans)."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students express direct and inverse proportion through sketching, monologue, and spoken explanation, linking responsibility and meaning to scaling and rate relationships.",
+      "activities": [
+        "Sketch two versions of a room: real 5 m × 4 m, and a 1/20 scale model; label corresponding lengths.",
+        "Write a short monologue: “If you triple the dose in direct proportion, what responsibility comes with that?”",
+        "Record a 60-second voice note explaining inverse proportion using speed vs time (if speed doubles, travel time halves)."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use an interactive visualiser to match inputs and outputs in direct and inverse proportion, explore patterns using specific formulas, and invent their own proportional model from a real situation.",
+      "tools": [
+        "Canva embed: interactive direct & inverse proportion visualiser and matching tool"
+      ],
+      "activities": [
+        "Explore direct proportion with y = 2x for x = 5, 10, 20; record y-values and describe the pattern.",
+        "Switch to inverse proportion with y = 100/x; try x = 2, 5, 10; describe what changes and what stays constant.",
+        "Use the matching tool to connect x and y values with their correct formulas; check your reasoning.",
+        "Invent a real situation (recipe, journey, model) and describe it using direct or inverse proportion."
+      ],
+      "design_challenges": [
+        "Create a real-world scaling or rate scenario and model it using either y = kx or y = k/x; justify your choice and interpret k."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stretch hands in proportion: reach one arm wide, then the other, repeating in rhythm.",
+        "Breathing: inhale 4, hold 2, exhale 6.",
+        "Walk/pacing: 1 minute focusing on pace; connect speed as distance/time."
+      ],
+      "wellbeing_prompts": [
+        "When proportion problems feel confusing, what small reset helps you return to the relationship calmly?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Direct vs Inverse Proportion Mini-Guide",
+        "focus": "Create a mini-guide or poster explaining direct vs inverse proportion with examples and a solved scaling problem.",
+        "products": [
+          "A mini-guide/poster explaining direct proportion and inverse proportion",
+          "3 clear examples of direct proportion with correct equations and/or graphs",
+          "3 clear examples of inverse proportion with correct equations and/or graphs",
+          "One real-world scaling problem solved step-by-step (map/model/recipe/time-speed)",
+          "A short reflection on which type was trickier and how you resolved it"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Explains both types clearly using equations and/or graphs",
+          "Fluency & Accuracy — Correct calculations and correct identification of proportional relationships",
+          "Application — Uses proportion in a real-world scaling/rate context with clear steps",
+          "Independence & Reflection — Reflects on difficulty and strategy used to improve"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confidence with basic ratio simplification",
+      "Rearranging simple formulas",
+      "Using multiplication and division with integers and decimals",
+      "Basic graph reading (axes and scale)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Ratio and proportion problem solving (including best buys and scaling)",
+      "Speed, density and pressure-style unit problems",
+      "Similar shapes and scale factor reasoning",
+      "Graphs and functions (interpreting k and graph shapes)",
+      "Compound measures and compound proportion"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/proportion/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

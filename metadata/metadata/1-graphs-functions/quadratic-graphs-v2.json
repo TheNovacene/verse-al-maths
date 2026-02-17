@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_quadratic_graphs_v2",
+    "title": "Quadratic Graphs",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "quadratic graphs (parabolas) and coefficients",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Explore quadratic graphs in the form y = ax^2 + bx + c, explain how changing a, b, and c changes the curve, and use vertex and symmetry ideas to model and justify a clean-energy design such as a parabolic solar cooker. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can quadratic curves help us design tools that focus energy and support a fairer, cleaner future?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Quadratic graphs are curved (parabolic) and can be modelled by y = ax^2 + bx + c. Students investigate how coefficients affect the curve and identify key features like the vertex and line of symmetry.",
+      "key_concepts": [
+        "Quadratic form: y = ax^2 + bx + c",
+        "Parabola shape",
+        "Effect of changing a on width and direction",
+        "Effect of changing b on curve position and symmetry",
+        "Effect of changing c on vertical shift (y-intercept)",
+        "Vertex (turning point)",
+        "Line of symmetry"
+      ],
+      "tools": [
+        "Interactive sketchpad: Build a Parabola (adjust a, b, c; locate vertex and symmetry)"
+      ],
+      "activities": [
+        "Explore how changing a affects the shape.",
+        "Explore what happens when b changes.",
+        "Explore what happens when c changes.",
+        "Find the vertex and the line of symmetry."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Quadratic curves appear in clean-energy design such as solar cookers and satellite dishes, where parabolic shapes direct energy to a focus or support efficiency modelling over time.",
+      "sdg_contexts": [
+        "SDG 7: Affordable and Clean Energy"
+      ],
+      "justice_prompts": [
+        "Why might engineers choose a parabola when designing tools for off-grid energy systems?",
+        "How can understanding quadratic curves support energy justice in places without reliable electricity?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students express the meaning of a parabola through metaphor, drawing, and reflection on turning points (vertices) in life.",
+      "activities": [
+        "Complete: “A parabola is like ___ because ___.”",
+        "Draw or digitally sketch a real-world quadratic curve.",
+        "Record how it feels to shape something that curves gently then soars or falls.",
+        "Reflect: When have you felt like a curve turning around a vertex?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students design a parabola to focus sunlight and test how coefficient choices affect feasibility, including constraints like a vertex height and base width.",
+      "design_challenges": [
+        "Create a parabola that could focus sunlight into a central point (solar cooker design).",
+        "Change a, b, and c to test how steep or wide the curve needs to be.",
+        "Find a vertex that’s 1m above ground and reason about how wide the base would need to be."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Move: Draw a parabola with your arm, starting low, rising high, then falling. Breathe in on the way up and out on the way down."
+      ],
+      "wellbeing_prompts": [
+        "Where are you on the curve today—rising, peaking, or gliding down?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Curves for Clean Energy",
+        "focus": "Design a solar cooker or parabolic reflector that maximizes energy focus using a quadratic curve, linking the mathematics to clean energy access and sustainability.",
+        "products": [
+          "A quadratic graph/model showing the reflector shape",
+          "Calculations/notes identifying the vertex, focus, and an appropriate width for the design",
+          "A short explanation of how the maths supports clean energy access or sustainability",
+          "Optional creative or embodied response from Expressive Self or Living Body"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains the role of vertex, shape, and symmetry",
+          "Fluency & Accuracy: Correct graphing and interpretation of coefficients (a, b, c)",
+          "Application to Problems: Applies quadratic graphs to an energy-efficient design",
+          "Independence & Reflection: Justifies choices and links to energy justice goals"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot coordinates on a Cartesian grid",
+      "Substitute values into an equation to generate (x, y) pairs",
+      "Work confidently with integers (including negatives)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Sketching quadratic graphs from equations",
+      "Finding and interpreting turning points and symmetry",
+      "Solving quadratic equations (including graphical solutions)",
+      "Completing the square and vertex form",
+      "Quadratic modelling in real contexts"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

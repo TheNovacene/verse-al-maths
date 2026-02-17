@@ -1,0 +1,181 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_ratios_and_golden_ratio_v2",
+    "title": "Ratio & The Golden Ratio",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "ratio",
+    "subtopic": "simplifying ratios and ratio problems; introduction to the golden ratio",
+    "level": "KS4_GCSE",
+    "exam_boards": [],
+    "tier": "higher",
+    "seeds_of_change": "Simplify ratios into simplest form, solve part-to-whole and scaling problems using ratio reasoning, and explore the golden ratio (approximately 1.618) as a proportional relationship seen in nature and design, linking ratio thinking to inclusive space design (SDG 11). :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can ratios help us compare fairly, spot patterns in proportion, and design spaces that feel inclusive and human?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Ratios compare quantities and can be simplified by dividing by common factors. Students practise simplifying, solving part-to-whole ratio questions, and explore the golden ratio as an irrational proportion found in nature and art.",
+      "key_concepts": [
+        "Ratio as a comparison (e.g., 2:3)",
+        "Simplest form by dividing by common factors",
+        "Part-to-part and part-to-whole reasoning",
+        "Scaling in proportion",
+        "Golden ratio (φ) as an irrational ratio ≈ 1.618",
+        "Checking golden ratio via long ÷ short"
+      ],
+      "activities": [
+        "Simplify the ratio 12:16.",
+        "If the ratio of apples to oranges is 3:5, how many oranges are there in 40 pieces of fruit?",
+        "Find two lengths where (longer ÷ shorter) is approximately 1.618."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Fibonacci’s sequence (1, 1, 2, 3, 5, 8, 13, …) appears in natural patterns. Renaissance artists and designers (including Leonardo da Vinci) explored proportion and the golden ratio to create human-feeling designs, raising questions about how maths can support inclusive public spaces (SDG 11).",
+      "sdg_contexts": [
+        "SDG 11: Sustainable Cities and Communities"
+      ],
+      "justice_prompts": [
+        "How might maths help us design inclusive and human spaces?"
+      ],
+      "tools": [
+        "D-ID: Chat with Fibonacci (link in lesson)"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students notice ratios in everyday objects, express the golden ratio through metaphor, and design simple patterns that follow chosen ratios.",
+      "activities": [
+        "Draw an object and label estimated ratios (e.g., width:height of a door).",
+        "Write a metaphor for the golden ratio (“It’s like…”).",
+        "Design a pattern or flag using a 2:3 or 3:5 ratio for colour or shapes.",
+        "Reflect: What ratios do you notice in your everyday surroundings?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students explore the golden ratio inside a pentagram by measuring segments and comparing long:short ratios, then apply ratio thinking to a design task (poster/room/garden/building layout).",
+      "tools": [
+        "Embedded interactive pentagram (Canvas file) to measure and compare ratios"
+      ],
+      "activities": [
+        "Measure segments in the pentagram and compare ratios.",
+        "Calculate long ÷ short — is it close to 1.618?",
+        "Identify other places you see this ratio in the world."
+      ],
+      "design_challenges": [
+        "Create a poster, room, garden, or building layout using the golden ratio and explain how ratios influenced your choices."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Move to a rhythm in 2:3 time — one beat for movement, one for breath.",
+        "Trace your hand or face and estimate ratios — can you find golden proportions?"
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option A: Sustainable Public Space Ratio Plan (SDG 11)",
+        "focus": "Design a sustainable public space using simple ratios (e.g., benches to trees) and justify your choices.",
+        "products": [
+          "A design sketch/plan with at least two labelled ratios",
+          "A short explanation of how the ratios support sustainability and inclusion",
+          "At least one worked ratio calculation (simplifying or scaling)"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Simplifies and compares ratios accurately",
+          "Fluency & Accuracy: Solves part-to-whole and scaling problems",
+          "Application: Uses ratios meaningfully in a design context",
+          "Creativity & Reflection: Thoughtful and expressive design choices"
+        ]
+      },
+      {
+        "name": "Option B: Golden Ratio Artwork or Layout",
+        "focus": "Create artwork or a layout using the golden ratio and explain how you verified proportions.",
+        "products": [
+          "An artwork/layout using golden ratio proportions",
+          "Measurements showing long ÷ short is approximately 1.618 in at least one place",
+          "A short explanation of where the golden ratio appears in your design"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains the golden ratio as a proportional relationship",
+          "Fluency & Accuracy: Uses measurement and division to test ratios",
+          "Application: Connects golden ratio to design choices",
+          "Creativity & Reflection: Original and reflective presentation"
+        ]
+      },
+      {
+        "name": "Option C: Reflection on Ratios, Fairness, and Beauty",
+        "focus": "Write a reflection on how understanding ratios supports fairness and beauty in the world.",
+        "products": [
+          "A written reflection (or voice note) linking ratios to fairness and design",
+          "At least one mathematical example (simplified ratio or golden ratio test)",
+          "A short personal insight: where you notice ratios in everyday life"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Uses ratio language accurately",
+          "Application: Links ratio thinking to real-world design/fairness",
+          "Communication: Clear, coherent explanation",
+          "Creativity & Reflection: Thoughtful personal voice and insight"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application",
+      "Creativity & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confident with factors and simplifying by dividing by a common factor",
+      "Basic multiplication and division skills",
+      "Comfort interpreting part-to-part language (e.g., apples:oranges)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Ratio and proportion problem solving",
+      "Scale factors and similarity",
+      "Rates (speed, density) and unit conversion",
+      "Percentages as ratios out of 100",
+      "Geometric reasoning with proportionality in shapes"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 2,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/ratio/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

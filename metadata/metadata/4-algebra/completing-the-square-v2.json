@@ -1,0 +1,128 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_completing_the_square_v2",
+    "title": "Solving Quadratic Equations by Completing the Square",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "solving_quadratics",
+    "subtopic": "solving quadratic equations by completing the square (vertex form)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Rewrite quadratics in the form a(x + p)^2 + q by completing the square, then solve quadratic equations (including those with irrational roots) and explain why the method works as a geometric and algebraic transformation. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "What if we could turn any quadratic into a perfect square?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Completing the square rewrites a quadratic into vertex form a(x + p)^2 + q, making it possible to solve equations even when factorising is not possible and helping reveal the vertex of a parabola.",
+      "key_concepts": [
+        "Completing the square",
+        "Rewrite ax^2 + bx + c as a(x + p)^2 + q",
+        "Perfect square trinomial",
+        "Works when factorising doesn’t (including non-monic and irrational roots)",
+        "Vertex form (turning point) of a parabola",
+        "Add and subtract the same value to keep equality"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Completing the square dates back to ancient Babylon and was later formalised by mathematicians such as Al-Khwarizmi, creating a reliable method for solving quadratics long before modern calculators.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use visuals, dialogue, or teaching to communicate why the method works and to make the step sequence memorable.",
+      "activities": [
+        "Use a square diagram to explain why the method works visually.",
+        "Write a dialogue between two students solving x^2 + 10x + c in different ways.",
+        "Record a short explanation teaching the steps to someone younger."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive visual tool to manipulate coefficients and complete the square step by step, observing how the geometric square forms and how the algebra changes with b and c.",
+      "design_challenges": [
+        "Start with Level 1: Use sliders to manipulate b and c in x^2 + bx + c.",
+        "Observe how the square is formed geometrically.",
+        "Try Level 2 or Level 3 with more challenging examples, possibly with irrational roots."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Form a human square with four people as the sides, then “complete” the square by adding a small square piece to balance the edges while explaining the steps."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 55,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Solve by Completing the Square",
+        "focus": "Solve three quadratic equations by completing the square, including one that results in irrational roots, and connect the method to a real-world scenario.",
+        "products": [
+          "Full working for three completed-square solutions",
+          "At least one example with irrational roots",
+          "A short explanation of why the added/subtracted value completes the square",
+          "One real-world scenario where completing the square could apply"
+        ],
+        "assessment_criteria": [
+          "Understanding: Shows the full process of completing the square accurately",
+          "Reasoning: Explains why specific values are added and subtracted",
+          "Application: Identifies and explains a meaningful real-world use"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Expanding brackets confidently",
+      "Solving linear equations using inverse operations",
+      "Comfort with rearranging expressions and working with halves/quarters",
+      "Basic understanding of quadratic expressions and equations"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Quadratic formula (derived from completing the square)",
+      "Vertex form and sketching quadratic graphs",
+      "Solving quadratics with irrational roots",
+      "Optimisation and modelling with quadratics"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/solving_quadratics/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_compound_interest_depreciation_v2",
+    "title": "Compound Interest & Depreciation",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "percentage_change",
+    "subtopic": "compound interest and depreciation (repeated percentage change)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Model repeated percentage growth and decay using compound interest and depreciation formulas, interpret each parameter in context, and calculate/compare outcomes over time to make informed financial decisions. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How do repeated percentage changes make money grow or shrink over time, and how can this knowledge help us make fairer financial choices?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore exponential growth and decay through compound interest and depreciation, using standard formulas and interpreting what each symbol means in a real context.",
+      "key_concepts": [
+        "Repeated percentage change",
+        "Exponential growth (compound interest)",
+        "Exponential decay (depreciation)",
+        "Compound interest formula: A = P(1 + r/n)^(nt)",
+        "Depreciation formula: V = V0(1 - d)^t",
+        "Principal (initial amount)",
+        "Interest rate and depreciation rate as decimals",
+        "Time in years",
+        "Compounding frequency (n)"
+      ],
+      "activities": [
+        "Quick check: If £500 grows at 4% compounded annually for 3 years, calculate the final amount.",
+        "Quick check: If a laptop worth £1200 depreciates at 15% each year, calculate its value after 2 years.",
+        "Explain what each letter means in A = P(1 + r/n)^(nt) and V = V0(1 - d)^t."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "A startup scenario highlights how savings can grow with interest while equipment loses value through depreciation, and invites discussion about how access to fair credit and rates can help or hinder success.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "How do financial systems help or hinder success depending on access to fair credit and interest rates?",
+        "What happens to people who face higher rates because of their background or circumstances?"
+      ],
+      "activities": [
+        "Discuss how different interest rates change outcomes for different people over the same time period."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use metaphor and explanation to make growth/decay memorable and communicable.",
+      "activities": [
+        "Create a sketch showing money growing like a tree or shrinking like a melting ice cube.",
+        "Write a short poem or metaphor describing interest or depreciation.",
+        "Record a voice note explaining compound interest and depreciation to a younger sibling."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use a business finance simulator to model a simple startup, adjusting investment, depreciation, and interest to compare outcomes over time.",
+      "tools": [
+        "Canva embed: Business finance simulator (compound interest + depreciation)"
+      ],
+      "activities": [
+        "Choose an investment amount and depreciation rate.",
+        "Calculate your total after 5 years with compound interest.",
+        "Estimate the value of equipment after 5 years of depreciation.",
+        "Compare two different scenarios and explain which is better and why."
+      ],
+      "design_challenges": [
+        "Design a simple startup plan with savings growth and asset depreciation, then justify your choices using calculations."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stretch arms out, breathe in for 4, hold for 4, and breathe out for 6."
+      ],
+      "wellbeing_prompts": [
+        "Reflect on how you feel about money — is it stressful or empowering?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Mini Business Forecast",
+        "focus": "Create a mini business forecast showing compound interest on savings and depreciation of assets over time, comparing multiple scenarios and reflecting on financial decision-making.",
+        "products": [
+          "A mini forecast (table, poster, slides, or short write-up) showing compound interest growth on savings over time",
+          "A mini forecast showing depreciation of an asset over time",
+          "Correct calculations for 3 different scenarios",
+          "A short explanation of what each part of the formulas means and how they are used",
+          "A short reflection on what financial knowledge you would want before starting a real business"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains what each part of each formula represents and why repeated multiplication models growth/decay",
+          "Fluency & Accuracy: Correct calculations (including converting rates to decimals and applying powers) across 3 scenarios",
+          "Application: Uses results to compare choices and explain impact on outcomes",
+          "Independence & Reflection: Thoughtful reflection on financial knowledge, risks, and decision-making"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Understand percentages and converting between percent and decimal",
+      "Use a calculator for powers and repeated multiplication when appropriate",
+      "Confidence with substitution into formulas",
+      "Basic understanding of exponential growth/decay as repeated multiplication"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Exponential graphs and functions",
+      "Growth and decay modelling problems",
+      "Percentage change and reverse percentage problems",
+      "Financial mathematics and interpreting rates in context"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/percentage_change/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

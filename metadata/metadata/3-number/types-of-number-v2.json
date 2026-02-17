@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_types_of_number_v2",
+    "title": "The Number Universe: Natural → Integers → Rationals → Irrationals → Real",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "types_of_number",
+    "subtopic": "number sets and notation (ℕ, ℤ, ℚ, irrationals, ℝ) and nesting relationships",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Classify numbers as natural, integer, rational, irrational or real; use correct set notation and nesting (ℕ ⊆ ℤ ⊆ ℚ ⊆ ℝ, with ℝ = ℚ ∪ irrationals); and reason about density of rationals/irrationals on the number line while reflecting on number-literacy equity. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How did our number system grow from counting to a complete real number line, and why does that matter?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Trace why different sets of numbers emerged, define each set, and use nesting relationships to classify numbers and justify membership.",
+      "key_concepts": [
+        "Natural numbers (ℕ): 1, 2, 3, … (definition may or may not include 0)",
+        "Integers (ℤ): …, −2, −1, 0, 1, 2, …",
+        "Rational numbers (ℚ): a/b where a, b are integers and b ≠ 0",
+        "Irrational numbers: cannot be expressed as a ratio of integers (e.g., √2, π)",
+        "Real numbers (ℝ): all points on the number line; ℝ = ℚ ∪ irrationals",
+        "Nesting: ℕ ⊆ ℤ ⊆ ℚ ⊆ ℝ",
+        "Density of rationals: between any two rationals is another rational",
+        "Boundary ideas: why √2 caused historical tension"
+      ],
+      "activities": [
+        "Classify −3: is it natural, integer, rational?",
+        "Explain why 4/7 is rational and not an integer.",
+        "Explain why √3 is not rational (use factorisation reasoning).",
+        "Between 1.414 and 1.415, name a rational number."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Number systems connect to culture, philosophy, and power. Access to advanced ideas like irrationals and the real number line is part of educational equity.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "If a community only teaches integers and rationals, how might that limit geometry, science, or data understanding?",
+        "What does “number literacy” mean in justice terms?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use metaphor and explanation to make nesting relationships memorable and to communicate why irrationals are ‘strange’ but useful.",
+      "activities": [
+        "Draw number sets as Russian dolls/concentric circles and label examples.",
+        "Write a short poem or micro-verse about numbers growing from counting to infinity.",
+        "Record a voice note explaining to a younger learner why √2 is ‘strange’ and how we still use it."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive nested diagram to place numbers into ℕ, ℤ, ℚ, ℝ, test true/false membership statements, and explore rationals/irrationals between numbers.",
+      "tools": [
+        "Canva embed: interactive nested diagram for ℕ, ℤ, ℚ, ℝ and number placement"
+      ],
+      "activities": [
+        "Sort: 5, −3, 1/2, √2, π into the correct sets.",
+        "Test: between 1 and 2, is there an irrational? (experiment with examples).",
+        "Debate: is 0 ∈ ℕ? Compare definitions and why conventions matter.",
+        "Make two true/false statements (e.g., “All rationals are integers”) and test by placement.",
+        "Design a small ‘number set puzzle’ for a peer to sort."
+      ],
+      "design_challenges": [
+        "Create a 10-number sorting puzzle that includes at least 2 irrationals and at least 2 rationals that are not integers; provide an answer key with justifications."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Inhale 4 • hold 4 • exhale 4 — repeat three times.",
+        "Stretch fingers wide, hold 5 seconds, relax.",
+        "Look far then close — alternate three times."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Number Universe Poster",
+        "focus": "Create a poster that shows how number sets nest and where example numbers belong, including reflection on a tricky boundary.",
+        "products": [
+          "A nested diagram showing ℕ, ℤ, ℚ, ℝ (and where irrationals fit)",
+          "At least 5 example numbers placed with arrows/labels (e.g., −3, 4/7, √5, π, 0)",
+          "A 2–3 sentence reflection: which boundary (e.g., ℚ vs irrationals) is most challenging and why"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Correct nesting; clear justifications for membership",
+          "Fluency & Accuracy — Correct notation (ℕ, ℤ, ℚ, ℝ) and no misplacements",
+          "Application — Uses examples that challenge boundaries (rational vs irrational; 0 in ℕ debate)",
+          "Independence & Reflection — Identifies a tricky boundary and a strategy to remember it"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Confidence with integers, negatives, and zero",
+      "Understand fractions as a/b with b ≠ 0",
+      "Basic familiarity with square roots as solutions to x^2 = n"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Surds and simplifying irrational forms",
+      "Proof and reasoning with prime factorisation",
+      "Number line density and interval reasoning",
+      "Algebraic and graphical reasoning about domains (ℝ, ℚ subsets)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/types_of_number/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

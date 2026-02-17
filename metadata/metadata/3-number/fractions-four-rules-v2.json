@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_fractions_four_rules_v2",
+    "title": "The Four Rules of Fractions (Add, Subtract, Multiply, Divide)",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "fractions",
+    "subtopic": "four operations with fractions (including mixed numbers, simplifying, reciprocals, LCD)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use equivalent fractions and the lowest common denominator to add/subtract, multiply and divide fractions accurately (including mixed numbers), and apply fraction rules to fair, safe real-life decisions such as rationing and recipes. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we use the four rules of fractions to make fair and accurate decisions in real life?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Learn and practise how to add, subtract, multiply, and divide fractions with accuracy and confidence, including simplifying, using LCD for addition/subtraction, and using Keep–Change–Flip for division.",
+      "key_concepts": [
+        "Equivalent fractions",
+        "Lowest Common Denominator (LCD)",
+        "Adding fractions with a common denominator",
+        "Subtracting fractions with a common denominator",
+        "Multiplying fractions (numerator×numerator, denominator×denominator)",
+        "Cross-cancelling before multiplying",
+        "Dividing fractions using reciprocal (Keep–Change–Flip)",
+        "Mixed numbers and improper fractions",
+        "Simplifying to lowest terms",
+        "Reciprocal"
+      ],
+      "activities": [
+        "Tiny worked examples: add, subtract, multiply (including cross-cancel), and divide (including converting to a mixed number).",
+        "Quick check set: (a) 5/8 + 1/2 (b) 7/12 − 1/3 (c) 3/10 × 5/6 (d) 5/9 ÷ 1/3.",
+        "Keyboard-friendly fraction entry practice using / when typing."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Fractions show up in rationing, recipes, fair pay, and resource sharing. Comparing fractional allocations helps people argue for fairness when communities receive different shares of the same resource.",
+      "sdg_contexts": [
+        "SDG 2: Zero Hunger",
+        "SDG 10: Reduced Inequalities"
+      ],
+      "justice_prompts": [
+        "If two communities receive different fractional amounts of the same resource, how can we compare and argue for fair distribution?"
+      ],
+      "activities": [
+        "Guest voice invitation: find a short clip or quote from a chef, nurse, or engineer who uses fractions, and explain how precision keeps people safe or ensures fairness."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use creative expression to make fraction rules memorable and to practise clear explanation for future learners.",
+      "activities": [
+        "Sketch a ‘fraction machine’ showing what happens for +, −, ×, ÷ (labels only).",
+        "Write a 3–4 line poem/rap using “Keep–Change–Flip” and “Find the LCD” as hooks.",
+        "Record a 30–60s voice note explaining one worked example step-by-step."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive Fraction Rules Sandbox to practise all four rules, model with fraction bars, and solve a design brief where fractional precision supports accessibility and safety.",
+      "tools": [
+        "Canva embed: Fraction Rules Sandbox (interactive practice with modelling)"
+      ],
+      "activities": [
+        "Warm-up: enter 2/3 + 3/4 and 5/12 − 1/8; check LCD each time.",
+        "Fluency: create three × and three ÷ fraction problems; solve, simplify, and show cross-cancelling if used.",
+        "Reasoning: recipe scaling using 3 1/2 cups for 12 people; find per-person fraction and new amount for 8 people.",
+        "Ethical design prompt: design a measuring aid for someone with one hand or low vision to portion 3/4, 1/3, and 1/8 accurately (shape, grip, tactile/high-contrast markings, tolerance).",
+        "Buddy challenge: swap one × and one ÷ question; check steps and write a one-line ‘fix-it rule’ when errors are found."
+      ],
+      "design_challenges": [
+        "Design a measuring aid for fractional accuracy (3/4, 1/3, 1/8) that supports one-handed use and/or low vision, explaining how markings and shape reduce error."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Box breath 3–4 cycles (inhale 4, hold 4, exhale 4, hold 4).",
+        "Hand stretch: open–close fists ×8; roll shoulders ×5 each way.",
+        "Pace break: stand, look 20m away for 20s; sip water."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Fraction Rules Guide",
+        "focus": "Create a one-page guide demonstrating all four fraction rules with worked examples, a designed real-life context problem, and a short reflection on a reliable checking strategy.",
+        "products": [
+          "A one-page ‘Fraction Rules Guide’",
+          "Two worked examples for each rule (+, −, ×, ÷)",
+          "One real-life context problem you design and solve (multi-step, unfamiliar)",
+          "A 3–4 sentence reflection on your most reliable strategy (LCD checklist, Keep–Change–Flip, cross-cancel, etc.)"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Shows why methods work (LCD reasoning; why cross-cancelling is valid; why reciprocals turn division into multiplication)",
+          "Fluency & Accuracy — Minimal notation errors; correct simplification; clear mixed ↔ improper conversions",
+          "Application — Includes and solves at least one unfamiliar, multi-step word problem (scaling, fair-sharing, etc.)",
+          "Independence & Reflection — States a strategy, one mistake caught, and how to avoid it next time"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Understand numerator and denominator and represent fractions",
+      "Find equivalent fractions by scaling numerator and denominator",
+      "Know basic multiplication/division facts for simplifying",
+      "Comfort converting between mixed numbers and improper fractions"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Adding/subtracting algebraic fractions",
+      "Fractional equations and rearranging",
+      "Ratio, proportion, and percentage problems",
+      "Scaling and similarity (fractional scale factors)",
+      "Probability with fractions"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/fractions/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

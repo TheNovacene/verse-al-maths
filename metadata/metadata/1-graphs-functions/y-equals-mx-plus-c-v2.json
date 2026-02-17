@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_y_equals_mx_plus_c_v2",
+    "title": "y = mx + c",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "equation of a straight line (y = mx + c)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Understand and use the form y = mx + c to describe straight lines, interpret m as gradient and c as the y-intercept, and explore how changing these parameters affects graphs and real-world models such as income growth. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can the equation y = mx + c help us model change, make predictions, and reason about fairness in real-world systems?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Straight lines can be represented by y = mx + c, where m controls steepness (gradient) and c controls where the line crosses the y-axis (y-intercept). Students test predictions by adjusting sliders and observing the graph.",
+      "key_concepts": [
+        "Linear equation form y = mx + c",
+        "Gradient (m) as rate of change",
+        "y-intercept (c)",
+        "Effect of changing m on steepness and direction",
+        "Effect of changing c on vertical shift",
+        "Predicting graph changes from parameter changes"
+      ],
+      "tools": [
+        "Canva embed: interactive sliders for m and c to explore how the line changes"
+      ],
+      "activities": [
+        "Adjust m and c and predict the effect before testing it.",
+        "Describe how the graph changes when only m changes.",
+        "Describe how the graph changes when only c changes."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Linear equations are used as models of real-world systems. Students compare two income-growth models using y = mx + c, discussing which helps families reach above-poverty income sooner and what feels realistic or ethical.",
+      "sdg_contexts": [
+        "SDG 1: No Poverty"
+      ],
+      "justice_prompts": [
+        "Which model gets families above poverty faster?",
+        "Which feels more realistic or ethical?"
+      ],
+      "tools": [
+        "Canva embed: Poverty Modelling Tool for comparing linear income models"
+      ],
+      "activities": [
+        "Compare a training programme model (gradual rise) with a cash investment model (higher starting value).",
+        "Use country income context links (e.g., GNI per capita) to discuss how models relate to reality."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students express what a line could represent in their own life, using sketches, writing prompts, or voice notes to connect mathematical structure to meaning.",
+      "activities": [
+        "Sketch a line and describe what it could mean in your life.",
+        "Write: “If I were a line, I would…”",
+        "Record a voice note describing the journey of a line."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students design and compare lines by controlling slope and intercept, then generalise how families of lines behave and how equations can be constructed to meet constraints like intersecting at a given point.",
+      "design_challenges": [
+        "Graph two lines with the same slope but different y-intercepts.",
+        "Graph two lines with the same y-intercept but different slopes.",
+        "Write equations for lines that intersect at (2, 5) and explain how slopes and intercepts change."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Breathe in for a rising slope and out for a falling slope.",
+        "Draw a line in the air and notice the pace, steepness, and ease."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Mastering Straight Lines",
+        "focus": "Create and compare two straight-line graphs to demonstrate understanding of how slope and intercept affect a line.",
+        "products": [
+          "A graph showing two lines with explanations",
+          "One example: same slope, different y-intercepts (labelled)",
+          "One example: same y-intercept, different slopes (labelled)",
+          "A short explanation of what you learned from the differences"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application",
+          "Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot coordinates on a Cartesian grid",
+      "Understand gradient as a measure of steepness",
+      "Recognise the y-axis intercept as the point where a graph crosses the y-axis",
+      "Work confidently with positive and negative numbers"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Finding gradient and intercept from graphs",
+      "Writing equations of lines from points or contexts",
+      "Interpreting linear models (rates and starting values)",
+      "Solving problems involving intersecting lines"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

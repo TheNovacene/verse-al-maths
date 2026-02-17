@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "sine_rule_v2",
+    "title": "The Sine Rule",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "trigonometry",
+    "subtopic": "sine rule for non-right-angled triangles",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use and justify the Sine Rule to find missing sides or angles in any triangle, and connect the rule to proof ideas using perpendicular heights."
+  },
+  "verse_ality": {
+    "driving_question": "How can we prove the Sine Rule works for any triangle — not just right-angled ones?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Learn and apply the Sine Rule relationship between each side and the sine of its opposite angle, then explore how a perpendicular height can be used to derive the rule.",
+      "key_concepts": [
+        "Sine Rule: a/sin(A) = b/sin(B) = c/sin(C)",
+        "Opposite side and opposite angle matching",
+        "Finding a missing side using a/sin(A) = b/sin(B)",
+        "Finding a missing angle using a/sin(A) = b/sin(B)",
+        "Using perpendicular height to derive/prove the relationship",
+        "Accuracy, checking, and reasonableness in triangle solutions"
+      ],
+      "tools": [
+        "Video Part 1: Introduction + challenge setup (canva_embed): https://www.canva.com/design/DAGvYgl_Pko/cSFqATkQhL-uTuPL14Hn1g/watch?embed",
+        "Video Part 2: Worked solutions + deriving the Sine Rule (canva_embed): https://www.canva.com/design/DAGvY5Lm9ME/aKWZsBhMor7XHzAU_WBKoQ/watch?embed"
+      ],
+      "activities": [
+        "Identify matching pairs (side a opposite angle A, etc.) and set up the correct sine rule proportion.",
+        "Solve at least one missing side problem using the Sine Rule.",
+        "Solve at least one missing angle problem using the Sine Rule.",
+        "Explain (in words) why dropping a perpendicular height helps derive the Sine Rule."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "See how the Sine Rule supports triangulation in navigation, surveying, astronomy, architecture, and 3D modelling, where right angles are not available.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "How would life change if we didn’t have tools to calculate inaccessible distances or angles?",
+        "What kinds of people or professions rely on trigonometry to connect unknowns?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Internalise the idea that sides ‘look across’ to opposite angles and communicate the rule through metaphor, comics, and explanation.",
+      "activities": [
+        "Sketch a triangle and decorate each side/angle with metaphors (e.g., ‘Side a looks across to Angle A’).",
+        "Create a short comic strip where triangle characters discover the Sine Rule.",
+        "Reflect: What helped you most in understanding the Sine Rule derivation?",
+        "Explain the Sine Rule to someone who thinks trig is only for right-angled triangles."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive triangle sketch to generate non-right-angled triangles, hide/reveal values, challenge peers, and use perpendicular constructions to derive the Sine Rule.",
+      "design_challenges": [
+        "Drag triangle points to generate different non-right-angled triangles.",
+        "Challenge a peer: hide two side lengths and ask them to find them using the Sine Rule.",
+        "Reveal heights (perpendicular constructions) to derive and prove the Sine Rule algebraically.",
+        "Use buttons to hide or reveal angles and side lengths.",
+        "Ethical design: adapt geometry tools for students with visual or fine-motor challenges."
+      ],
+      "tools": [
+        "Interactive sketch: Sine Rule Triangle Sketch (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020098/download"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Make a triangle with your arms and head and hold the pose.",
+        "Breathe in for 4 seconds as you ‘fill’ one side of your triangle.",
+        "Exhale for 6 seconds while tracing another side in the air.",
+        "Let your shoulders drop and reset after every ‘proof’."
+      ],
+      "wellbeing_prompts": [
+        "How do physical breaks help your mind process triangle logic?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Triangle Translator (SDG 4)",
+        "focus": "Create and solve two unique triangles in a web sketchpad—one missing side problem and one missing angle problem—then clearly explain and verify solutions using the Sine Rule.",
+        "products": [
+          "Two unique triangles created in the interactive sketch tool (screenshots).",
+          "In one triangle: calculated missing side with clear working.",
+          "In the other triangle: calculated missing angle with clear working.",
+          "Explanation (writing, diagrams, or short video) including how you verified answers using the Sine Rule."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic trig ratios in right-angled triangles (sin, cos, tan) and what sine represents",
+      "Using a calculator for sine values (degree mode where appropriate)",
+      "Triangle angle facts (sum of angles in a triangle)",
+      "Understanding of opposite sides and angles in triangles"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Cosine Rule",
+      "Area of a triangle using 1/2ab sin(C)",
+      "Solving non-right-angled triangle problems in 2D and 3D contexts",
+      "Further trigonometry problem solving (bearings, navigation, surveying)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 2,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/trigonometry/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

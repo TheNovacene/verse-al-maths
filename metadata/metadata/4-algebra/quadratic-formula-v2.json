@@ -1,0 +1,144 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_quadratic_formula_v2",
+    "title": "Solving Quadratic Equations Using the Quadratic Formula",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "solving_quadratics",
+    "subtopic": "quadratic formula and discriminant (nature of roots)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use the quadratic formula to solve any quadratic equation ax^2 + bx + c = 0, calculate the discriminant D = b^2 - 4ac, and interpret D to decide whether there are two real roots, one real root, or no real roots. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can one universal formula solve any quadratic — and how can the discriminant predict the type of roots before we even finish the calculation?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Use the quadratic formula as a universal method for solving quadratics in the form ax^2 + bx + c = 0, and use the discriminant to predict the nature of the solutions. :contentReference[oaicite:1]{index=1}",
+      "key_concepts": [
+        "Quadratic equation in standard form: ax^2 + bx + c = 0",
+        "Quadratic formula: x = (-b ± √(b^2 - 4ac)) / (2a)",
+        "Discriminant: D = b^2 - 4ac",
+        "If D > 0: two real roots",
+        "If D = 0: one real root",
+        "If D < 0: no real roots (complex roots)"
+      ],
+      "activities": [
+        "Solve x^2 - 5x + 6 = 0 using the quadratic formula.",
+        "Solve 2x^2 + 3x - 2 = 0 and interpret the discriminant.",
+        "Try a quadratic with no real roots such as x^2 + x + 1 = 0 and describe what the discriminant tells you."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "The quadratic formula dates back to ancient mathematical thinking (including Babylonian and Greek work) where people needed systematic methods to solve area and length problems. A universal method mattered because it worked even when a quadratic wouldn’t factorise neatly. :contentReference[oaicite:2]{index=2}",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why might a universal method for all quadratics have been important before calculators and modern algebra tools?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Communicate the meaning of each part of the formula and the role of the discriminant through story, visuals, or performance. :contentReference[oaicite:3]{index=3}",
+      "activities": [
+        "Write a short story or comic strip titled: “A Day in the Life of the Discriminant.”",
+        "Design a visual poster showing how each part of the formula contributes to the solution.",
+        "Create a rap or spoken word poem explaining how the quadratic formula works."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive quadratic formula calculator to input values for a, b and c and see the solution steps and roots, then investigate how changing b^2 - 4ac changes the nature of the roots. :contentReference[oaicite:4]{index=4}",
+      "tools": [
+        "Canva embed: Interactive quadratic formula calculator (step-by-step)"
+      ],
+      "activities": [
+        "Try different values for a, b and c and observe how the roots change.",
+        "Watch what happens as the discriminant b^2 - 4ac changes sign.",
+        "Try to make the discriminant exactly zero and explain what that means for the roots."
+      ],
+      "design_challenges": [
+        "Design three quadratics: one with D > 0, one with D = 0, and one with D < 0. Show your discriminant calculations and predict the root type before solving."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Form a “human equation”: in groups of three, represent a, b, and c, then act out each step of the quadratic formula using cards or strings to visualise operations."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Three Quadratics with the Formula",
+        "focus": "Choose three different quadratic equations and solve them using the quadratic formula, explaining steps clearly and using the discriminant to interpret solution types. :contentReference[oaicite:5]{index=5}",
+        "products": [
+          "Three different quadratic equations selected by the learner",
+          "Full solutions using the quadratic formula with correct substitution and careful bracketing",
+          "Discriminant calculation for each equation and interpretation of what it predicts",
+          "One created real-world problem that results in a quadratic equation (optional extension)"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Explains each step of the quadratic formula and the role of the discriminant",
+          "Fluency & Accuracy — Uses correct operations, brackets carefully, and simplifies accurately",
+          "Application — Creates or connects to a context that leads to a quadratic equation",
+          "Reflection — Explains when the quadratic formula is more useful than factorisation"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Expanding and simplifying algebraic expressions",
+      "Substituting values into formulas accurately",
+      "Working confidently with squares and square roots",
+      "Solving linear equations (for checking and interpreting roots)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Completing the square and the derivation of the quadratic formula",
+      "Interpreting discriminant and linking to quadratic graphs (number of x-intercepts)",
+      "Solving quadratics with irrational roots and exact form answers",
+      "Complex numbers as solutions when D < 0 (advanced extension)",
+      "Quadratic modelling in geometry and real-life contexts"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/solving_quadratics/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

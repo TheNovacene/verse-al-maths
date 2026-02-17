@@ -1,0 +1,142 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "circumference_of_circle_v2",
+    "title": "The Circumference–Diameter Relationship",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "circles",
+    "subtopic": "circumference, diameter, radius, and pi",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Investigate and explain the constant relationship between circumference and diameter, interpret the gradient of a C–d graph as π, and use C = πd (or C = 2πr) to solve and communicate real-world circle problems."
+  },
+  "verse_ality": {
+    "driving_question": "Why does the circumference of a circle always scale in a constant way with its diameter — and what does that tell us about π?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Define circumference and diameter, measure real objects, explore the straight-line relationship between C and d, and formalise the rule C = πd (and C = 2πr).",
+      "key_concepts": [
+        "Circumference (distance around a circle)",
+        "Diameter (distance across through the centre)",
+        "Radius and diameter relationship (d = 2r)",
+        "Constant ratio C/d",
+        "C–d graph is a straight line",
+        "Gradient equals π",
+        "Formulas: C = πd and C = 2πr"
+      ],
+      "activities": [
+        "Measure the diameter of a lid/cup.",
+        "Wrap string around the edge to measure circumference.",
+        "Compute C ÷ d and notice the value stays close to π.",
+        "Plot circumference (C) against diameter (d) and interpret the gradient."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore how π has fascinated civilisations for thousands of years and why it acts as a bridge between practical measurement, art, science and mystery.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Make meaning of π and the C–d relationship through visual and spoken expression using real circular objects.",
+      "activities": [
+        "Create a visual diagram showing how circumference changes as diameter increases.",
+        "Record a short voice note: “What does π mean to me?”",
+        "Make a collage of circular objects labelled with diameter and estimated circumference."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive tool to resize circles and observe how the C–d graph behaves, then write a rule linking circumference and diameter using the gradient idea.",
+      "design_challenges": [
+        "Try different circle sizes and record diameter and circumference values.",
+        "Describe the shape of the C–d graph.",
+        "Estimate the gradient of the line and interpret it.",
+        "Write a rule that links C and d and test it on new circle sizes."
+      ],
+      "tools": [
+        "Interactive: Circumference–Diameter Graph Tool (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/319995644/download"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Find a circular object and measure its diameter.",
+        "Use string to measure its circumference.",
+        "Make a circle motion in the air with your arms and imagine stretching it into a line."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Circumference–Diameter Poster or Slide",
+        "focus": "Create a poster or slide that explains the connection between diameter and circumference using measurements, a graph, and clear communication.",
+        "products": [
+          "Explanation in your own words of the relationship between circumference and diameter.",
+          "Diagrams or photos with annotations (include at least one real-life circular object).",
+          "A C–d graph (or clearly described straight-line relationship) with a note about the gradient.",
+          "Reflection responses: what surprised you, what the gradient tells you, and whether your method could estimate π."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Real Objects",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic measuring skills (using a ruler/tape for diameter and string for circumference)",
+      "Division to compute a ratio (C ÷ d)",
+      "Reading or sketching simple graphs and understanding gradient as ‘rate of change’"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Circle perimeter and area formulas (A = πr²)",
+      "Arc length and sectors",
+      "Graphs and proportional relationships (y = mx)",
+      "Estimation and experimental error in measurement"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/circles/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

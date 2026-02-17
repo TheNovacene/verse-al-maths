@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "trig_ratios_finding_missing_side_v2",
+    "title": "Using Trigonometry to Find Missing Sides",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "trigonometry",
+    "subtopic": "trig ratios to find a missing side",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Select and apply sin, cos, or tan (SOH-CAH-TOA) to calculate unknown side lengths in right-angled triangles, explaining why the chosen ratio fits the given information."
+  },
+  "verse_ality": {
+    "driving_question": "What is always true about SOH-CAH-TOA, and how can these ratios help us calculate unknown sides in right-angled triangles?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Use SOH-CAH-TOA to connect angles to side lengths and calculate a missing side in a right-angled triangle (given one angle and one side).",
+      "key_concepts": [
+        "Sine: opposite ÷ hypotenuse",
+        "Cosine: adjacent ÷ hypotenuse",
+        "Tangent: opposite ÷ adjacent",
+        "SOH-CAH-TOA",
+        "Opposite, adjacent, hypotenuse (relative to the chosen angle)",
+        "Choosing the correct ratio based on known/unknown sides",
+        "Rearranging trig equations to find a missing side"
+      ],
+      "tools": [
+        "Video: Trig Ratios - Finding a Missing Side (canva_embed): https://www.canva.com/design/DAGu0GYyHbY/MkVHrJZZ8WhQG_bGXXVMfw/watch?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect trigonometry to real work in surveying, engineering, architecture, aviation, and robotics—measuring heights, distances, and slopes when direct measurement is not possible.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Where does this matter in everyday life? Who depends on us getting these calculations right?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Make personal meaning of triangle logic by representing and explaining sin, cos, and tan in a way that helps you remember and apply them.",
+      "activities": [
+        "Draw or annotate a triangle from memory showing clear SOH-CAH-TOA labels.",
+        "Explain the difference between sin, cos, and tan in your own words (e.g., a short poem, cartoon, or mini-explainer).",
+        "Reflect: What feels easy when solving trig problems? What feels tricky?",
+        "Choose a learning metaphor that helps the idea ‘click’ for you."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive sketch to generate triangle scenarios, calculate missing sides, and consider how to design measurement tools that work for everyone.",
+      "design_challenges": [
+        "Use the sketch to calculate a missing side length given an angle and one side.",
+        "Drag point C to create different triangle scenarios and solve each one.",
+        "Challenge a classmate: create a triangle and ask them to find the missing side; then verify together.",
+        "Ethical design: adapt a triangle-measuring interface for visually impaired users or someone with fine motor challenges."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Pause after a set of problems: trace a triangle shape in the air with your fingers.",
+        "Breathe in for 3 and out for 4; imagine your triangle rotating as you breathe.",
+        "Stretch like two triangle sides meeting, then release neck and shoulder tension."
+      ],
+      "wellbeing_prompts": [
+        "How can you help your body reset when a problem gets frustrating?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Triangle Toolkit (SDG 4 – Quality Education)",
+        "focus": "Design a mini ‘toolkit’ that teaches others how to use trig ratios to find missing sides, using multiple examples and clear reasoning for ratio choice.",
+        "products": [
+          "Three triangle examples (one using sin, one using cos, one using tan) built in a web sketch tool, with screenshots.",
+          "For each triangle: written instructions explaining which ratio to use and why.",
+          "A short guide/tutorial for one triangle (text, audio, or recorded walkthrough).",
+          "Self and peer assessment using the GCSE Maths Rubric: Conceptual Understanding, Fluency & Accuracy, Application to Problems, Independence & Reflection."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Identify opposite, adjacent and hypotenuse relative to a chosen angle in a right-angled triangle",
+      "Use a calculator to evaluate sin, cos and tan of an angle (in degrees)",
+      "Rearrange simple equations to make a different subject"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Using trigonometry to find missing angles",
+      "Problem solving with bearings and elevation/depression",
+      "3D trigonometry and multi-step geometry contexts"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/trigonometry/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

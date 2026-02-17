@@ -1,0 +1,134 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "symmetry_reflection_rotation_v2",
+    "title": "Exploring Symmetry: Reflection & Rotation",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "symmetry",
+    "subtopic": "reflectional and rotational symmetry",
+    "level": "",
+    "exam_boards": [],
+    "tier": "",
+    "seeds_of_change": "Investigate and describe reflective and rotational symmetry by testing how shapes (especially squares) map onto themselves, naming invariant features such as lines of symmetry, order of rotation, and fixed points."
+  },
+  "verse_ality": {
+    "driving_question": "How can we test whether a shape has reflectional or rotational symmetry, and what stays invariant when it maps onto itself?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Investigate patterns and invariants in how a square behaves under reflections and rotations, and describe the fixed points and features that remain unchanged.",
+      "key_concepts": [
+        "Line (reflective) symmetry",
+        "Rotational symmetry",
+        "Order of rotational symmetry",
+        "Angle of rotation",
+        "Mapping a shape onto itself",
+        "Invariant features",
+        "Fixed points"
+      ],
+      "tools": [
+        "Interactive: Reflections (web_sketchpad): https://fermat2358.github.io/web-sketchpad-tools/reflections.html",
+        "Interactive: Rotations (web_sketchpad): https://fermat2358.github.io/web-sketchpad-tools/rotations.html"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore why humans care about symmetry and how it appears across culture, design, and architecture.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why do humans care about symmetry?",
+        "How does symmetry appear in human culture, design, or architecture?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use symmetry creatively by designing a symmetric shape or pattern that reflects your own style or interests.",
+      "activities": [
+        "Design a symmetric shape or pattern using reflection symmetry.",
+        "Design a symmetric shape or pattern using rotational symmetry.",
+        "Explain what makes your design symmetric (what transforms map it onto itself?)."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Connect symmetry to real design and engineering, noticing where symmetry improves function, efficiency, communication, or beauty.",
+      "design_challenges": [
+        "Find an example where symmetry improves efficiency or beauty (e.g., logos, machines, architecture).",
+        "Use the reflection tool to test and justify lines of symmetry for a square.",
+        "Use the rotation tool to test and justify the order of rotational symmetry for a square.",
+        "Apply the same ideas to another shape and compare how its symmetries differ from a square."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [],
+      "wellbeing_prompts": [
+        "Explore how symmetry appears in biology — in body shapes, flowers, or other living systems.",
+        "Why might symmetry be important for survival?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Symmetry Summary",
+        "focus": "Summarise what you discovered about symmetry by describing how a square maps onto itself through reflection and rotation, then apply the ideas to other shapes.",
+        "products": [
+          "A written or spoken summary of reflection symmetry in a square (including number and location of lines of symmetry).",
+          "A written or spoken summary of rotational symmetry in a square (including order and angle of rotation).",
+          "At least one additional shape analysed for reflection and rotational symmetry, with justification.",
+          "Optional: a symmetric design/pattern you created and a short explanation of its symmetries."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic understanding of 2D shapes (especially squares)",
+      "Comfort describing turns/rotations and mirror reflections"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Transformations: reflections, rotations, translations, enlargements",
+      "Congruence and invariance",
+      "Symmetry in tessellations and polygons",
+      "Coordinate geometry transformations"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 0,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/symmetry/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

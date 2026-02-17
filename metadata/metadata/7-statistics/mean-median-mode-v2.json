@@ -1,0 +1,150 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "mean_median_mode_v2",
+    "title": "Mean, Median and Mode: Which Average Tells the Fairest Story?",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "statistics",
+    "topic": "averages",
+    "subtopic": "mean, median and mode (measures of central tendency; outliers and fairness)",
+    "level": "KS3",
+    "exam_boards": [],
+    "tier": "",
+    "seeds_of_change": "Use and interpret measures of central tendency (mean, median, mode) to describe and compare data sets."
+  },
+  "verse_ality": {
+    "driving_question": "Which \"average\" tells the fairest story?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Use a data lab to calculate mean, median and mode, then test how each measure responds when you change values in the data set.",
+      "key_concepts": [
+        "Mean: add all values and divide by how many there are",
+        "Median: middle value when ordered (or mean of the two middle values)",
+        "Mode: most frequent value (can be more than one or none)",
+        "Measures of central tendency",
+        "Sensitivity to changes and outliers"
+      ],
+      "tools": [
+        "Interactive: Mean, Median and Mode Data Lab (canva_embed): https://www.canva.com/design/DAG7wzY-DXk/vSdWZeBYAHO6MTu1NfUnCQ/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore how statistics are used to tell stories about people (scores, income, waiting times, performance) and how the choice of 'average' can be fair or misleading.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Who benefits if we choose the mean instead of the median? Who might be hidden or misrepresented?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Express what you notice about different averages using characters, poetry, or number-line diagrams, and practise explaining the differences clearly to someone else.",
+      "activities": [
+        "Draw three characters called Mean, Median and Mode. Give them personalities (who is most sensitive to outliers?).",
+        "Write a short paragraph or poem starting: “When the outlier walks in, the mean…”",
+        "Create a sketch showing where mean, median and mode sit on a number line for one of your data sets.",
+        "In your own words, explain the difference between mean, median and mode to a friend who hates maths."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use interactive tools to explore outliers (mean vs median) and choose the most honest measure of average for different scenarios, thinking like a data designer.",
+      "design_challenges": [
+        "Activity 2: Explore outliers by adding/removing extreme values and observe how mean and median respond (canva_embed): https://www.canva.com/design/DAG7xDCD9ho/FLIty1u6rzxGS2fvIExrqA/view?embed",
+        "Which measure seems more stable when extreme values appear?",
+        "Activity 3: Work through scenarios and choose mean, median or mode as the most honest summary (canva_embed): https://www.canva.com/design/DAG7xGbQS9c/3G9FqIcZAhVCmlq_etpiag/view?embed",
+        "Buddy challenge: invent a new scenario (steps, game scores, notifications) and justify the best average.",
+        "Ethical design: If you were designing a dashboard to show 'average wellbeing' in a school, how would you avoid hiding anyone’s experience?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Breathe in for 4 counts while silently saying “collect”. Breathe out for 6 counts while silently saying “understand”. Repeat before returning to the tasks."
+      ],
+      "wellbeing_prompts": [
+        "What helps your mind-body stay curious rather than stressed when you see averages and comparisons?",
+        "How does it feel in your body when numbers don’t tell the full story?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option A – Class or Fictional Data Set",
+        "focus": "Create a short data story from a dataset of at least 10 values, calculate mean, median and mode, and argue which average tells the fairest story.",
+        "products": [
+          "A dataset (at least 10 values), real but anonymised or invented",
+          "Mean, median and mode calculations",
+          "1–2 paragraphs explaining which average is fairest and why (including any outliers)"
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      },
+      {
+        "name": "Option B – Scenario Critic",
+        "focus": "Choose a scenario (from the 'Which Average?' activity or your own) and explain which average is most honest, which could mislead, and how to present the data fairly.",
+        "products": [
+          "Chosen scenario and a clear decision: mean, median, or mode",
+          "Explanation of which average is most honest and which could be misleading",
+          "Suggestion for how to present the data to keep it fair (e.g., show median + range, mention outliers)"
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Add a list of numbers and divide by a count (mean)",
+      "Order data and identify the middle value(s) (median)",
+      "Identify the most frequent value(s) (mode)",
+      "Basic understanding of what an outlier is"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Range and measures of spread",
+      "Outliers and their impact on summaries",
+      "Comparing distributions (including box plots as extension)",
+      "Using averages responsibly in real-world reports"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 3,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/statistics/averages/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

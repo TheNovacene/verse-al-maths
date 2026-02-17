@@ -1,0 +1,131 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_algebraic_proof_v2",
+    "title": "Mathematical Proof",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "algebraic_proof",
+    "subtopic": "proof using definitions (even/odd), algebraic generalisation, contradiction, and geometric proof",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Understand proof as a logical argument that must always be true, use standard definitions (e.g., even = 2k, odd = 2k + 1) to build algebraic proofs, and communicate clear, precise reasoning with awareness of counterexamples. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "Why does mathematics rely so heavily on proof rather than opinion?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Proof is a logical argument that shows a statement must always be true. Learners use definitions and algebra to generalise patterns, and compare different proof strategies (algebraic, contradiction, geometric). :contentReference[oaicite:1]{index=1}",
+      "key_concepts": [
+        "Proof as a logical argument (always true, not just many examples)",
+        "Definitions as the foundation of proof (e.g., even numbers are of the form 2k; odd numbers are 2k + 1)",
+        "Algebraic proof: using algebra to generalise a pattern or property",
+        "Proof by contradiction: assuming the opposite leads to a false statement",
+        "Geometric proof: using diagrams, angles, and congruence",
+        "Example statements to prove: sum of two odd numbers is even; n^2 - n is always even; angles in a triangle sum to 180°"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "From Euclid’s ancient geometry to Andrew Wiles’ work on Fermat’s Last Theorem, proof has shaped how humans define mathematical truth and build reliable knowledge. :contentReference[oaicite:2]{index=2}",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why do you think mathematics relies so heavily on proof rather than opinion?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Learners communicate proof ideas through words, story, and voice, strengthening clarity and building confidence with logical explanation. :contentReference[oaicite:3]{index=3}",
+      "activities": [
+        "Write your own explanation of a proof in words only (no algebra).",
+        "Create a comic strip showing someone discovering a counterexample.",
+        "Record a voice note explaining why proof matters in maths and in life."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Learners build proofs using an interactive whiteboard tool: choose a statement, assemble logical steps, and test where incorrect reasoning breaks. :contentReference[oaicite:4]{index=4}",
+      "design_challenges": [
+        "Choose a statement and construct a clear sequence of logical steps that proves it true.",
+        "Try proving the same statement using different methods (algebraic vs geometric) and compare what changes.",
+        "Spot where an incorrect “proof” goes wrong and explain the exact step that breaks the logic.",
+        "Describe the strategy you use when approaching a new proof (definitions first, structure, checking for counterexamples, etc.)."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Act out a mathematical proof with a partner by assigning roles like “assumption”, “deduction”, and “conclusion”, then moving as each step is performed aloud."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Build Your Own Proof",
+        "focus": "Choose one proof statement from the lesson and construct a clear, logical argument that shows it must always be true, presented using words, algebra, and visuals as appropriate. :contentReference[oaicite:5]{index=5}",
+        "products": [
+          "One selected statement and a complete proof (logical steps in order)",
+          "Correct use of definitions and algebra where needed (e.g., even = 2k, odd = 2k + 1)",
+          "A visual element (diagram, flow, or annotated steps) supporting clarity",
+          "A short reflection: one potential counterexample attempt and why it fails (or why counterexamples are impossible)"
+        ],
+        "assessment_criteria": [
+          "Clarity & Logic: Each step follows from the last with no unexplained jumps",
+          "Precision: Definitions and algebra are used accurately and consistently",
+          "Communication: Proof is readable and structured (words, algebra, and visuals support understanding)",
+          "Reflection: Thoughtful consideration of counterexamples and what they would mean"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Understand basic algebra notation (using k or n to represent an integer)",
+      "Confidence with expanding and simplifying expressions",
+      "Know (or be ready to use) definitions of even and odd numbers"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Algebraic proof with sequences and divisibility",
+      "Proof and reasoning in geometry (angles, congruence, circle theorems)",
+      "Contradiction and counterexample in higher reasoning",
+      "Constructing and critiquing arguments in maths and beyond"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/algebraic_proof/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

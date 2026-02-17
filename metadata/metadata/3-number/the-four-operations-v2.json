@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_the_four_operations_v2",
+    "title": "The Four Operations",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "four_operations",
+    "subtopic": "addition, subtraction, multiplication, division (integers and decimals; checking with inverses/estimation)",
+    "level": "KS3",
+    "exam_boards": [],
+    "tier": "",
+    "seeds_of_change": "Use the four operations with integers and decimals, choose efficient strategies (mental, written, calculator when appropriate), and check answers using inverse operations and estimation to make fair, sensible real-life decisions. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How do the four operations help us make and check real-life decisions?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Build fluency with addition, subtraction, multiplication and division (including decimals), and strengthen accuracy by using inverses and estimation to check whether answers are reasonable.",
+      "key_concepts": [
+        "Operation (add, subtract, multiply, divide)",
+        "Inverse operations (addition ↔ subtraction, multiplication ↔ division)",
+        "Estimate to check reasonableness",
+        "Integers (negative, zero, positive)",
+        "Decimals (tenths, hundredths, etc.)",
+        "Addition as moving right on a number line",
+        "Subtraction as moving left on a number line",
+        "Multiplication as repeated addition",
+        "Division as sharing or grouping",
+        "Remainder"
+      ],
+      "activities": [
+        "Quick warm-up: choose 3–5 mental calculations across the four operations (including at least one decimal).",
+        "Operations as moves: explain each operation using a number line model.",
+        "Partner check: write an inverse check for each given calculation.",
+        "Low-floor, high-ceiling practice: choose a level and create 2 questions per operation; solve and check using inverses or estimation."
+      ],
+      "tools": [
+        "Canva embed: \"Deal or No Deal?\" app (use for comparing deals and checking answers)"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "The four operations show up in budgeting, travel, work pay, and sharing costs. They can also be used to test fairness—spotting dishonest deals or unfair pay by checking calculations.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Is everyone getting a fair share of group money?",
+        "Are “special offers” honest or a trick?",
+        "Is someone being underpaid for the work they do?"
+      ],
+      "activities": [
+        "Discussion: share a real situation where you needed one of the operations (shopping, cooking, travel, games).",
+        "Reflect and discuss: have you ever felt cheated because the maths wasn’t done fairly or correctly?",
+        "Mini task: write a short story/comic plan where a character needs all four operations to solve a fairness or planning problem; highlight where each operation appears."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Make the operations memorable by expressing them as characters, metaphors, or a visual map showing connections and inverse pairs.",
+      "activities": [
+        "Option A: Character design—turn +, −, ×, ÷ into four characters (personalities, relationships, inverse opposites).",
+        "Option B: Metaphor/poem—write metaphors for each operation.",
+        "Option C: Visual map—mind map/sketch showing how operations connect and undo each other.",
+        "Write 3–4 sentences explaining which operation feels most friendly, which feels spiky/difficult, and how characters/metaphors could help."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Design a practical “Fair Deal Checker” by creating multi-step real-life problems that require more than one operation, then use tools and checking strategies (inverse/estimation/shortcuts) to verify decisions.",
+      "tools": [
+        "Canva embed: \"Deal or No Deal?\" app"
+      ],
+      "activities": [
+        "Choose a context: shopping, food sharing/recipes, time planning, or money/saving/splitting bills.",
+        "Create at least 3 problems in your context; each problem must require at least two different operations.",
+        "Use the app to compare at least two deals and check at least one of your written problems.",
+        "For each problem, write an inverse calculation or estimate to check your answer.",
+        "Describe any shortcuts you used (e.g., ×5 by ×10 then halve)."
+      ],
+      "design_challenges": [
+        "Create a set of multi-step real-life problems (at least 3) and build a simple method for checking fairness using inverses and estimation."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Body check-in: notice how your shoulders, breath, jaw, or thoughts change when a calculation feels long or you feel stuck.",
+        "Box breathing: in 4, hold 4, out 4, hold 4 (repeat 3 times).",
+        "Shake & reset: gently shake hands, roll shoulders, return to the task.",
+        "Micro-break: look away and find 5 objects of a certain colour."
+      ],
+      "wellbeing_prompts": [
+        "One thing that helps me with operations is…",
+        "I find it hard when calculations…",
+        "Next time I get stuck on a calculation, I will try…"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option A: 4 Operations Fairness Guide (Mini Guide/Zine)",
+        "focus": "Create a one-page guide for another student explaining how to use the four operations to make fair, sensible decisions with money or time.",
+        "products": [
+          "A one-page guide with realistic examples involving money/time/sharing/offers",
+          "Worked calculations using all four operations (across the examples)",
+          "At least one inverse check and one estimation check shown clearly",
+          "Clear explanations of operation choice and reasoning"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains meanings and connections (inverse pairs, repeated addition, sharing)",
+          "Fluency & Accuracy: Correct, clearly set-out calculations; efficient methods used",
+          "Application to Problems: Realistic situations; operation choice justified",
+          "Independence & Reflection: Short reflection and evidence of checking/correcting mistakes"
+        ]
+      },
+      {
+        "name": "Option B: Game + Solutions",
+        "focus": "Design a small game where players must use all four operations to win, and include full worked solutions.",
+        "products": [
+          "Rules and materials for a small game (card/dice/puzzle sheet)",
+          "A set of game problems that require all four operations",
+          "A full worked solutions section",
+          "At least one inverse check or estimate shown in the solutions"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Operations and inverses are used intentionally",
+          "Fluency & Accuracy: Solutions are correct and clearly shown",
+          "Application to Problems: Problems are meaningful and fair",
+          "Independence & Reflection: Brief reflection on what worked and what you’d improve"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application to Problems",
+      "Independence & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic understanding of place value (including decimals)",
+      "Confidence with number facts and counting strategies",
+      "Willingness to check work using est

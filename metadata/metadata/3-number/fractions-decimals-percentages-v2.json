@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_fractions_decimals_percentages_v2",
+    "title": "Fractions, Decimals & Percentages — One Idea, Three Languages",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "fractions_decimals_percentages",
+    "subtopic": "converting between fractions, decimals and percentages (including recurring decimals and benchmarks)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Recognise fractions, decimals and percentages as equivalent representations; translate confidently between forms using place value, division, and scaling to 100; use benchmark equivalences and identify recurring decimals; apply FDP conversions to make and justify real-life comparisons (discounts and data framing) with a fairness lens (SDG 10). :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we translate between fractions, decimals and percentages so we can compare fairly and make better decisions?",
+    "knowing_world": {
+      "present": true,
+      "focus": "FDP are three ways to express the same quantity. Students learn reliable conversion routes (place value, division, scaling to 100) and use key benchmarks to compare values quickly, including recognising recurring decimals.",
+      "key_concepts": [
+        "Percent means per 100",
+        "Equivalence across FDP",
+        "Decimal to fraction using place value then simplify",
+        "Fraction to decimal by division",
+        "Fraction to percent by making denominator 100 or going via decimal",
+        "Benchmark equivalents (1/2, 1/4, 1/5, 1/8)",
+        "Terminating decimals",
+        "Recurring decimals",
+        "Percentage change = change ÷ original × 100%"
+      ],
+      "activities": [
+        "Quick check: write 0.45 as a fraction in simplest form.",
+        "Convert 7/20 to a decimal and a percent.",
+        "Compare: which is larger, 0.27 or 1/4? Give a quick reason.",
+        "Convert 62.5% into a fraction and a decimal.",
+        "Recurring spotlight: convert 1/3 and 2/9 and describe what you notice."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "FDP show up in discounts, battery life, medical doses, voting turnout and pay-gap reports. Students explore how different framings can change how a situation feels, and why clarity matters in communication.",
+      "sdg_contexts": [
+        "SDG 10: Reduced Inequalities"
+      ],
+      "justice_prompts": [
+        "Compare “Youth unemployment drops from 20% to 18%” with “A 10% decrease.” Which feels bigger? Who benefits from each framing?"
+      ],
+      "activities": [
+        "Guest voice invitation: find a short clip/quote (chef, nurse, coach, game designer) explaining when they switch between fraction/decimal/percent and why clarity matters."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students build memory and confidence through creative translation practice and explanation, treating FDP as a set of connected ‘languages’.",
+      "activities": [
+        "FDP Phrasebook: make a mini map of your top 10 equivalences (e.g., 3/5 ↔ 0.6 ↔ 60%).",
+        "Metaphor sketch: draw “three translators” passing the same message along a belt (Fraction → Decimal → Percent).",
+        "Voice note (60–90s): teach how to turn 0.375 into a fraction and percent; include one mistake to avoid."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use a Desmos FDP Converter & Matchmaker to translate and verify matches, then apply conversions to real decision-making (offers and data stories) and consider accessibility needs in tool design.",
+      "tools": [
+        "Desmos: FDP Converter & Matchmaker (embed; C column shows 1 when all three forms match)"
+      ],
+      "activities": [
+        "Warm-up translate: enter 3/8, 0.06, and 45 (meaning 45%) and convert each into the other two forms.",
+        "Match & justify (buddy challenge): one writes 5 fractions; the other writes 5 decimals; swap, convert, and get C=1 for each row with a 1-line reason.",
+        "Deal chooser: £80 hoodie — A) 15% off, B) £12 off. Decide which is better and show both methods.",
+        "Recurring spotlight: try 1/3, 2/9, 5/6. Discuss why some decimals repeat.",
+        "Ethical design prompt: design a converter for someone with dyscalculia and low vision (layout, font, contrast, icons, step-by-step reveals)."
+      ],
+      "design_challenges": [
+        "Design an accessible FDP converter for someone with dyscalculia and low vision, stating at least 5 interface features that reduce cognitive load and improve readability."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Three breaths (inhale 4, exhale 6).",
+        "Micro-stretch: palms press for 6 seconds ×3.",
+        "Eye rest: far–near–far."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - FDP Travel Guide",
+        "focus": "Create a one-page guide that helps a reader translate confidently between fractions, decimals and percentages, including benchmarks, recurring examples, and a real-world comparison solved in two ‘languages’.",
+        "products": [
+          "A one-page “FDP Travel Guide”",
+          "At least 8 equivalences (a mix of terminating and recurring) with brief reasons",
+          "One real-life comparison (discount or data story) solved in two forms (e.g., fraction + percent, or decimal + percent)",
+          "A 30–60s reflection (audio or text): when you choose fraction vs decimal vs percent, and why"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains equivalence and chooses appropriate conversion routes",
+          "Fluency & Accuracy: Conversions are correct and simplified where needed",
+          "Application: Real-life comparison is solved and justified clearly using two representations",
+          "Independence & Reflection: Reflection shows awareness of strategy choice and common pitfalls"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Place value understanding for decimals",
+      "Basic fraction simplification using common factors",
+      "Confident division with remainders (to create decimals)",
+      "Recognise common benchmark fractions (e.g., 1/2, 1/4)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Percentage increase/decrease problems",
+      "Ratio and proportion in context",
+      "Probability expressed as fractions/decimals/percentages",
+      "Interpreting statistical information and data framing"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/fractions_decimals_percentages/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

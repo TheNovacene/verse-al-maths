@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "cosine_rule_v2",
+    "title": "The Cosine Rule",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "trigonometry",
+    "subtopic": "cosine rule for non-right-angled triangles (SAS and SSS)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use the Cosine Rule to calculate missing sides (SAS) and missing angles (SSS) in any triangle, connecting the formula to Pythagoras’ Theorem and justifying solutions in real design contexts."
+  },
+  "verse_ality": {
+    "driving_question": "What’s always true about the Cosine Rule, and how does it extend Pythagoras’ Theorem to any triangle?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Learn how the Cosine Rule generalises Pythagoras’ Theorem for any triangle, and practise using both forms to calculate missing sides and angles.",
+      "key_concepts": [
+        "Cosine Rule for a missing side: a² = b² + c² − 2bc cos(A)",
+        "Cosine Rule for a missing angle: cos(A) = (b² + c² − a²) / (2bc)",
+        "SAS vs SSS triangle information",
+        "Included angle",
+        "Rearranging and calculator accuracy",
+        "Link to Pythagoras’ Theorem (right angle special case)"
+      ],
+      "tools": [
+        "Video: Deriving and using the Cosine Rule (SAS) (canva_embed): https://www.canva.com/design/DAGv3OVzYGE/a7YwiopVDxkUpV852qbXFA/watch?embed",
+        "Interactive: Cosine Rule Sketch (SAS) (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020095/download",
+        "Video: Rearranging the Cosine Rule to find angles (SSS) (canva_embed): https://www.canva.com/design/DAGv3EOdsGw/cLFitrNl8G-pLT4vybMXVA/watch?embed",
+        "Interactive: Cosine Rule Sketch (SSS) (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020094/download"
+      ],
+      "activities": [
+        "Use the Cosine Rule to calculate one missing side given two sides and the included angle (SAS).",
+        "Use the Cosine Rule (rearranged) to calculate one missing angle given all three sides (SSS).",
+        "Explain how the formula becomes Pythagoras’ Theorem when the included angle is 90°.",
+        "Challenge prompt: What’s always true about this formula?"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect the Cosine Rule to triangulation in navigation, astronomy, and surveying, where direct measurement is impossible and accuracy matters for safety and decision-making.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "When have humans had to estimate distances without being able to measure directly?",
+        "Where might this matter in real life or history? What happens if we get it wrong?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Build intuition by explaining the Cosine Rule in your own words and representing it visually, noticing whether finding a side or an angle feels more intuitive.",
+      "activities": [
+        "Write your own explanation of how the Cosine Rule extends Pythagoras’ Theorem.",
+        "Draw a labelled triangle showing when you’d use the Cosine Rule and annotate it.",
+        "Reflect: Which feels more intuitive — finding a side or an angle? Why?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use interactive sketches to solve SAS and SSS triangle problems and connect the skill to design and engineering contexts where triangle calculations guide real decisions.",
+      "design_challenges": [
+        "Use the sketch to reveal/hide angles and sides to create your own SAS problems and solve them.",
+        "Use the sketch to create SSS problems and calculate missing angles by rearranging the Cosine Rule.",
+        "Challenge a classmate: “Find angle A or side b using only what you see.”",
+        "Consider: what types of design problems (architecture, surveying, robotics) rely on this kind of calculation?"
+      ],
+      "tools": [
+        "Interactive: Cosine Rule Sketch (SAS) (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020095/download",
+        "Interactive: Cosine Rule Sketch (SSS) (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020094/download"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "After working on triangle problems, trace a triangle shape in the air with your hand while breathing in slowly.",
+        "Stretch your arms outward like triangle sides, then lower them as you exhale.",
+        "Notice tension in your neck or shoulders and gently roll them out."
+      ],
+      "wellbeing_prompts": [
+        "Where do you feel effort in your body when solving something tricky? What helps you reset?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Real World Triangles (SDG 11)",
+        "focus": "Use both forms of the Cosine Rule (SAS and SSS) to solve a park design triangle layout, then explain reasoning and propose an accessibility or sustainability improvement.",
+        "products": [
+          "A labelled triangle layout created in the web sketch tool (screenshots).",
+          "Working showing Cosine Rule to find a missing side (SAS).",
+          "Working showing Cosine Rule to find a missing angle (SSS).",
+          "A short reflection including one way the design could support accessibility or sustainability.",
+          "Self and peer assessment using the rubric."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Pythagoras’ Theorem and right-angled triangle reasoning",
+      "Basic trig ratios in right-angled triangles (sin, cos, tan)",
+      "Using a calculator for cosine values (degree mode where appropriate)",
+      "Rearranging equations and working accurately with squares and square roots"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Sine Rule",
+      "Area of a triangle using 1/2ab sin(C)",
+      "Further triangulation problems (bearings, navigation, surveying)",
+      "3D trigonometry and multi-step geometry contexts"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 2,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/trigonometry/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

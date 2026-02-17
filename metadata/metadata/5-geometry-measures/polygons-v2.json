@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "polygons_interior_angles_v2",
+    "title": "Exploring the Interior Angles of Regular Polygons",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "angle_facts",
+    "subtopic": "interior angle sums of polygons",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Discover and justify a general formula for the sum of interior angles of an n-sided polygon by partitioning into triangles, then apply it to find interior angles of regular polygons."
+  },
+  "verse_ality": {
+    "driving_question": "What pattern links the number of sides in a polygon to the sum of its interior angles, and how can we turn that pattern into a general formula?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Use a polygon explorer to draw diagonals from one vertex, count the triangles formed, and use this to calculate and generalise the sum of interior angles for polygons with different numbers of sides.",
+      "key_concepts": [
+        "Polygon and number of sides (n)",
+        "Diagonal from a vertex",
+        "Partitioning a polygon into triangles",
+        "Triangle angle sum (180°)",
+        "Interior angle sum of an n-gon: (n − 2) × 180°",
+        "Regular polygon interior angle: ((n − 2) × 180°) ÷ n"
+      ],
+      "tools": [
+        "Interactive: Polygon Explorer Web App (canva_embed): https://www.canva.com/design/DAG4rt0YAMc/Ko7baEo01cTLLjd7nnhrxw/view?embed"
+      ],
+      "activities": [
+        "Use the tool to investigate polygons with 3 to 8 sides.",
+        "From a single vertex, draw diagonals to split each polygon into triangles.",
+        "Record the number of triangles formed and calculate the interior angle sum for each polygon.",
+        "Look for a pattern linking n to the number of triangles and the total angle sum.",
+        "Write a general rule using n."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore why regular polygons appear across cultures in art and architecture (e.g., Greek temples and Islamic mosaics) and how symmetry, balance and repeatability make them powerful design choices.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why might symmetry and balance matter in the buildings, art and spaces we share?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Represent the pattern you discover in a creative way that helps others understand how increasing the number of sides changes angle sums.",
+      "activities": [
+        "Create a poster, sketch, or short video explaining how the number of sides affects the interior angle sum.",
+        "Show the triangle-splitting method visually and explain the pattern you notice.",
+        "Choose a creative format that makes the rule memorable."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use toggles (vertex labels, circumcircle) to support reasoning and consider how interactive tools like this can help in engineering, animation and architecture.",
+      "design_challenges": [
+        "Toggle vertex labels and the circumcircle: what does each feature help you notice?",
+        "Explain how splitting into triangles is a reliable reasoning method (not just a trick).",
+        "Design idea: How could this tool be made more accessible (e.g., non-colour cues, screen-reader-friendly labels)?",
+        "Where might polygon angle rules matter in real design work (tiling, CAD, animation rigs, architecture)?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Check in: Notice how your brain responds while pattern-spotting and generalising.",
+        "Strategy pause: If frustration rises, take one slow breath and return to the table of results.",
+        "Celebrate the ‘click’: Name the moment when the rule feels clear."
+      ],
+      "wellbeing_prompts": [
+        "What helps you stay focused when you’re searching for a pattern that isn’t obvious yet?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: General Formula for Interior Angle Sum",
+        "focus": "Use your investigation results to write a general formula for the sum of interior angles of a polygon with n sides, then extend it to find the interior angle of a regular polygon.",
+        "products": [
+          "A clear general formula for the sum of interior angles in terms of n.",
+          "A short explanation of why the formula works (triangle-splitting reasoning).",
+          "Challenge: a method/formula to find the interior angle of a regular n-gon (sum ÷ n) with one worked example."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Angle sum on a straight line (180°)",
+      "Angle sum of a triangle (180°)",
+      "Comfort identifying vertices and drawing diagonals"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Exterior angles of polygons",
+      "Tessellation and tiling",
+      "Geometric reasoning and proof",
+      "Regular polygon problems (missing angles/sides)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/angle_facts/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

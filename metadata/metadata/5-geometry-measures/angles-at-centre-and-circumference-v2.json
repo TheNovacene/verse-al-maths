@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "angles_at_centre_and_circumference_of_circle_v2",
+    "title": "Exploring the Angle at the Centre and Circumference",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "circles",
+    "subtopic": "angle at the centre and angle at the circumference (same arc)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use dynamic exploration to recognise and apply the circle theorem that the angle at the centre is twice the angle at the circumference subtended by the same arc, and explain or justify the relationship in written and diagram form."
+  },
+  "verse_ality": {
+    "driving_question": "What relationship always holds between the angle at the centre and the angle at the circumference subtended by the same arc, and why?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore and formalise the circle theorem: the angle at the centre is always twice the angle at the circumference subtended by the same arc, regardless of circle size or point positions on the same arc.",
+      "key_concepts": [
+        "Circle theorems",
+        "Angle at the centre",
+        "Angle at the circumference",
+        "Same arc / same chord",
+        "Invariant geometric relationship",
+        "Generalisation from dynamic examples"
+      ],
+      "tools": [
+        "Interactive: Angle at Centre vs Angle at Circumference (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/320404864/download"
+      ],
+      "activities": [
+        "Move points around the circle and observe how the centre angle changes compared with the circumference angle.",
+        "Record several paired measurements and look for a constant multiplier.",
+        "Write the relationship as a sentence and as a symbolic statement (e.g., ∠centre = 2 × ∠circumference).",
+        "Test whether the rule still holds when the arc changes but the same arc is used for both angles."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect the theorem to ancient Greek geometry (e.g., Euclid’s Elements) and early attempts to understand circular motion for astronomy and navigation.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use sketches and creative annotation to build intuition for why the relationship feels ‘harmonious’ and easy to trust once seen dynamically.",
+      "activities": [
+        "Sketch your own circle diagram showing the same arc and label both angles clearly.",
+        "Decorate/annotate your diagram to highlight the ‘twice as big’ relationship.",
+        "Reflect: How did the interactive visuals help you feel the rule is always true?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Notice how predictable angle relationships in circles support design and engineering involving arcs and radial patterns (gears, wheels, clock faces, spokes).",
+      "design_challenges": [
+        "Find a real object with radial or circular structure (clock, wheel, fan, gear) and identify where a centre-angle idea might appear.",
+        "Design a simple circular pattern where a chosen circumference angle fixes the centre angle automatically."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Trace arcs and chords with your finger while watching the interactive to connect movement with the geometry.",
+        "Notice how eye–hand coordination helps you follow curved motion and compare angles."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Explain and Illustrate the Centre–Circumference Theorem",
+        "focus": "Explain, in your own words, why the angle at the centre is twice the angle at the circumference subtended by the same arc, and communicate the idea clearly through a designed diagram.",
+        "products": [
+          "A written explanation of the theorem in your own words.",
+          "A clearly labelled and annotated diagram showing the same arc and both angles.",
+          "Extension (optional): a proof attempt using isosceles triangles or other circle-theorem reasoning."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic angle facts (around a point and on a straight line)",
+      "Comfort identifying arcs/chords and angles in a circle diagram",
+      "Ability to observe patterns and generalise a rule from examples"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Other circle theorems (angles in the same segment, cyclic quadrilaterals)",
+      "Reasoning and proof in geometry",
+      "Applications of circle theorems in problem solving"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/circles/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_simultaneous_equations_v2",
+    "title": "Simultaneous Equations",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "simultaneous_equations",
+    "subtopic": "solve linear simultaneous equations by substitution and elimination; interpret intersections and special cases",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Solve pairs of linear simultaneous equations using substitution and elimination, interpret solutions as intersection points of lines, and explain what it means when there is no solution or infinitely many solutions in modelling contexts like budgeting, routes and comparing deals. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "What values of x and y satisfy both equations at once?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Simultaneous equations represent two conditions that must both be true. Learners practise solving by elimination and substitution, and connect the algebraic solution to the graph idea of two lines meeting at an intersection.",
+      "key_concepts": [
+        "Simultaneous equations (two equations, two unknowns)",
+        "Substitution method (express one variable in terms of the other and substitute)",
+        "Elimination method (add/subtract equations to remove one variable)",
+        "Solution as the intersection point of two lines on a graph",
+        "No solution (parallel lines)",
+        "Infinitely many solutions (same line)"
+      ],
+      "activities": [
+        "Solve by elimination: { 2x + y = 10 ; x - y = 1 }.",
+        "Solve by substitution: y = 3x - 2 and 2x + y = 13.",
+        "Explain what it means if the equations have no solution or infinitely many solutions."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Simultaneous equations model situations where two conditions must both be satisfied: budgeting, comparing deals, intersecting paths, and balancing forces. The method helps find the single point (or region idea) where constraints align.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Where do you see real-life situations where two conditions must be true at the same time (e.g., affordability and fairness)?"
+      ],
+      "activities": [
+        "List 2–3 real scenarios that could be modelled with two equations (budgeting, routes, deals) and describe the unknowns."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Communicate the difference between substitution and elimination through story, metaphor, and teaching, building confidence in choosing and explaining a method.",
+      "activities": [
+        "Create a short video or storyboard explaining when you'd use substitution vs elimination.",
+        "Design a comic where two friends argue about whose method is “more powerful.”",
+        "Write a metaphor: “Two truths meet at one moment” and link it to intersection."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive tool to solve simultaneous equations across three levels, optionally revealing worked steps and resetting for fresh problems to build fluency and accuracy.",
+      "tools": [
+        "Canva embed: interactive simultaneous equations tool (3 levels; Show Steps; Reset for new questions)"
+      ],
+      "activities": [
+        "Try all three levels and solve at least one equation pair using each method (substitution and elimination).",
+        "Use “Show Steps” to compare your method with the guided solution.",
+        "Reset to generate new questions and repeat until you can solve confidently without prompts."
+      ],
+      "design_challenges": [
+        "Create 4 pairs of simultaneous equations: 2 best suited to elimination and 2 best suited to substitution. Provide full worked solutions and explain why each method is efficient for that pair."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Act out the meeting point: two learners walk from different sides of the room toward a common point; where they meet represents the solution.",
+        "Use tape on the floor to create axes and physically stand in the intersection region as the equations are read aloud."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Revision Card: Substitution vs Elimination",
+        "focus": "Create a revision card comparing substitution and elimination, including one worked example for each and a real-life situation that could be modelled with two equations.",
+        "products": [
+          "A revision card comparing substitution and elimination",
+          "One worked example solved by elimination (with clear steps)",
+          "One worked example solved by substitution (with clear steps)",
+          "One real-life context you create (e.g., budgeting or comparing deals) with the two equations written",
+          "A short reflection: which method you preferred and why"
+        ],
+        "assessment_criteria": [
+          "Understanding — Explains each method clearly and accurately",
+          "Fluency — Solves a pair of equations correctly using both methods",
+          "Application — Creates a realistic context and matches it to equations",
+          "Reflection — Compares methods and justifies a preferred approach"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Solve linear equations using inverse operations",
+      "Confidence with expanding/simplifying expressions",
+      "Comfort with substitution (replacing a variable with an expression)",
+      "Add/subtract equations accurately (including negatives)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Graphing simultaneous equations and interpreting intersections",
+      "Simultaneous equations with one linear and one quadratic (extension)",
+      "Inequalities and feasible regions (constraints)",
+      "Algebraic modelling of real contexts with multiple constraints"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/simultaneous_equations/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

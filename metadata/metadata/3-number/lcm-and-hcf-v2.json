@@ -1,0 +1,183 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_lcm_and_hcf_v2",
+    "title": "Lowest Common Multiple & Highest Common Factor",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "multiples_factors_primes",
+    "subtopic": "HCF and LCM using prime factorisation (prime powers)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use prime factorisation written as prime powers to calculate HCF (common primes with lowest powers) and LCM (all primes with highest powers), then apply these ideas to fair sharing and synchronising cycles in real contexts such as packaging and timings (SDG 12). :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can prime factorisation help us split fairly and synchronise repeating cycles?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Prime factorisation breaks numbers into prime building blocks. Using prime powers, HCF is found by taking primes common to all numbers with the lowest powers, and LCM by taking every prime that appears with the highest power.",
+      "key_concepts": [
+        "Prime factorisation",
+        "Prime powers (index form)",
+        "Highest Common Factor (HCF) using lowest powers of shared primes",
+        "Lowest Common Multiple (LCM) using highest powers of all primes present",
+        "Factor trees and repeated division"
+      ],
+      "activities": [
+        "Find the HCF and LCM of: (36, 60), (24, 84), (18, 30) using factor trees or repeated division.",
+        "Use a neat prime-power layout (row per number) to compare exponents quickly."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Factorisation has long supported fair sharing (equal groups) and synchronising repeating cycles (like traffic lights and schedules). Today, these ideas connect to efficient packaging and resource use through SDG 12: Responsible Consumption & Production.",
+      "sdg_contexts": [
+        "SDG 12: Responsible Consumption & Production"
+      ],
+      "justice_prompts": [
+        "Where do you see “repeat together” moments (LCM) or “split fairly” moments (HCF) in daily life?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students choose a creative way to represent prime factorisation and explain the difference between HCF and LCM using metaphor, visuals, or a mini-poster.",
+      "activities": [
+        "Sketch a factor “family tree” (factor tree) for 60, 84, or 120 and colour primes/composites differently.",
+        "Write a short metaphor: “HCF is like… / LCM is like…”",
+        "Create a mini-poster showing the prime-power method side-by-side for HCF and LCM."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive Prime Factor Tree tool to factor numbers, rewrite them in prime powers, and compute HCF/LCM by comparing exponents; then apply to practice scenarios including timing and packaging.",
+      "tools": [
+        "Canva embed: Prime Factor Tree interactive"
+      ],
+      "activities": [
+        "Build a prime factor tree for each number, then write each as prime powers (e.g., 60 = 2^2·3·5).",
+        "Calculate HCF (lowest powers of primes common to all numbers).",
+        "Calculate LCM (highest powers of primes appearing in any number).",
+        "Practice: (12, 18), (24, 60), (84, 120).",
+        "Three numbers: (12, 20, 30), (15, 18, 24).",
+        "Context (LCM): two warning lights flash every 12s and 18s—when do they flash together next?",
+        "Context (HCF): package 84 and 120 items into equal boxes with no waste—what is the largest box size?"
+      ],
+      "design_challenges": [
+        "Create your own real-world HCF/LCM scenario and justify the method using prime powers."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Reset: breathe in for 3, out for 5, and trace a tiny factor tree in the air with your finger to break the problem into smaller steps."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Design brief: Zero-waste crate size",
+        "focus": "Create a zero-waste crate size that works for 36-item and 48-item boxes and justify your choice using LCM reasoning.",
+        "products": [
+          "A clear statement of the crate size choice",
+          "Prime factorisation of 36 and 48 written as prime powers",
+          "LCM calculation using highest powers",
+          "A short justification explaining why LCM is the correct tool"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Clear use of prime powers for HCF/LCM",
+          "Fluency & Accuracy – Correct factorisations and calculations",
+          "Application – Sensible, well-argued real-world choice",
+          "Independence & Reflection – Personal strategy and learning notes"
+        ]
+      },
+      {
+        "name": "Fair kits: Tile packs",
+        "focus": "Use HCF to find the largest identical kit size you can make from 84 red and 60 blue tiles.",
+        "products": [
+          "Prime factorisation of 84 and 60 written as prime powers",
+          "HCF calculation using lowest shared powers",
+          "Kit design (what each kit contains) with no waste",
+          "A short explanation of why HCF applies"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Clear use of prime powers for HCF",
+          "Fluency & Accuracy – Correct factorisations and calculations",
+          "Application – Fair grouping explained clearly",
+          "Independence & Reflection – Personal strategy and learning notes"
+        ]
+      },
+      {
+        "name": "Explainer: Prime-power method guide",
+        "focus": "Create a one-page guide or 60-second voice note teaching the prime-power method for HCF and LCM.",
+        "products": [
+          "A clear step-by-step explanation of the prime-power method",
+          "At least one worked HCF example and one worked LCM example",
+          "Correct use of terms (prime factorisation, prime powers, HCF, LCM)"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Method is explained accurately and clearly",
+          "Fluency & Accuracy – Worked examples are correct",
+          "Communication – Guide/voice note is structured and easy to follow",
+          "Independence & Reflection – Includes a personal tip or common mistake to avoid"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application",
+      "Independence & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Know prime numbers and basic factorisation",
+      "Use factor trees or repeated division for prime factorisation",
+      "Understand multiples and factors language",
+      "Confidence multiplying prime powers to rebuild a number"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Prime factorisation for simplifying fractions",
+      "Finding common denominators using LCM",
+      "Ratio and proportional reasoning with shared factors",
+      "Number theory and divisibility reasoning"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/multiples_factors_primes/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

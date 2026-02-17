@@ -1,0 +1,130 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "angles_on_parallel_lines_v2",
+    "title": "Angles on Parallel Lines",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "angle_facts",
+    "subtopic": "angles on parallel lines (alternate, corresponding, co-interior)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Identify and use alternate and corresponding angle equalities and co-interior angle sums to solve unknown-angle problems and to justify when lines are parallel."
+  },
+  "verse_ality": {
+    "driving_question": "What relationships exist between the angles formed when a transversal cuts two parallel lines?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore angle relationships created by a transversal cutting parallel lines and apply them to find unknown angles and test whether lines are parallel.",
+      "key_concepts": [
+        "Transversal",
+        "Parallel lines",
+        "Alternate interior angles are equal",
+        "Corresponding angles are equal",
+        "Co-interior (consecutive interior) angles sum to 180°",
+        "Angle facts and reasoning to prove lines are parallel"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect angle relationships on parallel lines to real-world alignment in architecture, transport networks, and design (tracks, facades, road markings) where checking parallelism matters.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why is geometric accuracy useful in real-world design, and who is affected when alignment is wrong?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Represent and explain the relationships using drawings, colour, storytelling and voice, building confidence to identify ‘Z’ and ‘F’ patterns and supplementary pairs.",
+      "activities": [
+        "Create a drawing of two parallel lines and a transversal — colour matched pairs of equal angles (alternate, corresponding, co-interior).",
+        "Record a short explanation (voice-note or video) describing how you identify the “Z” angles and the “F” angles in such a diagram.",
+        "Invent a short comic where a “line” character meets a “transversal” and discovers angle friends — alternate, corresponding, co-interior."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use a web sketchpad to drag a transversal across parallel lines, observe equalities and supplementary pairs, and test what changes when lines stop being parallel.",
+      "design_challenges": [
+        "Move the transversal and observe how the corresponding angle matches the original when the lines remain parallel.",
+        "Drag to show the “Z” shape (alternate interior angles) — describe what you notice about the angles marked.",
+        "Create a pair of co-interior angles and check they sum to 180°.",
+        "Challenge: What happens if the lines are no longer parallel? Which relationships break down?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Stand straight holding two long ropes as parallel lines. A friend walks across them with a stick acting as a transversal. At each intersection count the angles created and match “Z” shapes or “F” shapes with gestures."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Angle Relationships Poster/Slide",
+        "focus": "Create a mini-poster or slide showing two parallel lines and a transversal with all key angle pairs labelled (alternate, corresponding, co-interior), stating which are equal or supplementary and linking to a real-life application.",
+        "products": [
+          "A clear diagram with all key angle pairs labelled (alternate, corresponding, co-interior).",
+          "Annotations showing which angles are equal and which sum to 180° (e.g., ∠a = ∠b, ∠c + ∠d = 180°).",
+          "A short real-life application note (e.g., road markings, ladder rails, building frame alignment).",
+          "A brief reflection: which relationship was easiest, which needed more reasoning, and why?"
+        ],
+        "criteria": [
+          "Understanding — Correctly classify each angle pair and state the relationship.",
+          "Fluency & Accuracy — Accurately label angles and include equation form.",
+          "Application — Explain how this is used in real life.",
+          "Independence & Reflection — Identify what was easiest/hardest and why."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Angle facts on a straight line (180°)",
+      "Vertically opposite angles",
+      "Basic naming/identification of angles in diagrams"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Angles in a triangle (parallel line proof pathway)",
+      "Polygon angle sums",
+      "Reasoning and proof in geometry problems"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/angle_facts/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

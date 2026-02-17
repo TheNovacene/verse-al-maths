@@ -1,0 +1,139 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "inverse_trig_finding_missing_angle_v2",
+    "title": "Using Inverse Trigonometric Ratios to Find Missing Angles",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "trigonometry",
+    "subtopic": "inverse trig ratios to find a missing angle",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use inverse sine, cosine, and tangent to calculate unknown angles in right-angled triangles from two known sides, using correct calculator settings and clear reasoning."
+  },
+  "verse_ality": {
+    "driving_question": "What is always true about inverse trig functions, and how is finding an angle different from finding a side?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Work backwards from side ratios to find a missing angle in a right-angled triangle using sin⁻¹, cos⁻¹, or tan⁻¹, choosing the correct inverse function and interpreting calculator output in degrees.",
+      "key_concepts": [
+        "Inverse trigonometric functions (sin⁻¹, cos⁻¹, tan⁻¹)",
+        "Right-angled triangles",
+        "Opposite, adjacent, hypotenuse (relative to the chosen angle)",
+        "Angle notation (θ)",
+        "Calculator in degree mode",
+        "Choosing the correct ratio from the known sides",
+        "Accuracy and checking by substitution"
+      ],
+      "tools": [
+        "Video: Inverse Trigs (canva_embed): https://www.canva.com/design/DAGvA-q4A-g/-avR0h2pW0q9hRmHV96aPA/watch?embed",
+        "Interactive: Inverse Trig Ratios Sketch (canvas_embed): https://canvas.instructure.com/courses/12822206/files/314020096/download"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore why inverse trig matters in real work: surveyors and engineers often know two sides and must calculate an angle precisely to design ramps, slopes, and bridges without relying on protractors.",
+      "sdg_contexts": [
+        "SDG 4: Quality Education"
+      ],
+      "justice_prompts": [
+        "Where do we need to be exact with angles? Who benefits from this skill?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Make personal meaning of inverse trig by explaining it in your own way and creating scenarios where finding an angle matters, noticing what feels tricky and what supports your confidence.",
+      "activities": [
+        "Make a poster explaining how to use sin⁻¹, cos⁻¹, and tan⁻¹ to find angles.",
+        "Create your own real-life triangle scenario (e.g., leaning ladder, ramp angle) and describe what you would need to measure.",
+        "Reflect: What part of using the calculator feels tricky? What helps?",
+        "Explain inverse trig to someone who has never seen it before (your choice of format)."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive sketch to generate triangles, hide/reveal values, and practise calculating missing angles with inverse trig—then evaluate how to design learning tools that are accessible beyond visuals.",
+      "design_challenges": [
+        "Challenge yourself or a partner: hide two sides and calculate the missing angle.",
+        "Use a calculator and one inverse trig ratio (sin⁻¹, cos⁻¹, or tan⁻¹) that matches the known sides.",
+        "Reveal the true value and check your accuracy; correct errors and try again.",
+        "Drag point C to generate new triangles and build fluency across many cases.",
+        "Ethical design: How could this angle-finder work for someone using a screen reader or without sight?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Pause after each calculation.",
+        "Stretch your arms open wide like triangle arms.",
+        "Look up toward the top angle and breathe in for 4, out for 6.",
+        "Sit upright like a triangle’s vertical side and relax your hands."
+      ],
+      "wellbeing_prompts": [
+        "How does your body feel after solving something tricky?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Trig Detective (SDG 4 – Quality Education)",
+        "focus": "Create and solve triangle ‘blueprints’ where the angle labels have been scrambled, using inverse trig to calculate and justify the correct missing angles.",
+        "products": [
+          "Three triangle scenarios (with different known side pairs).",
+          "For each scenario: working, final angle answer, and which inverse function you used (sin⁻¹, cos⁻¹, or tan⁻¹).",
+          "Screenshots (or equivalent evidence) and a short reflection.",
+          "Self-assessment using the GCSE Maths Rubric: Conceptual Understanding, Fluency & Accuracy, Application to Problems, Independence & Reflection."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Identify opposite, adjacent and hypotenuse relative to a chosen angle in a right-angled triangle",
+      "Use a calculator confidently in degree mode",
+      "Understand basic trig ratios (sin, cos, tan) and what they represent"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Problem solving with angles of elevation and depression",
+      "Bearings and navigation contexts",
+      "Further trigonometry (including multi-step and 3D contexts)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/trigonometry/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

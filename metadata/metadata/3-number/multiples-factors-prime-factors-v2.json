@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_multiples_factors_prime_factors_v2",
+    "title": "Multiples, Factors and Prime Factors",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "multiples_factors_primes",
+    "subtopic": "multiples, factors, prime factors, HCF and LCM",
+    "level": "KS4_GCSE",
+    "exam_boards": [],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Identify multiples, factors and prime factors; use prime factor trees to factorise numbers; and find HCF and LCM to solve real-world grouping problems using clear mathematical reasoning. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How do multiples and factors help us spot patterns and solve real-world grouping problems fairly and efficiently?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Students learn the language of multiples, factors and prime factors, then use factor trees to find prime factorisations and apply them to calculate HCF and LCM.",
+      "key_concepts": [
+        "Multiple",
+        "Factor",
+        "Prime factor",
+        "Prime factor tree",
+        "Lowest Common Multiple (LCM)",
+        "Highest Common Factor (HCF)"
+      ],
+      "activities": [
+        "Write the prime factor trees for 24 and 36.",
+        "Use the factor trees to find the HCF and LCM of 24 and 36.",
+        "Explain the difference between a factor and a multiple using an example."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Factors and multiples underpin patterns in construction, music, computing and design. Exact groupings help humans build, organise, and coordinate systems efficiently.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Where do you encounter factors or multiples in daily life?",
+        "Why do exact groupings matter?"
+      ],
+      "activities": [
+        "Discuss examples: builders aligning bricks in repeated patterns; musicians counting beats in cycles."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students represent factorisation and common multiples creatively to strengthen memory and communication.",
+      "activities": [
+        "Make a factor rainbow diagram for a number of your choice.",
+        "Create a prime factor tree that branches into a real tree illustration.",
+        "Write a poem or chant to remember how to find LCM and HCF.",
+        "Reflect: “If your life were a number, what would its factors be?”"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students connect multiples and factors to designed systems (calendars, packaging, software loops) and use tools like Venn diagrams or calculators to solve real-world synchronisation/grouping problems.",
+      "tools": [
+        "Canva embed: Interactive Prime Factor Tree Builder"
+      ],
+      "activities": [
+        "Explore multiples and factors in calendar design, packaging layouts, and repeating software cycles.",
+        "Solve a grouping/scheduling problem (e.g., two buses arriving together) using an LCM method (calculator or Venn diagram).",
+        "Use the Interactive Prime Factor Tree Builder to build and check factor trees step-by-step."
+      ],
+      "design_challenges": [
+        "Create a real-world grouping problem and show how HCF or LCM solves it, using factor trees, lists, or a Venn diagram."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Step forward for each multiple of 3 and stretch on each multiple of 5.",
+        "Notice what happens when you reach a common multiple."
+      ],
+      "wellbeing_prompts": [
+        "How do rhythms in your body (heartbeat or breath) relate to number patterns?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Factor Design Challenge (SDG 4)",
+        "focus": "Model a real-world system using multiples, factors, and prime factorisation, and explain why factor thinking supports efficiency, harmony, or fairness.",
+        "products": [
+          "A chosen real-world system involving multiples/factors (e.g., music beats, packaging layout, sports fixtures)",
+          "A mathematical model using factor trees, lists, and/or Venn diagrams",
+          "An explanation of how understanding factors/multiples supports efficiency, harmony, or fairness",
+          "A clear SDG 4 link (Quality Education) explaining how factor understanding helps learning access or clarity"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Clarity on LCM, HCF, prime factors",
+          "Fluency & Accuracy – Correct factorisation and reasoning",
+          "Application – Relevant and meaningful real-world link",
+          "Creativity & Reflection – Original and thoughtful presentation"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Understand multiplication and division as inverse operations",
+      "Know basic times tables (at least up to 10×10)",
+      "Recognise prime numbers up to at least 30"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Prime factorisation methods for larger numbers",
+      "HCF/LCM problem solving (fractions, simplifying, common denominators)",
+      "Algebraic reasoning with factors and multiples",
+      "Number theory patterns (primes and divisibility)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/multiples_factors_primes/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_plotting_straight_line_graphs_v2",
+    "title": "Plotting Straight Line Graphs",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "straight line graphs (y = mx + c)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Investigate linear relationships on a coordinate grid, connect patterns in x and y values to the form y = mx + c, and use gradient and intercept to model and interpret straight-line situations. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can straight-line graphs help us predict, design, and explain relationships in the real world?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Straight lines show a consistent relationship between x and y values that can be represented by an equation in the form y = mx + c, where m is the gradient and c is the y-intercept.",
+      "key_concepts": [
+        "Coordinate pairs and plotting points",
+        "Linear relationship",
+        "Equation of a straight line (y = mx + c)",
+        "Gradient (m) as rate of change",
+        "y-intercept (c)",
+        "Checking points satisfy an equation"
+      ],
+      "tools": [
+        "Interactive sketch: explore how changing points changes the line and its equation"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Linear patterns appear in daily life (budgeting, prediction, distance-time) and connect to the historical development of algebra and analytic geometry through thinkers such as Euclid and Diophantus.",
+      "sdg_contexts": [
+        "SDG 9: Industry, Innovation, and Infrastructure"
+      ],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Create and communicate your own linear relationships through drawing, listing points, forming rules, and expressing what “linear” means through metaphor or short poetic writing.",
+      "activities": [
+        "Draw your own line, list five points on it, and write a rule connecting x and y.",
+        "Create a metaphor or short poem for a linear relationship and compare it to a non-linear one."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use linear equations as design tools in construction, finance, physics and coding; investigate how engineers and systems use linear models to plan paths, distances, and infrastructure.",
+      "design_challenges": [
+        "Use the interactive sketch to record coordinate changes and write the exact equation of the line."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Breathing and tracing a steady left-to-right line motion to connect linearity with steadiness and predictability."
+      ],
+      "wellbeing_prompts": [
+        "How does the steadiness of a linear pattern feel in your body?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - SDG 9 Bridge Line Model",
+        "focus": "Model a straight bridge as a line through two given points and find the equation of that line.",
+        "products": [
+          "A plotted coordinate diagram showing the points (2, 3) and (8, 7)",
+          "Working to calculate the gradient",
+          "A correct linear equation for the bridge",
+          "A short reflection on how mathematics supports innovation in infrastructure"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains how gradient and intercept relate to a straight line (y = mx + c)",
+          "Fluency & Accuracy: Correct gradient calculation and correct final equation",
+          "Application: Clear link to the bridge/infrastructure context (SDG 9)",
+          "Communication & Reflection: Reasoning is clear and reflection is thoughtful"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot coordinates on a Cartesian grid",
+      "Work with negative and positive numbers",
+      "Understand basic substitution into an expression",
+      "Find gradient as change in y over change in x (rise/run)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Graphing and interpreting y = mx + c",
+      "Rearranging and solving linear equations",
+      "Parallel and perpendicular lines (gradients)",
+      "Real-world modelling with linear functions"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

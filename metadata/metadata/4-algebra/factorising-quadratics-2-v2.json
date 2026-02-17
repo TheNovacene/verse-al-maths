@@ -1,0 +1,132 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_factorising_non_monic_quadratics_v2",
+    "title": "Factorising Non-Monic Quadratics",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "factorising_quadratics",
+    "subtopic": "factorising non-monic quadratics ax^2 + bx + c by splitting the middle term and factoring by grouping",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Factorise non-monic quadratics of the form ax^2 + bx + c by multiplying a×c, finding two numbers that multiply to a×c and add to b, splitting the middle term, and factorising by grouping, then checking by expansion. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "When can a quadratic expression like ax^2 + bx + c be rewritten as a product of two brackets?",
+    "knowing_world": {
+      "present": true,
+      "focus": "When a is not 1, factorising can be done using the “split the middle term” method: use a×c to find a pair that sums to b, rewrite bx as two terms, then factor by grouping and check by expanding. :contentReference[oaicite:1]{index=1}",
+      "key_concepts": [
+        "Non-monic quadratic: ax^2 + bx + c where a ≠ 1",
+        "Multiply a × c (ac method)",
+        "Find two numbers that multiply to ac and add to b",
+        "Split the middle term bx into two terms",
+        "Factor by grouping",
+        "Check factorisation by expanding"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Methods for reversing multiplication and factorising expressions go back centuries. Today, factorising helps simplify relationships in engineering, coding, and physics by revealing structure and making problems easier to solve. :contentReference[oaicite:2]{index=2}",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Make the method memorable by turning the steps into a story, flowchart, or tutorial that shows the ‘journey’ from quadratic to factors and highlights the “aha!” moment when the correct split is found. :contentReference[oaicite:3]{index=3}",
+      "activities": [
+        "Design a flowchart or comic strip showing the journey of a quadratic being factorised.",
+        "Write a dialogue between two students factorising 3x^2 + 10x + 8 and describing their “aha!” moment.",
+        "Make a short video tutorial showing your step-by-step method, including a final check by expansion."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive tool that guides you through selecting a, b, c, finding the split for bx, grouping, and checking your answer, then reset to practise new non-monic quadratics. :contentReference[oaicite:4]{index=4}",
+      "design_challenges": [
+        "Use the interactive to factorise several non-monic quadratics and keep a log of the (ac pair, split, grouping) for each.",
+        "Choose three non-monic quadratics and show full working using split-the-middle-term and factor-by-grouping, then verify each by expanding.",
+        "Create one real-world problem (e.g., area or profit) that leads to a non-monic quadratic and explain what the factors mean in context."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Act out the process: breathe in to “combine” into a quadratic, breathe out to “split” into factors; use your arms to show brackets coming together or splitting apart while thinking through each step. :contentReference[oaicite:5]{index=5}"
+      ],
+      "wellbeing_prompts": [
+        "Which part of the process do you find most challenging, and what small reset helps you keep going?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Three Non-Monic Quadratics + One Context Problem",
+        "focus": "Factorise three non-monic quadratics using split-the-middle-term and factor-by-grouping, explain your factor-pair choices, and create one real-world problem that leads to a non-monic quadratic.",
+        "products": [
+          "Full working for three non-monic quadratics (including the ac product, chosen split, grouping steps, and final factors)",
+          "A brief explanation for each showing why the chosen pair works (multiplies to ac and adds to b)",
+          "A check by expansion for each factorised expression",
+          "One real-world problem (e.g., area or profit) that forms a non-monic quadratic, with an explanation of what the factors represent",
+          "A short reflection on which step was hardest and how you overcame it"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Explains the ac method and why the split is chosen",
+          "Fluency & Accuracy: Correct factorisation and correct expansion checks",
+          "Application: Real-world problem is coherent and links meaningfully to factors",
+          "Independence & Reflection: Identifies challenges and effective strategies"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Fluency with integer factors and factor pairs",
+      "Expanding brackets confidently (to check factorisations)",
+      "Collecting like terms and handling negative signs accurately",
+      "Factorising monic quadratics (x^2 + bx + c) as a starting point"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Solving quadratic equations by factorising",
+      "Algebraic manipulation with grouping and common factors",
+      "Linking factors to roots and x-intercepts on quadratic graphs",
+      "Quadratic modelling in geometry (area) and finance (profit/cost)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/factorising_quadratics/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_y_equals_f_x_plus_a_horizontal_shift_v2",
+    "title": "y = f(x + a)",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "horizontal translations of functions",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Understand and apply horizontal translation rules y = f(x + a) and y = f(x - a), explain shift direction using correct transformation language, and connect horizontal shifts to modelling delays and time changes in real-world systems such as transport and scheduling. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How do graphs shift left or right, and how can that help us model time changes and design fairer systems?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore horizontal translations by changing the input inside a function, recognising that the shape stays the same while every x-value effectively shifts left or right.",
+      "key_concepts": [
+        "Translation (no rotation or resizing)",
+        "Input (x-value) of a function",
+        "Horizontal shift (left/right movement)",
+        "y = f(x + a) shifts left by a units",
+        "y = f(x - a) shifts right by a units"
+      ],
+      "activities": [
+        "Explain why adding inside the function shifts the graph left.",
+        "Explain why subtracting inside the function shifts the graph right."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Horizontal translations model delays, phase shifts, and time changes in life: train schedules, sound engineering, daylight patterns, and accessible transport planning.",
+      "sdg_contexts": [
+        "SDG 11: Sustainable Cities and Communities"
+      ],
+      "justice_prompts": [
+        "Can you think of something in your world that was delayed — but still arrived?",
+        "When we understand how things move in time and space, how can we build smarter, fairer systems for everyone?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use writing and art to connect horizontal shifts to changes in direction, timing, and personal stories.",
+      "activities": [
+        "Write or sketch a scene where a person’s path changes — just like a graph.",
+        "What does it feel like to be “shifted left” or “shifted right”?",
+        "Create a metaphor for a graph that slides: “Like time, like tide, like...”"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive Web Sketchpad to test how changing a inside the function shifts the graph and moves key features like the turning point along the x-axis, then connect this to ethical design decisions in scheduling and sensing systems.",
+      "tools": [
+        "Web Sketchpad interactive (embedded via Canvas file link)"
+      ],
+      "activities": [
+        "Set f(x) = x^2, then adjust values of a to shift it left or right.",
+        "Observe how the turning point moves along the x-axis."
+      ],
+      "design_challenges": [
+        "Ethical design prompt: Design a schedule or sensor that must shift based on time of day or environment. Explain how horizontal translations help you design for fairness."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Sit comfortably with both feet on the ground.",
+        "Sway slightly to the left, then to the right, noticing balance.",
+        "Let your breath follow: in on the left, out on the right."
+      ],
+      "wellbeing_prompts": [
+        "Even graphs need room to shift. So do we."
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option 1: Visual Model of a Horizontal Shift",
+        "focus": "Create a visual model of a function with a horizontal shift and explain its rule clearly.",
+        "products": [
+          "A labelled graph (paper or digital) showing an original function and a horizontally shifted version",
+          "A written or spoken explanation identifying the form and the direction/magnitude of shift"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Identifies correct shift direction and form",
+          "Fluency & Accuracy – Applies function rules with accuracy",
+          "Communication – Clear explanation using correct transformation language"
+        ]
+      },
+      {
+        "name": "Option 2: Real-Life Application",
+        "focus": "Find a real-life application (transport, design, or scheduling) that uses horizontal translation and explain why it matters.",
+        "products": [
+          "A short description of the real-life situation (delay, schedule shift, phase shift, etc.)",
+          "A simple function/graph model showing the horizontal translation",
+          "A short explanation of what the shift represents"
+        ],
+        "assessment_criteria": [
+          "Application to Problems – Links graph changes to real-world shifts",
+          "Conceptual Understanding – Correctly matches translation to meaning",
+          "Independence & Reflection – Thoughtful choice of example"
+        ]
+      },
+      {
+        "name": "Option 3: Creative Story",
+        "focus": "Write a creative short story based on a graph that shifts direction, using the idea of translation as a narrative move.",
+        "products": [
+          "A short story (or comic/voice note) inspired by a graph shifting left/right",
+          "A short paragraph or caption linking the story to y = f(x ± a)"
+        ],
+        "assessment_criteria": [
+          "Independence & Reflection – Shows unique voice and personal meaning",
+          "Conceptual Understanding – Correctly links the story to the transformation",
+          "Communication – Story is coherent and clearly connected to the maths"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application to Problems",
+      "Independence & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot and interpret points on a coordinate grid",
+      "Understand function output as y-values",
+      "Work confidently with integers (including negative values)",
+      "Recognise translations as shifts without changing shape"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Full set of graph transformations (translations, reflections, stretches)",
+      "Sketching transformed graphs quickly from function notation",
+      "Trigonometric phase shifts and modelling periodic behaviour",
+      "Function notation fluency for GCSE and beyond"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

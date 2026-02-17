@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_manipulating_surds_v2",
+    "title": "Manipulating Surds",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "roots_and_powers",
+    "subtopic": "surds: simplify, add/subtract, multiply",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Recognise surds as irrational roots, simplify surds by factorising into square factors, and manipulate surds by adding/subtracting like surds and multiplying using √a·√b = √(ab), applying clear rules and communication strategies to stay accurate. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we work confidently with irrational square roots using reliable rules?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Surds are irrational roots that cannot be simplified to whole or fractional numbers, but they can be manipulated using consistent rules: simplify by extracting square factors, combine only like surds when adding/subtracting, and multiply using √a·√b = √(ab).",
+      "key_concepts": [
+        "Surd as an irrational square root (e.g., √2, √3, √5)",
+        "Simplifying surds by factorising into square factors",
+        "Example: √50 = √(25×2) = 5√2",
+        "Like surds (same root part) combine like algebra terms",
+        "Adding/subtracting like surds (e.g., 3√2 + 2√2 = 5√2)",
+        "Multiplying surds: √a × √b = √(ab) (e.g., √2 × √3 = √6)",
+        "Treat surds like algebraic terms unless simplified first"
+      ],
+      "activities": [
+        "Simplify √72.",
+        "Work out √8 + √18 (simplify first, then combine if like).",
+        "Simplify (2√3)(√5)."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Surds emerged from geometry needs like diagonals and lengths that cannot be written exactly as fractions; discoveries such as √2 reshaped ancient mathematical thinking about number. :contentReference[oaicite:1]{index=1}",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students communicate surd rules creatively to strengthen memory and build confidence explaining irrational numbers to others.",
+      "activities": [
+        "Design a visual comparing rational roots and irrational surds.",
+        "Write a poem starting: “Square roots that never end…”",
+        "Make a short video explaining surds to a friend who struggles with fractions."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive practice tool to practise simplifying, adding/subtracting, and multiplying surds across different challenge levels with feedback and repeat attempts.",
+      "tools": [
+        "Canva embed: Surd practice tool (levels for simplifying, adding/subtracting, multiplying; Check and Try Another)"
+      ],
+      "activities": [
+        "Choose a level (simplifying / adding-subtracting / multiplying).",
+        "Solve 3 random surd expressions.",
+        "Click “Check” for feedback and “Try Another” for more practice."
+      ],
+      "design_challenges": []
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Use string or sticks to form right-angled triangles. Measure the hypotenuse and estimate its square root; compare estimates with others."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Surds Mini Guide / Poster",
+        "focus": "Create a short guide or poster explaining how to simplify, add/subtract, and multiply surds, with clear examples and a real-world usefulness note.",
+        "products": [
+          "A short guide or poster on manipulating surds",
+          "At least one example each of simplifying, adding/subtracting, and multiplying surds",
+          "Colour-coding or visual cues showing which parts combine and why",
+          "A short explanation of how surds are useful beyond school maths"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Rules are explained correctly (simplify first; only like surds combine; √a·√b = √(ab))",
+          "Fluency & Accuracy: Examples are correct and simplified fully",
+          "Communication: Colour-coding/structure makes steps easy to follow",
+          "Application & Reflection: Includes a meaningful note on why surds matter beyond school"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Know square numbers and factor pairs",
+      "Understand square roots as the inverse of squaring",
+      "Comfort with simplifying numerical expressions",
+      "Basic algebra idea of combining like terms"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Rationalising denominators (higher GCSE extension)",
+      "Exact form answers in Pythagoras and trigonometry",
+      "Quadratic surds and simplifying expressions in algebra",
+      "Indices and roots (fractional indices)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/roots_and_powers/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

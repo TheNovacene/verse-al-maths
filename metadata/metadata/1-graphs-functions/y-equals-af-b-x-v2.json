@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_y_equals_a_f_bx_v2",
+    "title": "y = a f(bx)",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "stretching and compressing graphs (y = a·f(x), y = f(bx))",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Explore how multiplying a function by a changes vertical scale (amplitude) and how replacing x with bx changes horizontal scale (frequency), using sine waves to model rhythms and wellbeing-linked cycles. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "What happens to a graph when we stretch or squash it, and how can that help us model real rhythms in wellbeing?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Students investigate vertical and horizontal stretch/compression through y = a·f(x) and y = f(bx), using wave language (amplitude and frequency) to describe how the shape changes.",
+      "key_concepts": [
+        "Vertical stretch/compression: y = a·f(x)",
+        "Horizontal stretch/compression: y = f(bx)",
+        "Stretch vs compression",
+        "Amplitude (maximum height of a wave)",
+        "Frequency (how often a wave repeats)",
+        "Describing transformations using correct mathematical language"
+      ],
+      "activities": [
+        "Explain what happens to a graph when we multiply outputs by a.",
+        "Explain what happens to a graph when we replace x with bx.",
+        "Use examples with sine waves to describe amplitude and frequency changes."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Graph stretches and compressions help model biological and human rhythms (heartbeats, sleep cycles) and signals used by engineers and doctors, linking mathematics to health and wellbeing systems.",
+      "sdg_contexts": [
+        "SDG 3: Good Health and Wellbeing"
+      ],
+      "justice_prompts": [
+        "How can understanding rhythm and cycles improve human health and wellbeing?",
+        "Why might it matter that wellbeing systems are designed to flex with people’s natural rhythms?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students connect wave transformations to lived experience by sketching and writing about times when life felt stretched or squashed, using visual choices to represent calm and overwhelm.",
+      "activities": [
+        "Sketch a wave that represents your energy through the day.",
+        "Write about a time when life felt stretched or squashed.",
+        "Use colour (in your own work) to show calm vs overwhelm on a drawn graph."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use an interactive Web Sketchpad to explore how changing a affects amplitude and changing b affects frequency for y = sin(x), then apply this thinking to an ethical design prompt about digital wellbeing.",
+      "tools": [
+        "Web Sketchpad (embedded): explore y = sin(x) with sliders for a (amplitude) and b (frequency)"
+      ],
+      "activities": [
+        "Use the slider to change a and describe how the wave changes.",
+        "Change b and describe the effect on frequency.",
+        "Find settings where the graph feels ‘chaotic’ or ‘calm’ and justify your choices."
+      ],
+      "design_challenges": [
+        "Design a digital wellbeing app concept that uses stretched/compressed graphs to show how someone is doing across a week."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Inhale slowly for 4 counts (stretch).",
+        "Exhale gently for 6 counts (compress).",
+        "Notice the rhythm and flow."
+      ],
+      "wellbeing_prompts": [
+        "Our bodies and graphs both move in waves—tune into your pattern."
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option 1: Sleep Pattern Model",
+        "focus": "Create a model showing a person’s sleep pattern using a stretched sine wave, explaining how the transformation represents the situation.",
+        "products": [
+          "A labelled sine-wave model showing a chosen value of a (amplitude)",
+          "A brief explanation linking the graph to sleep rhythm"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Explains vertical and horizontal graph changes clearly",
+          "Fluency & Accuracy – Accurately uses a and/or b to model transformations",
+          "Application to Problems – Connects mathematical waves to real-life cycles",
+          "Independence & Reflection – Demonstrates personal insight and creativity"
+        ]
+      },
+      {
+        "name": "Option 2: Explain Frequency and Amplitude in Wellbeing",
+        "focus": "Explain how frequency and amplitude relate to physical or emotional wellbeing, using examples of stretched/compressed waves.",
+        "products": [
+          "At least two example graphs showing different a and/or b values",
+          "A clear written or spoken explanation linking amplitude/frequency to wellbeing rhythms"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Explains vertical and horizontal graph changes clearly",
+          "Fluency & Accuracy – Uses correct terminology (amplitude, frequency, stretch, compression)",
+          "Application to Problems – Meaningful link to real-life rhythm/cycle",
+          "Independence & Reflection – Thoughtful insight"
+        ]
+      },
+      {
+        "name": "Option 3: Rhythm Tracker / Wellbeing App Idea",
+        "focus": "Design a rhythm tracker or app idea that uses graphs to help someone feel more balanced, using stretches/compressions to represent change over a week.",
+        "products": [
+          "A short design brief or storyboard for the app",
+          "Example graphs demonstrating how a and b would be used to represent rhythm changes",
+          "A short SDG 3 reflection linking rhythm understanding to wellbeing support"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Explains vertical and horizontal graph changes clearly",
+          "Fluency & Accuracy – Accurately uses a and b to model transformations",
+          "Application to Problems – Connects graphs to wellbeing design",
+          "Independence & Reflection – Creativity and personal insight"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application to Problems",
+      "Independence & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Read and interpret coordinates on a graph",
+      "Understand basic function output as y-values",
+      "Multiply by integers and simple decimals",
+      "Basic familiarity with the idea of a sine wave shape (visual recognition is enough)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Full set of graph transformations (translations, reflections, stretches)",
+      "Trigonometric graphs (amplitude, period/frequency)",
+      "Modelling periodic behaviour in science and technology",
+      "Function notation and transformation composition"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

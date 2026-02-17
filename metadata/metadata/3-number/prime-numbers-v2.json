@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_prime_numbers_v2",
+    "title": "Prime Patterns and Sieves: Unlocking the Language of Numbers",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "prime_numbers",
+    "subtopic": "primes, factors, Sieve of Eratosthenes, prime patterns",
+    "level": "KS4_GCSE",
+    "exam_boards": [],
+    "tier": "higher",
+    "seeds_of_change": "Define and identify prime numbers, use the Sieve of Eratosthenes to find primes up to 100, notice distribution patterns, and connect primes to modern digital security and equitable access to mathematical learning (SDG 4). :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "What patterns do prime numbers follow, and why do they matter in the modern world?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Prime numbers are whole numbers greater than 1 with exactly two distinct factors (1 and itself). Students use an interactive Sieve of Eratosthenes to find primes up to 100 and explore patterns in how primes are distributed.",
+      "key_concepts": [
+        "Prime number (greater than 1 with exactly two distinct factors)",
+        "Composite number",
+        "Factor",
+        "Multiple",
+        "2 as the only even prime",
+        "Sieve of Eratosthenes",
+        "Patterns in prime distribution (gaps and clusters)"
+      ],
+      "activities": [
+        "Use the interactive grid to apply the Sieve of Eratosthenes and identify all primes up to 100.",
+        "Record and describe patterns you notice (gaps, clusters, spacing).",
+        "Explain why 2 is the only even prime."
+      ],
+      "tools": [
+        "Canva embed: Interactive Sieve of Eratosthenes grid (primes up to 100)"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "The sieve method dates back over 2000 years to Ancient Greece, showing early logical pattern-finding. Students consider how learners without screens could still access prime-number ideas and link this to inclusive education (SDG 4).",
+      "sdg_contexts": [
+        "SDG 4: Quality Education"
+      ],
+      "justice_prompts": [
+        "How might someone without internet or a calculator learn about prime numbers today? What tools would they need?",
+        "How can we ensure inclusive and equitable quality education for all (SDG 4), including for learners without screens?"
+      ],
+      "activities": [
+        "Discuss low-tech ways to teach/practise primes (grids, counters, cards, paper sieves)."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students choose a creative response to primes—story/metaphor, visual prime spiral or colour grid, or a reflective writing prompt about feeling “prime” or “composite.”",
+      "activities": [
+        "Invent a story or metaphor about primes and what it means to be “indivisible.”",
+        "Sketch a prime spiral or colour-coded number grid.",
+        "Write a reflection: What number do you feel like today—prime or composite? Why?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Explore modern uses of primes (especially digital security). Students investigate why prime factorisation is hard for large numbers, how RSA encryption relies on primes, and extend pattern-finding with Ulam’s spiral.",
+      "tools": [
+        "Canva embed: Interactive Prime Spiral (Ulam’s Spiral visualisation)"
+      ],
+      "design_challenges": [
+        "Research or model: Why is it hard to break a large number into its prime factors?",
+        "Explain (high-level) how RSA encryption relies on primes.",
+        "Explore Ulam’s spiral: note any diagonal patterns and write one theory, question, or “a-ha!” moment."
+      ],
+      "activities": [
+        "Write a short explanation or sketch what you notice in the prime spiral.",
+        "Consider how changing the spiral (e.g., triangular) might affect patterns."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Maths & movement: breathe in for 3, out for 5; count in primes as you stretch, walk, or rest."
+      ],
+      "wellbeing_prompts": [
+        "What does it feel like to be “undivided”? When do you feel most whole?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Project A: Visual or Tactile Prime Tool (SDG 4)",
+        "focus": "Design a visual or tactile tool that helps someone else understand primes without relying on screens.",
+        "products": [
+          "A physical or hand-drawn prime tool (grid, model, colour wheel, tiles, etc.)",
+          "A short explanation of how it teaches prime/composite classification",
+          "A brief SDG 4 link about inclusive access to learning"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Clear reasoning for what makes a number prime",
+          "Fluency & Accuracy – Accurate classification and use of prime/composite terms",
+          "Application to Problems – Tool supports learning in a low-tech context",
+          "Independence & Reflection – Thoughtful design choices and reflection"
+        ]
+      },
+      {
+        "name": "Project B: Prime-Finding Game",
+        "focus": "Create a mini game using cards or tiles to practise finding and classifying primes.",
+        "products": [
+          "Game rules and components (cards/tiles/grid)",
+          "A set of example rounds or challenges",
+          "An answer/checking method (sieve steps, factor checks, etc.)"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Correct prime definition is embedded",
+          "Fluency & Accuracy – Correct answers/checking method",
+          "Application to Problems – Game meaningfully practises prime thinking",
+          "Independence & Reflection – Creativity and evaluation of game fairness/difficulty"
+        ]
+      },
+      {
+        "name": "Project C: Teach Primes Without Internet",
+        "focus": "Write or record a teaching explanation aimed at someone who has no internet or calculator access.",
+        "products": [
+          "A teaching script, voice note, or short video",
+          "A worked example using the Sieve of Eratosthenes up to at least 50 (or 100)",
+          "A short reflection on what makes the explanation accessible"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Clear explanation of primes and the sieve method",
+          "Fluency & Accuracy – Correct classification and method steps",
+          "Application to Problems – Accessible teaching approach for low-resource contexts",
+          "Independence & Reflection – Thoughtful communication choices"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application to Problems",
+      "Independence & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Understand factors and multiples (basic)",
+      "Recognise whole numbers and simple divisibility (e.g., by 2, 3, 5)",
+      "Comfort with reasoning about division without a calculator"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Prime factorisation and HCF/LCM",
+      "Divisibility tests and proof-style reasoning",
+      "Cryptography basics and modular arithmetic (extension)",
+      "Number patterns and deeper number theory investigations"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/prime_numbers/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

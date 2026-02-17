@@ -1,0 +1,157 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "quartiles_and_comparing_distributions_v2",
+    "title": "Quartiles and Comparing Distributions",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "statistics",
+    "topic": "distributions",
+    "subtopic": "quartiles, five-number summary, box plots, comparing distributions",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use the five-number summary (min, Q1, median, Q3, max) to build box plots, calculate IQR, and write clear GCSE-style comparisons of two distributions using median for centre and IQR/range for spread."
+  },
+  "verse_ality": {
+    "driving_question": "How can one picture tell the story of a whole group?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Use quartiles and the five-number summary to build and interpret box plots, describing centre and spread using median, quartiles, range and interquartile range (IQR).",
+      "key_concepts": [
+        "Minimum, lower quartile (Q1), median, upper quartile (Q3), maximum",
+        "Five-number summary",
+        "Box-and-whisker plot (box plot)",
+        "Interquartile range (IQR = Q3 − Q1)",
+        "Range (max − min)",
+        "Describing a distribution using centre and spread"
+      ],
+      "tools": [
+        "Interactive: Box Plot Builder Web App (canva_embed): https://www.canva.com/design/DAG-NBpjaxk/K3LQsD-tDg3BJnIJ18Ge8Q/view?embed",
+        "Interactive: Box Plot Comparison Web App (canva_embed): https://www.canva.com/design/DAG-Ngp3Qfk/q5UR3JPbuCwU1k39D8Lyow/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Understand how box plots are used to compare groups in real contexts (exam results, race times, hospital waiting times, wages) and why summary pictures can both help and hide important stories depending on scale and what gets emphasised.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Who might be affected if a company or school only shows one summary picture of a group? Who might feel invisible in that summary?",
+        "How could a badly chosen scale make extreme values feel smaller (or bigger) than they really are?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use imagination and annotation to make sense of what box plots communicate about a group, describing ‘characters’ with different medians and spreads and reflecting on where an individual data point might sit within a distribution.",
+      "activities": [
+        "Create two ‘character’ box plots: one with a high median and small IQR, one with a lower median and large IQR, and describe what each says about its group.",
+        "Sketch two box plots and annotate with phrases like “higher typical value”, “more spread out”, and “more consistent”.",
+        "Reflect: If you were one data point inside your box plot, where would you want to sit, and why?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use interactive tools to generate and compare two distributions side-by-side, then write evidence-based statements that compare centre and spread using GCSE-style comparative language.",
+      "design_challenges": [
+        "Use the comparison app to enter two data sets (Group A and Group B) and view side-by-side box plots.",
+        "Compare the medians to judge which group has the higher typical value.",
+        "Compare IQR (and/or range) to judge which group is more consistent or more spread out.",
+        "Comment on overlap between boxes and whiskers and what that implies about similarity/difference between groups.",
+        "Buddy challenge: swap written comparisons and check they mention both median and spread and avoid vague claims without evidence.",
+        "Ethical design: If this app were used to compare student groups, what extra information should it show so the comparison feels fair and not judgemental?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Check-in: notice how your body feels when you see two groups compared (tense, competitive, small, curious).",
+        "Breathing reset: breathe in for 4 counts thinking “This is just information.” Breathe out for 6 counts thinking “I can learn from it.” Repeat a few times."
+      ],
+      "wellbeing_prompts": [
+        "How can you use data to support yourself and others, rather than to compare or judge?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option A – Use the App Data",
+        "focus": "Pick an example scenario in the comparison app, record five-number summaries and IQR for each group, then write a GCSE-style paragraph comparing the two distributions using median and IQR/range.",
+        "products": [
+          "Screenshot/summary from the app for two groups",
+          "Five-number summary for each group (min, Q1, median, Q3, max) and IQR",
+          "One comparison paragraph using comparative language and referencing both centre (median) and spread (IQR/range)"
+        ],
+        "criteria": [
+          "Conceptual Understanding – correct use of median, quartiles and IQR to describe distributions",
+          "Fluency & Accuracy – correct summaries and box plots",
+          "Application to Problems – clear comparison using evidence for both centre and spread",
+          "Independence & Reflection – avoids opinion-only judgements; reflects using evidence"
+        ]
+      },
+      {
+        "name": "Option B – Create Your Own Scenario",
+        "focus": "Invent two realistic data sets (at least 10 values each), use the box plot builder to find quartiles and draw box plots, then write a GCSE-style comparison explaining typical value, consistency and overlap.",
+        "products": [
+          "Two data sets (≥10 values each) representing a real context (e.g., journey times, revision minutes)",
+          "Box plots (or screenshots) and five-number summaries with IQR for each group",
+          "A comparison explaining higher typical value (median), consistency (spread), and any overlap/interesting features"
+        ],
+        "criteria": [
+          "Conceptual Understanding – correct interpretation of centre and spread",
+          "Fluency & Accuracy – accurate quartiles, IQR and comparisons",
+          "Application to Problems – connects comparison to the chosen context",
+          "Independence & Reflection – thoughtful, evidence-based conclusions"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Order a data set and find the median",
+      "Basic understanding of percentages or ‘quarters’ as 25%, 50%, 75% points",
+      "Subtract to find range and IQR",
+      "Read and interpret a number line/scale"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Cumulative frequency and estimating quartiles from graphs",
+      "Comparing distributions in exam-style questions (box plots and histograms)",
+      "Outliers and fairness in data summaries",
+      "Measures of spread (range and IQR) alongside averages"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/statistics/distributions/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

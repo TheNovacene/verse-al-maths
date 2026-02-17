@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "vectors_v2",
+    "title": "Vectors: The Language of Direction and Magnitude",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "vectors",
+    "subtopic": "vector notation, vector addition, and scalar multiplication",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Represent movement using vectors (magnitude and direction), combine vectors by addition, and scale vectors using scalar multiplication, connecting the maths to navigation and real movement."
+  },
+  "verse_ality": {
+    "driving_question": "How can vectors describe movement and position with both direction and magnitude — and what happens when we add and scale them?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Introduce vectors as quantities with magnitude and direction, and explore how components encode movement so we can model translations, forces, and velocities precisely.",
+      "key_concepts": [
+        "Vector (magnitude and direction)",
+        "Components and displacement",
+        "Vector notation",
+        "Resultant vector",
+        "Vector addition (head-to-tail)",
+        "Scalar multiplication"
+      ],
+      "tools": [
+        "Interactive: Vectors Web App (canva_embed): https://www.canva.com/design/DAG5VKZhEpw/qPas42NxFaSRbrWUc6-kPA/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Connect vectors to everyday and professional contexts where direction and size matter, including navigation, engineering, sport trajectories, and GPS-based movement.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Where do you encounter directional movement in your everyday life?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use play and creativity to experiment with combining vectors and notice how changing magnitude or direction changes the overall motion and patterns you can create.",
+      "activities": [
+        "Use the interactive tool to create your own vector combinations and explore the patterns they make.",
+        "Change the magnitude or direction of a vector and describe how the resultant changes.",
+        "Create a movement pattern (path) using multiple vectors and describe it in words."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use the tool to model and visualise vector operations so abstract ideas (addition and scaling) become concrete, supporting accurate design thinking in movement and translation problems.",
+      "design_challenges": [
+        "Plot individual vectors and label their components clearly.",
+        "Visualise vector addition and compare your prediction to the tool’s resultant.",
+        "Explore scalar multiplication: test what changes and what stays the same when you multiply by different scalars.",
+        "Explain how the visual representation helps you understand vector operations more clearly."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [],
+      "wellbeing_prompts": [
+        "Describe your own movement using vectors: how would you represent walking 3 steps east and 4 steps north?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Vector Addition and Closure",
+        "focus": "Create two or more vectors, predict their sum, and test your prediction using the interactive tool; then explore whether you can form a closed vector triangle and explain what it means.",
+        "products": [
+          "Two or more vectors created in the interactive tool (screenshot or sketch).",
+          "A prediction of the resultant vector (direction and magnitude/components).",
+          "Checked result using the tool, with a short comparison to your prediction.",
+          "A closed vector triangle attempt and an explanation of what it shows about the relationship between vectors."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Comfort with coordinates or grid movement (horizontal/vertical steps)",
+      "Add and subtract integers",
+      "Basic understanding of direction (e.g., compass directions)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Transformations as translations on a coordinate grid",
+      "Bearings and navigation problems",
+      "Velocity and displacement in graphs and motion contexts",
+      "Further vector geometry (collinearity and parallel vectors)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/vectors/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

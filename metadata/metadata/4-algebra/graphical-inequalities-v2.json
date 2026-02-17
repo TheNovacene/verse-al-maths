@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_graphical_inequalities_v2",
+    "title": "Solving Inequalities in Two Variables Using Graphs",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphical_inequalities",
+    "subtopic": "linear inequalities in two variables; regions and systems of inequalities",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Graph linear inequalities by drawing boundary lines, using solid vs dashed correctly, shading the correct region using a test point, and solve systems by identifying the overlap region, then explain steps and apply to real constraints like budgeting or logistics. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can graphs show all the solutions to an inequality—and what changes when we add a second condition?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Inequalities in two variables describe regions on the coordinate plane. Students learn how to draw the boundary line, decide whether it is included, shade the correct side, and solve systems by finding where shaded regions overlap.",
+      "key_concepts": [
+        "Linear inequality represents a region (not a single line)",
+        "Boundary line from the related equation (e.g., y = 2x + 1)",
+        "Solid boundary for ≤ or ≥ (included)",
+        "Dashed boundary for < or > (not included)",
+        "Shading the correct side of the boundary line",
+        "Test point method (e.g., (0,0)) to verify the correct region",
+        "Systems of inequalities solved by overlap of shaded regions"
+      ],
+      "activities": [
+        "Quick check: Describe what the inequality y > x looks like on a graph (line, dashed/solid, and which side is shaded).",
+        "Quick check: Sketch the regions for y ≤ -x + 3 and y ≥ 1 and identify the overlap region.",
+        "Explain the difference between a dashed and solid boundary and when each is used."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Real systems often have multiple constraints at once (e.g., zones on maps, safety limits in engineering, budgets and time). Graphical inequalities help us visualise feasible regions where all conditions are satisfied.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Where in the real world do you see systems with multiple conditions working at once?",
+        "How can visualising constraints help people make safer or fairer decisions?"
+      ],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students communicate inequality regions through colour, diagrams, and reflection—showing meaning in the shading and the intersection of conditions.",
+      "activities": [
+        "Create a coloured diagram showing several inequality regions and where they intersect.",
+        "Use shading and line style to explain what each region means.",
+        "Write a reflection: “Solving inequalities graphically helps me see…”"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive whiteboard tool to graph inequalities, combine two or more constraints, and verify shading using test points to build accuracy and intuition.",
+      "tools": [
+        "Canva embed: interactive whiteboard tool for graphing inequalities (with test-point feature)"
+      ],
+      "activities": [
+        "Graph y < 2x + 1 and x ≥ 0, then highlight and describe the overlap region.",
+        "Use a test point to verify your shading choice for at least two inequalities.",
+        "Create your own system of two inequalities and swap with a partner to solve."
+      ],
+      "design_challenges": [
+        "Design a real-world constraint scenario (budgeting/logistics/safety) and model it with two inequalities; graph and interpret the feasible region."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Use masking tape on the floor to create coordinate axes.",
+        "Walk into the solution region as inequalities are read aloud to build spatial intuition about constraints."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Graph a System of Two Inequalities",
+        "focus": "Choose a system of two inequalities, graph both, and clearly communicate the solution region with correct boundary styles, shading, and annotations, including a brief real-world application and reflection.",
+        "products": [
+          "A pair of inequalities chosen by the learner",
+          "A labelled graph with both boundary lines (solid/dashed as appropriate)",
+          "Correct shading for each inequality and the highlighted overlap region",
+          "Annotations explaining boundary inclusion (≤/≥ vs </>) and a test point used",
+          "A short application note connecting the solution region to a real-world context (budgeting or logistics)",
+          "A short reflection: what was tricky and how the graph helped"
+        ],
+        "assessment_criteria": [
+          "Understanding — Explains dashed vs solid boundaries and what they mean",
+          "Accuracy — Plots boundaries and shades regions correctly; overlap region is correct",
+          "Application — Connects the system to a meaningful real-world constraint",
+          "Reflection — Identifies a challenge and explains how graphing supported understanding"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot points and draw straight-line graphs from y = mx + c",
+      "Understand inequality symbols <, ≤, >, ≥",
+      "Solve simple linear inequalities in one variable (helpful but not required)",
+      "Confidence reading and using coordinate axes"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Graphing linear inequalities and feasible regions in optimisation problems",
+      "Simultaneous inequalities and constraint reasoning",
+      "Linear programming ideas (extension)",
+      "Interpreting regions in real modelling contexts (design, budgeting, scheduling)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/algebra/inequalities/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

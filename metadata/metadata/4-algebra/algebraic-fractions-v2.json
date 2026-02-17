@@ -1,0 +1,123 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_algebraic_fractions_v2",
+    "title": "Algebraic Fractions",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "algebraic_fractions",
+    "subtopic": "simplify, add/subtract, multiply/divide and solve equations involving algebraic fractions",
+    "level": "KS4_GCSE",
+    "exam_boards": [],
+    "tier": "higher",
+    "seeds_of_change": "Use fraction rules with algebraic expressions: simplify by factorising and cancelling, add/subtract using a common denominator, multiply/divide and then simplify, and solve equations by clearing denominators carefully and checking solutions for validity. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can we simplify, operate with, and solve algebraic fractions using the same rules as numeric fractions — without making algebra mistakes?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Algebraic fractions follow the same rules as ordinary fractions, but require extra care with factorising and cancelling expressions before simplifying or solving.",
+      "key_concepts": [
+        "Simplify by factorising numerator and denominator, then cancel common factors",
+        "Add/subtract using a common denominator",
+        "Multiply by multiplying numerators and denominators, then simplify",
+        "Divide by multiplying by the reciprocal",
+        "Solve by clearing denominators (where needed) and solving the resulting equation"
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Fractions have ancient roots (e.g., unit fractions in ancient Egypt). Algebraic fractions developed later to model real-world rates, speed, scaling, and are now used in engineering, computing, and financial modelling.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use creativity and explanation to make algebraic fraction rules memorable and teachable to others.",
+      "activities": [
+        "Create a comic strip where a “Fraction Hero” simplifies algebraic fractions to save the day.",
+        "Write a riddle: “I’m a fraction with a twist — I hide variables and tricks. What am I?”",
+        "Explain to a younger sibling how algebraic fractions relate to pizza slices and sharing."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive tool to practise simplifying, operating with, and solving algebraic fractions across increasing challenge levels, using resets to generate new examples and collaborating to challenge and check each other.",
+      "design_challenges": [
+        "Use the interactive to practise simplifying, add/subtract, multiply/divide, and solving algebraic fractions; increase difficulty across levels and use reset to try new examples.",
+        "Work in pairs or small groups to create a challenge round (you choose examples, someone else solves, then you peer-check using the rules)."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Fraction Relay (teams): one student writes a problem, the next simplifies it, the third checks the work; rotate and see how many correct solutions your team can complete in 5 minutes."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Create, Swap, Peer-Mark",
+        "focus": "Create your own mini set of algebraic fraction questions and swap with a partner for peer-marking using a checklist.",
+        "products": [
+          "At least 3 questions you created: one to simplify, one to operate (add/subtract or multiply/divide), and one to solve",
+          "A separate answer key with clear working",
+          "Peer-mark checklist evidence (accuracy, structure, reflection)"
+        ],
+        "assessment_criteria": [
+          "Accuracy: Expressions are correctly simplified, operated, or solved",
+          "Structure: Working is clear and step-by-step, with factorising/cancelling shown",
+          "Reflection: Identifies which question type was hardest and why, with a strategy to improve"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Simplify numerical fractions and use common denominators",
+      "Expand and factorise simple algebraic expressions (including difference of squares)",
+      "Cancel common factors correctly (understanding factor vs term)",
+      "Solve basic linear equations"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Adding and subtracting algebraic fractions in more complex forms",
+      "Solving equations that include algebraic fractions and factorisation steps",
+      "Algebraic manipulation of rational expressions (including restrictions on x)",
+      "Higher-level algebraic reasoning and modelling with rates"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/algebraic_fractions/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

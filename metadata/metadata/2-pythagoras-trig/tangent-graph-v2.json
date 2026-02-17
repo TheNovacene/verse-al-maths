@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "tangent_graph_v2",
+    "title": "Tangent Graphs: Balance, Limits, and Wellbeing",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs_of_functions",
+    "subtopic": "tangent graphs, asymptotes, and transformations",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Explain the behaviour of y = tan(x) using its definition tan(θ) = sin(θ)/cos(θ), identify its period and vertical asymptotes, and use y = a·tan(bx + c) + d to model and interpret threshold-like behaviours in context."
+  },
+  "verse_ality": {
+    "driving_question": "How can the tangent graph help us understand rapid change, limits, and ‘danger zones’ in real systems?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Learn how the tangent function arises from sin(θ)/cos(θ), why it becomes undefined when cos(θ)=0, and how this creates vertical asymptotes and steep repeating curves with period π.",
+      "key_concepts": [
+        "Tangent as a ratio: tan(θ) = sin(θ)/cos(θ)",
+        "Radians and the unit circle link",
+        "Period of tan(x): π",
+        "Undefined values where cos(θ)=0",
+        "Vertical asymptotes at ±π/2, ±3π/2, ...",
+        "Zeros of tan(x) at 0, ±π, ±2π, ...",
+        "Graph features: steep growth near asymptotes"
+      ],
+      "tools": [
+        "Interactive: Tangent from the Unit Circle (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020089/download"
+      ],
+      "activities": [
+        "Explore what happens to tan(θ) as θ approaches ±π/2.",
+        "Identify where the graph crosses the x-axis and connect this to sin(θ)=0.",
+        "Explain how the sketch shows undefined values and asymptotes."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Use tangent-like behaviour as a way to think about systems that can surge rapidly toward unsafe thresholds (e.g., stress responses or health indicators), and how early warning signs can support fairer outcomes.",
+      "sdg_contexts": [
+        "SDG 3: Good Health and Wellbeing"
+      ],
+      "justice_prompts": [
+        "In healthcare, where might it be helpful to know when a value is approaching a danger zone or ‘asymptote’?",
+        "Not everyone has equal access to preventative health tools. How can maths help highlight early warning signs and ensure care reaches those who need it most?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Use metaphor and reflection to connect the idea of rapid spikes and ‘safe ranges’ to lived experience, building emotional literacy alongside mathematical insight.",
+      "activities": [
+        "Describe a time when your mood or energy spiked quickly (metaphor-based reflection).",
+        "Sketch your ‘safe range’ and your personal ‘asymptotes’.",
+        "Reflect: When do you feel most balanced — and what throws you off?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Experiment with transformations of y = a·tan(bx + c) + d to represent threshold-like patterns, then interpret what the parameters mean in a wellbeing or biological model.",
+      "design_challenges": [
+        "Adjust parameters to model heart rate under exercise vs. rest.",
+        "Model a stress response to workload.",
+        "Model a mental ‘overload’ pattern and describe what the asymptotes represent."
+      ],
+      "tools": [
+        "Interactive: Tangent Transformations Model (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020082/download"
+      ],
+      "key_concepts": [
+        "Vertical stretch/compression (a)",
+        "Period control (b)",
+        "Horizontal shift (c)",
+        "Vertical shift (d)"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Body prompt: Imagine your own tangent curve — what are your ‘safe zones’? When do you feel you’re rising too steeply?",
+        "Breath activity: Inhale slowly as arms rise overhead; exhale as arms lower; repeat with calm awareness of rhythm."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Modelling with Tangent (SDG 3 – Good Health and Wellbeing)",
+        "focus": "Design a tangent-based graph that models a real or metaphorical health pattern, using parameters and asymptotes to represent boundaries and threshold behaviour.",
+        "products": [
+          "A graph of y = a·tan(bx + c) + d with labelled parameters and asymptotes.",
+          "A paragraph or audio reflection connecting the model to wellbeing and boundaries.",
+          "Optional: creative metaphor, drawing, or movement description."
+        ],
+        "criteria": [
+          "Conceptual Understanding – Explains graph behaviour, transformations, and asymptotes.",
+          "Fluency & Accuracy – Correct handling of undefined values and steep growth.",
+          "Application to Problems – Uses tangent to meaningfully model a human or biological pattern.",
+          "Independence & Reflection – Thoughtful connection to real experience or SDG."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic understanding of coordinates and reading graphs",
+      "Comfort with radians and the unit circle idea (or readiness to learn it)",
+      "Understanding of sine and cosine (or access to prior lessons)",
+      "Using a calculator for π-based values where needed"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Solving trig equations and interpreting restrictions",
+      "Transformations of functions and modelling",
+      "Further trig graphs and applications in contexts"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 2,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs_of_functions/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

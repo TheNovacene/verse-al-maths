@@ -1,0 +1,162 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "histograms_frequency_density_v2",
+    "title": "Histograms and Frequency Density",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "statistics",
+    "topic": "representing_data",
+    "subtopic": "histograms with frequency density (unequal class intervals)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Construct and interpret diagrams for grouped continuous data, including histograms with unequal class intervals; interpret and compare distributions."
+  },
+  "verse_ality": {
+    "driving_question": "How can histograms show who gets more – and who gets less – in our world?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Draw and interpret histograms for grouped continuous data, using frequency density so bar area (not just height) represents frequency, especially when class widths are unequal. Practise reading histogram shapes and matching them to SDG-themed stories.",
+      "key_concepts": [
+        "Class interval (bin)",
+        "Class width (upper boundary − lower boundary)",
+        "Frequency (count in a class)",
+        "Frequency density = frequency ÷ class width",
+        "In histograms with unequal class widths, bar area is proportional to frequency (not just height)",
+        "Interpreting distribution shape (clustered, skewed, concentrated, long tail)"
+      ],
+      "tools": [
+        "Histogram & Frequency Density Explorer (SDG Contexts) (canva_embed): https://www.canva.com/design/DAG_IQuhw_E/7rfQy6lsHLxw0PURNRBQAg/view?embed",
+        "Histogram Story Matcher (SDG Contexts) (canva_embed): https://www.canva.com/design/DAG_IeYqifY/NnpfX4BS7Id57jda9NZL1A/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Histograms show how a whole group’s experiences are spread out. In SDG contexts (water use, electricity use, commute times, sleep, screen time), histogram shape can reveal inequality, pressure on resources, and who sits in the extremes. Comparing two histograms can support decisions, but graphs can also hide individual stories if people are reduced to bars.",
+      "sdg_contexts": [
+        "SDG 6: Clean Water and Sanitation",
+        "SDG 7: Affordable and Clean Energy",
+        "SDG 11: Sustainable Cities and Communities"
+      ],
+      "justice_prompts": [
+        "Imagine these histograms are being shown to a city council or charity deciding where to focus support. What might they conclude from the shapes?",
+        "What might they miss if they only look at the graphs and not the people?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Treat a histogram as a ‘data skyline’ and translate between shape and story. Use labels and narrative to describe where most values lie, where extremes appear, and what that might mean in an SDG context.",
+      "activities": [
+        "Sketch a simple histogram and label it with phrases like “most people here”, “few people here”, “extreme cases here”.",
+        "Write a mini-story starting: “If you walked along the base of this histogram, you would see…”",
+        "Reflect: Which feels easier—starting with a histogram and describing the story, or starting with a story and building a histogram to match?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use histograms to design fairer systems by reasoning about distributions (not just averages). Describe how an intervention could shift a histogram (left/right), reduce extreme tails, or make outcomes more equal, and consider how to check whether changes help those most affected.",
+      "design_challenges": [
+        "Compare two groups using the SDG histogram comparison tool; identify where each has more area (low ranges vs high ranges) and whether one has a longer tail of extreme values.",
+        "Choose a variable (e.g., commute time, daily water use, daily screen time) and propose a change (e.g., more buses, conservation campaign, wellbeing plan).",
+        "Describe how you would want the histogram to change (shift left, become more concentrated, lose extreme tails).",
+        "Ethical design prompt: If you redesigned a system based on histograms, how would you check that changes really help the people who were in the ‘worst’ part of the distribution, not just improve the average?"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Look away from the screen and find 3 objects in the room that are calm or comforting.",
+        "Take a slow in-breath for 4 counts and imagine drawing a gentle curve.",
+        "Exhale for 6 counts and imagine smoothing out tension in your shoulders.",
+        "Roll your neck gently, unclench your jaw, and then return to the maths if you feel ready."
+      ],
+      "wellbeing_prompts": [
+        "How can you use what you learn from histograms to support your own wellbeing—for example, by noticing patterns in your sleep or screen time without judging yourself?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Pathway A – One Histogram, Deep Dive",
+        "focus": "Build one SDG histogram (or your own scenario) using frequency density, record the grouped table, then describe what the histogram shows about the distribution and what it might mean in the real context.",
+        "products": [
+          "Screenshot(s) or copied table/values from the histogram app used",
+          "Grouped frequency table including class intervals, frequencies, and frequency densities",
+          "A 6–8 sentence paragraph describing: where most values lie, any long tails/extreme values, and what this suggests in the SDG context"
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      },
+      {
+        "name": "Pathway B – Two Histograms Compared",
+        "focus": "Compare two SDG histograms (two groups or before/after), record key features, then write an evidence-based comparison about typical outcomes, variability, extremes, and what the comparison suggests about fairness or access.",
+        "products": [
+          "Screenshot(s) or copied values from the histogram comparison app used",
+          "Notes on key features of each histogram (where most area lies, spread, extreme values)",
+          "A comparison paragraph explaining: which group tends to have ‘better’ outcomes in context, which shows more variability, and what questions this raises about fairness or access"
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Read and interpret grouped frequency tables",
+      "Calculate class width (upper boundary − lower boundary)",
+      "Calculate frequency density (frequency ÷ class width)",
+      "Understand that in histograms, bar area represents frequency (especially with unequal class widths)",
+      "Use distribution language (most values, few values, skewed, clustered, long tail)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Frequency tables and grouped data choices (class width effects)",
+      "Cumulative frequency graphs and estimating medians/quartiles",
+      "Box plots and comparing distributions (median and IQR)",
+      "Critical data literacy and fairness when comparing groups"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 3,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/statistics/histograms/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

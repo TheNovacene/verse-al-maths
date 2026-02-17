@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_simultaneous_equations_and_graphs_v2",
+    "title": "Graphical Solutions to Simultaneous Equations",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "simultaneous_equations",
+    "subtopic": "solve simultaneous equations graphically; interpret one/no/infinite solutions using gradients and intercepts",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "Pearson Edexcel"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Solve simultaneous equations by plotting straight-line graphs and identifying intersection points, and interpret special cases (parallel lines → no solution; same line → infinite solutions) using gradients and intercepts. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can graphs show the solution to two equations at once—and what do parallel or identical lines tell us?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Each linear equation represents a straight line. The graphical solution is the point where the lines intersect. Students use slope (gradient) and intercept ideas to predict whether there will be one solution, no solution, or infinitely many solutions.",
+      "key_concepts": [
+        "Each equation represents a straight line",
+        "Intersection point solves both equations simultaneously",
+        "No intersection means no solution (parallel lines)",
+        "Same line means infinitely many solutions",
+        "Gradient and intercept determine whether lines meet, stay parallel, or overlap",
+        "Solution as a coordinate pair (x, y)"
+      ],
+      "activities": [
+        "Sketch the graphs of y = 2x + 1 and y = -x + 4; identify the intersection point.",
+        "Explain what the intersection represents in terms of satisfying both equations.",
+        "Predict what happens if gradients are equal but intercepts are different, and explain why."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Humans use intersecting-variable models in maps, economics, and engineering: crossing paths, market equilibrium, and design constraints all involve conditions meeting at the same point.",
+      "sdg_contexts": [],
+      "justice_prompts": [],
+      "activities": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students express the three solution stories (meet / never meet / always together) through drawing, animation, or dialogue, reinforcing interpretation of intersection, parallel, and overlapping lines.",
+      "activities": [
+        "Draw or animate two lines that meet, run parallel, or overlap entirely; label what each case means for solutions.",
+        "Write a dialogue between two characters representing each equation; describe what happens when they “meet” (or don’t)."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive graphing tool to adjust gradients and intercepts and observe how the intersection point moves, including constructing examples with one solution, no solution, and infinitely many solutions.",
+      "tools": [
+        "Canva embed: interactive tool for exploring simultaneous equations graphically"
+      ],
+      "activities": [
+        "Explore: what happens when the gradients of both lines are equal?",
+        "Create a pair of equations with no solution (parallel lines) and explain how you know.",
+        "Create a pair of equations with infinite solutions (same line) and explain how you know.",
+        "Adjust one gradient slowly and observe how the intersection point moves.",
+        "Design two lines that intersect at a specific point and explain how you chose the equations."
+      ],
+      "design_challenges": [
+        "Create three paired sets of linear equations: one with a single solution, one with no solution, and one with infinite solutions. For each, include a labelled sketch and a sentence explaining how gradients/intercepts guarantee that outcome."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Act out two lines with two people walking on intersecting paths: where you meet represents the solution.",
+        "Use string or chalk to mark two lines on the floor and physically locate the intersection point."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 50,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Visual Guide to Graphical Simultaneous Solutions",
+        "focus": "Create a short explanation or visual guide showing how to solve simultaneous equations graphically, including all three solution types and how gradients/intercepts signal each case.",
+        "products": [
+          "A visual guide (poster/slide/one-page notes) explaining the graphical method",
+          "One worked example with a single intersection solution (with labelled axes and intersection coordinate)",
+          "One example with no solution (parallel lines) with explanation using gradients/intercepts",
+          "One example with infinite solutions (same line) with explanation using equivalence of equations",
+          "A short reflection: which solution type is most useful in real life, and why?"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding — Uses slope and intercept to describe relationships and solution types",
+          "Fluency & Accuracy — Accurately plots and labels graphs and reads intersection coordinates",
+          "Application — Links graph behaviour to algebraic relationships (parallel/identical lines)",
+          "Independence & Reflection — Reflects thoughtfully on when different solution types matter"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Plot straight-line graphs from equations like y = mx + c",
+      "Read coordinates accurately from a grid",
+      "Understand gradient and y-intercept at a basic level",
+      "Basic understanding that solving simultaneously means satisfying both equations"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Solving simultaneous equations algebraically (elimination/substitution) and comparing methods",
+      "Interpreting intersections as solutions in modelling contexts",
+      "Systems of inequalities and feasible regions",
+      "Simultaneous equations involving one linear and one quadratic (extension)"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/simultaneous_equations/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

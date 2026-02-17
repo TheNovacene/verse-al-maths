@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "sin_cos_tan_larger_angles_v2",
+    "title": "Sin, Cos, and Tan for Larger Angles",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "trigonometry",
+    "subtopic": "sin, cos and tan for angles up to 360 degrees (quadrants and sign rules)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "higher",
+    "seeds_of_change": "Use the unit circle to extend sine, cosine and tangent to angles from 0° to 360°, determine the sign of each ratio in every quadrant, and use related acute angles (CAST) to find values and justify reasoning."
+  },
+  "verse_ality": {
+    "driving_question": "What changes about sine, cosine, and tangent as we move past 90°, and why do the signs change?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Extend trig ratios beyond acute angles using the unit circle, linking cosθ to x, sinθ to y, and tanθ to sinθ/cosθ, and apply quadrant sign rules for angles up to 360°.",
+      "key_concepts": [
+        "Unit circle definitions (cosθ as x-coordinate, sinθ as y-coordinate)",
+        "tanθ = sinθ / cosθ",
+        "Quadrants and angle ranges (0°–360°)",
+        "Sign rules for trig ratios in each quadrant",
+        "Related acute angle",
+        "CAST diagram (mnemonic for signs)"
+      ],
+      "activities": [
+        "Classify angles by quadrant and predict the signs of sin, cos and tan.",
+        "Explain why signs change using the unit circle coordinates (x and y).",
+        "Use the related acute angle to interpret obtuse and reflex angle trig values.",
+        "Respond to the prompt: What changes after 90°, and why?"
+      ],
+      "tools": [
+        "Video: Trig Ratios – Angles Greater Than 90° (canva_embed): https://www.canva.com/design/DAGvM7Yut5o/W9t0Tvyskul92CCbwiPR8Q/watch?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "See how larger angles show up in navigation, architecture, and astronomy, where motion and direction pass through all four quadrants and trigonometry supports accurate tracking and design.",
+      "sdg_contexts": [
+        "SDG 4: Quality Education"
+      ],
+      "justice_prompts": [
+        "Where might you encounter an angle over 90° in real life? Why might it be important to know its sine, cosine, or tangent?",
+        "How does understanding beyond acute angles open up new applications?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Communicate your understanding of quadrant sign rules and larger-angle trig through diagrams, mnemonics, and storytelling, making the concept memorable and shareable.",
+      "activities": [
+        "Draw a CAST diagram and colour-code which trig functions are positive in each quadrant.",
+        "Create a mnemonic to remember the sign rules for each quadrant.",
+        "Write a short story from the perspective of a point travelling around the unit circle.",
+        "Explain: How would you help someone visualise trig ratios for obtuse and reflex angles?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use an interactive unit-circle tool to explore trig values across all quadrants and consider inclusive design: how to communicate sign changes without relying on colour or purely visual cues.",
+      "design_challenges": [
+        "Drag the point around the unit circle and observe how sine, cosine, and tangent values change.",
+        "Compare the coordinates of the point to the trig ratios.",
+        "Find the related acute angle for obtuse and reflex angles.",
+        "Check the signs of each ratio in all four quadrants.",
+        "Ethical design: design a trig tool that communicates sign changes without relying on visual colour cues."
+      ],
+      "tools": [
+        "Interactive sketch: Trig Ratios Angles Greater Than 90 (canvas_file_embed): https://canvas.instructure.com/courses/12822206/files/314020101/download"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Move like the unit circle: slowly rotate your body through 360°.",
+        "Pause at 90°, 180°, 270° and notice how perspective shifts.",
+        "Stretch your arms out as radii to feel quadrant positions physically."
+      ],
+      "wellbeing_prompts": [
+        "How does moving through angles help you remember the CAST diagram?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Around the World in 360° (SDG 4)",
+        "focus": "Design a navigation-ready set of examples showing trig values and sign rules across all four quadrants.",
+        "products": [
+          "Four chosen angles (one from each quadrant).",
+          "For each angle: sine, cosine, and tangent determined using the unit circle.",
+          "Related acute angles identified with an explanation of sign changes using CAST.",
+          "Submission format: table, diagram, or short video explanation.",
+          "Self/peer assessment using the GCSE Maths Rubric (accuracy and clarity)."
+        ],
+        "criteria": [
+          "Conceptual Understanding – Correctly links unit circle coordinates to trig ratios and explains sign changes.",
+          "Fluency & Accuracy – Correct quadrant identification, related acute angles, and ratio signs/values.",
+          "Application to Problems – Connects work to navigation/bearings across quadrants.",
+          "Independence & Reflection – Clear communication choices and reflection on accessibility."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic trig ratios for acute angles (SOH-CAH-TOA)",
+      "Understanding of the unit circle idea (radius 1 centred at the origin)",
+      "Confidence with coordinates and quadrants",
+      "Calculator skills for trig values (degree mode where appropriate)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Exact trig values and special angles",
+      "Solving trig equations over 0°–360°",
+      "Trig graphs and periodicity",
+      "Bearings and navigation problem solving"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/geometry/trigonometry/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

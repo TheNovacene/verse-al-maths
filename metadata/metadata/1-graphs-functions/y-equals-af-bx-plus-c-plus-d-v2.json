@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "algebra_y_equals_a_f_bx_plus_c_plus_d_v2",
+    "title": "y = a f(bx + c) + d",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "algebra",
+    "topic": "graphs",
+    "subtopic": "transformations of sine graphs (amplitude, frequency, vertical shifts)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Use parameters to transform sine graphs, explaining how a changes amplitude and b changes frequency, and apply transformation language to model a real-world periodic pattern such as tides with an SDG 14 connection. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How can transforming a sine graph help us model real patterns like tides and understand their impact on the world?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Explore how changing parameters transforms a sine wave, focusing on vertical and horizontal stretches/compressions and using amplitude and frequency language to describe what changes.",
+      "key_concepts": [
+        "Base sine graph",
+        "Function form: y = a sin(bx)",
+        "Amplitude controlled by a",
+        "Frequency controlled by b",
+        "Vertical stretch and compression",
+        "Horizontal stretch and compression"
+      ],
+      "tools": [
+        "Embedded interactive sketch (Canvas file) for exploring parameter changes in y = a sin(bx)"
+      ],
+      "activities": [
+        "Use the sketch to increase/decrease a and describe what changes and what stays the same.",
+        "Use the sketch to increase/decrease b and describe what changes and what stays the same.",
+        "Explain transformations using correct mathematical language (amplitude, frequency, stretch, compression)."
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Sine waves model sound, tides, waves, and brain activity; understanding them supports communication and navigation technologies, including accessibility tools such as sonar and captioning systems.",
+      "sdg_contexts": [
+        "SDG 14: Life Below Water"
+      ],
+      "justice_prompts": [
+        "How are sine waves relevant to accessible communication, like closed captions or sonar for visually impaired navigation?"
+      ],
+      "activities": [
+        "Research how ancient mathematicians measured wave motion.",
+        "Investigate who developed sine wave properties and why it mattered."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Represent what you notice about changing a and b in your own voice, using metaphor, drawing, and descriptive language to connect amplitude and frequency to lived experience.",
+      "activities": [
+        "Write a metaphor for amplitude and frequency.",
+        "Draw sine graphs for different values of a and b.",
+        "Describe a “loud” sine wave versus a “tight” sine wave."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Apply sine transformations to real modelling contexts such as audio engineering filters or climate science tidal models, choosing parameter values to match observed periodic behaviour.",
+      "design_challenges": [
+        "Create and analyse sine wave models for periodic phenomena like seasonal temperatures, heartbeats, or musical tones.",
+        "Explain why your chosen transformations match the phenomenon you model."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Move your hand in a smooth sine wave motion and let your breath follow the wave.",
+        "If stuck, walk and speak a repeating pattern (“up, down, up…”) to reset."
+      ],
+      "wellbeing_prompts": [
+        "What helps you reset when you're feeling overwhelmed by symbols or steps?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task - Tidal Cycle Model (SDG 14)",
+        "focus": "Create a sine-function model of a simplified tidal cycle, using transformations to match features such as increased amplitude during spring tides, and explain the model using mathematical language.",
+        "products": [
+          "A graph of your tidal sine model",
+          "A paragraph or narrated visual explanation describing how a and b (and any vertical shift choices) match the tide behaviour",
+          "A brief SDG 14 link explaining how wave patterns affect marine ecosystems"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding: Clear explanation of transformations",
+          "Fluency & Accuracy: Correct use of parameters in sine equations",
+          "Application: Connection of graph to a real tidal pattern",
+          "Independence & Reflection: Thoughtful reflection on choices and impact"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Read and interpret graphs on coordinate axes",
+      "Basic understanding of sine graph shape (visual familiarity)",
+      "Multiply and divide with integers and simple decimals",
+      "Use correct mathematical language to describe changes to graphs"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Trigonometric graphs and transformations (amplitude and period)",
+      "Modelling periodic behaviour in science (tides, sound, seasons)",
+      "Function transformation composition (shifts, reflections, stretches)",
+      "Interpreting parameters in mathematical models"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/algebra/graphs/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

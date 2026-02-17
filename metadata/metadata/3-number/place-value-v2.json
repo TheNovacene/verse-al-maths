@@ -1,0 +1,187 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_place_value_v2",
+    "title": "Place Value",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "place_value",
+    "subtopic": "integers and decimals (expanded form, compare, order, round)",
+    "level": "KS3",
+    "exam_boards": [],
+    "tier": "",
+    "seeds_of_change": "Read, write, and understand place value in integers and decimals; partition numbers into expanded form and recombine; use place value to compare, order, and round numbers. :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "How does the position of a digit change the whole number?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Place value explains how a digit’s position determines its value in whole numbers and decimals. Students practise reading numbers, identifying digit values, and writing expanded form to build precision and confidence.",
+      "key_concepts": [
+        "Digit",
+        "Place (ones, tens, hundreds, tenths, hundredths, thousandths)",
+        "Value (what a digit is worth because of its place)",
+        "Place value chart",
+        "Standard form (everyday writing of numbers)",
+        "Expanded form (sum of parts)",
+        "Partitioning and recombining",
+        "Comparing and ordering using place value",
+        "Rounding using place value"
+      ],
+      "activities": [
+        "Warm-up: Read, say what each digit is worth, and write in expanded form (e.g., 4 307; 50 206; 809 014; 3.7; 0.406).",
+        "Digit of the Day: Place a chosen digit (e.g., 7) in different positions and compare its value (e.g., tens vs thousands; decimals like 0.73).",
+        "Quick Practice (low floor, high ceiling): expanded form for whole numbers, larger numbers, and decimals; check recombination with a partner."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Place value is essential for interpreting numbers accurately in money, measurement, time, and big-number contexts. Misreading place value can cause real mistakes (prices, ingredients, doses), so precision matters.",
+      "sdg_contexts": [],
+      "justice_prompts": [
+        "Why might it matter if a medicine dose or ingredient is written 0.5 instead of 0.05?",
+        "Which is more: 0.4 or 0.04? How would you explain without a calculator?"
+      ],
+      "activities": [
+        "Discussion: share real examples of misreading digits/zeros and how to prevent it.",
+        "Mini task: write a short 'number moment' story where someone misunderstands place value and someone else spots and fixes it; explain what key digits are worth."
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students express place value understanding creatively through drawing, metaphor, or narrative, and reflect on what feels clear or confusing (zeros, decimals, big numbers).",
+      "activities": [
+        "Place Value City: draw a city where each building is a place (ones house, tens tower, hundreds hotel) and digits move between places.",
+        "Metaphor/Poem: create a metaphor (bus seats, library shelves, cake layers) explaining why place matters.",
+        "Number Biography: choose a number (e.g., 3 407 or 0.508) and write where each digit lives, what it’s worth, and what changes if it moves."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use a drag-and-drop tool to decompose and rebuild numbers in expanded form, generate challenges, and reflect on how design features support learning and error-checking.",
+      "tools": [
+        "Canva embed: Place Value Drag & Drop Web App"
+      ],
+      "activities": [
+        "Use the app to generate a target number and match it using value tiles in expanded form.",
+        "Build, check, and iterate using the app’s feedback (“Check my expanded form”).",
+        "Create your own challenges including at least three places and at least one zero; swap with a partner to rebuild and explain digit values.",
+        "Optional decimal challenge: represent numbers like 4.6, 2.34, 0.507 in expanded form and explain digits after the decimal point.",
+        "Design reflection: what did the app make easier, what did you notice, and what feature would help another student?"
+      ],
+      "design_challenges": [
+        "Design a place value challenge number with at least three different places and at least one zero, then write the correct expanded form and a digit-value explanation for someone else."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Pause & check-in: notice body feelings when seeing long numbers (breath speed, thoughts).",
+        "Number breathing: breathe in for 4, out for 6 while counting quietly.",
+        "Grounding with digits: find 5 numbers in the room and say what each digit is worth in at least one of them.",
+        "Kind self-talk: choose a helpful sentence (e.g., “I can try one place at a time”)."
+      ],
+      "wellbeing_prompts": [
+        "Zeros/decimals can feel tricky—what strategy helps you stay steady when you feel stuck?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Option A: Place Value Explainer Card / Mini Poster",
+        "focus": "Create a one-page guide explaining place value, expanded form, and why digit value changes with position.",
+        "products": [
+          "A one-page explainer with definitions and examples",
+          "At least one worked expanded-form example",
+          "A clear explanation of why the same digit changes value in different places"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      },
+      {
+        "name": "Option B: Worked Example Set",
+        "focus": "Create 4–6 examples showing standard form, expanded form, and digit values, including an optional decimal.",
+        "products": [
+          "4–6 numbers written in standard and expanded form",
+          "Value labels for at least two digits in each number",
+          "At least one decimal example (optional)"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Problems",
+          "Independence & Reflection"
+        ]
+      },
+      {
+        "name": "Option C: Partner Challenge Sheet",
+        "focus": "Create a challenge sheet for a partner with full answers provided separately.",
+        "products": [
+          "A set of place value challenge questions (including digit value, building largest number, expanded form)",
+          "A separate answer sheet with full working/answers"
+        ],
+        "assessment_criteria": [
+          "Application to Problems",
+          "Communication",
+          "Fluency & Accuracy",
+          "Independence & Reflection"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application to Problems",
+      "Independence & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Recognise digits 0–9 and read whole numbers",
+      "Basic understanding of tens and ones (place concept)",
+      "Comfort with counting in 10s and 100s"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Rounding to significant figures and decimal places",
+      "Operations with decimals (addition, subtraction, multiplication, division)",
+      "Estimation and checking strategies",
+      "Standard form (scientific notation) later in KS3/KS4"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/place_value/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

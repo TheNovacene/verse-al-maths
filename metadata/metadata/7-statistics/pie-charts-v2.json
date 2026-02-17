@@ -1,0 +1,167 @@
+{
+  "_comment": "",
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "pie_charts_v2",
+    "title": "Pie Charts: Sharing the Circle",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "statistics",
+    "topic": "representing_data",
+    "subtopic": "pie charts (fractions, percentages and angles for categorical data)",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Interpret and construct pie charts; convert between frequency, fraction, percentage and angle; use proportional reasoning to describe and compare sectors, especially in SDG contexts."
+  },
+  "verse_ality": {
+    "driving_question": "How can a circle show whether the world is being shared fairly?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Use pie charts to represent categorical data as fractions, percentages and angles, and practise both constructing and interpreting SDG-themed pie charts.",
+      "key_concepts": [
+        "Category and frequency",
+        "Fraction of total (frequency ÷ total)",
+        "Percentage (fraction × 100)",
+        "Angle of sector (fraction × 360°)",
+        "Total of a pie chart (100% and 360°)",
+        "Interpreting and comparing sectors",
+        "Proportional reasoning"
+      ],
+      "tools": [
+        "Interactive: Pie Chart Builder (SDG Data & Angles) (canva_embed): https://www.canva.com/design/DAG_aqCoBYk/uLNHjvytk_Qx_AbH_obcvg/view?embed",
+        "Interactive: Read the Circle (SDG Pie Chart Explorer) (canva_embed): https://www.canva.com/design/DAG_gkwydIc/ouISkcnY5TW4bFrHIrVQMw/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Pie charts are about shares: who or what gets which portion of limited resources like time, money, energy, land, and attention. In SDG contexts, pie charts can reveal priorities, trade-offs, and who might be harmed or helped by how the ‘pie’ is divided.",
+      "sdg_contexts": [
+        "SDG 3: Good Health and Well-being",
+        "SDG 4: Quality Education",
+        "SDG 7: Affordable and Clean Energy",
+        "SDG 10: Reduced Inequalities",
+        "SDG 11: Sustainable Cities and Communities",
+        "SDG 13: Climate Action"
+      ],
+      "justice_prompts": [
+        "Who benefits from this distribution? Who might be missing out?",
+        "If you could change one slice, which would it be, and why?"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Treat a pie chart like a shared cake: some slices are big, some are tiny, and together they make a whole. Use creative annotation to connect numbers to meaning and feelings in a real SDG story.",
+      "activities": [
+        "Draw a simple pie chart sketch and annotate each slice with feelings as well as numbers (e.g., “Car use – 40% – noisy & polluting”).",
+        "Write a short paragraph starting: “If this pie chart was a story about our world, it would say that…”",
+        "Reflect: How does it feel to see something you care about as just one slice of a pie?"
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Use pie charts as decision tools: build a ‘current’ pie chart and an ‘ideal’ pie chart for an SDG topic, then explain how changing slices could support people and the planet (including accessibility/ethics of who gains and loses).",
+      "design_challenges": [
+        "Use Activity 3 (Comparing Pie Charts) to compare two SDG pie charts and identify which categories increased, decreased, or stayed similar.",
+        "Create a “current” pie chart showing how things are now, and an “ideal” pie chart showing how you think things should be.",
+        "Write or record 3–4 bullet points explaining which slices grew or shrank and how the changes could move toward SDG goals.",
+        "Ethical design prompt: How can you make sure changes support the groups who had the smallest or most vulnerable slices before?",
+        "Interactive: Comparing Pie Charts (SDG Fair Share) (canva_embed): https://www.canva.com/design/DAG_gkEzbC8/mV7h2l-awrtedYdw9taWWw/view?embed"
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Notice how your body feels when you see a huge slice for something harmful and a tiny slice for something caring.",
+        "Grounding: imagine a circle that represents your energy for today; breathe in for 4 counts imagining it gently expanding; breathe out for 6 counts imagining it smoothing.",
+        "Choose one small action that protects your own “rest & joy” slice today."
+      ],
+      "wellbeing_prompts": [
+        "If you drew a pie chart of your own day (sleep, school, screens, movement, connection, rest), what tiny change would help your chart feel kinder to your body and mind?"
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 45,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Pathway A – One Pie Chart",
+        "focus": "Create and interpret one SDG pie chart by converting frequencies into fractions, percentages and angles, then explain what the chart suggests about fairness and priorities.",
+        "products": [
+          "A screenshot or sketch of your pie chart.",
+          "A table showing categories and frequencies.",
+          "Fractions, percentages and angles for each slice (as appropriate).",
+          "A 6–8 sentence paragraph explaining: largest share and meaning, smallest share, and one change you would like to see (with reasons)."
+        ],
+        "criteria": [
+          "Conceptual Understanding: correctly converts between frequency, fraction, percentage and angle and interprets slices in context.",
+          "Fluency & Accuracy: totals are close to 100% / 360° and calculations are clearly shown.",
+          "Application to Problems: makes sensible statements about fairness, priorities or change using the chart.",
+          "Independence & Reflection: reflects in own words on how the pie is being shared and how it might change."
+        ]
+      },
+      {
+        "name": "Pathway B – Two Pie Charts Compared",
+        "focus": "Compare two SDG pie charts and explain what changed (which slices grew/shrank), whether the change moves closer to SDG goals, and who might feel the impact.",
+        "products": [
+          "Screenshots or sketches of Pie A and Pie B (or your own “Fair Share Story”).",
+          "Recorded percentages for each category in both pies.",
+          "A comparison paragraph explaining: which slices grew/shrank, whether the change supports SDG goals, and who is impacted in real life."
+        ],
+        "criteria": [
+          "Conceptual Understanding: interprets relative sizes correctly and compares categories meaningfully.",
+          "Fluency & Accuracy: percentages are recorded accurately and comparisons avoid double-counting or vague claims.",
+          "Application to Problems: connects differences to real SDG priorities and impacts on people/planet.",
+          "Independence & Reflection: uses thoughtful language about fairness and suggests meaningful improvements."
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Basic fraction skills (part of a whole)",
+      "Percentages and converting between fractions and percentages",
+      "Angles in degrees and the idea that a full turn is 360°",
+      "Proportional reasoning (scaling a share of a total)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Frequency tables and relative frequency",
+      "Bar charts and comparing categorical distributions",
+      "Interpreting data in real contexts (including SDG stories)",
+      "Cumulative frequency and comparing distributions (extension)",
+      "Critical data literacy: what graphs reveal and what they can hide"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 3,
+    "embedded_media": 0,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/statistics/pie_charts/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

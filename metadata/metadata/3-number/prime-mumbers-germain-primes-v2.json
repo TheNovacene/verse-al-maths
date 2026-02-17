@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "number_germain_primes_v2",
+    "title": "Germain Primes & Gender Equality",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "number",
+    "topic": "prime_numbers",
+    "subtopic": "Sophie Germain primes (p and 2p + 1 prime)",
+    "level": "KS4_GCSE",
+    "exam_boards": [],
+    "tier": "higher",
+    "seeds_of_change": "Define and test for Germain primes using the rule that p is prime and 2p + 1 is also prime, explore patterns in their spacing, and connect number theory to gender equality and digital security (SDG 5). :contentReference[oaicite:0]{index=0}"
+  },
+  "verse_ality": {
+    "driving_question": "What can Germain primes teach us about patterns in numbers and fairness in who gets to do mathematics?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Students learn the definition of a Germain prime and practise testing primes by calculating 2p + 1 and checking whether both numbers are prime.",
+      "key_concepts": [
+        "Prime number (greater than 1 with exactly two factors: 1 and itself)",
+        "Germain prime: a prime p such that 2p + 1 is also prime",
+        "Prime checking",
+        "Generating primes via a rule (2p + 1)",
+        "Patterns in spacing between special primes"
+      ],
+      "activities": [
+        "Test whether 3 is a Germain prime.",
+        "Test whether 7 is a Germain prime by calculating 2p + 1 and checking primality.",
+        "Find the next Germain prime after 11."
+      ],
+      "tools": []
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Sophie Germain (1776–1831) was a self-taught mathematician who worked despite exclusion from formal education. Her work on primes is now linked to ideas used in modern encryption and internet security, and invites discussion about gender equality in maths (SDG 5).",
+      "sdg_contexts": [
+        "SDG 5: Gender Equality"
+      ],
+      "justice_prompts": [
+        "Why is it important to remember and share stories of mathematicians like Sophie Germain?",
+        "What does gender equality in maths look like today?"
+      ],
+      "tools": [
+        "Canva embed: “La Belle Sophie” short video"
+      ]
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Students choose a creative response that connects mathematical discovery with voice, identity, and representation in maths.",
+      "activities": [
+        "Write a letter to Sophie Germain: share what you’re learning and ask her a question.",
+        "Create a poster of famous female mathematicians with quotes and key ideas.",
+        "Make a number-line collage showing all Germain primes under 50."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Students use an interactive tool to test Germain primes and explore why special prime pairs can strengthen digital security. They notice patterns and extend into a simple “secret code” design challenge.",
+      "tools": [
+        "Canva embed: Germain prime tester (check if p is prime, compute 2p + 1, check primality)"
+      ],
+      "activities": [
+        "Use the tool to test multiple values of p and record which are Germain primes.",
+        "Notice and describe spacing patterns between Germain primes.",
+        "Discuss why primes like these are valuable in security systems."
+      ],
+      "design_challenges": [
+        "Create a “Secret Code” using a Germain prime pair (e.g., 11 and 23) and explain (high-level) how prime ideas help keep information safe online."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "regulation_supports": [
+        "Sit comfortably and breathe deeply; imagine the quiet focus Sophie Germain needed to keep learning despite barriers."
+      ],
+      "wellbeing_prompts": [
+        "What helps you concentrate, even when things feel hard?",
+        "Try working with quiet instrumental music while searching for Germain primes or building your poster."
+      ]
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "pathway_choice",
+    "pathways": [
+      {
+        "name": "Project 1: Germain Prime Gallery",
+        "focus": "Show the primes you tested and what you discovered about Germain primes and their patterns.",
+        "products": [
+          "A gallery/display of tested values of p with results for 2p + 1",
+          "A clear identification of which p values are Germain primes",
+          "At least one observation about spacing/patterns"
+        ],
+        "assessment_criteria": [
+          "Conceptual Understanding – Accurately explains Germain primes and related calculations",
+          "Fluency & Accuracy – Correct prime-checking and calculations",
+          "Application to Problems – Uses the definition to test and classify examples",
+          "Independence & Reflection – Observations and reflections are thoughtful"
+        ]
+      },
+      {
+        "name": "Project 2: Reflection on Women in Maths (SDG 5)",
+        "focus": "Write or record a reflection about women in maths and what fairness in education means to you, linked to Sophie Germain’s story.",
+        "products": [
+          "A written reflection or audio/video recording",
+          "At least one reference to Sophie Germain’s experience",
+          "A personal connection to what gender equality in maths could look like today"
+        ],
+        "assessment_criteria": [
+          "Independence & Reflection – Thoughtful connection to gender and identity in maths",
+          "Communication – Message is clear and well-structured",
+          "Application to Problems – Links maths culture to fairness/equality meaningfully",
+          "Conceptual Understanding – Uses key terms correctly when referenced"
+        ]
+      },
+      {
+        "name": "Project 3: Maths + Justice Visual",
+        "focus": "Design a visual combining quotes/facts from Sophie Germain’s life with your prime learning, connecting maths to justice.",
+        "products": [
+          "A poster/slide/graphic with quotes or facts about Sophie Germain",
+          "A mathematical section explaining Germain primes with examples",
+          "A clear SDG 5 link about gender equality in mathematics/education"
+        ],
+        "assessment_criteria": [
+          "Application to Problems – Uses primes in a contextual/justice-linked way",
+          "Conceptual Understanding – Accurate explanation of Germain primes",
+          "Communication – Visual is clear and informative",
+          "Independence & Reflection – Demonstrates thoughtful connection to gender and identity in maths"
+        ]
+      }
+    ],
+    "rubric_focus": [
+      "Conceptual Understanding",
+      "Fluency & Accuracy",
+      "Application to Problems",
+      "Independence & Reflection"
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Know the definition of a prime number",
+      "Be able to test small numbers for primality using factors",
+      "Confident multiplying by 2 and adding 1",
+      "Comfort working with numbers up to at least 100"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Prime factorisation and HCF/LCM",
+      "Cryptography ideas and secure communication (high-level)",
+      "Exploring special prime families and conjectures (extension)",
+      "Reasoning and proof with number patterns"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 1
+  },
+  "technical": {
+    "file_path": "lessons/number/prime_numbers/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}

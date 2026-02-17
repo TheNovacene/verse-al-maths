@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "core_identity": {
+    "id": "bearings_v2",
+    "title": "Exploring Bearings: Navigating with Angles",
+    "version": "2.0",
+    "author": "Gerry Docherty",
+    "created": "2025-",
+    "updated": "2026-",
+    "status": "published"
+  },
+  "curriculum_alignment": {
+    "subject": "mathematics",
+    "module": "geometry",
+    "topic": "bearings",
+    "subtopic": "compass bearings and navigation",
+    "level": "KS4_GCSE",
+    "exam_boards": [
+      "AQA",
+      "Edexcel",
+      "OCR"
+    ],
+    "tier": "foundation_and_higher",
+    "seeds_of_change": "Measure and use bearings as three-figure angles clockwise from North, applying them accurately in navigation-style problems and reflecting on real-world tolerances."
+  },
+  "verse_ality": {
+    "driving_question": "How can we use bearings (measured clockwise from North) to navigate accurately in the real world?",
+    "knowing_world": {
+      "present": true,
+      "focus": "Learn how bearings are measured clockwise from North and written as three digits, then practise reading and setting bearings precisely.",
+      "key_concepts": [
+        "Compass directions",
+        "Bearings measured clockwise from North",
+        "Three-figure bearings (e.g., 045°, 270°)",
+        "Accuracy and acceptable error margins"
+      ],
+      "tools": [
+        "Interactive Compass Bearing Web App (canva_embed): https://www.canva.com/design/DAG5UlEubkM/qaMt13MiK3xBS3W0UBuO3A/view?embed"
+      ]
+    },
+    "human_story": {
+      "present": true,
+      "focus": "Explore how bearings supported exploration and trade as people navigated oceans and deserts using stars and simple tools to measure direction.",
+      "sdg_contexts": [],
+      "justice_prompts": []
+    },
+    "expressive_self": {
+      "present": true,
+      "focus": "Reflect on how reading a compass can build independence and confidence in outdoor settings such as hiking and orienteering.",
+      "activities": [
+        "Write a short reflection: How could compass skills support your independence?",
+        "Describe a scenario (real or imagined) where correct bearings would matter."
+      ]
+    },
+    "designed_world": {
+      "present": true,
+      "focus": "Connect bearings to modern systems including architecture, engineering, aviation, and navigation apps, where direction and angles remain foundational.",
+      "design_challenges": [
+        "Find one modern technology that uses direction/angles (e.g., GPS navigation) and explain how bearings relate.",
+        "Design a simple navigation challenge (start point + target bearing) for someone else to try."
+      ]
+    },
+    "living_body": {
+      "present": true,
+      "focus": "Use mental rotation and spatial reasoning to strengthen cognitive mapping skills by imagining the compass in different orientations and scenarios.",
+      "regulation_supports": [
+        "Pause and visualise North before setting each bearing.",
+        "Mentally rotate the compass and predict where the arrow should point before checking."
+      ],
+      "wellbeing_prompts": []
+    }
+  },
+  "learning_experience": {
+    "estimated_time": 40,
+    "agency_level": "high",
+    "error_safe": true,
+    "social_optional": true
+  },
+  "assessment": {
+    "type": "single_path",
+    "pathways": [
+      {
+        "name": "Final Task: Set and Match Bearings",
+        "focus": "Use the interactive compass to match target bearings accurately, then reflect on strategies and real-world tolerance.",
+        "products": [
+          "Evidence of at least 3 successful bearing matches (e.g., screenshots or a written record).",
+          "A short description of strategies you used to match bearings reliably.",
+          "A response explaining why a small margin of error (e.g., ±5°) can be acceptable in some real-world applications."
+        ],
+        "criteria": [
+          "Conceptual Understanding",
+          "Fluency & Accuracy",
+          "Application to Real Contexts",
+          "Independence & Reflection"
+        ]
+      }
+    ]
+  },
+  "prerequisites": {
+    "required": [
+      "Angle measure in degrees",
+      "Understanding clockwise rotation",
+      "Basic compass directions (N, E, S, W)"
+    ]
+  },
+  "connections": {
+    "builds_toward": [
+      "Scale drawings and maps",
+      "Trigonometry in navigation contexts",
+      "3D navigation and bearings problem solving",
+      "Interpreting angles in real-world diagrams"
+    ]
+  },
+  "content_assets": {
+    "interactive_tools": 1,
+    "embedded_media": 1,
+    "regulation_pauses": 0
+  },
+  "technical": {
+    "file_path": "lessons/geometry/navigation/",
+    "dependencies": []
+  },
+  "licensing": {
+    "licence": "Novacene Educational Content Licence v1",
+    "commercial_use": "requires_licence",
+    "attribution_required": true
+  }
+}
