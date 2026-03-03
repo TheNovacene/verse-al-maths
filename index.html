@@ -3,460 +3,650 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verse-al Maths · The Novacene</title>
+  <title>Nudge Match — Prototype v0.1</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --teal-deep:    #1a4a4a;
-      --teal-mid:     #2d7a7a;
-      --teal-light:   #4db8b8;
-      --amber:        #e8923a;
-      --cream:        #faf6ef;
-      --ink:          #1a2a2a;
-      --muted:        #6a8a8a;
-      --card-bg:      rgba(255,255,255,0.72);
-      --radius:       16px;
-      --transition:   0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background-color: var(--cream);
-      color: var(--ink);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(45,122,122,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 90% 80%, rgba(232,146,58,0.10) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    header {
-      position: relative;
-      z-index: 10;
-      padding: 3rem 2rem 2rem;
-      text-align: center;
-    }
-
-    .wordmark {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--teal-mid);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.1s forwards;
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 7vw, 5rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--teal-deep);
-      opacity: 0;
-      animation: fadeUp 0.9s 0.2s forwards;
-    }
-
-    h1 em { font-style: italic; color: var(--amber); }
-
-    .tagline {
-      margin-top: 1rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--muted);
-      max-width: 540px;
-      margin-left: auto;
-      margin-right: auto;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.35s forwards;
-    }
-
-    .divider {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--teal-light), var(--amber));
-      margin: 2rem auto;
-      border-radius: 2px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.5s forwards;
-    }
-
-    .breadcrumb {
-      display: none;
-      position: relative;
-      z-index: 10;
-      padding: 0 2rem 0.5rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .breadcrumb.visible { display: block; }
-
-    .breadcrumb button {
-      background: none;
-      border: none;
-      color: var(--teal-mid);
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      padding: 0;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .breadcrumb button:hover { color: var(--amber); }
-
-    main {
-      position: relative;
-      z-index: 5;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem 4rem;
-    }
-
-    .section-label {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.55s forwards;
-    }
-
-    .topics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .topic-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.6);
-      border-radius: var(--radius);
-      padding: 2rem;
-      cursor: pointer;
-      transition: transform var(--transition), box-shadow var(--transition);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      animation: fadeUp 0.7s forwards;
-      box-shadow: 0 2px 16px rgba(26,74,74,0.06);
-    }
-
-    .topic-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--card-accent, var(--teal-light));
-      border-radius: 4px 0 0 4px;
-      transition: width var(--transition);
-    }
-
-    .topic-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,74,74,0.14); }
-    .topic-card:hover::before { width: 6px; }
-
-    .topic-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem;
-      font-weight: 300;
-      color: var(--card-accent, var(--teal-light));
-      opacity: 0.25;
-      position: absolute;
-      top: 1rem;
-      right: 1.5rem;
-      line-height: 1;
-    }
-
-    .topic-icon { font-size: 1.8rem; margin-bottom: 0.75rem; display: block; }
-
-    .topic-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: var(--teal-deep);
-      margin-bottom: 0.4rem;
-      line-height: 1.2;
-    }
-
-    .topic-count { font-size: 0.8rem; color: var(--muted); }
-
-    .topic-seeds {
-      margin-top: 1rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .topic-card[data-topic="1"] { --card-accent: #4db8b8; }
-    .topic-card[data-topic="2"] { --card-accent: #5a9fd4; }
-    .topic-card[data-topic="3"] { --card-accent: #e8923a; }
-    .topic-card[data-topic="4"] { --card-accent: #8b6bc4; }
-    .topic-card[data-topic="5"] { --card-accent: #5a7a5a; }
-    .topic-card[data-topic="6"] { --card-accent: #c0392b; }
-    .topic-card[data-topic="7"] { --card-accent: #d4a017; }
-
-    .topic-card:nth-child(1) { animation-delay: 0.6s; }
-    .topic-card:nth-child(2) { animation-delay: 0.7s; }
-    .topic-card:nth-child(3) { animation-delay: 0.8s; }
-    .topic-card:nth-child(4) { animation-delay: 0.9s; }
-    .topic-card:nth-child(5) { animation-delay: 1.0s; }
-    .topic-card:nth-child(6) { animation-delay: 1.1s; }
-    .topic-card:nth-child(7) { animation-delay: 1.2s; }
-
-    #lessons-view { display: none; }
-    #lessons-view.visible { display: block; }
-    #topics-view.hidden { display: none; }
-
-    .lessons-header {
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.1s forwards;
-    }
-
-    .lessons-topic-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-weight: 300;
-      color: var(--teal-deep);
-      margin-bottom: 0.25rem;
-    }
-
-    .lessons-subtitle {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      color: var(--muted);
-      font-size: 1rem;
-    }
-
-    .lessons-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-
-    .lesson-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.6);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      transition: transform var(--transition), box-shadow var(--transition);
-      box-shadow: 0 2px 12px rgba(26,74,74,0.05);
-      opacity: 0;
-      animation: fadeUp 0.5s forwards;
-    }
-
-    .lesson-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(26,74,74,0.12); }
-
-    .lesson-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      font-weight: 400;
-      color: var(--teal-deep);
-      line-height: 1.3;
-      margin-bottom: 0.5rem;
-    }
-
-    .open-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .open-label::after { content: '→'; transition: transform var(--transition); }
-    .lesson-card:hover .open-label::after { transform: translateX(4px); }
-
-    .lesson-card:nth-child(1)  { animation-delay: 0.1s; }
-    .lesson-card:nth-child(2)  { animation-delay: 0.15s; }
-    .lesson-card:nth-child(3)  { animation-delay: 0.2s; }
-    .lesson-card:nth-child(4)  { animation-delay: 0.25s; }
-    .lesson-card:nth-child(5)  { animation-delay: 0.3s; }
-    .lesson-card:nth-child(6)  { animation-delay: 0.35s; }
-    .lesson-card:nth-child(7)  { animation-delay: 0.4s; }
-    .lesson-card:nth-child(8)  { animation-delay: 0.45s; }
-    .lesson-card:nth-child(9)  { animation-delay: 0.5s; }
-    .lesson-card:nth-child(10) { animation-delay: 0.55s; }
-    .lesson-card:nth-child(11) { animation-delay: 0.6s; }
-    .lesson-card:nth-child(12) { animation-delay: 0.65s; }
-    .lesson-card:nth-child(13) { animation-delay: 0.7s; }
-    .lesson-card:nth-child(14) { animation-delay: 0.75s; }
-    .lesson-card:nth-child(15) { animation-delay: 0.8s; }
-    .lesson-card:nth-child(16) { animation-delay: 0.85s; }
-    .lesson-card:nth-child(17) { animation-delay: 0.9s; }
-    .lesson-card:nth-child(18) { animation-delay: 0.95s; }
-
-    footer {
-      position: relative;
-      z-index: 5;
-      text-align: center;
-      padding: 2rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 600px) {
-      header { padding: 2rem 1.25rem 1.5rem; }
-      main   { padding: 0 1.25rem 3rem; }
-      .topics-grid, .lessons-grid { grid-template-columns: 1fr; }
-    }
+    body { font-family: 'DM Sans', sans-serif; background: #FAF8F4; color: #2C3E3E; -webkit-font-smoothing: antialiased; }
+    .fr { font-family: 'Fraunces', serif; }
+    textarea { font-family: 'DM Sans', sans-serif; }
+    button { font-family: 'DM Sans', sans-serif; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+    @keyframes pop { from { opacity:0; transform:scale(0.93); } to { opacity:1; transform:scale(1); } }
+    .fu { animation: fadeUp .35s ease forwards; }
+    .pop { animation: pop .25s ease forwards; }
   </style>
 </head>
 <body>
+  <div id="root"></div>
 
-  <header>
-    <p class="wordmark">The Novacene · Verse-al Maths</p>
-    <h1>Mathematics for<br /><em>curious minds</em></h1>
-    <p class="tagline">A curriculum that begins with who you are, not what you don't know yet.</p>
-    <div class="divider"></div>
-  </header>
+  <script type="text/babel">
+    const { useState } = React;
 
-  <div class="breadcrumb" id="breadcrumb">
-    <button onclick="showTopics()">← All topics</button>
-    <span id="breadcrumb-topic"></span>
-  </div>
+    // ── Tokens ──────────────────────────────────────────────────────────────
+    const T = {
+      teal:"#1A6B6B", tealL:"#2A8A8A", tealXL:"#E4F0F0",
+      cream:"#FAF8F4", sand:"#F0EBE1", coral:"#E8674A",
+      amber:"#F0A84E", green:"#4CAF7A", slate:"#2C3E3E",
+      muted:"#7A9090", white:"#FFFFFF", border:"#D8E8E8",
+    };
 
-  <main>
-    <div id="topics-view">
-      <p class="section-label">Choose your starting point</p>
-      <div class="topics-grid" id="topics-grid"></div>
-    </div>
-    <div id="lessons-view">
-      <div class="lessons-header">
-        <h2 class="lessons-topic-name" id="lessons-topic-name"></h2>
-        <p class="lessons-subtitle" id="lessons-subtitle"></p>
-      </div>
-      <div class="lessons-grid" id="lessons-grid"></div>
-    </div>
-  </main>
-
-  <footer>
-    <p>I am not finished, I am forming — each question a contour of my becoming.</p>
-  </footer>
-
-  <script>
-    const topics = [
-      { id:1, folder:"1-graphs-functions", name:"Graphs & Functions", icon:"📈",
-        seed:"To find the shape of change, the line that maps the range.",
-        lessons:["coordinates-v2","plotting-straight-line-graphs-v2","finding-the-gradient-v2","y-equals-mx-plus-c-v2","parallel-and-perpendicular-lines-v2","quadratic-graphs-v2","y-equals-af-bx-v2","y-equals-af-bx-plus-c-plus-d-v2","y-equals-f-a-plus-x-v2","y-equals-f-x-plus-a-v2","y-equals-f-minus-x-v2"] },
-      { id:2, folder:"2-pythagoras-trig", name:"Pythagoras & Trigonometry", icon:"📐",
-        seed:"To measure what cannot be seen, the hidden side of every triangle.",
-        lessons:["pythagoras-theorem-v2","3d-pythagoras-v2","trigonometry-sine-cos-tan-v2","trig-ratios-finding-missing-side-v2","inverse-trig-finding-missing-angle-v2","sine-graph-v2","cosine-graph-v2","tangent-graph-v2","sin-cos-tan-larger-angles-v2","sine-rule-v2","cosine-rule-v2","3d-trigonometry-v2"] },
-      { id:3, folder:"3-number", name:"Number", icon:"🔢",
-        seed:"The laws that hold the world in place, the patterns that repeat through space.",
-        lessons:["place-value-v2","types-of-number-v2","the-four-operations-v2","order-of-operations-bodmas-v2","multiples-factors-prime-factors-v2","prime-numbers-v2","prime-numbers-2-germain-primes-v2","lcm-and-hcf-v2","square-roots-and-cube-roots-v2","fractions-four-rules-v2","fractions-decimals-percentages-v2","ratios-v2","proportion-v2","standard-form-v2","compound-interest-depreciation-v2","sets-and-venn-diagrams-v2"] },
-      { id:4, folder:"4-algebra", name:"Algebra", icon:"✏️",
-        seed:"To speak in the language of the unknown, until the unknown becomes known.",
-        lessons:["multiplying-out-brackets-v2","factorising-quadratics-v2","factorising-quadratics-2-v2","solving-equations-v2","inequalities-v2","making-formulae-from-words-v2","rearranging-formulas-v2","number-patterns-and-sequences-v2","simultaneous-equations-v2","simultaneous-equations-and-graphs-v2","quadratic-formula-v2","solving-quadratic-equations-by-factorisation-v2","completing-the-square-v2","algebraic-fractions-v2","powers-and-roots-v2","manipulating-surds-v2","graphical-inequalities-v2","algebraic-proof-v2"] },
-      { id:5, folder:"5-geometry-measures", name:"Geometry & Measures", icon:"📏",
-        seed:"To see the world in shapes, and shapes in the world.",
-        lessons:["angles-in-a-triangle-v2","angles-on-parallel-lines-v2","polygons-v2","symmetry-v2","circumference-of-circle-v2","area-of-circle-v2","areas-of-compound-shapes-v2","surface-area-nets-volumes-v2","four-transformations-v2","congruence-similarity-koch-snowflake-v2","similar-triangles-v2","bearings-v2","maps-and-scale-drawings-v2","distance-time-graphs-v2","vectors-v2","geometrical-constructions-v2","angles-at-centre-and-circumference-of-circle-v2"] },
-      { id:6, folder:"6-probability", name:"Probability", icon:"🎲",
-        seed:"To hold uncertainty with precision, to find the likely in the unknown.",
-        lessons:["probability-basics-v2","relative-frequency-v2","tree-diagrams-v2","probabilities-from-venn-diagrams-v2"] },
-      { id:7, folder:"7-statistics", name:"Statistics", icon:"📊",
-        seed:"To find the story hidden in the numbers, to see the human in the data.",
-        lessons:["mean-median-mode-v2","frequency-tables-v2","pie-charts-v2","histograms-frequency-density-v2","cumulative-frequency-v2","quartiles-and-comparing-distributions-v2"] },
+    // ── Mock data ────────────────────────────────────────────────────────────
+    const PRACTITIONERS = [
+      { id:"p1", name:"Marcus", initial:"M", colour:"#4A7C7C",
+        tagline:"Outdoors, music, and a calm presence.",
+        specialisms:["ADHD","Anxiety","SEMH"],
+        interests:["music","outdoors","cooking","sport"],
+        cornerstones:{Connection:5,Movement:5,Creativity:4,Reflection:3,Rest:4,Nutrition:3},
+        locations:["home","outdoors","community"], style:"patient",
+        bio:"Marcus has 4 years with Nudge. He's calm, practical, and loves getting outside. He has a particular gift for building trust slowly — no rush, no pressure.",
+        compliance:{dbs:"✓",safeguarding:"✓",cpi:"✓",online:"Yes"},
+        region:"North East", availHours:12, matchScore:94,
+        testimonial:'"Marcus never made me feel like a problem to fix. He just showed up." — young person, 2025' },
+      { id:"p2", name:"Priya", initial:"P", colour:"#7A6B4A",
+        tagline:"Creative arts, reflection, and honest conversation.",
+        specialisms:["PDA","Autism","Complex needs"],
+        interests:["art","film","gaming","animals"],
+        cornerstones:{Connection:4,Movement:3,Creativity:5,Reflection:5,Rest:4,Nutrition:3},
+        locations:["home","online","library"], style:"creative",
+        bio:"Priya brings 6 years' experience working alongside young people with PDA and autistic profiles. She's patient, creative, and follows the young person's lead completely.",
+        compliance:{dbs:"✓",safeguarding:"✓",cpi:"✓",online:"Yes"},
+        region:"Yorkshire", availHours:8, matchScore:87,
+        testimonial:'"Priya actually listened. She didn\'t pretend she had all the answers." — parent, 2025' },
+      { id:"p3", name:"Dev", initial:"D", colour:"#5A4A7C",
+        tagline:"Sport, routine, and earning trust one step at a time.",
+        specialisms:["ADHD","Trauma","EAL"],
+        interests:["sport","cooking","film","outdoors"],
+        cornerstones:{Connection:4,Movement:5,Creativity:3,Reflection:3,Rest:3,Nutrition:5},
+        locations:["community","park","home"], style:"funny",
+        bio:"Dev is energetic, consistent, and has a quiet knack for meeting young people exactly where they are. Brilliant for young people who find sitting still hard.",
+        compliance:{dbs:"✓",safeguarding:"✓",cpi:"✓",online:"No"},
+        region:"North East", availHours:16, matchScore:79,
+        testimonial:'"He made me laugh on the worst day. That mattered." — young person, 2024' },
     ];
 
-    function titleCase(slug) {
-      return slug.replace(/-v2$/,'').replace(/-/g,' ')
-        .replace(/\b\w/g, c => c.toUpperCase())
-        .replace(/\bAnd\b/g,'and').replace(/\bOf\b/g,'of')
-        .replace(/\bThe\b/g,'the').replace(/\bIn\b/g,'in')
-        .replace(/^./,c => c.toUpperCase());
+    const INTERESTS  = [{id:"music",label:"Music",e:"🎵"},{id:"art",label:"Art",e:"🎨"},{id:"gaming",label:"Gaming",e:"🎮"},{id:"outdoors",label:"Outdoors",e:"🌿"},{id:"sport",label:"Sport",e:"⚽"},{id:"cooking",label:"Cooking",e:"🍳"},{id:"animals",label:"Animals",e:"🐾"},{id:"film",label:"Film",e:"🎬"}];
+    const LOCATIONS  = [{id:"home",label:"At home",e:"🏠"},{id:"outdoors",label:"Outside",e:"🌳"},{id:"community",label:"In the community",e:"☕"},{id:"online",label:"Online",e:"💻"},{id:"library",label:"Library/café",e:"📚"},{id:"park",label:"Park",e:"🌸"}];
+    const STYLES     = [{id:"patient",label:"Calm and patient",e:"🌊"},{id:"funny",label:"Funny and chatty",e:"😄"},{id:"creative",label:"Creative",e:"✨"},{id:"quiet",label:"Quiet — not pushy",e:"🌙"},{id:"sporty",label:"Active and sporty",e:"🏃"},{id:"unsure",label:"Not sure yet",e:"🤷"}];
+    const CHALLENGES = [{id:"school",label:"School feels impossible",e:"🏫"},{id:"anxiety",label:"Anxiety",e:"😰"},{id:"trust",label:"Hard to trust people",e:"🔒"},{id:"focus",label:"Focusing",e:"🌀"},{id:"lonely",label:"Feeling lonely",e:"💙"},{id:"unsure",label:"Not sure yet",e:"❓"}];
+
+    // ── Shared UI ────────────────────────────────────────────────────────────
+    const Badge = ({children, colour=T.teal}) =>
+      <span style={{padding:"3px 10px",borderRadius:999,fontSize:12,fontWeight:600,background:colour+"22",color:colour}}>{children}</span>;
+
+    const Btn = ({children,onClick,variant="primary",disabled,small}) => {
+      const p = variant==="primary";
+      return <button onClick={onClick} disabled={disabled} style={{
+        padding:small?"8px 18px":"11px 24px", borderRadius:999,
+        cursor:disabled?"default":"pointer", fontWeight:600,
+        fontSize:small?13:15, transition:"all .2s",
+        border:p?"none":`2px solid ${T.teal}`,
+        background:disabled?T.border:p?T.teal:T.white,
+        color:disabled?T.muted:p?T.white:T.teal,
+        opacity:disabled?.6:1,
+        boxShadow:p&&!disabled?"0 4px 14px rgba(26,107,107,.25)":"none",
+      }}>{children}</button>;
+    };
+
+    const Card = ({children,style,onClick,hoverable}) =>
+      <div onClick={onClick}
+        onMouseEnter={e=>hoverable&&(e.currentTarget.style.boxShadow="0 6px 20px rgba(26,107,107,.13)")}
+        onMouseLeave={e=>hoverable&&(e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,.04)")}
+        style={{background:T.white,borderRadius:14,border:`1px solid ${T.border}`,padding:20,
+          transition:"all .2s",cursor:hoverable?"pointer":"default",
+          boxShadow:"0 2px 8px rgba(0,0,0,.04)",...style}}>
+        {children}
+      </div>;
+
+    const Avatar = ({initial,colour,size=44}) =>
+      <div style={{width:size,height:size,borderRadius:"50%",background:colour||T.teal,
+        color:T.white,display:"flex",alignItems:"center",justifyContent:"center",
+        fontSize:size*.38,fontWeight:700,flexShrink:0,fontFamily:"'Fraunces',serif"}}>
+        {initial}
+      </div>;
+
+    const Dots = ({total,current}) =>
+      <div style={{display:"flex",gap:6,justifyContent:"center",margin:"12px 0"}}>
+        {Array.from({length:total}).map((_,i) =>
+          <div key={i} style={{width:7,height:7,borderRadius:999,transition:"all .3s",
+            background:i===current?T.teal:T.border,
+            transform:i===current?"scale(1.5)":"scale(1)"}}/>)}
+      </div>;
+
+    const Bar = ({label,value}) =>
+      <div style={{marginBottom:8}}>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:3}}>
+          <span style={{color:T.muted}}>{label}</span>
+          <span style={{color:T.teal,fontWeight:600}}>{value}/5</span>
+        </div>
+        <div style={{height:5,borderRadius:999,background:T.tealXL}}>
+          <div style={{height:5,borderRadius:999,background:T.teal,width:`${value/5*100}%`}}/>
+        </div>
+      </div>;
+
+    const Score = ({score}) =>
+      <div style={{textAlign:"center",flexShrink:0}}>
+        <div style={{fontSize:24,fontWeight:700,color:score>90?T.green:score>80?T.amber:T.coral}}>{score}%</div>
+        <div style={{fontSize:10,color:T.muted}}>coherence</div>
+      </div>;
+
+    const Back = ({onClick}) =>
+      <button onClick={onClick} style={{background:"none",border:"none",cursor:"pointer",
+        color:T.muted,fontSize:13,marginBottom:18,padding:0}}>← Back</button>;
+
+    const Lbl = ({children}) =>
+      <div style={{fontSize:11,color:T.muted,fontWeight:600,textTransform:"uppercase",
+        letterSpacing:".05em",marginBottom:6}}>{children}</div>;
+
+    const Chip = ({children,active,onClick,ac,ab}) =>
+      <button onClick={onClick} style={{padding:"10px 16px",borderRadius:12,fontSize:14,
+        cursor:"pointer",border:`2px solid ${active?ac:T.border}`,
+        background:active?ab:T.white,color:active?ac:T.slate,
+        fontWeight:500,transition:"all .15s"}}>{children}</button>;
+
+    // ── Roles ────────────────────────────────────────────────────────────────
+    const ROLES = [
+      {id:"young-person", label:"I'm a young person",    emoji:"🌱", desc:"Tell us what matters to you",        colour:T.teal},
+      {id:"parent",       label:"I'm a parent or carer", emoji:"🏡", desc:"Stay in the loop, have your say",    colour:"#4A7C7C"},
+      {id:"practitioner", label:"I'm a practitioner",    emoji:"🧭", desc:"See your matches and respond",       colour:"#7A6B4A"},
+      {id:"commissioner", label:"I'm a commissioner",    emoji:"📋", desc:"Track referrals and outcomes",       colour:"#5A4A7C"},
+      {id:"eic",          label:"I'm an EIC",            emoji:"⚡", desc:"Run the matching engine",            colour:T.coral},
+    ];
+
+    function RoleSelector({onSelect}) {
+      return <div style={{maxWidth:700,margin:"0 auto",padding:"36px 20px"}} className="fu">
+        <div style={{textAlign:"center",marginBottom:36}}>
+          <div style={{fontSize:36,marginBottom:10}}>🔗</div>
+          <div className="fr" style={{fontSize:30,fontWeight:600,color:T.teal,marginBottom:8}}>Find your match</div>
+          <div style={{fontSize:15,color:T.muted,maxWidth:420,margin:"0 auto"}}>
+            Nudge connects young people with the right practitioner — and gives everyone a voice in how that happens.
+          </div>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12}}>
+          {ROLES.map(r =>
+            <Card key={r.id} hoverable onClick={()=>onSelect(r.id)} style={{textAlign:"center",padding:22}}>
+              <div style={{fontSize:28,marginBottom:10}}>{r.emoji}</div>
+              <div style={{fontWeight:600,fontSize:14,marginBottom:4,color:r.colour}}>{r.label}</div>
+              <div style={{fontSize:12,color:T.muted}}>{r.desc}</div>
+            </Card>)}
+        </div>
+        <div style={{textAlign:"center",fontSize:12,color:T.muted,marginTop:24}}>
+          Prototype v0.1 — internal concept. All names and data are fictional.
+        </div>
+      </div>;
     }
 
-    function renderTopics() {
-      const grid = document.getElementById('topics-grid');
-      grid.innerHTML = '';
-      topics.forEach(t => {
-        const card = document.createElement('div');
-        card.className = 'topic-card';
-        card.dataset.topic = t.id;
-        card.innerHTML = `
-          <span class="topic-number">${String(t.id).padStart(2,'0')}</span>
-          <span class="topic-icon">${t.icon}</span>
-          <div class="topic-name">${t.name}</div>
-          <div class="topic-count">${t.lessons.length} lessons</div>
-          <p class="topic-seeds">${t.seed}</p>`;
-        card.addEventListener('click', () => showLessons(t));
-        grid.appendChild(card);
-      });
+    // ── Young Person ─────────────────────────────────────────────────────────
+    function YoungPersonFlow({onBack}) {
+      const [step,setStep]   = useState(0);
+      const [prefs,setPrefs] = useState({interests:[],locations:[],challenges:[],style:null});
+      const [matched,setMatched] = useState(null);
+      const [resp,setResp]   = useState(null);
+
+      const toggle = (key,val) => setPrefs(p => ({
+        ...p, [key]: p[key].includes(val) ? p[key].filter(x=>x!==val) : [...p[key],val]
+      }));
+
+      const compute = () => [...PRACTITIONERS].map(pr => {
+        let s=0;
+        prefs.interests.forEach(i=>{if(pr.interests.includes(i))s+=20});
+        prefs.locations.forEach(l=>{if(pr.locations.includes(l))s+=15});
+        if(pr.style===prefs.style)s+=25;
+        return {...pr,ls:s};
+      }).sort((a,b)=>b.ls-a.ls)[0];
+
+      const STEPS = [
+        {title:"What do you enjoy?",          sub:"Pick as many as you like. No wrong answers.",                      emoji:"🎉", opts:INTERESTS,  key:"interests",  ac:T.teal,    ab:T.tealXL},
+        {title:"Where do you feel comfortable?", sub:"Where would you like to meet your practitioner?",               emoji:"🌍", opts:LOCATIONS,  key:"locations",  ac:T.teal,    ab:T.tealXL},
+        {title:"What's been hard lately?",    sub:"You don't have to share everything. Just what feels right.",       emoji:"💙", opts:CHALLENGES, key:"challenges", ac:T.coral,   ab:"#FEF0EC"},
+        {title:"What kind of person helps you most?", sub:"There's no right answer — just what feels true for you.", emoji:"🧭", opts:STYLES,     key:"style",      ac:"#B07A20", ab:"#FEF5E7"},
+      ];
+
+      if(resp==="yes") return (
+        <div style={{maxWidth:480,margin:"0 auto",padding:"36px 20px",textAlign:"center"}} className="pop">
+          <div style={{fontSize:56,marginBottom:12}}>🎉</div>
+          <div className="fr" style={{fontSize:26,fontWeight:600,color:T.green,marginBottom:10}}>Match confirmed!</div>
+          <p style={{color:T.muted,marginBottom:20}}>{matched.name} has been notified. Your EIC will be in touch to arrange the first session. No rush — you're in control.</p>
+          <Card style={{textAlign:"left",marginBottom:20}}>
+            <div style={{display:"flex",gap:12,alignItems:"center",marginBottom:12}}>
+              <Avatar initial={matched.initial} colour={matched.colour} size={52}/>
+              <div><div style={{fontWeight:700,fontSize:17}}>{matched.name}</div><div style={{fontSize:12,color:T.muted}}>{matched.region}</div></div>
+            </div>
+            <div style={{padding:10,background:T.tealXL,borderRadius:8,fontSize:13,color:T.teal,fontStyle:"italic"}}>
+              "{matched.testimonial.split('"')[1]}"
+            </div>
+          </Card>
+          <Btn onClick={onBack}>Back to start</Btn>
+        </div>
+      );
+
+      if(resp==="pass") return (
+        <div style={{maxWidth:420,margin:"0 auto",padding:"36px 20px",textAlign:"center"}} className="fu">
+          <div style={{fontSize:40,marginBottom:12}}>💬</div>
+          <div className="fr" style={{fontSize:22,fontWeight:600,color:T.slate,marginBottom:10}}>That's completely fine.</div>
+          <p style={{color:T.muted,marginBottom:20}}>Your EIC will look at other options. Would you like to tell us anything that might help find a better fit?</p>
+          <textarea placeholder="Anything you'd like to add? (optional)"
+            style={{width:"100%",padding:12,borderRadius:10,border:`2px solid ${T.border}`,
+              fontSize:14,minHeight:80,marginBottom:16,resize:"vertical"}}/>
+          <Btn onClick={onBack}>Done for now</Btn>
+        </div>
+      );
+
+      if(matched) {
+        const shared = prefs.interests.filter(i=>matched.interests.includes(i));
+        return (
+          <div style={{maxWidth:480,margin:"0 auto",padding:"36px 20px"}} className="pop">
+            <div style={{textAlign:"center",marginBottom:24}}>
+              <div style={{fontSize:32,marginBottom:6}}>✨</div>
+              <div className="fr" style={{fontSize:24,fontWeight:600,color:T.teal,marginBottom:6}}>We found a match!</div>
+              <div style={{fontSize:14,color:T.muted}}>Here's someone we think could be a great fit. You don't have to decide right now.</div>
+            </div>
+            <Card style={{marginBottom:16}}>
+              <div style={{display:"flex",gap:14,alignItems:"flex-start",marginBottom:14}}>
+                <Avatar initial={matched.initial} colour={matched.colour} size={60}/>
+                <div style={{flex:1}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                    <div>
+                      <div style={{fontWeight:700,fontSize:20,marginBottom:4}}>{matched.name}</div>
+                      <div style={{fontSize:13,color:T.muted}}>{matched.tagline}</div>
+                    </div>
+                    <Score score={matched.matchScore}/>
+                  </div>
+                </div>
+              </div>
+              <p style={{fontSize:14,color:T.slate,lineHeight:1.6,marginBottom:14}}>{matched.bio}</p>
+              {shared.length>0 && (
+                <div style={{padding:10,background:T.tealXL,borderRadius:8,marginBottom:12}}>
+                  <div style={{fontSize:12,fontWeight:600,color:T.teal,marginBottom:4}}>Things you have in common 🎯</div>
+                  <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                    {shared.map(i=>{const o=INTERESTS.find(x=>x.id===i);return <span key={i} style={{fontSize:13}}>{o?.e} {o?.label}</span>})}
+                  </div>
+                </div>
+              )}
+              <div style={{borderTop:`1px solid ${T.border}`,paddingTop:10,fontSize:12,color:T.muted,fontStyle:"italic"}}>
+                {matched.testimonial}
+              </div>
+            </Card>
+            <div style={{display:"flex",gap:10,justifyContent:"center"}}>
+              <Btn onClick={()=>setResp("yes")}>Yes — this feels right 👍</Btn>
+              <Btn variant="outline" onClick={()=>setResp("pass")}>Not quite right</Btn>
+            </div>
+          </div>
+        );
+      }
+
+      const s = STEPS[step];
+      const isMulti = s.key !== "style";
+      return (
+        <div style={{maxWidth:520,margin:"0 auto",padding:"36px 20px"}}>
+          <Back onClick={onBack}/>
+          <Dots total={STEPS.length} current={step}/>
+          <div style={{textAlign:"center",marginBottom:28}} key={step} className="fu">
+            <div style={{fontSize:32,marginBottom:8}}>{s.emoji}</div>
+            <div className="fr" style={{fontSize:22,fontWeight:600,color:T.slate,marginBottom:6}}>{s.title}</div>
+            <div style={{fontSize:14,color:T.muted}}>{s.sub}</div>
+          </div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center",marginBottom:28}}>
+            {s.opts.map(o => {
+              const active = isMulti ? prefs[s.key].includes(o.id) : prefs[s.key]===o.id;
+              return <Chip key={o.id} active={active} ac={s.ac} ab={s.ab}
+                onClick={()=>isMulti?toggle(s.key,o.id):setPrefs(p=>({...p,[s.key]:o.id}))}>
+                {o.e} {o.label}
+              </Chip>;
+            })}
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <button onClick={()=>setStep(Math.max(0,step-1))}
+              style={{background:"none",border:"none",cursor:"pointer",color:T.muted,fontSize:13}}>
+              {step>0?"← Back":""}
+            </button>
+            <div style={{display:"flex",gap:8}}>
+              <Btn variant="outline" small onClick={()=>step===STEPS.length-1?setMatched(compute()):setStep(step+1)}>Skip →</Btn>
+              <Btn small onClick={()=>step===STEPS.length-1?setMatched(compute()):setStep(step+1)}>
+                {step===STEPS.length-1?"Find my match ✨":"Next →"}
+              </Btn>
+            </div>
+          </div>
+        </div>
+      );
     }
 
-    function showLessons(topic) {
-      document.getElementById('lessons-topic-name').textContent = topic.name;
-      document.getElementById('lessons-subtitle').textContent = topic.seed;
-      const bc = document.getElementById('breadcrumb');
-      bc.classList.add('visible');
-      document.getElementById('breadcrumb-topic').textContent = ` / ${topic.name}`;
-      const grid = document.getElementById('lessons-grid');
-      grid.innerHTML = '';
-      topic.lessons.forEach(slug => {
-        const card = document.createElement('a');
-        card.className = 'lesson-card';
-        card.href = `../lessons/${topic.folder}/${slug}.html`;
-        card.target = '_blank';
-        card.rel = 'noopener';
-        card.innerHTML = `
-          <div class="lesson-title">${titleCase(slug)}</div>
-          <div class="open-label">Open lesson</div>`;
-        grid.appendChild(card);
-      });
-      document.getElementById('topics-view').classList.add('hidden');
-      document.getElementById('lessons-view').classList.add('visible');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // ── Practitioner ─────────────────────────────────────────────────────────
+    function PractitionerFlow({onBack}) {
+      const pr = PRACTITIONERS[0];
+      const [view,setView] = useState("profile");
+      const [resp,setResp] = useState(null);
+      const REF = {id:"REF-2026-0441",age:14,needs:["Anxiety","School avoidance","Trust"],
+        interests:["Music","Gaming","Animals"],preferredStyle:"Patient and calm",
+        preferredLocations:["Home","Outdoors"],region:"North East",days:3};
+
+      if(view==="match") return (
+        <div style={{maxWidth:480,margin:"0 auto",padding:"36px 20px"}} className="fu">
+          <Back onClick={()=>setView("profile")}/>
+          <div style={{textAlign:"center",marginBottom:20}}>
+            <Badge colour={T.amber}>New match request</Badge>
+            <div className="fr" style={{fontSize:22,fontWeight:600,color:T.slate,marginTop:10}}>{REF.id}</div>
+            <div style={{fontSize:14,color:T.muted,marginTop:6}}>The young person's identity stays protected until you both say yes.</div>
+          </div>
+          <Card style={{marginBottom:16}}>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:14}}>
+              {[{l:"Age",v:REF.age},{l:"Region",v:REF.region},{l:"Days since referral",v:`${REF.days} days`,c:T.coral},{l:"Match score",v:"94%",c:T.green}].map(x=>
+                <div key={x.l}><div style={{fontSize:11,color:T.muted,marginBottom:3}}>{x.l}</div><div style={{fontWeight:600,color:x.c||T.slate}}>{x.v}</div></div>)}
+            </div>
+            <Lbl>Support needs</Lbl>
+            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:12}}>
+              {REF.needs.map(n=><Badge key={n} colour={T.coral}>{n}</Badge>)}
+            </div>
+            <Lbl>Interests (what they told us)</Lbl>
+            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:12}}>
+              {REF.interests.map(i=><Badge key={i} colour={T.teal}>{i}</Badge>)}
+            </div>
+            <div style={{padding:10,background:T.tealXL,borderRadius:8,fontSize:13}}>
+              <strong>They'd prefer: </strong>{REF.preferredStyle} — {REF.preferredLocations.join(" or ").toLowerCase()}
+            </div>
+          </Card>
+          {resp
+            ? <Card style={{textAlign:"center"}}>
+                {resp==="accept"
+                  ? <><div style={{fontSize:32,marginBottom:6}}>👋</div><div style={{fontWeight:600,color:T.green,marginBottom:6}}>Great — you've accepted.</div><div style={{fontSize:13,color:T.muted}}>Your EIC will be in touch once parent/carer consent is confirmed.</div></>
+                  : <><div style={{fontSize:32,marginBottom:6}}>🙏</div><div style={{fontWeight:600,color:T.muted,marginBottom:6}}>Noted — no problem at all.</div><div style={{fontSize:13,color:T.muted}}>Declined sessions are never held against you.</div></>}
+              </Card>
+            : <div style={{display:"flex",gap:10,justifyContent:"center"}}>
+                <Btn onClick={()=>setResp("accept")}>Accept ✓</Btn>
+                <Btn variant="outline" onClick={()=>setResp("decline")}>Not available for this one</Btn>
+              </div>}
+        </div>
+      );
+
+      return (
+        <div style={{maxWidth:520,margin:"0 auto",padding:"36px 20px"}} className="fu">
+          <Back onClick={onBack}/>
+          <div onClick={()=>setView("match")} style={{background:T.amber+"22",border:`2px solid ${T.amber}`,
+            borderRadius:12,padding:"12px 16px",marginBottom:20,cursor:"pointer",
+            display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <div style={{display:"flex",gap:10,alignItems:"center"}}>
+              <span style={{fontSize:18}}>🔔</span>
+              <div>
+                <div style={{fontWeight:600,fontSize:13}}>New match request — REF-2026-0441</div>
+                <div style={{fontSize:12,color:T.muted}}>North East · 94% match · 3 days since referral</div>
+              </div>
+            </div>
+            <span style={{color:T.amber,fontWeight:600,fontSize:13}}>Review →</span>
+          </div>
+          <Card>
+            <div style={{display:"flex",gap:14,alignItems:"flex-start",marginBottom:16}}>
+              <Avatar initial={pr.initial} colour={pr.colour} size={60}/>
+              <div style={{flex:1}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                  <div><div style={{fontWeight:700,fontSize:18}}>{pr.name}</div><div style={{fontSize:13,color:T.muted}}>{pr.region} · {pr.availHours}h/week available</div></div>
+                  <Badge colour={T.green}>Active</Badge>
+                </div>
+                <p style={{fontSize:13,color:T.slate,lineHeight:1.6,marginTop:8}}>{pr.bio}</p>
+              </div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
+              <div>
+                <Lbl>Specialisms</Lbl>
+                <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>{pr.specialisms.map(s=><Badge key={s} colour={T.coral}>{s}</Badge>)}</div>
+              </div>
+              <div>
+                <Lbl>Compliance</Lbl>
+                {Object.entries(pr.compliance).map(([k,v])=>
+                  <div key={k} style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:2}}>
+                    <span style={{color:T.muted}}>{k.toUpperCase()}</span>
+                    <span style={{color:v==="✓"||v==="Yes"?T.green:T.coral,fontWeight:600}}>{v}</span>
+                  </div>)}
+              </div>
+            </div>
+            <Lbl>Cornerstones profile</Lbl>
+            {Object.entries(pr.cornerstones).map(([k,v])=><Bar key={k} label={k} value={v}/>)}
+          </Card>
+        </div>
+      );
     }
 
-    function showTopics() {
-      document.getElementById('topics-view').classList.remove('hidden');
-      document.getElementById('lessons-view').classList.remove('visible');
-      document.getElementById('breadcrumb').classList.remove('visible');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // ── Parent ───────────────────────────────────────────────────────────────
+    function ParentFlow({onBack}) {
+      const pr = PRACTITIONERS[0];
+      const [done,setDone] = useState(false);
+      const [notes,setNotes] = useState("");
+
+      if(done) return (
+        <div style={{maxWidth:420,margin:"0 auto",padding:"36px 20px",textAlign:"center"}} className="pop">
+          <div style={{fontSize:48,marginBottom:12}}>✅</div>
+          <div className="fr" style={{fontSize:24,fontWeight:600,color:T.green,marginBottom:10}}>Thank you</div>
+          <p style={{color:T.muted,marginBottom:20}}>Your consent has been recorded. The EIC will be in touch to arrange the first session. You can pause or stop at any point.</p>
+          <Btn onClick={onBack}>Back to start</Btn>
+        </div>
+      );
+
+      return (
+        <div style={{maxWidth:520,margin:"0 auto",padding:"36px 20px"}} className="fu">
+          <Back onClick={onBack}/>
+          <div className="fr" style={{fontSize:22,fontWeight:600,color:T.slate,marginBottom:6}}>Your child's match</div>
+          <p style={{color:T.muted,marginBottom:20,fontSize:14}}>Here's what your child told us they'd like — and the practitioner we're proposing. You have the final say.</p>
+          <Card style={{marginBottom:14}}>
+            <Lbl>What your child said they'd like</Lbl>
+            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:6}}>
+              {["Music 🎵","Animals 🐾","Gaming 🎮"].map(i=><Badge key={i} colour={T.teal}>{i}</Badge>)}
+              {["At home 🏠","Outside 🌳"].map(i=><Badge key={i} colour={T.tealL}>{i}</Badge>)}
+              <Badge colour={T.amber}>Patient and calm 🌊</Badge>
+            </div>
+          </Card>
+          <Card style={{marginBottom:14}}>
+            <div style={{display:"flex",gap:12,alignItems:"center",marginBottom:12}}>
+              <Avatar initial={pr.initial} colour={pr.colour} size={50}/>
+              <div style={{flex:1}}><div style={{fontWeight:700,fontSize:17}}>{pr.name}</div><div style={{fontSize:12,color:T.muted}}>{pr.region}</div></div>
+              <Score score={94}/>
+            </div>
+            <p style={{fontSize:13,lineHeight:1.6,marginBottom:12}}>{pr.bio}</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+              {Object.entries(pr.compliance).map(([k,v])=>
+                <div key={k} style={{textAlign:"center",padding:"8px 4px",background:T.tealXL,borderRadius:8}}>
+                  <div style={{fontSize:14,marginBottom:2}}>{v==="✓"||v==="Yes"?"✅":"❌"}</div>
+                  <div style={{fontSize:10,color:T.muted}}>{k.toUpperCase()}</div>
+                </div>)}
+            </div>
+            <div style={{padding:10,background:T.sand,borderRadius:8,fontSize:12,fontStyle:"italic",color:T.slate}}>{pr.testimonial}</div>
+          </Card>
+          <Card style={{marginBottom:16}}>
+            <div style={{fontSize:13,fontWeight:600,marginBottom:8}}>Is there anything you'd like the team to know?</div>
+            <textarea value={notes} onChange={e=>setNotes(e.target.value)}
+              placeholder="Any context, preferences or concerns (optional)..."
+              style={{width:"100%",padding:10,borderRadius:8,border:`2px solid ${T.border}`,fontSize:13,minHeight:70,resize:"vertical"}}/>
+          </Card>
+          <div style={{display:"flex",gap:10,marginBottom:10}}>
+            <Btn onClick={()=>setDone(true)}>I'm happy to proceed ✓</Btn>
+            <Btn variant="outline" onClick={onBack}>I'd like to discuss this first</Btn>
+          </div>
+          <div style={{fontSize:11,color:T.muted}}>Your consent can be withdrawn at any time. Contact your EIC or email hello@nudgeeducation.co.uk</div>
+        </div>
+      );
     }
 
-    renderTopics();
+    // ── Commissioner ─────────────────────────────────────────────────────────
+    function CommissionerFlow({onBack}) {
+      const REFS = [
+        {id:"REF-2026-0441",la:"Sunderland City Council", status:"Matching",  days:3, matched:PRACTITIONERS[0].name, score:94},
+        {id:"REF-2026-0438",la:"Gateshead Council",        status:"Active",    started:"03/02/2026"},
+        {id:"REF-2026-0435",la:"Durham County Council",    status:"Confirmed", matched:PRACTITIONERS[1].name, score:87},
+        {id:"REF-2026-0430",la:"Northumberland Council",   status:"Active",    started:"28/01/2026"},
+        {id:"REF-2026-0421",la:"Sunderland City Council",  status:"Closed",    outcome:"Re-engaged school", weeks:14},
+      ];
+      const SC = {Matching:T.amber,Active:T.teal,Confirmed:T.green,Closed:T.muted};
+
+      return (
+        <div style={{maxWidth:640,margin:"0 auto",padding:"36px 20px"}} className="fu">
+          <Back onClick={onBack}/>
+          <div className="fr" style={{fontSize:22,fontWeight:600,color:T.slate,marginBottom:4}}>Commissioner Dashboard</div>
+          <div style={{fontSize:13,color:T.muted,marginBottom:24}}>North East region · February 2026</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:24}}>
+            {[{l:"Active referrals",v:"12",c:T.teal},{l:"Avg days to match",v:"4.2",c:T.green,s:"↓ from 9.1"},{l:"In matching",v:"3",c:T.amber},{l:"Transitions",v:"34",c:T.teal,s:"this year"}].map(x=>
+              <Card key={x.l} style={{textAlign:"center",padding:14}}>
+                <div style={{fontSize:26,fontWeight:700,color:x.c,fontFamily:"'Fraunces',serif"}}>{x.v}</div>
+                <div style={{fontSize:11,color:T.muted,marginTop:3}}>{x.l}</div>
+                {x.s&&<div style={{fontSize:10,color:T.green,marginTop:2}}>{x.s}</div>}
+              </Card>)}
+          </div>
+          <Card style={{marginBottom:16}}>
+            <Lbl>Referral tracker</Lbl>
+            {REFS.map((r,i)=>
+              <div key={r.id} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 0",borderBottom:i<REFS.length-1?`1px solid ${T.border}`:"none"}}>
+                <div style={{width:8,height:8,borderRadius:"50%",background:SC[r.status],flexShrink:0}}/>
+                <div style={{flex:1}}>
+                  <div style={{fontWeight:600,fontSize:13}}>{r.id}</div>
+                  <div style={{fontSize:11,color:T.muted}}>{r.la}</div>
+                </div>
+                <Badge colour={SC[r.status]}>{r.status}</Badge>
+                {r.status==="Matching"&&<div style={{textAlign:"right",fontSize:11}}><div style={{color:T.coral,fontWeight:600}}>{r.days}d</div><div style={{color:T.muted}}>→ {r.matched} ({r.score}%)</div></div>}
+                {r.status==="Closed"&&<div style={{textAlign:"right",fontSize:11}}><div style={{color:T.green,fontWeight:600}}>{r.outcome}</div><div style={{color:T.muted}}>{r.weeks}wks</div></div>}
+                {r.started&&<div style={{fontSize:11,color:T.muted}}>{r.started}</div>}
+              </div>)}
+          </Card>
+          <Card style={{background:T.tealXL,border:`1px solid ${T.tealL}`}}>
+            <div style={{fontWeight:600,color:T.teal,marginBottom:8}}>📊 Matching speed — North East</div>
+            <div style={{fontSize:12,color:T.muted,marginBottom:6}}>Current average: 4.2 days referral → match</div>
+            <div style={{height:8,borderRadius:999,background:T.white}}>
+              <div style={{height:8,borderRadius:999,background:T.green,width:"54%"}}/>
+            </div>
+            <div style={{fontSize:11,color:T.muted,marginTop:6}}>Target: 3 days · Sector average: 9+ days</div>
+          </Card>
+        </div>
+      );
+    }
+
+    // ── EIC ──────────────────────────────────────────────────────────────────
+    function EICFlow({onBack}) {
+      const [proposed,setProposed] = useState(null);
+      const [confirmed,setConfirmed] = useState(false);
+      const REF = {id:"REF-2026-0441",age:14,la:"Sunderland City Council",days:3,
+        needs:["Anxiety","School avoidance"],interests:["Music","Gaming","Animals"],
+        style:"Patient and calm",risk:"Amber"};
+      const ranked = PRACTITIONERS.map(p=>({...p,factors:[
+        {l:"Geography",  s:p.region==="North East"?25:5,  m:25},
+        {l:"Compliance", s:25,                             m:25},
+        {l:"Availability",s:p.availHours>10?20:10,        m:20},
+        {l:"Specialism", s:p.specialisms.includes("Anxiety")?20:8, m:20},
+        {l:"Cornerstones",s:Math.round(p.cornerstones.Connection/5*10), m:10},
+      ]})).sort((a,b)=>b.matchScore-a.matchScore);
+
+      if(confirmed) return (
+        <div style={{maxWidth:440,margin:"0 auto",padding:"36px 20px",textAlign:"center"}} className="pop">
+          <div style={{fontSize:48,marginBottom:12}}>📨</div>
+          <div className="fr" style={{fontSize:24,fontWeight:600,color:T.teal,marginBottom:10}}>Proposed!</div>
+          <p style={{color:T.muted,marginBottom:6}}><strong>{proposed?.name}</strong> has been notified. Awaiting their response.</p>
+          <p style={{color:T.muted,fontSize:13,marginBottom:24}}>Parent/carer consent notification also sent. Clock: <strong style={{color:T.coral}}>3 days → target 3 days</strong></p>
+          <div style={{textAlign:"left",position:"relative",paddingLeft:20,marginBottom:20}}>
+            <div style={{position:"absolute",left:7,top:8,bottom:8,width:2,background:T.border}}/>
+            {[
+              {l:"Referral received",                time:"21/02/2026",done:true},
+              {l:"Young person preferences captured",time:"22/02/2026",done:true},
+              {l:"Match proposed by EIC",            time:"24/02/2026",done:true},
+              {l:"Practitioner response",            time:"Awaiting",  active:true},
+              {l:"Parent/carer consent",             time:"Awaiting"},
+              {l:"Session 1 booked",                 time:"Pending"},
+            ].map((x,i)=>
+              <div key={i} style={{display:"flex",gap:10,marginBottom:14}}>
+                <div style={{width:14,height:14,borderRadius:"50%",background:x.done?T.green:x.active?T.teal:T.border,
+                  border:"2px solid white",flexShrink:0,marginTop:2,boxShadow:x.active?`0 0 0 3px ${T.tealXL}`:"none"}}/>
+                <div>
+                  <div style={{fontSize:13,fontWeight:600,color:x.done?T.slate:x.active?T.teal:T.muted}}>{x.l}</div>
+                  <div style={{fontSize:11,color:T.muted}}>{x.time}</div>
+                </div>
+              </div>)}
+          </div>
+          <Btn onClick={onBack}>Back to start</Btn>
+        </div>
+      );
+
+      return (
+        <div style={{maxWidth:640,margin:"0 auto",padding:"36px 20px"}} className="fu">
+          <Back onClick={onBack}/>
+          <div className="fr" style={{fontSize:22,fontWeight:600,color:T.slate,marginBottom:8}}>Matching engine</div>
+          <div style={{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center",marginBottom:20}}>
+            <Badge colour={T.coral}>{REF.id}</Badge>
+            <span style={{fontSize:13,color:T.muted}}>{REF.la} · Age {REF.age}</span>
+            <Badge colour={T.amber}>Risk: {REF.risk}</Badge>
+            <span style={{color:T.coral,fontSize:12,fontWeight:600}}>⏱ {REF.days} days since referral</span>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:18}}>
+            <Card style={{padding:14}}><Lbl>Needs</Lbl><div style={{display:"flex",gap:6,flexWrap:"wrap"}}>{REF.needs.map(n=><Badge key={n} colour={T.coral}>{n}</Badge>)}</div></Card>
+            <Card style={{padding:14}}><Lbl>Young person said</Lbl><div style={{display:"flex",gap:6,flexWrap:"wrap"}}>{REF.interests.map(n=><Badge key={n} colour={T.teal}>{n}</Badge>)}<Badge colour={T.amber}>{REF.style}</Badge></div></Card>
+          </div>
+          <Lbl>Ranked shortlist — transparency view</Lbl>
+          {ranked.map((pr,i)=>
+            <div key={pr.id} onClick={()=>setProposed(pr)} style={{marginBottom:10,cursor:"pointer",
+              border:`2px solid ${proposed?.id===pr.id?T.teal:T.border}`,borderRadius:12,padding:14,
+              background:proposed?.id===pr.id?T.tealXL:T.white,transition:"all .2s"}}>
+              <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:10}}>
+                <div style={{width:22,height:22,borderRadius:"50%",flexShrink:0,
+                  background:i===0?T.green:i===1?T.amber:T.border,
+                  display:"flex",alignItems:"center",justifyContent:"center",color:T.white,fontSize:11,fontWeight:700}}>
+                  {i+1}
+                </div>
+                <Avatar initial={pr.initial} colour={pr.colour} size={36}/>
+                <div style={{flex:1}}>
+                  <div style={{fontWeight:600,fontSize:14}}>{pr.name} · {pr.region}</div>
+                  <div style={{fontSize:11,color:T.muted}}>{pr.availHours}h available · Online: {pr.compliance.online}</div>
+                </div>
+                <Score score={pr.matchScore}/>
+              </div>
+              <div style={{display:"flex",gap:6}}>
+                {pr.factors.map(f=>
+                  <div key={f.l} style={{flex:"1 1 60px",textAlign:"center",padding:"5px 4px",background:T.cream,borderRadius:6}}>
+                    <div style={{fontSize:10,color:T.muted,marginBottom:2}}>{f.l}</div>
+                    <div style={{fontWeight:600,fontSize:12,color:f.s/f.m>.8?T.green:f.s/f.m>.5?T.amber:T.coral}}>{f.s}/{f.m}</div>
+                  </div>)}
+              </div>
+            </div>)}
+          <div style={{display:"flex",gap:10,alignItems:"center",marginTop:4}}>
+            <Btn onClick={()=>proposed&&setConfirmed(true)} disabled={!proposed}>
+              Propose {proposed?proposed.name:"selected practitioner"} →
+            </Btn>
+            {!proposed&&<span style={{fontSize:12,color:T.muted}}>Select a practitioner above</span>}
+          </div>
+          <div style={{fontSize:11,color:T.muted,marginTop:10}}>
+            All decisions logged with your ID and timestamp. You can override the ranking — just add a note explaining why.
+          </div>
+        </div>
+      );
+    }
+
+    // ── App root ─────────────────────────────────────────────────────────────
+    function App() {
+      const [role,setRole] = useState(null);
+      return (
+        <div style={{minHeight:"100vh",background:T.cream}}>
+          <div style={{background:T.teal,padding:"12px 20px",display:"flex",
+            justifyContent:"space-between",alignItems:"center",
+            position:"sticky",top:0,zIndex:100}}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <div style={{width:28,height:28,borderRadius:7,background:"rgba(255,255,255,.15)",
+                display:"flex",alignItems:"center",justifyContent:"center",fontSize:14}}>🔗</div>
+              <span className="fr" style={{color:"white",fontSize:17,fontWeight:600}}>Nudge Match</span>
+              <span style={{fontSize:10,color:"rgba(255,255,255,.6)",padding:"2px 8px",
+                background:"rgba(255,255,255,.1)",borderRadius:999}}>prototype v0.1</span>
+            </div>
+            {role && <button onClick={()=>setRole(null)} style={{background:"rgba(255,255,255,.15)",
+              border:"none",color:"white",padding:"5px 12px",borderRadius:999,cursor:"pointer",fontSize:12}}>
+              Switch role
+            </button>}
+          </div>
+          {!role             && <RoleSelector      onSelect={setRole}/>}
+          {role==="young-person"  && <YoungPersonFlow   onBack={()=>setRole(null)}/>}
+          {role==="practitioner"  && <PractitionerFlow  onBack={()=>setRole(null)}/>}
+          {role==="parent"        && <ParentFlow         onBack={()=>setRole(null)}/>}
+          {role==="commissioner"  && <CommissionerFlow   onBack={()=>setRole(null)}/>}
+          {role==="eic"           && <EICFlow            onBack={()=>setRole(null)}/>}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
   </script>
 </body>
 </html>
