@@ -275,6 +275,8 @@
     #lessons-view.visible { display: block; }
     #wok-view { display: none; }
     #wok-view.visible { display: block; }
+    #skill-view { display: none; }
+    #skill-view.visible { display: block; }
     #topics-view.hidden { display: none; }
 
     .lessons-header {
@@ -563,6 +565,128 @@
       margin-top: 0.5rem;
     }
 
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp 0.7s forwards;
+      box-shadow: 0 2px 16px rgba(26,74,74,0.06);
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--skill-accent, var(--teal-light));
+      border-radius: 4px 0 0 4px;
+      transition: width var(--transition);
+    }
+
+    .skill-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,74,74,0.14); }
+    .skill-card:hover::before { width: 6px; }
+
+    .skill-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+
+    .skill-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--teal-deep);
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .skill-count { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.6rem; }
+
+    .skill-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .skill-card[data-skill="see-it"]          { --skill-accent: #4db8b8; }
+    .skill-card[data-skill="experiment"]       { --skill-accent: #8b6bc4; }
+    .skill-card[data-skill="step-through"]     { --skill-accent: #e8923a; }
+    .skill-card[data-skill="translate"]        { --skill-accent: #5a9fd4; }
+    .skill-card[data-skill="sense-check"]      { --skill-accent: #c0392b; }
+    .skill-card[data-skill="spot-what-stays"]  { --skill-accent: #5a7a5a; }
+    .skill-card[data-skill="connect"]          { --skill-accent: #d4a017; }
+    .skill-card[data-skill="investigate"]      { --skill-accent: #2d7a7a; }
+
+    .skill-card:nth-child(1) { animation-delay: 0.6s; }
+    .skill-card:nth-child(2) { animation-delay: 0.68s; }
+    .skill-card:nth-child(3) { animation-delay: 0.76s; }
+    .skill-card:nth-child(4) { animation-delay: 0.84s; }
+    .skill-card:nth-child(5) { animation-delay: 0.92s; }
+    .skill-card:nth-child(6) { animation-delay: 1.0s; }
+    .skill-card:nth-child(7) { animation-delay: 1.08s; }
+    .skill-card:nth-child(8) { animation-delay: 1.16s; }
+
+    .skill-details {
+      display: none;
+      padding: 2rem;
+    }
+
+    .skill-details.visible { display: block; }
+
+    .skill-details h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--teal-deep);
+      margin-bottom: 0.4rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s forwards;
+    }
+
+    .skill-details .skill-details-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.15s forwards;
+    }
+
+    .skill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 50px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: white;
+      line-height: 1;
+    }
+
+    .skill-badge[data-skill="see-it"]          { background: #4db8b8; }
+    .skill-badge[data-skill="experiment"]       { background: #8b6bc4; }
+    .skill-badge[data-skill="step-through"]     { background: #e8923a; }
+    .skill-badge[data-skill="translate"]        { background: #5a9fd4; }
+    .skill-badge[data-skill="sense-check"]      { background: #c0392b; }
+    .skill-badge[data-skill="spot-what-stays"]  { background: #5a7a5a; }
+    .skill-badge[data-skill="connect"]          { background: #d4a017; }
+    .skill-badge[data-skill="investigate"]      { background: #2d7a7a; }
+
     footer {
       position: relative;
       z-index: 5;
@@ -582,7 +706,7 @@
     @media (max-width: 600px) {
       header { padding: 2rem 1.25rem 1rem; }
       main   { padding: 0 1.25rem 3rem; }
-      .topics-grid, .lessons-grid, .wok-grid, .activities-grid { grid-template-columns: 1fr; }
+      .topics-grid, .lessons-grid, .wok-grid, .skill-grid, .activities-grid { grid-template-columns: 1fr; }
       .view-toggle { margin: 1rem 0 0; }
     }
   </style>
@@ -596,6 +720,7 @@
     <div class="view-toggle" id="view-toggle">
       <button class="toggle-btn active" onclick="switchView('topic')">By Topic</button>
       <button class="toggle-btn" onclick="switchView('wok')">By Way of Knowing</button>
+      <button class="toggle-btn" onclick="switchView('skill')">By Skill</button>
     </div>
     <div class="divider"></div>
   </header>
@@ -620,6 +745,11 @@
     <div id="wok-view">
       <div class="wok-grid" id="wok-grid"></div>
       <div class="wok-details" id="wok-details"></div>
+    </div>
+    <div id="skill-view">
+      <p class="section-label">Skills you'll develop</p>
+      <div class="skill-grid" id="skill-grid"></div>
+      <div class="skill-details" id="skill-details"></div>
     </div>
   </main>
 
@@ -788,6 +918,142 @@
       lb: { name: "The Living Body", emoji: "🌀", colour: "#5a7a5a" },
     };
 
+    const skillInfo = {
+      "see-it":         { name: "See It",          emoji: "👁️",  desc: "Turning abstract ideas into something visual you can reason about." },
+      "experiment":     { name: "Experiment",       emoji: "🧪", desc: "Changing variables to discover how things connect." },
+      "step-through":   { name: "Step Through",     emoji: "🪜", desc: "Breaking complexity into ordered, logical steps." },
+      "translate":      { name: "Translate",        emoji: "🔄", desc: "Moving between words, symbols, and the real world." },
+      "sense-check":    { name: "Sense-Check",      emoji: "🎯", desc: "Building intuition and checking answers feel right." },
+      "spot-what-stays":{ name: "Spot What Stays",  emoji: "🔍", desc: "Finding the rules that hold true beneath the surface." },
+      "connect":        { name: "Connect",          emoji: "🔗", desc: "Seeing how graphs, equations, tables, and words describe the same idea." },
+      "investigate":    { name: "Investigate",       emoji: "🔬", desc: "Spotting patterns, forming conjectures, and testing them." },
+    };
+
+    const skillMap = {
+      "1-graphs-functions/coordinates-kw-activity-1": ["see-it", "investigate"],
+      "1-graphs-functions/finding-the-gradient-dw-activity-2": ["experiment", "see-it"],
+      "1-graphs-functions/finding-the-gradient-kw-activity-1": ["see-it", "investigate"],
+      "1-graphs-functions/formula-for-slope-kw-activity-1": ["see-it", "spot-what-stays"],
+      "1-graphs-functions/parallel-and-perpendicular-lines-dw-activity-2": ["experiment", "spot-what-stays"],
+      "1-graphs-functions/parallel-and-perpendicular-lines-kw-activity-1": ["see-it", "spot-what-stays"],
+      "1-graphs-functions/plotting-straight-line-graphs-kw-activity-1": ["see-it", "translate"],
+      "1-graphs-functions/pythagoras-theorem-kw-activity-1": ["see-it", "spot-what-stays"],
+      "1-graphs-functions/quadratic-graphs-kw-activity-1": ["see-it", "investigate"],
+      "1-graphs-functions/y=af(bx)-dw-activity-1": ["experiment", "see-it"],
+      "1-graphs-functions/y=af(bx+c)+d-kw-activity-1": ["see-it", "spot-what-stays", "investigate"],
+      "1-graphs-functions/y=f(-x)-and-y=-f(x)-dw-activity-1": ["experiment", "see-it", "spot-what-stays"],
+      "1-graphs-functions/y=f(x)+a-dw-activity-1": ["experiment", "see-it"],
+      "1-graphs-functions/y=f(x+a)-dw-activity-1": ["experiment", "see-it"],
+      "1-graphs-functions/y=mx+c-hs-activity-2": ["translate", "connect"],
+      "1-graphs-functions/y=mx+c-kw-activity-1": ["see-it", "translate"],
+      "2-pythagoras-trig/3-d-pythagoras-dw-activity-1": ["experiment", "see-it"],
+      "2-pythagoras-trig/other-shapes-kw-activity-1": ["see-it", "spot-what-stays"],
+      "2-pythagoras-trig/perigals-disssection-kw-activity-1": ["see-it", "investigate"],
+      "2-pythagoras-trig/pythagoras-kw-activity-1": ["see-it", "spot-what-stays"],
+      "2-pythagoras-trig/pythagoras-theorem-hs-activity-2": ["connect", "translate"],
+      "2-pythagoras-trig/pythagoras-theorem-kw-activity-1": ["see-it", "investigate"],
+      "2-pythagoras-trig/the-sine-rule-dw-activity-1": ["step-through", "translate"],
+      "2-pythagoras-trig/trigonometry-sine-cos-tan-kw-activity-1": ["see-it", "investigate"],
+      "2-pythagoras-trig/trigonometry-sine-cos-tan-kw-activity-2": ["see-it", "spot-what-stays"],
+      "2-pythagoras-trig/trigonometry-sine-cos-tan-kw-activity-3": ["see-it", "investigate"],
+      "3-number/bodmas-dw-activity-1": ["step-through", "sense-check"],
+      "3-number/climate-change-escape-room-kw-activity-1": ["investigate", "translate"],
+      "3-number/climate-temp-tracker-kw-activity-1": ["see-it", "investigate"],
+      "3-number/compound-interest-and-depreciation-dw-activity-1": ["experiment", "translate"],
+      "3-number/fractions-4-rules-dw-activity-1": ["step-through", "sense-check"],
+      "3-number/hcf-lcm-dw-activity-1": ["step-through", "spot-what-stays"],
+      "3-number/multiples-factors-and-prime-factors-dw-activity-1": ["step-through", "investigate"],
+      "3-number/number-line-walker-kw-activity-1": ["see-it", "investigate"],
+      "3-number/place-value-kw-activity-1": ["see-it", "translate"],
+      "3-number/prime-numbers-2-germain-primes-dw-activity-1": ["investigate", "spot-what-stays"],
+      "3-number/prime-numbers-dw-activity-2": ["step-through", "investigate"],
+      "3-number/prime-numbers-kw-activity-1": ["see-it", "investigate"],
+      "3-number/proportion-dw-activity-1": ["experiment", "sense-check"],
+      "3-number/ratios-dw-activity-1": ["step-through", "translate"],
+      "3-number/sets-and-venn-diagrams-dw-activity-1": ["see-it", "translate"],
+      "3-number/square-and-cube-roots-dw-activity-1": ["step-through", "sense-check"],
+      "3-number/standard-form-dw-activity-1": ["translate", "sense-check"],
+      "3-number/the-4-operations-kw-activity-1": ["see-it", "investigate"],
+      "3-number/the-pentagram-kw-activity-1": ["see-it", "spot-what-stays"],
+      "3-number/types-of-number-dw-activity-1": ["translate", "spot-what-stays"],
+      "4-algebra/algebraic-fractions-dw-activity-1": ["step-through", "translate"],
+      "4-algebra/completing-the-square-dw-activity-1": ["step-through", "see-it"],
+      "4-algebra/expanding-brackets-dw-activity-1": ["step-through", "translate"],
+      "4-algebra/factorising-quadratics-2-dw-activity-1": ["step-through", "spot-what-stays"],
+      "4-algebra/factorising-quadratics-dw-activity-1": ["step-through", "spot-what-stays"],
+      "4-algebra/formulae-from-words-dw-activity-1": ["translate", "step-through"],
+      "4-algebra/graphical-inequalities-dw-activity-1": ["see-it", "connect"],
+      "4-algebra/inequalities-dw-activity-1": ["step-through", "sense-check"],
+      "4-algebra/manipulating-surds-dw-activity-1": ["step-through", "spot-what-stays"],
+      "4-algebra/number-patterns-and-sequences-dw-activity-1": ["investigate", "spot-what-stays"],
+      "4-algebra/powers-and-roots-dw-activity-1": ["step-through", "spot-what-stays"],
+      "4-algebra/proof-dw-activity-1": ["step-through", "investigate"],
+      "4-algebra/rearranging-formulae-dw-activity-1": ["step-through", "translate"],
+      "4-algebra/simultaneous-equations-and-graphs-dw-activity-1": ["see-it", "connect"],
+      "4-algebra/simultaneous-equations-dw-activity-1": ["step-through", "translate"],
+      "4-algebra/solving-equations-dw-activity-1": ["step-through", "sense-check"],
+      "4-algebra/solving-equations-kw-activity-1": ["see-it", "translate"],
+      "4-algebra/solving-quadratic-equations-by-factorisation-dw-activity-1": ["step-through", "translate"],
+      "4-algebra/solving-quadratic-equations-by-factorisation-kw-activity-1": ["see-it", "translate"],
+      "4-algebra/solving-quadratics-by-formula-dw-activity-1": ["step-through", "sense-check"],
+      "5-geometry-measures/angles-at-the-centre-and-circumference-of-a-circle-kw-activity-1": ["see-it", "spot-what-stays"],
+      "5-geometry-measures/angles-in-a-triangle-dw-activity-1": ["experiment", "investigate"],
+      "5-geometry-measures/angles-on-parallel-lines-dw-activity-1": ["see-it", "investigate"],
+      "5-geometry-measures/area-of-a-circle-dw-activity-2": ["experiment", "sense-check"],
+      "5-geometry-measures/area-of-a-circle-kw-activity-1": ["see-it", "spot-what-stays"],
+      "5-geometry-measures/areas-of-compound-shapes-kw-activity-1": ["see-it", "translate"],
+      "5-geometry-measures/bearings-kw-activity-1": ["see-it", "translate"],
+      "5-geometry-measures/circumference-of-a-circle-dw-activity-1": ["experiment", "sense-check"],
+      "5-geometry-measures/congruence-and-similarity-the-koch-snowflake-kw-activity-1": ["see-it", "investigate"],
+      "5-geometry-measures/distance-time-graphs-kw-activity-1": ["see-it", "investigate"],
+      "5-geometry-measures/geometrical-constructions-dw-activity-1": ["step-through", "translate"],
+      "5-geometry-measures/geometrical-constructions-dw-activity-2": ["step-through", "translate"],
+      "5-geometry-measures/maps-and-scale-drawings-kw-activity-1": ["see-it", "translate"],
+      "5-geometry-measures/nets-volumes-surface-areas-kw-activity-1": ["see-it", "translate"],
+      "5-geometry-measures/polygons-kw-activity-1": ["see-it", "investigate"],
+      "5-geometry-measures/similar-triangles-kw-activity-1": ["see-it", "investigate"],
+      "5-geometry-measures/symmetry-kw-activity-1": ["see-it", "investigate"],
+      "5-geometry-measures/symmetry-kw-activity-2": ["see-it", "spot-what-stays"],
+      "5-geometry-measures/the-four-transformations-es-activity-5": ["translate", "connect"],
+      "5-geometry-measures/the-four-transformations-kw-activity-1": ["see-it", "translate"],
+      "5-geometry-measures/the-four-transformations-kw-activity-2": ["see-it", "investigate"],
+      "5-geometry-measures/the-four-transformations-kw-activity-3": ["see-it", "spot-what-stays"],
+      "5-geometry-measures/the-four-transformations-kw-activity-4": ["see-it", "investigate"],
+      "5-geometry-measures/vectors-kw-activity-1": ["see-it", "translate"],
+      "6-probability/probability-basics-kw-activity-1": ["see-it", "investigate"],
+      "6-probability/probability-with-venn-diagrams-kw-activity-1": ["see-it", "translate"],
+      "6-probability/relative-frequency-kw-activity-1": ["investigate", "sense-check"],
+      "6-probability/tree-diagrams-kw-activity-1": ["see-it", "translate"],
+      "7-statistics/cumulative-frequency-dw-activity-3": ["see-it", "connect"],
+      "7-statistics/cumulative-frequency-kw-activity-1": ["see-it", "investigate"],
+      "7-statistics/cumulative-frequency-kw-activity-2": ["see-it", "spot-what-stays"],
+      "7-statistics/frequency-tables-dw-activity-2": ["see-it", "translate"],
+      "7-statistics/frequency-tables-dw-activity-3": ["see-it", "translate"],
+      "7-statistics/frequency-tables-kw-activity-1": ["see-it", "investigate"],
+      "7-statistics/histograms-and-frequency-density-hs-activity-3": ["translate", "connect"],
+      "7-statistics/histograms-and-frequency-density-kw-activity-1": ["see-it", "investigate"],
+      "7-statistics/histograms-and-frequency-density-kw-activity-2": ["see-it", "spot-what-stays"],
+      "7-statistics/mean-median-mode-dw-activity-2": ["experiment", "sense-check"],
+      "7-statistics/mean-median-mode-dw-activity-3": ["experiment", "investigate"],
+      "7-statistics/mean-median-mode-kw-activity-1": ["see-it", "investigate"],
+      "7-statistics/pie-charts-dw-activity-3": ["see-it", "translate"],
+      "7-statistics/pie-charts-kw-activity-1": ["see-it", "investigate"],
+      "7-statistics/pie-charts-kw-activity-2": ["see-it", "spot-what-stays"],
+      "7-statistics/quartiles-and-comparing-distributions-dw-activity-2": ["experiment", "investigate"],
+      "7-statistics/quartiles-and-comparing-distributions-kw-activity-1": ["see-it", "investigate"],
+    };
+
+    function getSkillsForActivity(folder, file) {
+      const key = folder + "/" + file;
+      return skillMap[key] || [];
+    }
+
+    function createSkillBadge(skillKey) {
+      const info = skillInfo[skillKey];
+      if (!info) return '';
+      return `<span class="skill-badge" data-skill="${skillKey}" title="${info.name}">${info.emoji} ${info.name}</span>`;
+    }
+
     function titleCase(slug) {
       // Remove version suffix
       let text = slug.replace(/-v2$/,'');
@@ -899,25 +1165,26 @@
     }
 
     function switchView(view) {
-      const topicBtn = document.querySelectorAll('.toggle-btn')[0];
-      const wokBtn = document.querySelectorAll('.toggle-btn')[1];
+      const btns = document.querySelectorAll('.toggle-btn');
+      btns.forEach(b => b.classList.remove('active'));
+
+      document.getElementById('topics-view').classList.add('hidden');
+      document.getElementById('lessons-view').classList.remove('visible');
+      document.getElementById('wok-view').classList.remove('visible');
+      document.getElementById('skill-view').classList.remove('visible');
+      document.getElementById('breadcrumb').classList.remove('visible');
 
       if (view === 'topic') {
-        topicBtn.classList.add('active');
-        wokBtn.classList.remove('active');
+        btns[0].classList.add('active');
         document.getElementById('topics-view').classList.remove('hidden');
-        document.getElementById('wok-view').classList.remove('visible');
-        if (!document.getElementById('lessons-view').classList.contains('visible')) {
-          document.getElementById('breadcrumb').classList.remove('visible');
-        }
-      } else {
-        topicBtn.classList.remove('active');
-        wokBtn.classList.add('active');
-        document.getElementById('topics-view').classList.add('hidden');
-        document.getElementById('lessons-view').classList.remove('visible');
+      } else if (view === 'wok') {
+        btns[1].classList.add('active');
         document.getElementById('wok-view').classList.add('visible');
-        document.getElementById('breadcrumb').classList.remove('visible');
         renderWoKView();
+      } else if (view === 'skill') {
+        btns[2].classList.add('active');
+        document.getElementById('skill-view').classList.add('visible');
+        renderSkillView();
       }
     }
 
@@ -1002,6 +1269,83 @@
       });
 
       detailsDiv.innerHTML = html;
+    }
+
+    function renderSkillView() {
+      const grid = document.getElementById('skill-grid');
+      grid.innerHTML = '';
+      const skillKeys = Object.keys(skillInfo);
+
+      skillKeys.forEach(key => {
+        const info = skillInfo[key];
+        let count = 0;
+        Object.values(skillMap).forEach(skills => {
+          if (skills.includes(key)) count++;
+        });
+
+        const card = document.createElement('div');
+        card.className = 'skill-card';
+        card.dataset.skill = key;
+        card.innerHTML = `
+          <span class="skill-icon">${info.emoji}</span>
+          <div class="skill-name">${info.name}</div>
+          <div class="skill-count">${count} activities</div>
+          <div class="skill-desc">${info.desc}</div>`;
+        card.addEventListener('click', () => showSkillDetails(key));
+        grid.appendChild(card);
+      });
+    }
+
+    function showSkillDetails(skillKey) {
+      const info = skillInfo[skillKey];
+      const detailsDiv = document.getElementById('skill-details');
+      detailsDiv.classList.add('visible');
+
+      const topicMap = {};
+      topics.forEach(t => { topicMap[t.folder] = t.name; });
+
+      // Group matching activities by topic
+      const byTopic = {};
+      topics.forEach(t => { byTopic[t.name] = []; });
+
+      Object.entries(activities).forEach(([folder, acts]) => {
+        const topicName = topicMap[folder];
+        if (!topicName) return;
+        acts.forEach(act => {
+          const key = folder + "/" + act.file;
+          const skills = skillMap[key] || [];
+          if (skills.includes(skillKey)) {
+            byTopic[topicName].push({ ...act, folder });
+          }
+        });
+      });
+
+      let html = `<h3>${info.emoji} ${info.name}</h3>`;
+      html += `<p class="skill-details-desc">${info.desc}</p>`;
+
+      Object.entries(byTopic).forEach(([topicName, acts]) => {
+        if (acts.length > 0) {
+          html += `<div class="topic-section">
+            <div class="topic-section-title">${topicName}</div>
+            <div class="activities-grid">`;
+
+          acts.forEach(act => {
+            const actSkills = skillMap[act.folder + "/" + act.file] || [];
+            const otherSkills = actSkills.filter(s => s !== skillKey);
+            const badgesHTML = otherSkills.map(s => createSkillBadge(s)).join('') + createWokBadge(act.wok);
+
+            html += `<a href="/verse-al-maths/lessons/${act.folder}/${act.file}.html" target="_blank" rel="noopener" class="activity-card">
+              <div class="activity-card-title">${titleCase(act.base)} Activity ${act.num}</div>
+              <div class="activity-card-wok">${badgesHTML}</div>
+            </a>`;
+          });
+
+          html += `</div></div>`;
+        }
+      });
+
+      detailsDiv.innerHTML = html;
+      detailsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     renderTopics();
