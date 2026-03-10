@@ -21,6 +21,11 @@
       --card-bg:      rgba(255,255,255,0.72);
       --radius:       16px;
       --transition:   0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --wok-kw:       #4db8b8;
+      --wok-dw:       #8b6bc4;
+      --wok-hs:       #e8923a;
+      --wok-es:       #5a9fd4;
+      --wok-lb:       #5a7a5a;
     }
 
     html { scroll-behavior: smooth; }
@@ -47,7 +52,7 @@
     header {
       position: relative;
       z-index: 10;
-      padding: 3rem 2rem 2rem;
+      padding: 3rem 2rem 1.5rem;
       text-align: center;
     }
 
@@ -85,6 +90,7 @@
       max-width: 540px;
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 1.5rem;
       opacity: 0;
       animation: fadeUp 0.9s 0.35s forwards;
     }
@@ -93,10 +99,45 @@
       width: 60px;
       height: 2px;
       background: linear-gradient(90deg, var(--teal-light), var(--amber));
-      margin: 2rem auto;
+      margin: 1.5rem auto 0;
       border-radius: 2px;
       opacity: 0;
       animation: fadeUp 0.6s 0.5s forwards;
+    }
+
+    .view-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1.5rem 0 0;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.6s forwards;
+    }
+
+    .toggle-btn {
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 50px;
+      padding: 0.65rem 1.25rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .toggle-btn.active {
+      background: var(--teal-light);
+      color: white;
+      border-color: var(--teal-light);
+      box-shadow: 0 4px 16px rgba(77,184,184,0.2);
+    }
+
+    .toggle-btn:hover:not(.active) {
+      background: rgba(255,255,255,0.8);
+      color: var(--teal-mid);
     }
 
     .breadcrumb {
@@ -232,6 +273,8 @@
 
     #lessons-view { display: none; }
     #lessons-view.visible { display: block; }
+    #wok-view { display: none; }
+    #wok-view.visible { display: block; }
     #topics-view.hidden { display: none; }
 
     .lessons-header {
@@ -266,17 +309,24 @@
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,0.6);
       border-radius: 12px;
-      padding: 1.5rem;
-      text-decoration: none;
+      padding: 0;
       color: inherit;
       display: block;
       transition: transform var(--transition), box-shadow var(--transition);
       box-shadow: 0 2px 12px rgba(26,74,74,0.05);
       opacity: 0;
       animation: fadeUp 0.5s forwards;
+      overflow: hidden;
     }
 
     .lesson-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(26,74,74,0.12); }
+
+    .lesson-link {
+      display: block;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+    }
 
     .lesson-title {
       font-family: 'Cormorant Garamond', serif;
@@ -295,10 +345,61 @@
       display: flex;
       align-items: center;
       gap: 0.3rem;
+      margin-bottom: 0.75rem;
     }
 
     .open-label::after { content: '→'; transition: transform var(--transition); }
     .lesson-card:hover .open-label::after { transform: translateX(4px); }
+
+    .activities-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0.75rem 1.5rem 1rem;
+      border-top: 1px solid rgba(26,74,74,0.08);
+    }
+
+    .activity-link {
+      font-size: 0.85rem;
+      color: var(--teal-mid);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: 6px;
+      transition: all var(--transition);
+    }
+
+    .activity-link:hover {
+      background: rgba(77,184,184,0.1);
+      color: var(--teal-deep);
+    }
+
+    .wok-badges {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-left: auto;
+    }
+
+    .wok-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: white;
+      line-height: 1;
+    }
+
+    .wok-badge.kw { background-color: var(--wok-kw); }
+    .wok-badge.dw { background-color: var(--wok-dw); }
+    .wok-badge.hs { background-color: var(--wok-hs); }
+    .wok-badge.es { background-color: var(--wok-es); }
+    .wok-badge.lb { background-color: var(--wok-lb); }
 
     .lesson-card:nth-child(1)  { animation-delay: 0.1s; }
     .lesson-card:nth-child(2)  { animation-delay: 0.15s; }
@@ -319,6 +420,149 @@
     .lesson-card:nth-child(17) { animation-delay: 0.9s; }
     .lesson-card:nth-child(18) { animation-delay: 0.95s; }
 
+    .wok-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .wok-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius);
+      padding: 2rem;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp 0.7s forwards;
+      box-shadow: 0 2px 16px rgba(26,74,74,0.06);
+    }
+
+    .wok-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--wok-accent, var(--teal-light));
+      border-radius: 4px 0 0 4px;
+      transition: width var(--transition);
+    }
+
+    .wok-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,74,74,0.14); }
+    .wok-card:hover::before { width: 6px; }
+
+    .wok-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+
+    .wok-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--teal-deep);
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .wok-count { font-size: 0.8rem; color: var(--muted); }
+
+    .wok-card[data-wok="kw"] { --wok-accent: var(--wok-kw); }
+    .wok-card[data-wok="dw"] { --wok-accent: var(--wok-dw); }
+    .wok-card[data-wok="hs"] { --wok-accent: var(--wok-hs); }
+    .wok-card[data-wok="es"] { --wok-accent: var(--wok-es); }
+    .wok-card[data-wok="lb"] { --wok-accent: var(--wok-lb); }
+
+    .wok-card:nth-child(1) { animation-delay: 0.6s; }
+    .wok-card:nth-child(2) { animation-delay: 0.7s; }
+    .wok-card:nth-child(3) { animation-delay: 0.8s; }
+    .wok-card:nth-child(4) { animation-delay: 0.9s; }
+    .wok-card:nth-child(5) { animation-delay: 1.0s; }
+
+    .wok-details {
+      display: none;
+      padding: 2rem;
+    }
+
+    .wok-details.visible { display: block; }
+
+    .wok-details h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--teal-deep);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s forwards;
+    }
+
+    .topic-section {
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s forwards;
+    }
+
+    .topic-section:nth-child(2) { animation-delay: 0.15s; }
+    .topic-section:nth-child(3) { animation-delay: 0.2s; }
+    .topic-section:nth-child(4) { animation-delay: 0.25s; }
+    .topic-section:nth-child(5) { animation-delay: 0.3s; }
+    .topic-section:nth-child(6) { animation-delay: 0.35s; }
+    .topic-section:nth-child(7) { animation-delay: 0.4s; }
+    .topic-section:nth-child(8) { animation-delay: 0.45s; }
+
+    .topic-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.85rem;
+    }
+
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .activity-card {
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all var(--transition);
+      font-size: 0.95rem;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 6px 20px rgba(26,74,74,0.1);
+    }
+
+    .activity-card-title {
+      color: var(--teal-mid);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .activity-card-wok {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+    }
+
     footer {
       position: relative;
       z-index: 5;
@@ -336,9 +580,10 @@
     }
 
     @media (max-width: 600px) {
-      header { padding: 2rem 1.25rem 1.5rem; }
+      header { padding: 2rem 1.25rem 1rem; }
       main   { padding: 0 1.25rem 3rem; }
-      .topics-grid, .lessons-grid { grid-template-columns: 1fr; }
+      .topics-grid, .lessons-grid, .wok-grid, .activities-grid { grid-template-columns: 1fr; }
+      .view-toggle { margin: 1rem 0 0; }
     }
   </style>
 </head>
@@ -348,6 +593,10 @@
     <p class="wordmark">The Novacene · Verse-al Maths</p>
     <h1>Mathematics for<br /><em>curious minds</em></h1>
     <p class="tagline">A curriculum that begins with who you are, not what you don't know yet.</p>
+    <div class="view-toggle" id="view-toggle">
+      <button class="toggle-btn active" onclick="switchView('topic')">By Topic</button>
+      <button class="toggle-btn" onclick="switchView('wok')">By Way of Knowing</button>
+    </div>
     <div class="divider"></div>
   </header>
 
@@ -368,6 +617,10 @@
       </div>
       <div class="lessons-grid" id="lessons-grid"></div>
     </div>
+    <div id="wok-view">
+      <div class="wok-grid" id="wok-grid"></div>
+      <div class="wok-details" id="wok-details"></div>
+    </div>
   </main>
 
   <footer>
@@ -378,7 +631,7 @@
     const topics = [
       { id:1, folder:"1-graphs-functions", name:"Graphs & Functions", icon:"📈",
         seed:"To find the shape of change, the line that maps the range.",
-        lessons:["coordinates-v2","plotting-straight-line-graphs-v2","finding-the-gradient-v2","y-equals-mx-plus-c-v2","parallel-and-perpendicular-lines-v2","quadratic-graphs-v2","y-equals-af-bx-v2","y-equals-af-bx-plus-c-plus-d-v2","y-equals-f-a-plus-x-v2","y-equals-f-x-plus-a-v2","y-equals-f-minus-x-v2"] },
+        lessons:["coordinates-v2","plotting-straight-line-graphs-v2","finding-the-gradient-v2","y=mx+c-v2","parallel-and-perpendicular-lines-v2","quadratic-graphs-v2","y=af(bx)-v2","y=af(bx+c)+d-v2","y=f(x+a)-v2","y=f(x)+a-v2","y=f(-x)-and-y=-f(x)-v2"] },
       { id:2, folder:"2-pythagoras-trig", name:"Pythagoras & Trigonometry", icon:"📐",
         seed:"To measure what cannot be seen, the hidden side of every triangle.",
         lessons:["pythagoras-theorem-v2","3d-pythagoras-v2","trigonometry-sine-cos-tan-v2","trig-ratios-finding-missing-side-v2","inverse-trig-finding-missing-angle-v2","sine-graph-v2","cosine-graph-v2","tangent-graph-v2","sin-cos-tan-larger-angles-v2","sine-rule-v2","cosine-rule-v2","3d-trigonometry-v2"] },
@@ -399,12 +652,187 @@
         lessons:["mean-median-mode-v2","frequency-tables-v2","pie-charts-v2","histograms-frequency-density-v2","cumulative-frequency-v2","quartiles-and-comparing-distributions-v2"] },
     ];
 
+    const activities = {
+      "1-graphs-functions": [
+        { file:"coordinates-kw-activity-1", base:"coordinates", wok:"kw", num:1 },
+        { file:"finding-the-gradient-kw-activity-1", base:"finding-the-gradient", wok:"kw", num:1 },
+        { file:"finding-the-gradient-dw-activity-2", base:"finding-the-gradient", wok:"dw", num:2 },
+        { file:"formula-for-slope-kw-activity-1", base:"formula-for-slope", wok:"kw", num:1 },
+        { file:"parallel-and-perpendicular-lines-kw-activity-1", base:"parallel-and-perpendicular-lines", wok:"kw", num:1 },
+        { file:"parallel-and-perpendicular-lines-dw-activity-2", base:"parallel-and-perpendicular-lines", wok:"dw", num:2 },
+        { file:"plotting-straight-line-graphs-kw-activity-1", base:"plotting-straight-line-graphs", wok:"kw", num:1 },
+        { file:"pythagoras-theorem-kw-activity-1", base:"pythagoras-theorem", wok:"kw", num:1 },
+        { file:"quadratic-graphs-kw-activity-1", base:"quadratic-graphs", wok:"kw", num:1 },
+        { file:"y=af(bx)-dw-activity-1", base:"y=af(bx)", wok:"dw", num:1 },
+        { file:"y=af(bx+c)+d-kw-activity-1", base:"y=af(bx+c)+d", wok:"kw", num:1 },
+        { file:"y=f(-x)-and-y=-f(x)-dw-activity-1", base:"y=f(-x)-and-y=-f(x)", wok:"dw", num:1 },
+        { file:"y=f(x)+a-dw-activity-1", base:"y=f(x)+a", wok:"dw", num:1 },
+        { file:"y=f(x+a)-dw-activity-1", base:"y=f(x+a)", wok:"dw", num:1 },
+        { file:"y=mx+c-kw-activity-1", base:"y=mx+c", wok:"kw", num:1 },
+        { file:"y=mx+c-hs-activity-2", base:"y=mx+c", wok:"hs", num:2 },
+      ],
+      "2-pythagoras-trig": [
+        { file:"3-d-pythagoras-dw-activity-1", base:"3-d-pythagoras", wok:"dw", num:1 },
+        { file:"other-shapes-kw-activity-1", base:"other-shapes", wok:"kw", num:1 },
+        { file:"perigals-disssection-kw-activity-1", base:"perigals-disssection", wok:"kw", num:1 },
+        { file:"pythagoras-kw-activity-1", base:"pythagoras", wok:"kw", num:1 },
+        { file:"pythagoras-theorem-kw-activity-1", base:"pythagoras-theorem", wok:"kw", num:1 },
+        { file:"pythagoras-theorem-hs-activity-2", base:"pythagoras-theorem", wok:"hs", num:2 },
+        { file:"the-sine-rule-dw-activity-1", base:"the-sine-rule", wok:"dw", num:1 },
+        { file:"trigonometry-sine-cos-tan-kw-activity-1", base:"trigonometry-sine-cos-tan", wok:"kw", num:1 },
+        { file:"trigonometry-sine-cos-tan-kw-activity-2", base:"trigonometry-sine-cos-tan", wok:"kw", num:2 },
+        { file:"trigonometry-sine-cos-tan-kw-activity-3", base:"trigonometry-sine-cos-tan", wok:"kw", num:3 },
+      ],
+      "3-number": [
+        { file:"bodmas-dw-activity-1", base:"bodmas", wok:"dw", num:1 },
+        { file:"climate-change-escape-room-kw-activity-1", base:"climate-change-escape-room", wok:"kw", num:1 },
+        { file:"climate-temp-tracker-kw-activity-1", base:"climate-temp-tracker", wok:"kw", num:1 },
+        { file:"compound-interest-and-depreciation-dw-activity-1", base:"compound-interest-and-depreciation", wok:"dw", num:1 },
+        { file:"fractions-4-rules-dw-activity-1", base:"fractions-4-rules", wok:"dw", num:1 },
+        { file:"hcf-lcm-dw-activity-1", base:"hcf-lcm", wok:"dw", num:1 },
+        { file:"multiples-factors-and-prime-factors-dw-activity-1", base:"multiples-factors-and-prime-factors", wok:"dw", num:1 },
+        { file:"number-line-walker-kw-activity-1", base:"number-line-walker", wok:"kw", num:1 },
+        { file:"place-value-kw-activity-1", base:"place-value", wok:"kw", num:1 },
+        { file:"prime-numbers-2-germain-primes-dw-activity-1", base:"prime-numbers-2-germain-primes", wok:"dw", num:1 },
+        { file:"prime-numbers-kw-activity-1", base:"prime-numbers", wok:"kw", num:1 },
+        { file:"prime-numbers-dw-activity-2", base:"prime-numbers", wok:"dw", num:2 },
+        { file:"proportion-dw-activity-1", base:"proportion", wok:"dw", num:1 },
+        { file:"ratios-dw-activity-1", base:"ratios", wok:"dw", num:1 },
+        { file:"sets-and-venn-diagrams-dw-activity-1", base:"sets-and-venn-diagrams", wok:"dw", num:1 },
+        { file:"square-and-cube-roots-dw-activity-1", base:"square-and-cube-roots", wok:"dw", num:1 },
+        { file:"standard-form-dw-activity-1", base:"standard-form", wok:"dw", num:1 },
+        { file:"the-4-operations-kw-activity-1", base:"the-4-operations", wok:"kw", num:1 },
+        { file:"the-pentagram-kw-activity-1", base:"the-pentagram", wok:"kw", num:1 },
+        { file:"types-of-number-dw-activity-1", base:"types-of-number", wok:"dw", num:1 },
+      ],
+      "4-algebra": [
+        { file:"algebraic-fractions-dw-activity-1", base:"algebraic-fractions", wok:"dw", num:1 },
+        { file:"completing-the-square-dw-activity-1", base:"completing-the-square", wok:"dw", num:1 },
+        { file:"expanding-brackets-dw-activity-1", base:"expanding-brackets", wok:"dw", num:1 },
+        { file:"factorising-quadratics-dw-activity-1", base:"factorising-quadratics", wok:"dw", num:1 },
+        { file:"factorising-quadratics-2-dw-activity-1", base:"factorising-quadratics-2", wok:"dw", num:1 },
+        { file:"formulae-from-words-dw-activity-1", base:"formulae-from-words", wok:"dw", num:1 },
+        { file:"graphical-inequalities-dw-activity-1", base:"graphical-inequalities", wok:"dw", num:1 },
+        { file:"inequalities-dw-activity-1", base:"inequalities", wok:"dw", num:1 },
+        { file:"manipulating-surds-dw-activity-1", base:"manipulating-surds", wok:"dw", num:1 },
+        { file:"number-patterns-and-sequences-dw-activity-1", base:"number-patterns-and-sequences", wok:"dw", num:1 },
+        { file:"powers-and-roots-dw-activity-1", base:"powers-and-roots", wok:"dw", num:1 },
+        { file:"proof-dw-activity-1", base:"proof", wok:"dw", num:1 },
+        { file:"rearranging-formulae-dw-activity-1", base:"rearranging-formulae", wok:"dw", num:1 },
+        { file:"simultaneous-equations-dw-activity-1", base:"simultaneous-equations", wok:"dw", num:1 },
+        { file:"simultaneous-equations-and-graphs-dw-activity-1", base:"simultaneous-equations-and-graphs", wok:"dw", num:1 },
+        { file:"solving-equations-dw-activity-1", base:"solving-equations", wok:"dw", num:1 },
+        { file:"solving-equations-kw-activity-1", base:"solving-equations", wok:"kw", num:1 },
+        { file:"solving-quadratic-equations-by-factorisation-dw-activity-1", base:"solving-quadratic-equations-by-factorisation", wok:"dw", num:1 },
+        { file:"solving-quadratic-equations-by-factorisation-kw-activity-1", base:"solving-quadratic-equations-by-factorisation", wok:"kw", num:1 },
+        { file:"solving-quadratics-by-formula-dw-activity-1", base:"solving-quadratics-by-formula", wok:"dw", num:1 },
+      ],
+      "5-geometry-measures": [
+        { file:"angles-at-the-centre-and-circumference-of-a-circle-kw-activity-1", base:"angles-at-the-centre-and-circumference-of-a-circle", wok:"kw", num:1 },
+        { file:"angles-in-a-triangle-dw-activity-1", base:"angles-in-a-triangle", wok:"dw", num:1 },
+        { file:"angles-on-parallel-lines-dw-activity-1", base:"angles-on-parallel-lines", wok:"dw", num:1 },
+        { file:"area-of-a-circle-kw-activity-1", base:"area-of-a-circle", wok:"kw", num:1 },
+        { file:"area-of-a-circle-dw-activity-2", base:"area-of-a-circle", wok:"dw", num:2 },
+        { file:"areas-of-compound-shapes-kw-activity-1", base:"areas-of-compound-shapes", wok:"kw", num:1 },
+        { file:"bearings-kw-activity-1", base:"bearings", wok:"kw", num:1 },
+        { file:"circumference-of-a-circle-dw-activity-1", base:"circumference-of-a-circle", wok:"dw", num:1 },
+        { file:"congruence-and-similarity-the-koch-snowflake-kw-activity-1", base:"congruence-and-similarity-the-koch-snowflake", wok:"kw", num:1 },
+        { file:"distance-time-graphs-kw-activity-1", base:"distance-time-graphs", wok:"kw", num:1 },
+        { file:"geometrical-constructions-dw-activity-1", base:"geometrical-constructions", wok:"dw", num:1 },
+        { file:"geometrical-constructions-dw-activity-2", base:"geometrical-constructions", wok:"dw", num:2 },
+        { file:"maps-and-scale-drawings-kw-activity-1", base:"maps-and-scale-drawings", wok:"kw", num:1 },
+        { file:"nets-volumes-surface-areas-kw-activity-1", base:"nets-volumes-surface-areas", wok:"kw", num:1 },
+        { file:"polygons-kw-activity-1", base:"polygons", wok:"kw", num:1 },
+        { file:"similar-triangles-kw-activity-1", base:"similar-triangles", wok:"kw", num:1 },
+        { file:"symmetry-kw-activity-1", base:"symmetry", wok:"kw", num:1 },
+        { file:"symmetry-kw-activity-2", base:"symmetry", wok:"kw", num:2 },
+        { file:"the-four-transformations-kw-activity-1", base:"the-four-transformations", wok:"kw", num:1 },
+        { file:"the-four-transformations-kw-activity-2", base:"the-four-transformations", wok:"kw", num:2 },
+        { file:"the-four-transformations-kw-activity-3", base:"the-four-transformations", wok:"kw", num:3 },
+        { file:"the-four-transformations-kw-activity-4", base:"the-four-transformations", wok:"kw", num:4 },
+        { file:"the-four-transformations-es-activity-5", base:"the-four-transformations", wok:"es", num:5 },
+        { file:"vectors-kw-activity-1", base:"vectors", wok:"kw", num:1 },
+      ],
+      "6-probability": [
+        { file:"probability-basics-kw-activity-1", base:"probability-basics", wok:"kw", num:1 },
+        { file:"probability-with-venn-diagrams-kw-activity-1", base:"probability-with-venn-diagrams", wok:"kw", num:1 },
+        { file:"relative-frequency-kw-activity-1", base:"relative-frequency", wok:"kw", num:1 },
+        { file:"tree-diagrams-kw-activity-1", base:"tree-diagrams", wok:"kw", num:1 },
+      ],
+      "7-statistics": [
+        { file:"cumulative-frequency-kw-activity-1", base:"cumulative-frequency", wok:"kw", num:1 },
+        { file:"cumulative-frequency-kw-activity-2", base:"cumulative-frequency", wok:"kw", num:2 },
+        { file:"cumulative-frequency-dw-activity-3", base:"cumulative-frequency", wok:"dw", num:3 },
+        { file:"frequency-tables-kw-activity-1", base:"frequency-tables", wok:"kw", num:1 },
+        { file:"frequency-tables-dw-activity-2", base:"frequency-tables", wok:"dw", num:2 },
+        { file:"frequency-tables-dw-activity-3", base:"frequency-tables", wok:"dw", num:3 },
+        { file:"histograms-and-frequency-density-kw-activity-1", base:"histograms-and-frequency-density", wok:"kw", num:1 },
+        { file:"histograms-and-frequency-density-kw-activity-2", base:"histograms-and-frequency-density", wok:"kw", num:2 },
+        { file:"histograms-and-frequency-density-hs-activity-3", base:"histograms-and-frequency-density", wok:"hs", num:3 },
+        { file:"mean-median-mode-kw-activity-1", base:"mean-median-mode", wok:"kw", num:1 },
+        { file:"mean-median-mode-dw-activity-2", base:"mean-median-mode", wok:"dw", num:2 },
+        { file:"mean-median-mode-dw-activity-3", base:"mean-median-mode", wok:"dw", num:3 },
+        { file:"pie-charts-kw-activity-1", base:"pie-charts", wok:"kw", num:1 },
+        { file:"pie-charts-kw-activity-2", base:"pie-charts", wok:"kw", num:2 },
+        { file:"pie-charts-dw-activity-3", base:"pie-charts", wok:"dw", num:3 },
+        { file:"quartiles-and-comparing-distributions-kw-activity-1", base:"quartiles-and-comparing-distributions", wok:"kw", num:1 },
+        { file:"quartiles-and-comparing-distributions-dw-activity-2", base:"quartiles-and-comparing-distributions", wok:"dw", num:2 },
+      ],
+    };
+
+    const wokInfo = {
+      kw: { name: "The Knowing World", emoji: "🧠", colour: "#4db8b8" },
+      dw: { name: "The Designed World", emoji: "🏗", colour: "#8b6bc4" },
+      hs: { name: "The Human Story", emoji: "🧬", colour: "#e8923a" },
+      es: { name: "The Expressive Self", emoji: "🗣", colour: "#5a9fd4" },
+      lb: { name: "The Living Body", emoji: "🌀", colour: "#5a7a5a" },
+    };
+
     function titleCase(slug) {
-      return slug.replace(/-v2$/,'').replace(/-/g,' ')
+      // Remove version suffix
+      let text = slug.replace(/-v2$/,'');
+
+      // Handle mathematical notation (equations with = and +)
+      if (text.includes('=')) {
+        // Split by = and handle both sides
+        let parts = text.split('=');
+        let result = parts.map(part => {
+          // Remove hyphens around operators, but preserve the operators
+          let cleaned = part.replace(/^-/, '').replace(/-$/, '');
+          return cleaned;
+        }).join(' = ');
+
+        // Add spaces around mathematical operators
+        result = result.replace(/([+\-*\/])/g, ' $1 ');
+
+        // Clean up multiple spaces
+        result = result.replace(/\s+/g, ' ').trim();
+
+        return result;
+      }
+
+      // Standard title case for normal words
+      text = text.replace(/-/g,' ')
         .replace(/\b\w/g, c => c.toUpperCase())
         .replace(/\bAnd\b/g,'and').replace(/\bOf\b/g,'of')
         .replace(/\bThe\b/g,'the').replace(/\bIn\b/g,'in')
         .replace(/^./,c => c.toUpperCase());
+
+      return text;
+    }
+
+    function getActivitiesForLesson(lessonSlug, topicFolder) {
+      const topicActivities = activities[topicFolder] || [];
+      return topicActivities.filter(act => {
+        const actBase = act.base.toLowerCase();
+        const lessonBase = lessonSlug.replace(/-v2$/,'').toLowerCase();
+        return lessonBase.includes(actBase) || actBase.includes(lessonBase);
+      });
+    }
+
+    function createWokBadge(wokCode) {
+      const info = wokInfo[wokCode];
+      return `<span class="wok-badge ${wokCode}" title="${info.name}">${info.emoji} ${wokCode.toUpperCase()}</span>`;
     }
 
     function renderTopics() {
@@ -434,26 +862,146 @@
       const grid = document.getElementById('lessons-grid');
       grid.innerHTML = '';
       topic.lessons.forEach(slug => {
-        const card = document.createElement('a');
+        const card = document.createElement('div');
         card.className = 'lesson-card';
-        card.href = `/verse-al-maths/lessons/${topic.folder}/${slug}.html`;
-        card.target = '_blank';
-        card.rel = 'noopener';
+
+        const lessonActivities = getActivitiesForLesson(slug, topic.folder);
+        const activitiesHTML = lessonActivities.length > 0
+          ? `<div class="activities-list">${lessonActivities.map(act => {
+              return `<a href="/verse-al-maths/lessons/${topic.folder}/${act.file}.html" target="_blank" rel="noopener" class="activity-link">
+                Activity ${act.num} · ${titleCase(act.base)}
+                <div class="wok-badges">${createWokBadge(act.wok)}</div>
+              </a>`;
+            }).join('')}</div>`
+          : '';
+
         card.innerHTML = `
-          <div class="lesson-title">${titleCase(slug)}</div>
-          <div class="open-label">Open lesson</div>`;
+          <a href="/verse-al-maths/lessons/${topic.folder}/${slug}.html" target="_blank" rel="noopener" class="lesson-link">
+            <div class="lesson-title">${titleCase(slug)}</div>
+            <div class="open-label">Open lesson</div>
+          </a>
+          ${activitiesHTML}`;
         grid.appendChild(card);
       });
       document.getElementById('topics-view').classList.add('hidden');
       document.getElementById('lessons-view').classList.add('visible');
+      document.getElementById('wok-view').classList.remove('visible');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showTopics() {
       document.getElementById('topics-view').classList.remove('hidden');
       document.getElementById('lessons-view').classList.remove('visible');
+      document.getElementById('wok-view').classList.remove('visible');
       document.getElementById('breadcrumb').classList.remove('visible');
+      switchView('topic');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchView(view) {
+      const topicBtn = document.querySelectorAll('.toggle-btn')[0];
+      const wokBtn = document.querySelectorAll('.toggle-btn')[1];
+
+      if (view === 'topic') {
+        topicBtn.classList.add('active');
+        wokBtn.classList.remove('active');
+        document.getElementById('topics-view').classList.remove('hidden');
+        document.getElementById('wok-view').classList.remove('visible');
+        if (!document.getElementById('lessons-view').classList.contains('visible')) {
+          document.getElementById('breadcrumb').classList.remove('visible');
+        }
+      } else {
+        topicBtn.classList.remove('active');
+        wokBtn.classList.add('active');
+        document.getElementById('topics-view').classList.add('hidden');
+        document.getElementById('lessons-view').classList.remove('visible');
+        document.getElementById('wok-view').classList.add('visible');
+        document.getElementById('breadcrumb').classList.remove('visible');
+        renderWoKView();
+      }
+    }
+
+    function renderWoKView() {
+      const grid = document.getElementById('wok-grid');
+      grid.innerHTML = '';
+      const wokKeys = ['kw', 'dw', 'hs', 'es', 'lb'];
+
+      wokKeys.forEach((key, idx) => {
+        const info = wokInfo[key];
+        const card = document.createElement('div');
+        card.className = 'wok-card';
+        card.dataset.wok = key;
+        card.innerHTML = `
+          <span class="wok-icon">${info.emoji}</span>
+          <div class="wok-name">${info.name}</div>
+          <div class="wok-count" id="wok-count-${key}"></div>`;
+        card.addEventListener('click', () => showWoKDetails(key));
+        grid.appendChild(card);
+      });
+
+      updateWoKCounts();
+    }
+
+    function updateWoKCounts() {
+      const wokKeys = ['kw', 'dw', 'hs', 'es', 'lb'];
+      wokKeys.forEach(key => {
+        let count = 0;
+        Object.values(activities).forEach(topicActivities => {
+          topicActivities.forEach(act => {
+            if (act.wok === key) count++;
+          });
+        });
+        document.getElementById(`wok-count-${key}`).textContent = `${count} activities`;
+      });
+    }
+
+    function showWoKDetails(wokKey) {
+      const info = wokInfo[wokKey];
+      const detailsDiv = document.getElementById('wok-details');
+      detailsDiv.classList.add('visible');
+
+      // Organize activities by topic
+      const activitiesByTopic = {};
+      topics.forEach(t => {
+        activitiesByTopic[t.name] = [];
+      });
+
+      const topicMap = {};
+      topics.forEach(t => {
+        topicMap[t.folder] = t.name;
+      });
+
+      Object.entries(activities).forEach(([folder, acts]) => {
+        const topicName = topicMap[folder];
+        if (topicName) {
+          acts.forEach(act => {
+            if (act.wok === wokKey) {
+              activitiesByTopic[topicName].push({ ...act, folder });
+            }
+          });
+        }
+      });
+
+      let html = `<h3>${info.emoji} ${info.name}</h3>`;
+
+      Object.entries(activitiesByTopic).forEach(([topicName, acts]) => {
+        if (acts.length > 0) {
+          html += `<div class="topic-section">
+            <div class="topic-section-title">${topicName}</div>
+            <div class="activities-grid">`;
+
+          acts.forEach(act => {
+            html += `<a href="/verse-al-maths/lessons/${act.folder}/${act.file}.html" target="_blank" rel="noopener" class="activity-card">
+              <div class="activity-card-title">${titleCase(act.file)}</div>
+              <div class="activity-card-wok">${createWokBadge(act.wok)}</div>
+            </a>`;
+          });
+
+          html += `</div></div>`;
+        }
+      });
+
+      detailsDiv.innerHTML = html;
     }
 
     renderTopics();
