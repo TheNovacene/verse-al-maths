@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Equations Balancer</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .app-wrapper {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .scale-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin: 30px 0;
+      height: 200px;
+      position: relative;
+    }
+
+    .scale-pan {
+      width: 140px;
+      height: 100px;
+      background: linear-gradient(to bottom, #FFD700, #FFA500);
+      border: 3px solid #FF8C00;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #333;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      margin: 0 40px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .scale-pan-expr {
+      font-size: 16px;
+      font-family: 'Courier New', monospace;
+      margin-bottom: 6px;
+      min-height: 24px;
+    }
+
+    .scale-pan-value {
+      font-size: 18px;
+      color: #d97706;
+      font-weight: bold;
+      border-top: 2px solid rgba(0,0,0,0.1);
+      padding-top: 4px;
+      width: 100%;
+    }
+
+    .scale-pan.left-heavy {
+      transform: rotateZ(-15deg) translateY(20px);
+    }
+
+    .scale-pan.right-heavy {
+      transform: rotateZ(15deg) translateY(20px);
+    }
+
+    .scale-beam {
+      position: absolute;
+      width: 300px;
+      height: 8px;
+      background: #8B4513;
+      top: 50px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .scale-fulcrum {
+      position: absolute;
+      width: 2px;
+      height: 80px;
+      background: #333;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .fulcrum-triangle {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 30px solid #333;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .equation-box {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .equation-display {
+      font-size: 28px;
+      font-weight: bold;
+      text-align: center;
+      color: #333;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      min-height: 40px;
+    }
+
+    .sides-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: #f0f0f0;
+      border-radius: 8px;
+    }
+
+    .side {
+      text-align: center;
+      flex: 1;
+    }
+
+    .side-label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .side-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #667eea;
+      margin-top: 8px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .equals-sign {
+      font-size: 32px;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .steps-log {
+      background: #f9f9f9;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+      max-height: 150px;
+      overflow-y: auto;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .step-item {
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .step-item:last-child {
+      border-bottom: none;
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    button {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-operation {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-operation:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .btn-operation:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: #764ba2;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #653890;
+      transform: translateY(-2px);
+    }
+
+    .btn-new {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-new:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+
+    .btn-reset {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-reset:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+      align-items: center;
+    }
+
+    input[type="number"] {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .difficulty-selector {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+      justify-content: center;
+    }
+
+    .difficulty-btn {
+      padding: 8px 16px;
+      border: 2px solid #667eea;
+      background: white;
+      color: #667eea;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .difficulty-btn.active {
+      background: #667eea;
+      color: white;
+    }
+
+    .message {
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .message.success {
+      background: #d1fae5;
+      color: #065f46;
+      border: 2px solid #10b981;
+    }
+
+    .message.info {
+      background: #dbeafe;
+      color: #0c4a6e;
+      border: 2px solid #667eea;
+    }
+
+    .message.warning {
+      background: #fef3c7;
+      color: #92400e;
+      border: 2px solid #fbbf24;
+    }
+
+    .solution-box {
+      padding: 20px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border-radius: 12px;
+      margin: 20px 0;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+      animation: slideIn 0.5s ease;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
+    }
+
+    .solution-box.show {
+      max-height: 200px;
+      opacity: 1;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .solution-label {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .solution-value {
+      font-size: 48px;
+      font-weight: bold;
+      font-family: 'Courier New', monospace;
+      margin: 10px 0;
+    }
+
+    .solution-message {
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .title {
+      text-align: center;
+      color: white;
+      margin: 20px 0;
+    }
+
+    .title h1 {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .title p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper">
+   <div class="title">
+    <h1>⚖️ Advanced Equations Balancer</h1>
+    <p>Master linear equations by keeping both sides balanced</p>
+   </div>
+   <div class="scale-container" id="scaleContainer">
+    <div class="scale-pan" id="leftPan">
+     <div class="scale-pan-expr" id="leftPanExpr">
+      x + 3
+     </div>
+     <div class="scale-pan-value" id="leftPanValue">
+      5
+     </div>
+    </div>
+    <div class="scale-beam"></div>
+    <div class="scale-fulcrum">
+     <div class="fulcrum-triangle"></div>
+    </div>
+    <div class="scale-pan" id="rightPan">
+     <div class="scale-pan-expr" id="rightPanExpr">
+      5
+     </div>
+     <div class="scale-pan-value" id="rightPanValue">
+      5
+     </div>
+    </div>
+   </div>
+   <div class="equation-box">
+    <div style="margin-bottom: 20px;">
+     <label style="font-weight: 600; color: #333; display: block; margin-bottom: 10px;">Select Difficulty:</label>
+     <div class="difficulty-selector">
+      <button class="difficulty-btn active" data-difficulty="easy">Easy</button> <button class="difficulty-btn" data-difficulty="medium">Medium</button> <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+     </div>
+    </div>
+    <div class="equation-display" id="equationDisplay">
+     Loading equation...
+    </div>
+    <div class="sides-container">
+     <div class="side">
+      <div class="side-label">
+       Left Side
+      </div>
+      <div class="side-value" id="leftSideExpr">
+       0
+      </div>
+     </div>
+     <div class="equals-sign">
+      =
+     </div>
+     <div class="side">
+      <div class="side-label">
+       Right Side
+      </div>
+      <div class="side-value" id="rightSideExpr">
+       0
+      </div>
+     </div>
+    </div>
+    <div id="messageArea"></div>
+    <div class="solution-box" id="solutionBox">
+     <div class="solution-label">
+      ✨ Solution Found! ✨
+     </div>
+     <div class="solution-value" id="solutionValue">
+      x = 2
+     </div>
+     <div class="solution-message">
+      Both sides are perfectly balanced!
+     </div>
+    </div>
+    <div class="steps-log" id="stepsLog"></div>
+    <div style="margin: 20px 0; padding: 15px; background: #f0e8ff; border-radius: 8px;">
+     <label style="font-weight: 600; color: #333; display: block; margin-bottom: 8px;">Enter Value for Operations:</label> <input type="number" id="valueInput" placeholder="Enter number" value="1">
+    </div>
+    <div style="margin: 20px 0; padding: 15px; background: #e8f0ff; border-radius: 8px;">
+     <div style="font-weight: 600; color: #333; margin-bottom: 10px;">
+      LEFT Side - Operations on Constants:
+     </div>
+     <div class="button-grid" style="margin-bottom: 15px;"><button class="btn-operation" id="addLeftConstBtn">Add to Left</button> <button class="btn-operation" id="subtractLeftConstBtn">Subtract from Left</button> <button class="btn-operation" id="multiplyLeftConstBtn">Multiply Left by</button> <button class="btn-operation" id="divideLeftConstBtn">Divide Left by</button>
+     </div>
+    </div>
+    <div style="margin: 20px 0; padding: 15px; background: #e8f0ff; border-radius: 8px;">
+     <div style="font-weight: 600; color: #333; margin-bottom: 10px;">
+      LEFT Side - Operations on Variables:
+     </div>
+     <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+      <input type="number" id="leftVarInput" placeholder="Coefficient" value="1" style="width: 100px; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px;">
+      <div style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-size: 18px; font-weight: 600; color: #667eea; text-align: center; font-family: 'Courier New', monospace;" id="leftVarDisplay">
+       x
+      </div><button class="btn-secondary" id="addXLeftVarBtn">Add to Left</button> <button class="btn-secondary" id="subtractXLeftVarBtn">Subtract from Left</button>
+     </div>
+    </div>
+    <div style="margin: 20px 0; padding: 15px; background: #fff0e8; border-radius: 8px;">
+     <div style="font-weight: 600; color: #333; margin-bottom: 10px;">
+      RIGHT Side - Operations on Constants:
+     </div>
+     <div class="button-grid" style="margin-bottom: 15px;"><button class="btn-operation" id="addRightConstBtn">Add to Right</button> <button class="btn-operation" id="subtractRightConstBtn">Subtract from Right</button> <button class="btn-operation" id="multiplyRightConstBtn">Multiply Right by</button> <button class="btn-operation" id="divideRightConstBtn">Divide Right by</button>
+     </div>
+    </div>
+    <div style="margin: 20px 0; padding: 15px; background: #fff0e8; border-radius: 8px;">
+     <div style="font-weight: 600; color: #333; margin-bottom: 10px;">
+      RIGHT Side - Operations on Variables:
+     </div>
+     <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+      <input type="number" id="rightVarInput" placeholder="Coefficient" value="1" style="width: 100px; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px;">
+      <div style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-size: 18px; font-weight: 600; color: #667eea; text-align: center; font-family: 'Courier New', monospace;" id="rightVarDisplay">
+       x
+      </div><button class="btn-secondary" id="addXRightVarBtn">Add to Right</button> <button class="btn-secondary" id="subtractXRightVarBtn">Subtract from Right</button>
+     </div>
+    </div>
+    <div class="button-grid">
+     <button class="btn-reset" id="resetBtn">Reset Equation</button> <button class="btn-new" id="newBtn">New Equation</button>
+    </div>
+   </div>
+  </div>
+  <script>
+    const equations = {
+      easy: [
+        { left: 'x + 3', right: '5', solution: 2 },
+        { left: 'x + 1', right: '3', solution: 2 },
+        { left: '2x', right: '4', solution: 2 },
+        { left: 'x + 4', right: '6', solution: 2 },
+        { left: '3x', right: '6', solution: 2 },
+        { left: 'x + 2', right: '7', solution: 5 },
+        { left: 'x + 5', right: '8', solution: 3 },
+        { left: '2x', right: '8', solution: 4 },
+        { left: '3x', right: '9', solution: 3 },
+        { left: 'x + 6', right: '10', solution: 4 },
+        { left: '4x', right: '8', solution: 2 },
+        { left: 'x + 7', right: '11', solution: 4 },
+        { left: '2x', right: '6', solution: 3 },
+        { left: 'x + 2', right: '4', solution: 2 },
+        { left: '5x', right: '10', solution: 2 },
+        { left: 'x + 8', right: '12', solution: 4 },
+        { left: '3x', right: '12', solution: 4 },
+        { left: 'x + 9', right: '13', solution: 4 },
+        { left: '2x', right: '10', solution: 5 },
+        { left: 'x + 10', right: '15', solution: 5 }
+      ],
+      medium: [
+        { left: '2x + 3', right: '7', solution: 2 },
+        { left: '3x - 2', right: '4', solution: 2 },
+        { left: '2x + 1', right: '5', solution: 2 },
+        { left: '4x - 3', right: '5', solution: 2 },
+        { left: '2x + 5', right: '9', solution: 2 },
+        { left: '3x + 1', right: '7', solution: 2 },
+        { left: '2x - 1', right: '3', solution: 2 },
+        { left: '5x - 2', right: '8', solution: 2 },
+        { left: '3x + 4', right: '10', solution: 2 },
+        { left: '2x + 7', right: '11', solution: 2 },
+        { left: '4x - 1', right: '7', solution: 2 },
+        { left: '3x - 3', right: '3', solution: 2 },
+        { left: '2x + 6', right: '10', solution: 2 },
+        { left: '5x - 5', right: '5', solution: 2 },
+        { left: '3x + 2', right: '8', solution: 2 },
+        { left: '2x + 9', right: '13', solution: 2 },
+        { left: '4x + 1', right: '9', solution: 2 },
+        { left: '3x - 1', right: '5', solution: 2 },
+        { left: '2x + 4', right: '8', solution: 2 },
+        { left: '5x + 1', right: '11', solution: 2 }
+      ],
+      hard: [
+        { left: '3x + 1', right: 'x + 5', solution: 2 },
+        { left: '5x - 3', right: '2x + 3', solution: 2 },
+        { left: '2x + 7', right: 'x + 9', solution: 2 },
+        { left: '4x - 2', right: '3x', solution: 2 },
+        { left: '6x - 5', right: '3x + 1', solution: 2 },
+        { left: '3x + 4', right: 'x + 8', solution: 2 },
+        { left: '5x - 1', right: '2x + 5', solution: 2 },
+        { left: '4x + 2', right: '2x + 6', solution: 2 },
+        { left: '2x + 10', right: 'x + 12', solution: 2 },
+        { left: '3x - 2', right: 'x + 2', solution: 2 },
+        { left: '6x + 1', right: '4x + 5', solution: 2 },
+        { left: '2x + 8', right: 'x + 10', solution: 2 },
+        { left: '5x - 2', right: '3x + 2', solution: 2 },
+        { left: '4x + 3', right: '2x + 7', solution: 2 },
+        { left: '3x + 5', right: 'x + 9', solution: 2 },
+        { left: '7x - 3', right: '4x + 3', solution: 2 },
+        { left: '2x + 6', right: 'x + 8', solution: 2 },
+        { left: '5x + 1', right: '3x + 5', solution: 2 },
+        { left: '4x - 1', right: '2x + 3', solution: 2 },
+        { left: '3x + 2', right: 'x + 6', solution: 2 }
+      ]
+    };
+
+    let currentDifficulty = 'easy';
+    let currentEquation = null;
+    let originalEquation = null;
+    let steps = [];
+    let leftValue = 0;
+    let rightValue = 0;
+    let hasBeenModified = false;
+
+    function parseExpression(expr) {
+      let constant = 0;
+      let xCoeff = 0;
+      
+      expr = expr.replace(/\s+/g, '');
+      
+      // Handle multiplication and division first
+      expr = expr.replace(/\(([^)]+)\)×(\d+)/g, (match, inside, mult) => {
+        const parsed = parseExpression(inside);
+        return (parsed.constant * mult) + (parsed.xCoeff * mult > 0 ? '+' : '') + (parsed.xCoeff * mult !== 0 ? parsed.xCoeff * mult + 'x' : '');
+      });
+      
+      expr = expr.replace(/\(([^)]+)\)÷(\d+)/g, (match, inside, div) => {
+        const parsed = parseExpression(inside);
+        return (parsed.constant / div) + (parsed.xCoeff / div > 0 ? '+' : '') + (parsed.xCoeff / div !== 0 ? parsed.xCoeff / div + 'x' : '');
+      });
+      
+      let terms = expr.match(/[+-]?[^+-]+/g) || [];
+      
+      terms.forEach(term => {
+        term = term.trim();
+        if (term.includes('x')) {
+          const coeff = term.replace('x', '') || '1';
+          xCoeff += parseFloat(coeff);
+        } else if (term !== '') {
+          constant += parseFloat(term);
+        }
+      });
+      
+      return { constant, xCoeff };
+    }
+
+    function calculateValue(expr, xValue = 0) {
+      const parsed = parseExpression(expr);
+      // Calculate the value: constant + (xCoeff * x)
+      return parsed.constant + (parsed.xCoeff * xValue);
+    }
+
+    function findOriginalSolutionX() {
+      // Find what x should be based on the ORIGINAL equation
+      const leftParsed = parseExpression(originalEquation.left);
+      const rightParsed = parseExpression(originalEquation.right);
+      
+      // Solve: leftConst + leftCoeff*x = rightConst + rightCoeff*x
+      // Rearrange: (leftCoeff - rightCoeff)*x = rightConst - leftConst
+      const xCoeffDiff = leftParsed.xCoeff - rightParsed.xCoeff;
+      const constDiff = rightParsed.constant - leftParsed.constant;
+      
+      if (xCoeffDiff === 0) return 0; // No x term, can't solve
+      return constDiff / xCoeffDiff;
+    }
+
+    function updateDisplay() {
+      // Use the ORIGINAL equation to find what x should be
+      const solutionX = findOriginalSolutionX();
+      
+      // Calculate current values using that x value
+      leftValue = calculateValue(currentEquation.left, solutionX);
+      rightValue = calculateValue(currentEquation.right, solutionX);
+
+      document.getElementById('equationDisplay').textContent = 
+        `${currentEquation.left} = ${currentEquation.right}`;
+      
+      document.getElementById('leftSideExpr').textContent = currentEquation.left;
+      document.getElementById('rightSideExpr').textContent = currentEquation.right;
+      
+      // Update the scale pans to show the expression AND the numeric value
+      document.getElementById('leftPanExpr').textContent = currentEquation.left;
+      document.getElementById('leftPanValue').textContent = Math.round(leftValue * 100) / 100;
+      
+      document.getElementById('rightPanExpr').textContent = currentEquation.right;
+      document.getElementById('rightPanValue').textContent = Math.round(rightValue * 100) / 100;
+
+      console.log(`Left: ${currentEquation.left} = ${leftValue} | Right: ${currentEquation.right} = ${rightValue} | x = ${solutionX}`);
+      
+      updateScale();
+      checkSolution();
+    }
+
+    function updateScale() {
+      const leftPan = document.getElementById('leftPan');
+      const rightPan = document.getElementById('rightPan');
+      const scaleBeam = document.querySelector('.scale-beam');
+      const diff = leftValue - rightValue;
+
+      // Tilt the scale based on difference
+      if (Math.abs(diff) < 0.01) {
+        scaleBeam.style.transform = 'rotateZ(0deg)';
+        leftPan.classList.remove('left-heavy', 'right-heavy');
+        rightPan.classList.remove('left-heavy', 'right-heavy');
+      } else if (diff > 0) {
+        scaleBeam.style.transform = `rotateZ(${Math.min(diff * 3, 20)}deg)`;
+        leftPan.classList.add('left-heavy');
+        rightPan.classList.remove('right-heavy');
+      } else {
+        scaleBeam.style.transform = `rotateZ(${Math.max(diff * 3, -20)}deg)`;
+        rightPan.classList.add('right-heavy');
+        leftPan.classList.remove('left-heavy');
+      }
+    }
+
+    function isSolved() {
+      // The equation is only "solved" when it's in the form: x = number
+      // This means: left side has coefficient of x, right side is just a number (or vice versa)
+      const leftParsed = parseExpression(currentEquation.left);
+      const rightParsed = parseExpression(currentEquation.right);
+      
+      // Check if left is "x" (xCoeff = 1, constant = 0) and right is a number (xCoeff = 0)
+      const leftIsX = Math.abs(leftParsed.xCoeff - 1) < 0.01 && Math.abs(leftParsed.constant) < 0.01;
+      const rightIsNumber = Math.abs(rightParsed.xCoeff) < 0.01;
+      
+      // Or check if right is "x" and left is a number
+      const rightIsX = Math.abs(rightParsed.xCoeff - 1) < 0.01 && Math.abs(rightParsed.constant) < 0.01;
+      const leftIsNumber = Math.abs(leftParsed.xCoeff) < 0.01;
+      
+      return (leftIsX && rightIsNumber) || (rightIsX && leftIsNumber);
+    }
+
+    function checkSolution() {
+      const messageArea = document.getElementById('messageArea');
+      const solutionBox = document.getElementById('solutionBox');
+      
+      if (Math.abs(leftValue - rightValue) < 0.01) {
+        // Only show solution if the equation is fully solved (x isolated)
+        if (hasBeenModified && isSolved()) {
+          messageArea.innerHTML = '<div class="message success">✓ Perfectly Solved! Both sides equal ' + leftValue + '</div>';
+          // Show the solution box with the x value
+          const solutionX = findOriginalSolutionX();
+          document.getElementById('solutionValue').textContent = 'x = ' + (Math.round(solutionX * 100) / 100);
+          solutionBox.classList.add('show');
+        } else if (hasBeenModified) {
+          messageArea.innerHTML = '<div class="message success">✓ Balanced! Both sides equal ' + leftValue + ' — keep simplifying to isolate x!</div>';
+          solutionBox.classList.remove('show');
+        } else {
+          messageArea.innerHTML = '<div class="message info">Start by modifying one side of the equation!</div>';
+          solutionBox.classList.remove('show');
+        }
+      } else {
+        messageArea.innerHTML = '<div class="message info">Sides differ by ' + Math.abs(leftValue - rightValue) + '</div>';
+        solutionBox.classList.remove('show');
+      }
+    }
+
+    function addStep(description) {
+      steps.push(description);
+      const stepsLog = document.getElementById('stepsLog');
+      const stepItem = document.createElement('div');
+      stepItem.className = 'step-item';
+      stepItem.textContent = (steps.length) + '. ' + description;
+      stepsLog.appendChild(stepItem);
+      stepsLog.scrollTop = stepsLog.scrollHeight;
+    }
+
+    function loadEquation() {
+      const eqs = equations[currentDifficulty];
+      originalEquation = { ...eqs[Math.floor(Math.random() * eqs.length)] };
+      currentEquation = { ...originalEquation };
+      steps = [];
+      hasBeenModified = false;
+      document.getElementById('stepsLog').innerHTML = '';
+      document.getElementById('messageArea').innerHTML = '';
+      updateDisplay();
+    }
+
+    // Difficulty buttons
+    document.querySelectorAll('.difficulty-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentDifficulty = e.target.dataset.difficulty;
+        loadEquation();
+      });
+    });
+
+    // Left side - Operations on Constants
+    document.getElementById('addLeftConstBtn').addEventListener('click', () => {
+      const value = parseFloat(document.getElementById('valueInput').value) || 0;
+      if (value === 0) return;
+      hasBeenModified = true;
+      currentEquation.left += ' + ' + value;
+      addStep(`Added ${value} to LEFT side`);
+      updateDisplay();
+    });
+
+    document.getElementById('subtractLeftConstBtn').addEventListener('click', () => {
+      const value = parseFloat(document.getElementById('valueInput').value) || 0;
+      if (value === 0) return;
+      hasBeenModified = true;
+      currentEquation.left += ' - ' + value;
+      addStep(`Subtracted ${value} from LEFT side`);
+      updateDisplay();
+    });
+
+    document.getElementById('multiplyLeftConstBtn').addEventListener('click', () => {
+      const value = parseFloat(document.getElementById('valueInput').value) || 0;
+      if (value === 0 || value === 1) return;
+      hasBeenModified = true;
+      currentEquation.left = '(' + currentEquation.left + ') × ' + value;
+      addStep(`Multiplied LEFT side by ${value}`);
+      updateDisplay();
+    });
+
+    document.getElementById('divideLeftConstBtn').addEventListener('click', () => {
+      const value = parseFloat(document.getElementById('valueInput').value) || 0;
+      if (value === 0 || value === 1) return;
+      hasBeenModified = true;
+      currentEquation.left = '(' + currentEquation.left + ') ÷ ' + value;
+      addStep(`Divided LEFT side by ${value}`);
+      updateDisplay();
+    });
+
+    // Update variable display boxes
+    document.getElementById('leftVarInput').addEventListener('input', (e) => {
+      const coeff = parseFloat(e.target.value) || 1;
+      const display = coeff === 1 ? 'x' : coeff + 'x';
+      document.getElementById('leftVarDisplay').textContent = display;
+    });
+
+    document.getElementById('rightVarInput').addEventListener('input', (e) => {
+      const coeff = parseFloat(e.target.value) || 1;
+      const display = coeff === 1 ? 'x' : coeff + 'x';
+      document.getElementById('rightVarDisplay').textContent = display;
+    });
+
+    // Left side - Operations on Variables
+    document.getElementById('addXLeftVarBtn').addEventListener('click', () => {
+      const coeff = parseFloat(document.getElementById('leftVarInput').value) || 1;
+      if (coeff === 0) return;
+      hasBeenModified = true;
+      const xTerm = coeff === 1 ? 'x' : coeff + 'x';
+      currentEquation.left += ' + ' + xTerm;
+      addStep(`Added ${xTerm} to LEFT side`);
+      updateDisplay();
+    });
+
+    document.getElementById('subtractXLeftVarBtn').addEventListener('click', () => {
+      const coeff = parseFloat(document.getElementById('leftVarInput').value) || 1;
+      if (coeff === 0) return;
+      hasBeenModified = true;
+      const xTerm = coeff === 1 ? 'x' : coeff + 'x';
+      currentEquation.left += ' - ' + xTerm;
+      addStep(`Subtracted ${xTerm} from LEFT side`);
+      updateDisplay();
+    });
+
+    // Right side - Operations on Constants
+    document.getElementById('addRightConstBtn').addEventListener('click', () => {
+      const value = parseFloat(document.getElementById('valueInput').value) || 0;
+      if (value === 0) return;
+      hasBeenModified = true;
+      currentEquation.right += ' + ' + value;
+      addStep(`Added ${value} to RIGHT side`);
+      updateDisplay();
+    });
+
+    document.getElementById('subtractRightConstBtn').addEventListener('click', () => {
+      const value = parseFloat(document.getElementById('valueInput').value) || 0;
+      if (value === 0) return;
+      hasBeenModified = true;
+      currentEquation.right += ' - ' + value;
+      addStep(`Subtracted ${value} from RIGHT side`);
+      updateDisplay();
+    });
+
+    document.getElementById('multiplyRightConstBtn').addEventListener('click', () => {
+      const value = parseFloat(document.getElementById('valueInput').value) || 0;
+      if (value === 0 || value === 1) return;
+      hasBeenModified = true;
+      currentEquation.right = '(' + currentEquation.right + ') × ' + value;
+      addStep(`Multiplied RIGHT side by ${value}`);
+      updateDisplay();
+    });
+
+    document.getElementById('divideRightConstBtn').addEventListener('click', () => {
+      const value = parseFloat(document.getElementById('valueInput').value) || 0;
+      if (value === 0 || value === 1) return;
+      hasBeenModified = true;
+      currentEquation.right = '(' + currentEquation.right + ') ÷ ' + value;
+      addStep(`Divided RIGHT side by ${value}`);
+      updateDisplay();
+    });
+
+    // Right side - Operations on Variables
+    document.getElementById('addXRightVarBtn').addEventListener('click', () => {
+      const coeff = parseFloat(document.getElementById('rightVarInput').value) || 1;
+      if (coeff === 0) return;
+      hasBeenModified = true;
+      const xTerm = coeff === 1 ? 'x' : coeff + 'x';
+      currentEquation.right += ' + ' + xTerm;
+      addStep(`Added ${xTerm} to RIGHT side`);
+      updateDisplay();
+    });
+
+    document.getElementById('subtractXRightVarBtn').addEventListener('click', () => {
+      const coeff = parseFloat(document.getElementById('rightVarInput').value) || 1;
+      if (coeff === 0) return;
+      hasBeenModified = true;
+      const xTerm = coeff === 1 ? 'x' : coeff + 'x';
+      currentEquation.right += ' - ' + xTerm;
+      addStep(`Subtracted ${xTerm} from RIGHT side`);
+      updateDisplay();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      loadEquation();
+    });
+
+    document.getElementById('newBtn').addEventListener('click', () => {
+      loadEquation();
+    });
+
+    // Initialize
+    loadEquation();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d71350c870868b8',t:'MTc3MjYzMDcyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

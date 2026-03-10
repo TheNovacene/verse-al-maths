@@ -1,0 +1,1321 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Net-Builder &amp; Volume/Surface Area Match</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #2d3748;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      margin: 0 0 15px 0;
+      font-size: 32px;
+      color: #2d3748;
+    }
+
+    .instructions {
+      font-size: 16px;
+      color: #4a5568;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .mode-selector {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: white;
+      color: #667eea;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .mode-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .mode-btn.active {
+      background: #667eea;
+      color: white;
+    }
+
+    .shape-selector {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .shape-btn {
+      padding: 10px 20px;
+      border: 2px solid white;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .shape-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .shape-btn.active {
+      background: white;
+      color: #667eea;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 968px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .panel h2 {
+      margin: 0 0 15px 0;
+      font-size: 22px;
+      color: #2d3748;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .net-workspace {
+      min-height: 500px;
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      border: 3px dashed #cbd5e0;
+      background-image: 
+        linear-gradient(rgba(203, 213, 224, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(203, 213, 224, 0.3) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    .workspace-placeholder {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #718096;
+      pointer-events: none;
+      width: 100%;
+    }
+
+    .placed-piece {
+      position: absolute;
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      cursor: move;
+      user-select: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .placed-piece:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .placed-piece.selected {
+      box-shadow: 0 0 0 3px #667eea;
+    }
+
+    .placed-piece.rectangle {
+      padding: 12px 20px;
+      border-radius: 8px;
+      min-width: 80px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+    }
+
+    .placed-piece.square {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+    }
+
+    .placed-piece.triangle {
+      width: 0;
+      height: 0;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-bottom: 86px solid #38f9d7;
+      background: none;
+    }
+
+    .placed-piece.triangle .label {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      color: white;
+      font-weight: 600;
+    }
+
+    .rotation-controls {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      gap: 5px;
+      background: white;
+      padding: 5px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+    }
+
+    .placed-piece.selected .rotation-controls {
+      display: flex;
+    }
+
+    .rotate-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      background: #667eea;
+      color: white;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .rotate-btn:hover {
+      background: #5568d3;
+    }
+
+    .delete-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      background: #f5576c;
+      color: white;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .delete-btn:hover {
+      background: #e04555;
+    }
+
+    .net-pieces {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .net-piece {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      cursor: move;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-width: 80px;
+      min-height: 80px;
+    }
+
+    .net-piece.rectangle {
+      padding: 12px 20px;
+      border-radius: 8px;
+    }
+
+    .net-piece.triangle {
+      width: 0;
+      height: 0;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-bottom: 86px solid #f5576c;
+      background: none;
+      padding: 0;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .net-piece.triangle .label {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .net-piece.square {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      padding: 0;
+    }
+
+    .net-piece:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .net-piece.placed {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .net-piece.dragging {
+      opacity: 0.5;
+    }
+
+    .shape-view {
+      min-height: 400px;
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shape-diagram {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+
+    .dimensions {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .dimension-control {
+      margin-bottom: 15px;
+    }
+
+    .dimension-control label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .dimension-input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dimension-input-group input[type="range"] {
+      flex: 1;
+      height: 8px;
+      border-radius: 5px;
+      background: #e2e8f0;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .dimension-input-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+    }
+
+    .dimension-input-group input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      border: none;
+    }
+
+    .dimension-input-group input[type="number"] {
+      width: 80px;
+      padding: 8px;
+      border: 2px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .calculations {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .calculations h2 {
+      margin: 0 0 15px 0;
+      font-size: 22px;
+      color: #2d3748;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .calc-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f7fafc;
+      border-radius: 10px;
+      border-left: 4px solid #667eea;
+    }
+
+    .calc-section h3 {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+      color: #667eea;
+    }
+
+    .formula {
+      font-family: 'Courier New', monospace;
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 10px 0;
+      font-size: 15px;
+      border: 2px solid #e2e8f0;
+    }
+
+    .result {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2d3748;
+      margin-top: 10px;
+    }
+
+    .breakdown {
+      font-size: 14px;
+      color: #4a5568;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .challenge-panel {
+      background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+    }
+
+    .challenge-panel h2 {
+      margin: 0 0 15px 0;
+      font-size: 22px;
+      color: #2d3748;
+    }
+
+    .challenge-content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .target-display {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .challenge-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #667eea;
+    }
+
+    .btn-secondary:hover {
+      background: #f7fafc;
+      transform: translateY(-2px);
+    }
+
+    .feedback {
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+
+    .feedback.success {
+      background: #43e97b;
+      color: white;
+    }
+
+    .feedback.error {
+      background: #f5576c;
+      color: white;
+    }
+
+    .feedback.info {
+      background: #74b9ff;
+      color: white;
+    }
+
+    .check-net-btn {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .scaling-info {
+      background: #e6fffa;
+      border: 2px solid #81e6d9;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .scaling-info h4 {
+      margin: 0 0 10px 0;
+      color: #234e52;
+      font-size: 16px;
+    }
+
+    .scaling-info p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #2c7a7b;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <header>
+    <h1 id="app-title">Net-Builder &amp; Volume/Surface Area Match</h1>
+    <p class="instructions" id="instructions-text">Drag the net pieces to build the net of the solid. Then adjust the dimensions and observe how the surface area and volume change. Try the challenge to hit a target value!</p>
+   </header>
+   <div class="mode-selector"><button class="mode-btn active" data-mode="explore">Explore Mode</button> <button class="mode-btn" data-mode="challenge">Challenge Mode</button>
+   </div>
+   <div class="shape-selector"><button class="shape-btn active" data-shape="cube">Cube</button> <button class="shape-btn" data-shape="rectangular">Rectangular Prism</button> <button class="shape-btn" data-shape="triangular">Triangular Prism</button> <button class="shape-btn" data-shape="pyramid">Square Pyramid</button>
+   </div>
+   <div class="main-content">
+    <div class="panel">
+     <h2>Net Builder</h2>
+     <div class="net-pieces" id="net-pieces"></div>
+     <div class="net-workspace" id="net-workspace">
+      <p style="text-align: center; color: #718096; margin-top: 180px;">Drag pieces here to build the net</p>
+     </div><button class="btn btn-primary check-net-btn" id="check-net-btn">Check Net</button>
+     <div class="feedback" id="net-feedback"></div>
+    </div>
+    <div class="panel">
+     <h2>3D Shape &amp; Dimensions</h2>
+     <div class="shape-view">
+      <div class="shape-diagram" id="shape-diagram">
+       📦
+      </div>
+      <div class="dimensions" id="dimensions"></div>
+     </div>
+    </div>
+   </div>
+   <div class="calculations">
+    <h2>Calculations</h2>
+    <div class="calc-section">
+     <h3>Surface Area</h3>
+     <div class="formula" id="surface-formula"></div>
+     <div class="result" id="surface-result"></div>
+     <div class="breakdown" id="surface-breakdown"></div>
+    </div>
+    <div class="calc-section">
+     <h3>Volume</h3>
+     <div class="formula" id="volume-formula"></div>
+     <div class="result" id="volume-result"></div>
+    </div>
+    <div class="scaling-info" id="scaling-info"></div>
+   </div>
+   <div class="challenge-panel" id="challenge-panel" style="display: none;">
+    <h2 id="challenge-label">🎯 Challenge Mode</h2>
+    <div class="challenge-content">
+     <div class="target-display" id="target-display"></div>
+     <div class="challenge-buttons"><button class="btn btn-primary" id="submit-challenge">Submit Answer</button> <button class="btn btn-secondary" id="new-challenge">New Challenge</button>
+     </div>
+     <div class="feedback" id="challenge-feedback"></div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      app_title: "Net-Builder & Volume/Surface Area Match",
+      instructions_text: "Drag the net pieces to build the net of the solid. Then adjust the dimensions and observe how the surface area and volume change. Try the challenge to hit a target value!",
+      challenge_label: "🎯 Challenge Mode"
+    };
+
+    let currentShape = 'cube';
+    let currentMode = 'explore';
+    let dimensions = { length: 5, width: 5, height: 5 };
+    let netPiecesPlaced = 0;
+    let totalNetPieces = 6;
+    let challengeTarget = { type: 'surface', value: 0 };
+    let originalDimensions = {};
+    let placedPieces = [];
+    let selectedPiece = null;
+    let draggedPiece = null;
+    let dragOffset = { x: 0, y: 0 };
+
+    const shapes = {
+      cube: {
+        emoji: '📦',
+        pieces: [
+          { name: 'Top', shape: 'square' },
+          { name: 'Bottom', shape: 'square' },
+          { name: 'Front', shape: 'square' },
+          { name: 'Back', shape: 'square' },
+          { name: 'Left', shape: 'square' },
+          { name: 'Right', shape: 'square' }
+        ],
+        dims: ['side'],
+        defaults: { side: 5 }
+      },
+      rectangular: {
+        emoji: '📦',
+        pieces: [
+          { name: 'Top', shape: 'rectangle' },
+          { name: 'Bottom', shape: 'rectangle' },
+          { name: 'Front', shape: 'rectangle' },
+          { name: 'Back', shape: 'rectangle' },
+          { name: 'Left', shape: 'rectangle' },
+          { name: 'Right', shape: 'rectangle' }
+        ],
+        dims: ['length', 'width', 'height'],
+        defaults: { length: 6, width: 4, height: 3 }
+      },
+      triangular: {
+        emoji: '▲',
+        pieces: [
+          { name: 'Triangle End 1', shape: 'triangle' },
+          { name: 'Triangle End 2', shape: 'triangle' },
+          { name: 'Bottom', shape: 'rectangle' },
+          { name: 'Side 1', shape: 'rectangle' },
+          { name: 'Side 2', shape: 'rectangle' }
+        ],
+        dims: ['base', 'height', 'length'],
+        defaults: { base: 4, height: 3, length: 6 }
+      },
+      pyramid: {
+        emoji: '🔺',
+        pieces: [
+          { name: 'Base', shape: 'square' },
+          { name: 'Triangle 1', shape: 'triangle' },
+          { name: 'Triangle 2', shape: 'triangle' },
+          { name: 'Triangle 3', shape: 'triangle' },
+          { name: 'Triangle 4', shape: 'triangle' }
+        ],
+        dims: ['base', 'height'],
+        defaults: { base: 5, height: 6 }
+      }
+    };
+
+    function initializeShape(shape) {
+      currentShape = shape;
+      dimensions = { ...shapes[shape].defaults };
+      originalDimensions = { ...dimensions };
+      netPiecesPlaced = 0;
+      totalNetPieces = shapes[shape].pieces.length;
+      placedPieces = [];
+      selectedPiece = null;
+
+      const shapeDiagram = document.getElementById('shape-diagram');
+      
+      if (shape === 'triangular') {
+        // Create SVG for triangular prism - triangular ends front/back, rectangular base on bottom
+        shapeDiagram.innerHTML = `
+          <svg width="180" height="140" viewBox="0 0 180 140">
+            <!-- Bottom rectangular face -->
+            <polygon points="30,100 30,50 150,50 150,100" fill="#cbd5e0" stroke="#2d3748" stroke-width="2.5"/>
+            
+            <!-- Left slanted rectangular face -->
+            <polygon points="30,50 90,20 90,90 30,100" fill="#94a3b8" stroke="#2d3748" stroke-width="2"/>
+            
+            <!-- Right slanted rectangular face -->
+            <polygon points="150,50 90,20 90,90 150,100" fill="#a0aec0" stroke="#2d3748" stroke-width="2"/>
+            
+            <!-- Front triangular face (clearly visible!) -->
+            <polygon points="30,50 90,20 150,50" fill="#e2e8f0" stroke="#2d3748" stroke-width="2.5"/>
+            
+            <!-- Back triangular face edges (depth) -->
+            <polygon points="30,100 90,90 150,100" fill="#b8c5d6" stroke="#2d3748" stroke-width="2"/>
+          </svg>
+        `;
+      } else if (shape === 'pyramid') {
+        // Create SVG for square pyramid - square base on bottom, triangular faces pointing up to apex
+        shapeDiagram.innerHTML = `
+          <svg width="180" height="140" viewBox="0 0 180 140">
+            <!-- Square base on the bottom -->
+            <polygon points="40,110 140,110 140,70 40,70" fill="#cbd5e0" stroke="#2d3748" stroke-width="2.5"/>
+            
+            <!-- Back left triangular face -->
+            <polygon points="40,70 90,25 90,25 40,70" fill="#94a3b8" stroke="#2d3748" stroke-width="2"/>
+            
+            <!-- Back right triangular face -->
+            <polygon points="140,70 90,25 140,70" fill="#a0aec0" stroke="#2d3748" stroke-width="2"/>
+            
+            <!-- Front left triangular face (visible) -->
+            <polygon points="40,110 90,25 40,70" fill="#b8c5d6" stroke="#2d3748" stroke-width="2"/>
+            
+            <!-- Front right triangular face (most visible) -->
+            <polygon points="140,110 90,25 140,70" fill="#e2e8f0" stroke="#2d3748" stroke-width="2.5"/>
+            
+            <!-- Apex to front corners -->
+            <line x1="90" y1="25" x2="40" y2="110" stroke="#2d3748" stroke-width="2"/>
+            <line x1="90" y1="25" x2="140" y2="110" stroke="#2d3748" stroke-width="2.5"/>
+          </svg>
+        `;
+      } else {
+        shapeDiagram.textContent = shapes[shape].emoji;
+      }
+      
+      renderNetPieces();
+      renderDimensions();
+      calculateAndDisplay();
+      updateScalingInfo();
+      
+      const workspace = document.getElementById('net-workspace');
+      workspace.innerHTML = '<div class="workspace-placeholder">Drag pieces here to build the net</div>';
+      
+      document.getElementById('net-feedback').className = 'feedback';
+      document.getElementById('net-feedback').style.display = 'none';
+    }
+
+    function renderNetPieces() {
+      const container = document.getElementById('net-pieces');
+      container.innerHTML = '';
+      
+      shapes[currentShape].pieces.forEach((piece, index) => {
+        const pieceEl = document.createElement('div');
+        pieceEl.className = `net-piece ${piece.shape}`;
+        pieceEl.draggable = true;
+        pieceEl.dataset.index = index;
+        pieceEl.dataset.shape = piece.shape;
+        
+        if (piece.shape === 'triangle') {
+          const label = document.createElement('span');
+          label.className = 'label';
+          label.textContent = piece.name;
+          pieceEl.appendChild(label);
+        } else {
+          pieceEl.textContent = piece.name;
+        }
+        
+        pieceEl.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', index);
+          pieceEl.classList.add('dragging');
+        });
+        
+        pieceEl.addEventListener('dragend', (e) => {
+          pieceEl.classList.remove('dragging');
+        });
+        
+        container.appendChild(pieceEl);
+      });
+    }
+
+    function renderDimensions() {
+      const container = document.getElementById('dimensions');
+      container.innerHTML = '';
+      
+      shapes[currentShape].dims.forEach(dim => {
+        const control = document.createElement('div');
+        control.className = 'dimension-control';
+        
+        const label = document.createElement('label');
+        label.textContent = dim.charAt(0).toUpperCase() + dim.slice(1) + ':';
+        
+        const inputGroup = document.createElement('div');
+        inputGroup.className = 'dimension-input-group';
+        
+        const slider = document.createElement('input');
+        slider.type = 'range';
+        slider.min = '1';
+        slider.max = '15';
+        slider.value = dimensions[dim] || 5;
+        slider.dataset.dim = dim;
+        
+        const number = document.createElement('input');
+        number.type = 'number';
+        number.min = '1';
+        number.max = '15';
+        number.value = dimensions[dim] || 5;
+        number.dataset.dim = dim;
+        
+        slider.addEventListener('input', (e) => {
+          dimensions[dim] = parseFloat(e.target.value);
+          number.value = e.target.value;
+          calculateAndDisplay();
+          updateScalingInfo();
+        });
+        
+        number.addEventListener('input', (e) => {
+          const val = parseFloat(e.target.value);
+          if (val >= 1 && val <= 15) {
+            dimensions[dim] = val;
+            slider.value = val;
+            calculateAndDisplay();
+            updateScalingInfo();
+          }
+        });
+        
+        inputGroup.appendChild(slider);
+        inputGroup.appendChild(number);
+        control.appendChild(label);
+        control.appendChild(inputGroup);
+        container.appendChild(control);
+      });
+    }
+
+    function calculateSurfaceArea() {
+      let area = 0;
+      let breakdown = '';
+      let formula = '';
+      
+      switch(currentShape) {
+        case 'cube':
+          const s = dimensions.side;
+          area = 6 * s * s;
+          formula = `SA = 6s² = 6 × ${s}² = ${area.toFixed(2)}`;
+          breakdown = `6 faces, each ${s} × ${s} = ${(s*s).toFixed(2)}`;
+          break;
+          
+        case 'rectangular':
+          const l = dimensions.length;
+          const w = dimensions.width;
+          const h = dimensions.height;
+          area = 2 * (l*w + l*h + w*h);
+          formula = `SA = 2(lw + lh + wh) = 2(${l}×${w} + ${l}×${h} + ${w}×${h}) = ${area.toFixed(2)}`;
+          breakdown = `Top/Bottom: 2 × (${l} × ${w}) = ${(2*l*w).toFixed(2)}<br>Front/Back: 2 × (${l} × ${h}) = ${(2*l*h).toFixed(2)}<br>Left/Right: 2 × (${w} × ${h}) = ${(2*w*h).toFixed(2)}`;
+          break;
+          
+        case 'triangular':
+          const b = dimensions.base;
+          const th = dimensions.height;
+          const len = dimensions.length;
+          const slant = Math.sqrt((b/2)*(b/2) + th*th);
+          area = b*th + 2*slant*len + b*len;
+          formula = `SA = base triangle + 2 sides + bottom = ${area.toFixed(2)}`;
+          breakdown = `Triangular ends: 2 × (½ × ${b} × ${th}) = ${(b*th).toFixed(2)}<br>Rectangular sides: 2 × (${slant.toFixed(2)} × ${len}) = ${(2*slant*len).toFixed(2)}<br>Bottom: ${b} × ${len} = ${(b*len).toFixed(2)}`;
+          break;
+          
+        case 'pyramid':
+          const base = dimensions.base;
+          const pHeight = dimensions.height;
+          const slantHeight = Math.sqrt((base/2)*(base/2) + pHeight*pHeight);
+          area = base*base + 2*base*slantHeight;
+          formula = `SA = base² + 2 × base × slant height = ${area.toFixed(2)}`;
+          breakdown = `Base: ${base} × ${base} = ${(base*base).toFixed(2)}<br>4 triangular faces: 4 × (½ × ${base} × ${slantHeight.toFixed(2)}) = ${(2*base*slantHeight).toFixed(2)}`;
+          break;
+      }
+      
+      return { area, formula, breakdown };
+    }
+
+    function calculateVolume() {
+      let volume = 0;
+      let formula = '';
+      
+      switch(currentShape) {
+        case 'cube':
+          const s = dimensions.side;
+          volume = s * s * s;
+          formula = `V = s³ = ${s}³ = ${volume.toFixed(2)}`;
+          break;
+          
+        case 'rectangular':
+          const l = dimensions.length;
+          const w = dimensions.width;
+          const h = dimensions.height;
+          volume = l * w * h;
+          formula = `V = l × w × h = ${l} × ${w} × ${h} = ${volume.toFixed(2)}`;
+          break;
+          
+        case 'triangular':
+          const b = dimensions.base;
+          const th = dimensions.height;
+          const len = dimensions.length;
+          volume = 0.5 * b * th * len;
+          formula = `V = ½ × base × height × length = ½ × ${b} × ${th} × ${len} = ${volume.toFixed(2)}`;
+          break;
+          
+        case 'pyramid':
+          const base = dimensions.base;
+          const pHeight = dimensions.height;
+          volume = (1/3) * base * base * pHeight;
+          formula = `V = ⅓ × base² × height = ⅓ × ${base}² × ${pHeight} = ${volume.toFixed(2)}`;
+          break;
+      }
+      
+      return { volume, formula };
+    }
+
+    function calculateAndDisplay() {
+      const surface = calculateSurfaceArea();
+      const vol = calculateVolume();
+      
+      document.getElementById('surface-formula').textContent = surface.formula;
+      document.getElementById('surface-result').textContent = `${surface.area.toFixed(2)} square units`;
+      document.getElementById('surface-breakdown').innerHTML = surface.breakdown;
+      
+      document.getElementById('volume-formula').textContent = vol.formula;
+      document.getElementById('volume-result').textContent = `${vol.volume.toFixed(2)} cubic units`;
+    }
+
+    function updateScalingInfo() {
+      const container = document.getElementById('scaling-info');
+      
+      const currentSurface = calculateSurfaceArea().area;
+      const currentVolume = calculateVolume().volume;
+      
+      const origDims = { ...dimensions };
+      const firstDim = shapes[currentShape].dims[0];
+      
+      dimensions[firstDim] = originalDimensions[firstDim] * 2;
+      const doubledSurface = calculateSurfaceArea().area;
+      const doubledVolume = calculateVolume().volume;
+      dimensions[firstDim] = origDims[firstDim];
+      
+      const surfaceRatio = (doubledSurface / currentSurface).toFixed(2);
+      const volumeRatio = (doubledVolume / currentVolume).toFixed(2);
+      
+      container.innerHTML = `
+        <h4>📊 Scaling Relationship</h4>
+        <p><strong>If ${firstDim} doubles:</strong></p>
+        <p>• Surface Area becomes ${surfaceRatio}× larger</p>
+        <p>• Volume becomes ${volumeRatio}× larger</p>
+      `;
+    }
+
+    const workspace = document.getElementById('net-workspace');
+    
+    workspace.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+
+    workspace.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const index = e.dataTransfer.getData('text/plain');
+      const sourcePiece = document.querySelector(`.net-pieces .net-piece[data-index="${index}"]`);
+      
+      if (sourcePiece && !sourcePiece.classList.contains('placed')) {
+        const piece = shapes[currentShape].pieces[index];
+        const workspaceRect = workspace.getBoundingClientRect();
+        
+        // Calculate position relative to workspace
+        const x = e.clientX - workspaceRect.left - 50;
+        const y = e.clientY - workspaceRect.top - 40;
+        
+        // Create piece data
+        const pieceData = {
+          id: Date.now(),
+          index: parseInt(index),
+          name: piece.name,
+          shape: piece.shape,
+          x: Math.max(0, Math.min(x, workspaceRect.width - 100)),
+          y: Math.max(0, Math.min(y, workspaceRect.height - 100)),
+          rotation: 0
+        };
+        
+        placedPieces.push(pieceData);
+        
+        // Remove placeholder if exists
+        const placeholder = workspace.querySelector('.workspace-placeholder');
+        if (placeholder) {
+          placeholder.remove();
+        }
+        
+        // Render the placed piece
+        renderPlacedPiece(pieceData);
+        
+        // Mark source as placed
+        sourcePiece.classList.add('placed');
+        netPiecesPlaced++;
+        
+        if (netPiecesPlaced === totalNetPieces) {
+          document.getElementById('net-feedback').textContent = '✅ Great! All pieces placed. Click "Check Net" to verify.';
+          document.getElementById('net-feedback').className = 'feedback info';
+        }
+      }
+    });
+
+    function renderPlacedPiece(pieceData) {
+      const workspacePiece = document.createElement('div');
+      workspacePiece.className = `placed-piece ${pieceData.shape}`;
+      workspacePiece.dataset.id = pieceData.id;
+      workspacePiece.style.left = `${pieceData.x}px`;
+      workspacePiece.style.top = `${pieceData.y}px`;
+      workspacePiece.style.transform = `rotate(${pieceData.rotation}deg)`;
+      
+      if (pieceData.shape === 'triangle') {
+        const label = document.createElement('span');
+        label.className = 'label';
+        label.textContent = pieceData.name;
+        workspacePiece.appendChild(label);
+      } else {
+        workspacePiece.textContent = pieceData.name;
+      }
+      
+      // Add rotation controls
+      const controls = document.createElement('div');
+      controls.className = 'rotation-controls';
+      controls.innerHTML = `
+        <button class="rotate-btn" data-action="rotate-left">↶ 90°</button>
+        <button class="rotate-btn" data-action="rotate-right">↷ 90°</button>
+        <button class="delete-btn" data-action="delete">✕ Remove</button>
+      `;
+      workspacePiece.appendChild(controls);
+      
+      // Click to select
+      workspacePiece.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectPiece(pieceData.id);
+      });
+      
+      // Drag to move
+      workspacePiece.addEventListener('mousedown', (e) => {
+        if (e.target.tagName === 'BUTTON') return;
+        e.preventDefault();
+        draggedPiece = pieceData;
+        dragOffset.x = e.clientX - pieceData.x;
+        dragOffset.y = e.clientY - pieceData.y;
+        selectPiece(pieceData.id);
+      });
+      
+      // Control buttons
+      controls.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const action = e.target.dataset.action;
+        if (action === 'rotate-left') {
+          pieceData.rotation = (pieceData.rotation - 90) % 360;
+          workspacePiece.style.transform = `rotate(${pieceData.rotation}deg)`;
+        } else if (action === 'rotate-right') {
+          pieceData.rotation = (pieceData.rotation + 90) % 360;
+          workspacePiece.style.transform = `rotate(${pieceData.rotation}deg)`;
+        } else if (action === 'delete') {
+          removePlacedPiece(pieceData.id);
+        }
+      });
+      
+      workspace.appendChild(workspacePiece);
+    }
+
+    function selectPiece(id) {
+      selectedPiece = id;
+      document.querySelectorAll('.placed-piece').forEach(el => {
+        el.classList.toggle('selected', el.dataset.id == id);
+      });
+    }
+
+    function removePlacedPiece(id) {
+      const pieceData = placedPieces.find(p => p.id === id);
+      if (!pieceData) return;
+      
+      // Remove from array
+      placedPieces = placedPieces.filter(p => p.id !== id);
+      
+      // Remove from DOM
+      const element = workspace.querySelector(`[data-id="${id}"]`);
+      if (element) element.remove();
+      
+      // Unmark source piece
+      const sourcePiece = document.querySelector(`.net-pieces .net-piece[data-index="${pieceData.index}"]`);
+      if (sourcePiece) {
+        sourcePiece.classList.remove('placed');
+      }
+      
+      netPiecesPlaced--;
+      
+      // Show placeholder if empty
+      if (placedPieces.length === 0) {
+        workspace.innerHTML = '<div class="workspace-placeholder">Drag pieces here to build the net</div>';
+      }
+      
+      document.getElementById('net-feedback').className = 'feedback';
+      document.getElementById('net-feedback').style.display = 'none';
+    }
+
+    // Mouse move for dragging
+    document.addEventListener('mousemove', (e) => {
+      if (draggedPiece) {
+        const workspaceRect = workspace.getBoundingClientRect();
+        const newX = e.clientX - dragOffset.x;
+        const newY = e.clientY - dragOffset.y;
+        
+        // Constrain to workspace
+        draggedPiece.x = Math.max(0, Math.min(newX, workspaceRect.width - 100));
+        draggedPiece.y = Math.max(0, Math.min(newY, workspaceRect.height - 100));
+        
+        const element = workspace.querySelector(`[data-id="${draggedPiece.id}"]`);
+        if (element) {
+          element.style.left = `${draggedPiece.x}px`;
+          element.style.top = `${draggedPiece.y}px`;
+        }
+      }
+    });
+
+    // Mouse up to stop dragging
+    document.addEventListener('mouseup', () => {
+      draggedPiece = null;
+    });
+
+    // Click workspace to deselect
+    workspace.addEventListener('click', (e) => {
+      if (e.target === workspace || e.target.classList.contains('workspace-placeholder')) {
+        selectedPiece = null;
+        document.querySelectorAll('.placed-piece').forEach(el => {
+          el.classList.remove('selected');
+        });
+      }
+    });
+
+    document.getElementById('check-net-btn').addEventListener('click', () => {
+      const feedback = document.getElementById('net-feedback');
+      
+      if (netPiecesPlaced === 0) {
+        feedback.textContent = '❌ No pieces placed yet! Drag the pieces from above into the workspace.';
+        feedback.className = 'feedback error';
+        feedback.style.display = 'block';
+        return;
+      }
+      
+      if (netPiecesPlaced < totalNetPieces) {
+        const missing = totalNetPieces - netPiecesPlaced;
+        feedback.textContent = `⚠️ You need ${missing} more piece(s). You've placed ${netPiecesPlaced} out of ${totalNetPieces} faces.`;
+        feedback.className = 'feedback error';
+        feedback.style.display = 'block';
+        return;
+      }
+      
+      // All pieces placed - check alignment
+      feedback.innerHTML = `
+        ✅ <strong>Great work!</strong> All ${totalNetPieces} faces are placed!<br>
+        💡 <strong>Net Tips:</strong><br>
+        • Use the ↶ and ↷ buttons to rotate pieces 90°<br>
+        • Drag pieces to position them edge-to-edge<br>
+        • A proper net should fold into the 3D shape<br>
+        • Try to arrange faces so edges that touch in the 3D shape are touching in the net
+      `;
+      feedback.className = 'feedback success';
+      feedback.style.display = 'block';
+    });
+
+    document.querySelectorAll('.shape-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        initializeShape(btn.dataset.shape);
+      });
+    });
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMode = btn.dataset.mode;
+        
+        if (currentMode === 'challenge') {
+          document.getElementById('challenge-panel').style.display = 'block';
+          generateChallenge();
+        } else {
+          document.getElementById('challenge-panel').style.display = 'none';
+        }
+      });
+    });
+
+    function generateChallenge() {
+      challengeTarget.type = Math.random() > 0.5 ? 'surface' : 'volume';
+      
+      const randomDims = {};
+      shapes[currentShape].dims.forEach(dim => {
+        randomDims[dim] = Math.floor(Math.random() * 10) + 3;
+      });
+      
+      const tempDims = { ...dimensions };
+      dimensions = randomDims;
+      
+      if (challengeTarget.type === 'surface') {
+        challengeTarget.value = calculateSurfaceArea().area;
+      } else {
+        challengeTarget.value = calculateVolume().volume;
+      }
+      
+      dimensions = tempDims;
+      
+      const targetDisplay = document.getElementById('target-display');
+      targetDisplay.textContent = `Target ${challengeTarget.type === 'surface' ? 'Surface Area' : 'Volume'}: ${challengeTarget.value.toFixed(2)} ${challengeTarget.type === 'surface' ? 'square' : 'cubic'} units`;
+      
+      document.getElementById('challenge-feedback').className = 'feedback';
+      document.getElementById('challenge-feedback').style.display = 'none';
+    }
+
+    document.getElementById('submit-challenge').addEventListener('click', () => {
+      const current = challengeTarget.type === 'surface' ? calculateSurfaceArea().area : calculateVolume().volume;
+      const target = challengeTarget.value;
+      const diff = Math.abs(current - target);
+      const percentDiff = (diff / target) * 100;
+      
+      const feedback = document.getElementById('challenge-feedback');
+      
+      if (percentDiff < 2) {
+        feedback.textContent = '🎉 Perfect! You matched the target!';
+        feedback.className = 'feedback success';
+        feedback.style.display = 'block';
+      } else if (percentDiff < 10) {
+        feedback.textContent = `Close! You're ${current > target ? 'over' : 'under'} by ${diff.toFixed(2)} units.`;
+        feedback.className = 'feedback info';
+        feedback.style.display = 'block';
+      } else {
+        const hint = current < target ? 'Try increasing' : 'Try decreasing';
+        feedback.textContent = `${hint} the dimensions. Current: ${current.toFixed(2)}`;
+        feedback.className = 'feedback error';
+        feedback.style.display = 'block';
+      }
+    });
+
+    document.getElementById('new-challenge').addEventListener('click', () => {
+      generateChallenge();
+    });
+
+    async function onConfigChange(config) {
+      const appTitle = config.app_title || defaultConfig.app_title;
+      const instructionsText = config.instructions_text || defaultConfig.instructions_text;
+      const challengeLabel = config.challenge_label || defaultConfig.challenge_label;
+
+      document.getElementById('app-title').textContent = appTitle;
+      document.getElementById('instructions-text').textContent = instructionsText;
+      document.getElementById('challenge-label').textContent = challengeLabel;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["app_title", config.app_title || defaultConfig.app_title],
+        ["instructions_text", config.instructions_text || defaultConfig.instructions_text],
+        ["challenge_label", config.challenge_label || defaultConfig.challenge_label]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    initializeShape('cube');
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d89317a0666c546',t:'MTc3Mjg4MjI0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

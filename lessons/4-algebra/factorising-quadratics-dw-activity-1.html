@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadratic Factoring Practice Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .draggable {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+        
+        .draggable:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+        }
+        
+        .drop-zone {
+            min-height: 80px;
+            border: 3px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        
+        .drop-zone.drag-over {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        
+        .drop-zone.has-content {
+            border-color: #10b981;
+            background-color: #f0fdf4;
+        }
+        
+        .factor-pair {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .math-display {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.5rem;
+        }
+        
+        .feedback-correct {
+            background-color: #dcfce7;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+        
+        .feedback-incorrect {
+            background-color: #fef2f2;
+            border-color: #dc2626;
+            color: #dc2626;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-full">
+    <div class="container mx-auto px-4 py-6 max-w-6xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Quadratic Factoring Practice</h1>
+            <p class="text-lg text-gray-600 bg-white px-6 py-3 rounded-lg shadow-sm">
+                Drag the correct factor pair so that <span class="font-semibold">m + n = b</span>. Then factorise.
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div id="practiceMode" class="space-y-8">
+            <!-- Controls -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex flex-wrap gap-4 items-center justify-center">
+                    <div class="flex items-center gap-2">
+                        <label for="bValue" class="font-semibold text-gray-700">b =</label>
+                        <select id="bValue" class="px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label for="cValue" class="font-semibold text-gray-700">c =</label>
+                        <select id="cValue" class="px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <button id="randomizeBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                        🎲 New Random Quadratic
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quadratic Display -->
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Current Quadratic:</h2>
+                <div id="quadraticDisplay" class="math-display text-4xl font-bold text-blue-800 bg-blue-50 py-6 px-8 rounded-lg inline-block">
+                    x² + 5x + 6
+                </div>
+            </div>
+
+            <!-- Factor Pairs and Guess Box -->
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Available Factor Pairs -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">Available Factor Pairs</h3>
+                    <p class="text-sm text-gray-600 mb-4 text-center">Pairs (m, n) where m × n = c</p>
+                    <div id="factorPairs" class="grid grid-cols-2 gap-3">
+                        <!-- Factor pairs will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Guess Box -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">Your Factorisation</h3>
+                    <div class="space-y-4">
+                        <div id="dropZone" class="drop-zone rounded-lg p-6 text-center">
+                            <p class="text-gray-500 text-lg">Drag a factor pair here</p>
+                            <p class="text-sm text-gray-400 mt-2">(x + m)(x + n)</p>
+                        </div>
+                        
+                        <div class="flex gap-3 justify-center">
+                            <button id="checkBtn" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
+                                ✓ Check Answer
+                            </button>
+                            <button id="clearBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                🗑️ Clear
+                            </button>
+                        </div>
+                        
+                        <div id="feedback" class="hidden p-4 rounded-lg border-2 text-center font-semibold">
+                            <!-- Feedback will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Show Answer Button -->
+            <div class="text-center">
+                <button id="showAnswerBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                    📖 Show Correct Answer
+                </button>
+            </div>
+        </div>
+
+        <!-- Answer Page -->
+        <div id="answerMode" class="hidden space-y-8">
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Correct Factorisation</h2>
+                <div class="space-y-4">
+                    <div id="originalQuadratic" class="math-display text-3xl text-blue-800">
+                        <!-- Original quadratic -->
+                    </div>
+                    <div class="text-2xl text-gray-600">=</div>
+                    <div id="correctFactorisation" class="math-display text-3xl text-green-700 font-bold">
+                        <!-- Correct factorisation -->
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <button id="backToPracticeBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                        ← Back to Practice
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class QuadraticFactoringTool {
+            constructor() {
+                this.currentB = 5;
+                this.currentC = 6;
+                this.currentGuess = null;
+                this.factorPairs = [];
+                
+                this.initializeElements();
+                this.setupEventListeners();
+                this.populateDropdowns();
+                this.updateQuadratic();
+            }
+            
+            initializeElements() {
+                this.bSelect = document.getElementById('bValue');
+                this.cSelect = document.getElementById('cValue');
+                this.quadraticDisplay = document.getElementById('quadraticDisplay');
+                this.factorPairsContainer = document.getElementById('factorPairs');
+                this.dropZone = document.getElementById('dropZone');
+                this.checkBtn = document.getElementById('checkBtn');
+                this.clearBtn = document.getElementById('clearBtn');
+                this.feedback = document.getElementById('feedback');
+                this.randomizeBtn = document.getElementById('randomizeBtn');
+                this.showAnswerBtn = document.getElementById('showAnswerBtn');
+                this.practiceMode = document.getElementById('practiceMode');
+                this.answerMode = document.getElementById('answerMode');
+                this.backToPracticeBtn = document.getElementById('backToPracticeBtn');
+                this.originalQuadratic = document.getElementById('originalQuadratic');
+                this.correctFactorisation = document.getElementById('correctFactorisation');
+            }
+            
+            setupEventListeners() {
+                this.bSelect.addEventListener('change', () => {
+                    this.currentB = parseInt(this.bSelect.value);
+                    this.updateQuadratic();
+                });
+                
+                this.cSelect.addEventListener('change', () => {
+                    this.currentC = parseInt(this.cSelect.value);
+                    this.updateQuadratic();
+                });
+                
+                this.checkBtn.addEventListener('click', () => this.checkAnswer());
+                this.clearBtn.addEventListener('click', () => this.clearGuess());
+                this.randomizeBtn.addEventListener('click', () => this.randomizeValues());
+                this.showAnswerBtn.addEventListener('click', () => this.showAnswer());
+                this.backToPracticeBtn.addEventListener('click', () => this.backToPractice());
+                
+                // Drag and drop setup
+                this.setupDragAndDrop();
+            }
+            
+            populateDropdowns() {
+                // Populate b values (-12 to 12)
+                for (let i = -12; i <= 12; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    if (i === this.currentB) option.selected = true;
+                    this.bSelect.appendChild(option);
+                }
+                
+                // Populate c values (-12 to 12, excluding 0)
+                for (let i = -12; i <= 12; i++) {
+                    if (i === 0) continue;
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    if (i === this.currentC) option.selected = true;
+                    this.cSelect.appendChild(option);
+                }
+            }
+            
+            updateQuadratic() {
+                // Update display
+                const bStr = this.currentB >= 0 ? `+ ${this.currentB}x` : `- ${Math.abs(this.currentB)}x`;
+                const cStr = this.currentC >= 0 ? `+ ${this.currentC}` : `- ${Math.abs(this.currentC)}`;
+                this.quadraticDisplay.textContent = `x² ${bStr} ${cStr}`;
+                
+                // Generate factor pairs
+                this.generateFactorPairs();
+                this.clearGuess();
+            }
+            
+            generateFactorPairs() {
+                this.factorPairs = [];
+                const c = Math.abs(this.currentC);
+                
+                for (let i = 1; i <= c; i++) {
+                    if (c % i === 0) {
+                        const j = c / i;
+                        if (this.currentC > 0) {
+                            // Both positive or both negative
+                            this.factorPairs.push([i, j]);
+                            if (i !== j) this.factorPairs.push([j, i]);
+                            this.factorPairs.push([-i, -j]);
+                            if (i !== j) this.factorPairs.push([-j, -i]);
+                        } else {
+                            // One positive, one negative
+                            this.factorPairs.push([i, -j]);
+                            this.factorPairs.push([-i, j]);
+                            if (i !== j) {
+                                this.factorPairs.push([j, -i]);
+                                this.factorPairs.push([-j, i]);
+                            }
+                        }
+                    }
+                }
+                
+                // Remove duplicates
+                this.factorPairs = this.factorPairs.filter((pair, index, self) => 
+                    index === self.findIndex(p => p[0] === pair[0] && p[1] === pair[1])
+                );
+                
+                this.renderFactorPairs();
+            }
+            
+            renderFactorPairs() {
+                this.factorPairsContainer.innerHTML = '';
+                
+                this.factorPairs.forEach((pair, index) => {
+                    const pairElement = document.createElement('div');
+                    pairElement.className = 'factor-pair draggable text-white p-4 rounded-lg text-center font-semibold cursor-grab select-none';
+                    pairElement.textContent = `(${pair[0]}, ${pair[1]})`;
+                    pairElement.draggable = true;
+                    pairElement.dataset.pair = JSON.stringify(pair);
+                    pairElement.tabIndex = 0;
+                    
+                    // Keyboard support
+                    pairElement.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.selectPair(pair);
+                        }
+                    });
+                    
+                    this.factorPairsContainer.appendChild(pairElement);
+                });
+            }
+            
+            setupDragAndDrop() {
+                this.factorPairsContainer.addEventListener('dragstart', (e) => {
+                    if (e.target.classList.contains('draggable')) {
+                        e.dataTransfer.setData('text/plain', e.target.dataset.pair);
+                    }
+                });
+                
+                this.dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.add('drag-over');
+                });
+                
+                this.dropZone.addEventListener('dragleave', () => {
+                    this.dropZone.classList.remove('drag-over');
+                });
+                
+                this.dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.remove('drag-over');
+                    
+                    const pairData = e.dataTransfer.getData('text/plain');
+                    if (pairData) {
+                        const pair = JSON.parse(pairData);
+                        this.selectPair(pair);
+                    }
+                });
+            }
+            
+            selectPair(pair) {
+                this.currentGuess = pair;
+                this.dropZone.innerHTML = `
+                    <div class="text-xl font-semibold text-gray-800">
+                        (x + ${pair[0]})(x + ${pair[1]})
+                    </div>
+                    <div class="text-sm text-gray-600 mt-2">
+                        m = ${pair[0]}, n = ${pair[1]}
+                    </div>
+                `;
+                this.dropZone.classList.add('has-content');
+                this.checkBtn.disabled = false;
+                this.hideFeedback();
+            }
+            
+            checkAnswer() {
+                if (!this.currentGuess) return;
+                
+                const sum = this.currentGuess[0] + this.currentGuess[1];
+                const isCorrect = sum === this.currentB;
+                
+                this.feedback.className = isCorrect ? 
+                    'p-4 rounded-lg border-2 text-center font-semibold feedback-correct' :
+                    'p-4 rounded-lg border-2 text-center font-semibold feedback-incorrect';
+                
+                if (isCorrect) {
+                    this.feedback.innerHTML = `
+                        <div class="text-xl">✓ Correct!</div>
+                        <div class="text-sm mt-2">
+                            ${this.currentGuess[0]} + ${this.currentGuess[1]} = ${sum} = b
+                        </div>
+                    `;
+                } else {
+                    this.feedback.innerHTML = `
+                        <div class="text-xl">✗ Not quite right</div>
+                        <div class="text-sm mt-2">
+                            ${this.currentGuess[0]} + ${this.currentGuess[1]} = ${sum}, but b = ${this.currentB}
+                        </div>
+                    `;
+                }
+                
+                this.feedback.classList.remove('hidden');
+            }
+            
+            clearGuess() {
+                this.currentGuess = null;
+                this.dropZone.innerHTML = `
+                    <p class="text-gray-500 text-lg">Drag a factor pair here</p>
+                    <p class="text-sm text-gray-400 mt-2">(x + m)(x + n)</p>
+                `;
+                this.dropZone.classList.remove('has-content');
+                this.checkBtn.disabled = true;
+                this.hideFeedback();
+            }
+            
+            hideFeedback() {
+                this.feedback.classList.add('hidden');
+            }
+            
+            randomizeValues() {
+                this.currentB = Math.floor(Math.random() * 25) - 12; // -12 to 12
+                let newC;
+                do {
+                    newC = Math.floor(Math.random() * 25) - 12; // -12 to 12
+                } while (newC === 0);
+                this.currentC = newC;
+                
+                this.bSelect.value = this.currentB;
+                this.cSelect.value = this.currentC;
+                this.updateQuadratic();
+            }
+            
+            showAnswer() {
+                // Find the correct factor pair
+                const correctPair = this.factorPairs.find(pair => 
+                    pair[0] + pair[1] === this.currentB
+                );
+                
+                const bStr = this.currentB >= 0 ? `+ ${this.currentB}x` : `- ${Math.abs(this.currentB)}x`;
+                const cStr = this.currentC >= 0 ? `+ ${this.currentC}` : `- ${Math.abs(this.currentC)}`;
+                
+                this.originalQuadratic.textContent = `x² ${bStr} ${cStr}`;
+                
+                if (correctPair) {
+                    this.correctFactorisation.textContent = `(x + ${correctPair[0]})(x + ${correctPair[1]})`;
+                } else {
+                    this.correctFactorisation.textContent = 'Cannot be factored with integers';
+                }
+                
+                this.practiceMode.classList.add('hidden');
+                this.answerMode.classList.remove('hidden');
+            }
+            
+            backToPractice() {
+                this.practiceMode.classList.remove('hidden');
+                this.answerMode.classList.add('hidden');
+            }
+        }
+        
+        // Initialize the tool when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new QuadraticFactoringTool();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99294978939999f8',t:'MTc2MTEzOTE3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparing Cumulative Frequency Graphs – SDG Stories</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .graph-container {
+      position: relative;
+    }
+    .tooltip {
+      position: absolute;
+      background: #1e293b;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      pointer-events: none;
+      z-index: 100;
+      white-space: nowrap;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-50 text-slate-800">
+  <div id="app-wrapper" class="h-full w-full overflow-auto">
+   <div class="max-w-6xl mx-auto p-4 md:p-6"><!-- Header -->
+    <header class="mb-6">
+     <div class="flex items-center gap-3 mb-2">
+      <div class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
+       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+       </svg>
+      </div>
+      <div>
+       <h1 id="app-title" class="text-xl md:text-2xl font-bold text-slate-900">Comparing Cumulative Frequency Graphs</h1>
+       <p class="text-sm text-slate-500">SDG Stories for GCSE Maths</p>
+      </div>
+     </div>
+    </header><!-- Scenario Selection -->
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4"><label class="block text-sm font-semibold text-slate-700 mb-2">📚 Choose a Real-World Scenario</label> <select id="scenario-select" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800"> <option value="education">SDG 4: Quality Education – Exam Scores</option> <option value="equality">SDG 5/10: Equality – Daily Unpaid Work Hours</option> <option value="cities">SDG 11: Sustainable Cities – Commute Times</option> </select>
+     <p id="scenario-description" class="mt-2 text-sm text-slate-600 italic"></p>
+    </section><!-- Data Input Tables -->
+    <section class="grid md:grid-cols-2 gap-4 mb-4"><!-- Group A -->
+     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+      <h3 class="font-semibold text-emerald-700 mb-3 flex items-center gap-2"><span class="w-3 h-3 bg-emerald-500 rounded-full"></span> <span id="group-a-title">Group A</span></h3>
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="bg-emerald-50">
+          <th class="p-2 text-left font-medium text-emerald-800 border-b border-emerald-200" id="interval-header-a">Class Interval</th>
+          <th class="p-2 text-center font-medium text-emerald-800 border-b border-emerald-200">Frequency</th>
+         </tr>
+        </thead>
+        <tbody id="table-a"></tbody>
+       </table>
+      </div>
+     </div><!-- Group B -->
+     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+      <h3 class="font-semibold text-violet-700 mb-3 flex items-center gap-2"><span class="w-3 h-3 bg-violet-500 rounded-full"></span> <span id="group-b-title">Group B</span></h3>
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="bg-violet-50">
+          <th class="p-2 text-left font-medium text-violet-800 border-b border-violet-200" id="interval-header-b">Class Interval</th>
+          <th class="p-2 text-center font-medium text-violet-800 border-b border-violet-200">Frequency</th>
+         </tr>
+        </thead>
+        <tbody id="table-b"></tbody>
+       </table>
+      </div>
+     </div>
+    </section><!-- Calculate Button -->
+    <div class="flex justify-center mb-4"><button id="calculate-btn" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-md transition-all transform hover:scale-105 flex items-center gap-2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+      </svg> Calculate &amp; Draw Graphs </button>
+    </div><!-- Cumulative Frequency Tables -->
+    <section id="cf-tables" class="grid md:grid-cols-2 gap-4 mb-4 hidden"><!-- CF Table A -->
+     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+      <h3 class="font-semibold text-emerald-700 mb-3">📊 Cumulative Frequency Table – <span id="cf-title-a">Group A</span></h3>
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="bg-emerald-50">
+          <th class="p-2 text-left font-medium text-emerald-800 border-b border-emerald-200">Upper Boundary</th>
+          <th class="p-2 text-center font-medium text-emerald-800 border-b border-emerald-200">Freq</th>
+          <th class="p-2 text-center font-medium text-emerald-800 border-b border-emerald-200">Cum. Freq</th>
+         </tr>
+        </thead>
+        <tbody id="cf-table-a"></tbody>
+        <tfoot>
+         <tr class="bg-emerald-100 font-semibold">
+          <td class="p-2 text-emerald-800">Total (N)</td>
+          <td class="p-2 text-center text-emerald-800" id="total-a">-</td>
+          <td class="p-2 text-center text-emerald-800" id="total-cf-a">-</td>
+         </tr>
+        </tfoot>
+       </table>
+      </div>
+     </div><!-- CF Table B -->
+     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+      <h3 class="font-semibold text-violet-700 mb-3">📊 Cumulative Frequency Table – <span id="cf-title-b">Group B</span></h3>
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="bg-violet-50">
+          <th class="p-2 text-left font-medium text-violet-800 border-b border-violet-200">Upper Boundary</th>
+          <th class="p-2 text-center font-medium text-violet-800 border-b border-violet-200">Freq</th>
+          <th class="p-2 text-center font-medium text-violet-800 border-b border-violet-200">Cum. Freq</th>
+         </tr>
+        </thead>
+        <tbody id="cf-table-b"></tbody>
+        <tfoot>
+         <tr class="bg-violet-100 font-semibold">
+          <td class="p-2 text-violet-800">Total (N)</td>
+          <td class="p-2 text-center text-violet-800" id="total-b">-</td>
+          <td class="p-2 text-center text-violet-800" id="total-cf-b">-</td>
+         </tr>
+        </tfoot>
+       </table>
+      </div>
+     </div>
+    </section><!-- Graph -->
+    <section id="graph-section" class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4 hidden">
+     <h3 class="font-semibold text-slate-800 mb-3">📈 Cumulative Frequency Graphs</h3>
+     <div class="graph-container bg-slate-50 rounded-lg p-2">
+      <canvas id="graph-canvas" width="800" height="400"></canvas>
+      <div id="tooltip" class="tooltip hidden"></div>
+     </div>
+     <div class="flex justify-center gap-6 mt-3 text-sm">
+      <div class="flex items-center gap-2"><span class="w-4 h-1 bg-emerald-500 rounded"></span> <span id="legend-a" class="text-slate-600">Group A</span>
+      </div>
+      <div class="flex items-center gap-2"><span class="w-4 h-1 bg-violet-500 rounded"></span> <span id="legend-b" class="text-slate-600">Group B</span>
+      </div>
+     </div><!-- Quartile Drawing Controls -->
+     <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+      <h4 class="font-semibold text-blue-800 mb-2 flex items-center gap-2"><span>✏️</span> Draw Quartiles on Graph</h4>
+      <p class="text-sm text-blue-700 mb-3">Click the buttons below to draw horizontal lines at the quartile positions for each group.</p>
+      <div class="grid md:grid-cols-2 gap-3"><!-- Group A Controls -->
+       <div class="bg-white p-3 rounded border border-emerald-200">
+        <p class="text-sm font-medium text-emerald-800 mb-2" id="draw-label-a">Group A</p>
+        <div class="flex flex-wrap gap-2"><button class="draw-quartile-btn px-3 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-medium rounded transition-colors" data-group="a" data-quartile="q1"> Q1 </button> <button class="draw-quartile-btn px-3 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-medium rounded transition-colors" data-group="a" data-quartile="median"> Median </button> <button class="draw-quartile-btn px-3 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-medium rounded transition-colors" data-group="a" data-quartile="q3"> Q3 </button> <button class="clear-quartile-btn px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-medium rounded transition-colors" data-group="a"> Clear </button>
+        </div>
+       </div><!-- Group B Controls -->
+       <div class="bg-white p-3 rounded border border-violet-200">
+        <p class="text-sm font-medium text-violet-800 mb-2" id="draw-label-b">Group B</p>
+        <div class="flex flex-wrap gap-2"><button class="draw-quartile-btn px-3 py-1.5 bg-violet-100 hover:bg-violet-200 text-violet-800 text-xs font-medium rounded transition-colors" data-group="b" data-quartile="q1"> Q1 </button> <button class="draw-quartile-btn px-3 py-1.5 bg-violet-100 hover:bg-violet-200 text-violet-800 text-xs font-medium rounded transition-colors" data-group="b" data-quartile="median"> Median </button> <button class="draw-quartile-btn px-3 py-1.5 bg-violet-100 hover:bg-violet-200 text-violet-800 text-xs font-medium rounded transition-colors" data-group="b" data-quartile="q3"> Q3 </button> <button class="clear-quartile-btn px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-medium rounded transition-colors" data-group="b"> Clear </button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Statistics Summary -->
+    <section id="stats-section" class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4 hidden">
+     <h3 class="font-semibold text-slate-800 mb-3">📋 Summary Statistics (Estimated from Graph)</h3>
+     <div class="grid md:grid-cols-2 gap-4"><!-- Stats A -->
+      <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+       <h4 class="font-semibold text-emerald-700 mb-2" id="stats-title-a">Group A</h4>
+       <div class="space-y-1 text-sm">
+        <p><span class="font-medium">Q1 (Lower Quartile):</span> <span id="q1-a" class="text-emerald-800 font-semibold">-</span></p>
+        <p><span class="font-medium">Median (Q2):</span> <span id="median-a" class="text-emerald-800 font-semibold">-</span></p>
+        <p><span class="font-medium">Q3 (Upper Quartile):</span> <span id="q3-a" class="text-emerald-800 font-semibold">-</span></p>
+        <p><span class="font-medium">IQR:</span> <span id="iqr-a" class="text-emerald-800 font-semibold">-</span></p>
+       </div>
+      </div><!-- Stats B -->
+      <div class="bg-violet-50 rounded-lg p-4 border border-violet-200">
+       <h4 class="font-semibold text-violet-700 mb-2" id="stats-title-b">Group B</h4>
+       <div class="space-y-1 text-sm">
+        <p><span class="font-medium">Q1 (Lower Quartile):</span> <span id="q1-b" class="text-violet-800 font-semibold">-</span></p>
+        <p><span class="font-medium">Median (Q2):</span> <span id="median-b" class="text-violet-800 font-semibold">-</span></p>
+        <p><span class="font-medium">Q3 (Upper Quartile):</span> <span id="q3-b" class="text-violet-800 font-semibold">-</span></p>
+        <p><span class="font-medium">IQR:</span> <span id="iqr-b" class="text-violet-800 font-semibold">-</span></p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Guided Questions -->
+    <section id="questions-section" class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl shadow-sm border border-amber-200 p-4 mb-4 hidden">
+     <h3 class="font-semibold text-amber-800 mb-3 flex items-center gap-2"><span>🤔</span> Guided Comparison Questions</h3>
+     <div class="space-y-3">
+      <div class="bg-white/70 rounded-lg p-3 border border-amber-100">
+       <p class="text-sm font-medium text-amber-900 mb-2" id="question-1">1. Which group has the higher median? What does that mean in this context?</p><button class="check-answer-btn px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium rounded transition-colors" data-question="1"> Check Answer </button>
+       <div id="feedback-1" class="mt-2 text-sm hidden"></div>
+      </div>
+      <div class="bg-white/70 rounded-lg p-3 border border-amber-100">
+       <p class="text-sm font-medium text-amber-900 mb-2" id="question-2">2. Which group has a larger IQR? What does this tell us about the spread of the middle 50% of data?</p><button class="check-answer-btn px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium rounded transition-colors" data-question="2"> Check Answer </button>
+       <div id="feedback-2" class="mt-2 text-sm hidden"></div>
+      </div>
+      <div class="bg-white/70 rounded-lg p-3 border border-amber-100">
+       <p class="text-sm font-medium text-amber-900 mb-2" id="question-3">3. Looking at lower values on the x-axis, which group has higher cumulative frequency? What does this suggest?</p><button class="check-answer-btn px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium rounded transition-colors" data-question="3"> Check Answer </button>
+       <div id="feedback-3" class="mt-2 text-sm hidden"></div>
+      </div>
+      <div class="bg-white/70 rounded-lg p-3 border border-amber-100">
+       <p class="text-sm font-medium text-amber-900 mb-2" id="question-4">4. Write a sentence comparing the two groups using the context (e.g., "Class A tends to...")</p><button class="check-answer-btn px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium rounded transition-colors" data-question="4"> Check Answer </button>
+       <div id="feedback-4" class="mt-2 text-sm hidden"></div>
+      </div>
+     </div>
+    </section><!-- Footer -->
+    <footer class="text-center text-xs text-slate-400 py-4">
+     Built for KS4 GCSE Maths • Supporting the UN Sustainable Development Goals
+    </footer>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      app_title: 'Comparing Cumulative Frequency Graphs',
+      group_a_label: 'Group A',
+      group_b_label: 'Group B'
+    };
+
+    // Scenarios data
+    const scenarios = {
+      education: {
+        name: 'Exam Scores',
+        description: 'Compare exam scores between two classes taking the same test. This relates to SDG 4: Quality Education – ensuring inclusive and equitable quality education for all.',
+        xLabel: 'Exam Score (%)',
+        groupAName: 'Class A',
+        groupBName: 'Class B',
+        intervals: ['0-20', '20-40', '40-60', '60-80', '80-100'],
+        dataA: [2, 8, 15, 18, 7],
+        dataB: [5, 12, 20, 10, 3]
+      },
+      equality: {
+        name: 'Daily Unpaid Work Hours',
+        description: 'Compare daily hours spent on unpaid domestic work between two groups. This relates to SDG 5 (Gender Equality) and SDG 10 (Reduced Inequalities).',
+        xLabel: 'Hours of Unpaid Work',
+        groupAName: 'Group A',
+        groupBName: 'Group B',
+        intervals: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6'],
+        dataA: [12, 18, 25, 15, 8, 2],
+        dataB: [3, 8, 12, 22, 20, 15]
+      },
+      cities: {
+        name: 'Commute Times',
+        description: 'Compare commute times before and after a new bus/cycle route was introduced. This relates to SDG 11: Sustainable Cities and Communities.',
+        xLabel: 'Commute Time (minutes)',
+        groupAName: 'Before New Route',
+        groupBName: 'After New Route',
+        intervals: ['0-10', '10-20', '20-30', '30-40', '40-50', '50-60'],
+        dataA: [5, 12, 18, 25, 15, 10],
+        dataB: [15, 25, 22, 12, 6, 5]
+      }
+    };
+
+    let currentScenario = 'education';
+    let dataA = [];
+    let dataB = [];
+    let cfDataA = [];
+    let cfDataB = [];
+    let drawnQuartilesA = { q1: false, median: false, q3: false };
+    let drawnQuartilesB = { q1: false, median: false, q3: false };
+    let calculatedStats = null;
+
+    // Parse interval to get upper boundary
+    function getUpperBoundary(interval) {
+      const parts = interval.split('-');
+      return parseFloat(parts[1]);
+    }
+
+    // Calculate cumulative frequencies
+    function calculateCF(frequencies) {
+      const cf = [];
+      let cumulative = 0;
+      for (let i = 0; i < frequencies.length; i++) {
+        cumulative += frequencies[i];
+        cf.push(cumulative);
+      }
+      return cf;
+    }
+
+    // Linear interpolation to estimate value at given CF
+    function interpolateValue(targetCF, upperBoundaries, cfValues) {
+      if (targetCF <= 0) return upperBoundaries[0];
+      if (targetCF >= cfValues[cfValues.length - 1]) return upperBoundaries[upperBoundaries.length - 1];
+      
+      for (let i = 0; i < cfValues.length; i++) {
+        if (cfValues[i] >= targetCF) {
+          if (i === 0) {
+            const prevBoundary = upperBoundaries[0] - (upperBoundaries[1] - upperBoundaries[0]);
+            const ratio = targetCF / cfValues[0];
+            return prevBoundary + ratio * (upperBoundaries[0] - prevBoundary);
+          }
+          const prevCF = cfValues[i - 1];
+          const currCF = cfValues[i];
+          const prevBoundary = upperBoundaries[i - 1];
+          const currBoundary = upperBoundaries[i];
+          const ratio = (targetCF - prevCF) / (currCF - prevCF);
+          return prevBoundary + ratio * (currBoundary - prevBoundary);
+        }
+      }
+      return upperBoundaries[upperBoundaries.length - 1];
+    }
+
+    // Populate input table
+    function populateTable(tableId, intervals, data) {
+      const tbody = document.getElementById(tableId);
+      tbody.innerHTML = '';
+      intervals.forEach((interval, i) => {
+        const row = document.createElement('tr');
+        row.className = 'border-b border-slate-100 hover:bg-slate-50';
+        row.innerHTML = `
+          <td class="p-2 text-slate-700">${interval}</td>
+          <td class="p-2 text-center">
+            <input type="number" min="0" value="${data[i]}" 
+              class="w-16 p-1 text-center border border-slate-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              data-index="${i}" data-table="${tableId}">
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Populate CF table
+    function populateCFTable(tableId, intervals, frequencies, cf) {
+      const tbody = document.getElementById(tableId);
+      tbody.innerHTML = '';
+      intervals.forEach((interval, i) => {
+        const upperBoundary = getUpperBoundary(interval);
+        const row = document.createElement('tr');
+        row.className = 'border-b border-slate-100';
+        row.innerHTML = `
+          <td class="p-2 text-slate-700">${upperBoundary}</td>
+          <td class="p-2 text-center text-slate-700">${frequencies[i]}</td>
+          <td class="p-2 text-center font-medium text-slate-800">${cf[i]}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Get frequencies from input table
+    function getFrequencies(tableId) {
+      const inputs = document.querySelectorAll(`#${tableId} input`);
+      return Array.from(inputs).map(input => parseInt(input.value) || 0);
+    }
+
+    // Draw the graph
+    function drawGraph(scenario, freqA, freqB, cfA, cfB) {
+      const canvas = document.getElementById('graph-canvas');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, width, height);
+      
+      // Margins
+      const margin = { top: 30, right: 30, bottom: 50, left: 60 };
+      const graphWidth = width - margin.left - margin.right;
+      const graphHeight = height - margin.top - margin.bottom;
+      
+      // Get data
+      const intervals = scenarios[scenario].intervals;
+      const upperBoundaries = intervals.map(getUpperBoundary);
+      const minX = 0;
+      const maxX = Math.max(...upperBoundaries);
+      const maxY = Math.max(cfA[cfA.length - 1], cfB[cfB.length - 1]);
+      
+      // Scale functions
+      const scaleX = (x) => margin.left + (x - minX) / (maxX - minX) * graphWidth;
+      const scaleY = (y) => margin.top + graphHeight - (y / maxY) * graphHeight;
+      
+      // Draw grid
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      
+      // Horizontal grid lines
+      for (let i = 0; i <= 5; i++) {
+        const y = margin.top + (i / 5) * graphHeight;
+        ctx.beginPath();
+        ctx.moveTo(margin.left, y);
+        ctx.lineTo(width - margin.right, y);
+        ctx.stroke();
+      }
+      
+      // Vertical grid lines
+      for (let i = 0; i <= 5; i++) {
+        const x = margin.left + (i / 5) * graphWidth;
+        ctx.beginPath();
+        ctx.moveTo(x, margin.top);
+        ctx.lineTo(x, margin.top + graphHeight);
+        ctx.stroke();
+      }
+      
+      // Draw axes
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 2;
+      
+      // Y-axis
+      ctx.beginPath();
+      ctx.moveTo(margin.left, margin.top);
+      ctx.lineTo(margin.left, margin.top + graphHeight);
+      ctx.stroke();
+      
+      // X-axis
+      ctx.beginPath();
+      ctx.moveTo(margin.left, margin.top + graphHeight);
+      ctx.lineTo(width - margin.right, margin.top + graphHeight);
+      ctx.stroke();
+      
+      // Axis labels
+      ctx.fillStyle = '#475569';
+      ctx.font = '12px DM Sans';
+      ctx.textAlign = 'center';
+      
+      // X-axis labels
+      for (let i = 0; i <= 5; i++) {
+        const val = minX + (i / 5) * (maxX - minX);
+        const x = scaleX(val);
+        ctx.fillText(Math.round(val), x, margin.top + graphHeight + 20);
+      }
+      
+      // X-axis title
+      ctx.font = '13px DM Sans';
+      ctx.fillText(scenarios[scenario].xLabel, width / 2, height - 10);
+      
+      // Y-axis labels
+      ctx.textAlign = 'right';
+      for (let i = 0; i <= 5; i++) {
+        const val = (5 - i) / 5 * maxY;
+        const y = margin.top + (i / 5) * graphHeight;
+        ctx.fillText(Math.round(val), margin.left - 10, y + 4);
+      }
+      
+      // Y-axis title
+      ctx.save();
+      ctx.translate(15, height / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.textAlign = 'center';
+      ctx.fillText('Cumulative Frequency', 0, 0);
+      ctx.restore();
+      
+      // Draw curve A (emerald)
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(scaleX(0), scaleY(0));
+      upperBoundaries.forEach((boundary, i) => {
+        ctx.lineTo(scaleX(boundary), scaleY(cfA[i]));
+      });
+      ctx.stroke();
+      
+      // Draw points A
+      ctx.fillStyle = '#10b981';
+      upperBoundaries.forEach((boundary, i) => {
+        ctx.beginPath();
+        ctx.arc(scaleX(boundary), scaleY(cfA[i]), 5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      
+      // Draw curve B (violet)
+      ctx.strokeStyle = '#8b5cf6';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(scaleX(0), scaleY(0));
+      upperBoundaries.forEach((boundary, i) => {
+        ctx.lineTo(scaleX(boundary), scaleY(cfB[i]));
+      });
+      ctx.stroke();
+      
+      // Draw points B
+      ctx.fillStyle = '#8b5cf6';
+      upperBoundaries.forEach((boundary, i) => {
+        ctx.beginPath();
+        ctx.arc(scaleX(boundary), scaleY(cfB[i]), 5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      
+      // Draw median and quartile lines
+      const nA = cfA[cfA.length - 1];
+      const nB = cfB[cfB.length - 1];
+      
+      // Draw user-drawn quartile lines
+      if (drawnQuartilesA.q1) {
+        drawDashedLine(nA / 4, '#10b981', 2);
+      }
+      if (drawnQuartilesA.median) {
+        drawDashedLine(nA / 2, '#10b981', 2);
+      }
+      if (drawnQuartilesA.q3) {
+        drawDashedLine(3 * nA / 4, '#10b981', 2);
+      }
+      
+      if (drawnQuartilesB.q1) {
+        drawDashedLine(nB / 4, '#8b5cf6', 2);
+      }
+      if (drawnQuartilesB.median) {
+        drawDashedLine(nB / 2, '#8b5cf6', 2);
+      }
+      if (drawnQuartilesB.q3) {
+        drawDashedLine(3 * nB / 4, '#8b5cf6', 2);
+      }
+      
+      // Helper to draw dashed line
+      function drawDashedLine(y, color, lineWidth) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lineWidth;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(margin.left, scaleY(y));
+        ctx.lineTo(width - margin.right, scaleY(y));
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    // Calculate and display statistics
+    function calculateStats(scenario, cfA, cfB) {
+      const intervals = scenarios[scenario].intervals;
+      const upperBoundaries = intervals.map(getUpperBoundary);
+      
+      const nA = cfA[cfA.length - 1];
+      const nB = cfB[cfB.length - 1];
+      
+      // Group A statistics
+      const q1A = interpolateValue(nA / 4, upperBoundaries, cfA);
+      const medianA = interpolateValue(nA / 2, upperBoundaries, cfA);
+      const q3A = interpolateValue(3 * nA / 4, upperBoundaries, cfA);
+      const iqrA = q3A - q1A;
+      
+      // Group B statistics
+      const q1B = interpolateValue(nB / 4, upperBoundaries, cfB);
+      const medianB = interpolateValue(nB / 2, upperBoundaries, cfB);
+      const q3B = interpolateValue(3 * nB / 4, upperBoundaries, cfB);
+      const iqrB = q3B - q1B;
+      
+      // Update display
+      document.getElementById('q1-a').textContent = q1A.toFixed(1);
+      document.getElementById('median-a').textContent = medianA.toFixed(1);
+      document.getElementById('q3-a').textContent = q3A.toFixed(1);
+      document.getElementById('iqr-a').textContent = iqrA.toFixed(1);
+      
+      document.getElementById('q1-b').textContent = q1B.toFixed(1);
+      document.getElementById('median-b').textContent = medianB.toFixed(1);
+      document.getElementById('q3-b').textContent = q3B.toFixed(1);
+      document.getElementById('iqr-b').textContent = iqrB.toFixed(1);
+      
+      const stats = { 
+        medianA, medianB, iqrA, iqrB, 
+        q1A, q1B, q3A, q3B,
+        groupAName: scenarios[scenario].groupAName,
+        groupBName: scenarios[scenario].groupBName
+      };
+      
+      calculatedStats = stats;
+      return stats;
+    }
+
+    // Update scenario
+    function updateScenario(scenarioKey) {
+      currentScenario = scenarioKey;
+      const scenario = scenarios[scenarioKey];
+      
+      document.getElementById('scenario-description').textContent = scenario.description;
+      document.getElementById('group-a-title').textContent = scenario.groupAName;
+      document.getElementById('group-b-title').textContent = scenario.groupBName;
+      document.getElementById('interval-header-a').textContent = scenario.xLabel.split('(')[0].trim();
+      document.getElementById('interval-header-b').textContent = scenario.xLabel.split('(')[0].trim();
+      
+      populateTable('table-a', scenario.intervals, scenario.dataA);
+      populateTable('table-b', scenario.intervals, scenario.dataB);
+      
+      // Hide results sections
+      document.getElementById('cf-tables').classList.add('hidden');
+      document.getElementById('graph-section').classList.add('hidden');
+      document.getElementById('stats-section').classList.add('hidden');
+      document.getElementById('questions-section').classList.add('hidden');
+    }
+
+    // Calculate and display results
+    function calculate() {
+      const scenario = scenarios[currentScenario];
+      const freqA = getFrequencies('table-a');
+      const freqB = getFrequencies('table-b');
+      
+      const cfA = calculateCF(freqA);
+      const cfB = calculateCF(freqB);
+      
+      // Reset drawn quartiles
+      drawnQuartilesA = { q1: false, median: false, q3: false };
+      drawnQuartilesB = { q1: false, median: false, q3: false };
+      
+      // Update CF tables
+      populateCFTable('cf-table-a', scenario.intervals, freqA, cfA);
+      populateCFTable('cf-table-b', scenario.intervals, freqB, cfB);
+      
+      // Update totals
+      const totalA = freqA.reduce((a, b) => a + b, 0);
+      const totalB = freqB.reduce((a, b) => a + b, 0);
+      document.getElementById('total-a').textContent = totalA;
+      document.getElementById('total-cf-a').textContent = cfA[cfA.length - 1];
+      document.getElementById('total-b').textContent = totalB;
+      document.getElementById('total-cf-b').textContent = cfB[cfB.length - 1];
+      
+      // Update titles
+      document.getElementById('cf-title-a').textContent = scenario.groupAName;
+      document.getElementById('cf-title-b').textContent = scenario.groupBName;
+      document.getElementById('stats-title-a').textContent = scenario.groupAName;
+      document.getElementById('stats-title-b').textContent = scenario.groupBName;
+      document.getElementById('legend-a').textContent = scenario.groupAName;
+      document.getElementById('legend-b').textContent = scenario.groupBName;
+      document.getElementById('draw-label-a').textContent = scenario.groupAName;
+      document.getElementById('draw-label-b').textContent = scenario.groupBName;
+      
+      // Draw graph
+      drawGraph(currentScenario, freqA, freqB, cfA, cfB);
+      
+      // Calculate stats
+      const stats = calculateStats(currentScenario, cfA, cfB);
+      
+      // Update questions
+      updateQuestions(scenario, stats);
+      
+      // Show results sections
+      document.getElementById('cf-tables').classList.remove('hidden');
+      document.getElementById('graph-section').classList.remove('hidden');
+      document.getElementById('stats-section').classList.remove('hidden');
+      document.getElementById('questions-section').classList.remove('hidden');
+      
+      // Scroll to results
+      document.getElementById('cf-tables').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Update context-specific questions
+    function updateQuestions(scenario, stats) {
+      document.getElementById('question-1').textContent = 
+        `1. Which group has the higher median? What does that mean in this context?`;
+      
+      document.getElementById('question-2').textContent = 
+        `2. Which group has a larger IQR? What does this tell us about the spread of the middle 50% of data?`;
+      
+      document.getElementById('question-3').textContent = 
+        `3. Looking at lower values on the x-axis, which group has higher cumulative frequency? What does this suggest?`;
+      
+      if (currentScenario === 'education') {
+        document.getElementById('question-4').textContent = 
+          '4. Write a sentence comparing the two classes using the context.';
+      } else if (currentScenario === 'equality') {
+        document.getElementById('question-4').textContent = 
+          '4. Write a sentence comparing the two groups using the context.';
+      } else {
+        document.getElementById('question-4').textContent = 
+          '4. Write a sentence about the impact of the new route using the context.';
+      }
+      
+      // Hide all feedback
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`feedback-${i}`).classList.add('hidden');
+      }
+    }
+
+    // Apply configuration to UI
+    function applyConfig(config) {
+      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+      
+      // Only update group labels if they differ from scenario defaults
+      const scenario = scenarios[currentScenario];
+      const groupALabel = config.group_a_label || defaultConfig.group_a_label;
+      const groupBLabel = config.group_b_label || defaultConfig.group_b_label;
+      
+      // If custom labels are set (not default), use them instead of scenario names
+      if (groupALabel !== 'Group A') {
+        document.getElementById('group-a-title').textContent = groupALabel;
+        document.getElementById('cf-title-a').textContent = groupALabel;
+        document.getElementById('stats-title-a').textContent = groupALabel;
+        document.getElementById('legend-a').textContent = groupALabel;
+      }
+      
+      if (groupBLabel !== 'Group B') {
+        document.getElementById('group-b-title').textContent = groupBLabel;
+        document.getElementById('cf-title-b').textContent = groupBLabel;
+        document.getElementById('stats-title-b').textContent = groupBLabel;
+        document.getElementById('legend-b').textContent = groupBLabel;
+      }
+    }
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: async (config) => {
+          applyConfig(config);
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['app_title', config.app_title || defaultConfig.app_title],
+          ['group_a_label', config.group_a_label || defaultConfig.group_a_label],
+          ['group_b_label', config.group_b_label || defaultConfig.group_b_label]
+        ])
+      });
+    }
+
+    // Check answer feedback
+    function checkAnswer(questionNum) {
+      if (!calculatedStats) return;
+      
+      const feedbackDiv = document.getElementById(`feedback-${questionNum}`);
+      feedbackDiv.classList.remove('hidden');
+      
+      let feedback = '';
+      
+      if (questionNum === 1) {
+        const higherGroup = calculatedStats.medianA > calculatedStats.medianB ? calculatedStats.groupAName : calculatedStats.groupBName;
+        const higherMedian = Math.max(calculatedStats.medianA, calculatedStats.medianB).toFixed(1);
+        const lowerGroup = calculatedStats.medianA > calculatedStats.medianB ? calculatedStats.groupBName : calculatedStats.groupAName;
+        
+        if (currentScenario === 'education') {
+          feedback = `<p class="text-green-700 font-medium">✓ ${higherGroup} has the higher median (≈ ${higherMedian}).</p>
+                      <p class="text-slate-700 mt-1">This suggests that ${higherGroup} performed better overall on the test, with a typical score around ${higherMedian}%, compared to ${lowerGroup}.</p>`;
+        } else if (currentScenario === 'equality') {
+          feedback = `<p class="text-green-700 font-medium">✓ ${higherGroup} has the higher median (≈ ${higherMedian} hours).</p>
+                      <p class="text-slate-700 mt-1">This indicates that ${higherGroup} typically spends more time on unpaid work each day.</p>`;
+        } else {
+          const lowerMedianGroup = calculatedStats.medianA < calculatedStats.medianB ? calculatedStats.groupAName : calculatedStats.groupBName;
+          feedback = `<p class="text-green-700 font-medium">✓ The median commute times differ between the two groups.</p>
+                      <p class="text-slate-700 mt-1">${lowerMedianGroup} has shorter typical commute times, suggesting the new route has helped reduce journey times.</p>`;
+        }
+      } else if (questionNum === 2) {
+        const largerIQRGroup = calculatedStats.iqrA > calculatedStats.iqrB ? calculatedStats.groupAName : calculatedStats.groupBName;
+        const largerIQR = Math.max(calculatedStats.iqrA, calculatedStats.iqrB).toFixed(1);
+        
+        feedback = `<p class="text-green-700 font-medium">✓ ${largerIQRGroup} has the larger IQR (≈ ${largerIQR}).</p>
+                    <p class="text-slate-700 mt-1">A larger IQR means more variation in the central 50% of the data. ${largerIQRGroup} has more spread in the middle half of values, indicating less consistency.</p>`;
+      } else if (questionNum === 3) {
+        const scenario = scenarios[currentScenario];
+        const intervals = scenario.intervals;
+        const lowerBoundary = getUpperBoundary(intervals[Math.floor(intervals.length / 3)]);
+        
+        feedback = `<p class="text-green-700 font-medium">✓ Look at where each curve is positioned at lower x-values.</p>
+                    <p class="text-slate-700 mt-1">The group with the higher cumulative frequency at lower values has MORE data points in that range. This means that group tends to have lower values overall. Compare the curves at x ≈ ${lowerBoundary}.</p>`;
+      } else if (questionNum === 4) {
+        if (currentScenario === 'education') {
+          const betterClass = calculatedStats.medianA > calculatedStats.medianB ? calculatedStats.groupAName : calculatedStats.groupBName;
+          feedback = `<p class="text-green-700 font-medium">✓ Example answer:</p>
+                      <p class="text-slate-700 mt-1 italic">"${betterClass} tends to score higher on the exam, with a median of ${Math.max(calculatedStats.medianA, calculatedStats.medianB).toFixed(1)}% compared to the other class. This suggests ${betterClass} performed better overall."</p>`;
+        } else if (currentScenario === 'equality') {
+          const moreWorkGroup = calculatedStats.medianA > calculatedStats.medianB ? calculatedStats.groupAName : calculatedStats.groupBName;
+          feedback = `<p class="text-green-700 font-medium">✓ Example answer:</p>
+                      <p class="text-slate-700 mt-1 italic">"${moreWorkGroup} typically spends more time on unpaid work (median ≈ ${Math.max(calculatedStats.medianA, calculatedStats.medianB).toFixed(1)} hours), which suggests an unequal distribution of domestic responsibilities between the two groups."</p>`;
+        } else {
+          const afterGroup = calculatedStats.groupBName;
+          const shorterMedian = calculatedStats.medianB < calculatedStats.medianA;
+          if (shorterMedian) {
+            feedback = `<p class="text-green-700 font-medium">✓ Example answer:</p>
+                        <p class="text-slate-700 mt-1 italic">"After the new route was introduced, commute times decreased, with a median of ${calculatedStats.medianB.toFixed(1)} minutes compared to ${calculatedStats.medianA.toFixed(1)} minutes before. This shows the new transport option has made journeys faster."</p>`;
+          } else {
+            feedback = `<p class="text-green-700 font-medium">✓ Example answer:</p>
+                        <p class="text-slate-700 mt-1 italic">"Compare the two groups' medians and IQR values. Describe what the difference means for commute times in context - has the new route made journeys shorter or more consistent?"</p>`;
+          }
+        }
+      }
+      
+      feedbackDiv.innerHTML = feedback;
+    }
+
+    // Event listeners
+    document.getElementById('scenario-select').addEventListener('change', (e) => {
+      updateScenario(e.target.value);
+    });
+
+    document.getElementById('calculate-btn').addEventListener('click', calculate);
+    
+    // Quartile drawing buttons
+    document.querySelectorAll('.draw-quartile-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const group = e.target.dataset.group;
+        const quartile = e.target.dataset.quartile;
+        
+        if (group === 'a') {
+          drawnQuartilesA[quartile] = true;
+        } else {
+          drawnQuartilesB[quartile] = true;
+        }
+        
+        // Redraw graph with new lines
+        const scenario = scenarios[currentScenario];
+        const freqA = getFrequencies('table-a');
+        const freqB = getFrequencies('table-b');
+        const cfA = calculateCF(freqA);
+        const cfB = calculateCF(freqB);
+        drawGraph(currentScenario, freqA, freqB, cfA, cfB);
+      });
+    });
+    
+    // Clear quartile buttons
+    document.querySelectorAll('.clear-quartile-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const group = e.target.dataset.group;
+        
+        if (group === 'a') {
+          drawnQuartilesA = { q1: false, median: false, q3: false };
+        } else {
+          drawnQuartilesB = { q1: false, median: false, q3: false };
+        }
+        
+        // Redraw graph without lines
+        const scenario = scenarios[currentScenario];
+        const freqA = getFrequencies('table-a');
+        const freqB = getFrequencies('table-b');
+        const cfA = calculateCF(freqA);
+        const cfB = calculateCF(freqB);
+        drawGraph(currentScenario, freqA, freqB, cfA, cfB);
+      });
+    });
+    
+    // Check answer buttons
+    document.querySelectorAll('.check-answer-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const questionNum = parseInt(e.target.dataset.question);
+        checkAnswer(questionNum);
+      });
+    });
+
+    // Canvas tooltip
+    const canvas = document.getElementById('graph-canvas');
+    const tooltip = document.getElementById('tooltip');
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // Simple tooltip showing coordinates (could be enhanced)
+      tooltip.style.left = (e.clientX - rect.left + 10) + 'px';
+      tooltip.style.top = (e.clientY - rect.top - 30) + 'px';
+    });
+
+    // Initialize
+    updateScenario('education');
+    applyConfig(defaultConfig);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c16c7e924b52722',t:'MTc2ODk5ODE4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

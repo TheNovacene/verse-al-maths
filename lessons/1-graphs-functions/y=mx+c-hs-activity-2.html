@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enhanced Poverty Modelling Tool</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label { margin-right: 10px; }
+    canvas { margin-top: 20px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h2>📈 Enhanced Poverty Modelling Tool</h2>
+  <p>Compare two income strategies with the equation <code>y = mx + c</code>.</p>
+
+  <h3>Model 1</h3>
+  <label for="slope1">m:</label><input type="number" id="slope1" value="10">
+  <label for="intercept1">c:</label><input type="number" id="intercept1" value="20">
+
+  <h3>Model 2</h3>
+  <label for="slope2">m:</label><input type="number" id="slope2" value="5">
+  <label for="intercept2">c:</label><input type="number" id="intercept2" value="35">
+
+  <button onclick="drawGraph()">Draw</button>
+  <button onclick="clearGraph()">Clear</button>
+
+  <canvas id="povertyGraph" width="850" height="500"></canvas>
+
+  <script>
+    const canvas = document.getElementById('povertyGraph');
+    const ctx = canvas.getContext('2d');
+    const povertyLineY = 50;
+
+    function drawAxes() {
+      ctx.beginPath();
+      ctx.moveTo(40, 0);
+      ctx.lineTo(40, 460);
+      ctx.moveTo(40, 460);
+      ctx.lineTo(840, 460);
+      ctx.strokeStyle = '#000';
+      ctx.stroke();
+
+      ctx.font = '14px Arial';
+      ctx.fillText('Income (£)', 5, 20);
+      ctx.fillText('Months →', 700, 490);
+
+      for (let i = 0; i <= 12; i++) {
+        ctx.fillText(i, 40 + i * 60, 475);
+      }
+
+      for (let y = 0; y <= 100; y += 10) {
+        ctx.fillText(100 - y, 5, y * 4.6 + 10);
+      }
+    }
+
+    function drawLine(m, c, color) {
+      ctx.beginPath();
+      ctx.moveTo(40, 460 - (m * 0 + c) * 4);
+      for (let x = 0; x <= 12; x++) {
+        let y = m * x + c;
+        ctx.lineTo(40 + x * 60, 460 - y * 4);
+      }
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function drawPovertyLine() {
+      let y = 460 - povertyLineY * 4;
+      ctx.beginPath();
+      ctx.moveTo(40, y);
+      ctx.lineTo(840, y);
+      ctx.strokeStyle = 'red';
+      ctx.setLineDash([5, 5]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = 'black';
+      ctx.fillText('Poverty Line (£50)', 650, y - 5);
+    }
+
+    function drawGraph() {
+      clearGraph(false);
+      drawAxes();
+      drawPovertyLine();
+      let m1 = parseFloat(document.getElementById('slope1').value);
+      let c1 = parseFloat(document.getElementById('intercept1').value);
+      let m2 = parseFloat(document.getElementById('slope2').value);
+      let c2 = parseFloat(document.getElementById('intercept2').value);
+      drawLine(m1, c1, 'blue');
+      drawLine(m2, c2, 'green');
+    }
+
+    function clearGraph(eraseAll = true) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (!eraseAll) drawAxes();
+    }
+
+    drawGraph();
+  </script>
+</body>
+</html>

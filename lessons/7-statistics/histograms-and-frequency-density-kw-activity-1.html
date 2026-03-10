@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histogram &amp; Frequency Density Explorer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .histogram-bar {
+      transition: all 0.3s ease;
+    }
+    .histogram-bar:hover {
+      filter: brightness(1.1);
+    }
+    .input-field {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+    }
+    .data-table {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .tooltip {
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-slate-50 via-sky-50 to-emerald-50">
+  <div id="app-wrapper" class="h-full w-full overflow-auto">
+   <div class="max-w-6xl mx-auto p-4 md:p-6"><!-- Header -->
+    <header class="text-center mb-6">
+     <h1 id="app-title" class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">Histogram &amp; Frequency Density Explorer</h1>
+     <p class="text-slate-600 text-sm md:text-base">Explore histograms with unequal class widths using real-world SDG data</p>
+    </header><!-- Main Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><!-- Left Column: Controls & Table -->
+     <div class="space-y-4"><!-- Mode Selection -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4"><label class="block text-sm font-semibold text-slate-700 mb-2"> <span class="inline-flex items-center gap-2"> 🎮 Mode </span> </label>
+       <div class="grid grid-cols-2 gap-2 mb-4"><button id="explore-mode-btn" class="mode-btn px-4 py-2.5 rounded-lg font-medium transition-all border-2 bg-sky-500 text-white border-sky-500"> 📊 Explore </button> <button id="quiz-mode-btn" class="mode-btn px-4 py-2.5 rounded-lg font-medium transition-all border-2 bg-white text-slate-700 border-slate-300 hover:border-sky-300"> 🎯 Quiz Mode </button>
+       </div><!-- SDG Context Selection --> <label class="block text-sm font-semibold text-slate-700 mb-2"> <span class="inline-flex items-center gap-2"> 🌍 Select SDG Data Set </span> </label> <select id="sdg-select" class="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-700 font-medium input-field cursor-pointer"> <option value="sdg6">SDG 6: Daily water use per person (litres)</option> <option value="sdg7">SDG 7: Daily household electricity use (kWh)</option> <option value="sdg11">SDG 11: Commute time to school (minutes)</option> <option value="custom">✏️ My SDG Scenario</option> </select> <!-- Custom Variable Name -->
+       <div id="custom-name-container" class="mt-4 hidden"><label class="block text-sm font-medium text-slate-600 mb-1">Your variable name:</label> <input type="text" id="custom-variable-name" placeholder="e.g., Daily minutes of exercise" class="w-full px-4 py-2 rounded-lg border border-slate-300 text-slate-700 input-field" value="My Custom Variable">
+       </div>
+      </div><!-- Quiz Panel -->
+      <div id="quiz-panel" class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 hidden">
+       <h2 class="text-lg font-semibold text-slate-800 mb-3">🎯 Quiz Challenge</h2>
+       <div id="quiz-question" class="mb-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
+        <p class="text-sm font-medium text-amber-900 mb-2">Study the histogram carefully!</p>
+        <p class="text-base font-semibold text-slate-800" id="quiz-question-text">What is the frequency for the class interval 20-40?</p>
+       </div>
+       <div id="quiz-input-area" class="space-y-3">
+        <div><label class="block text-sm font-medium text-slate-600 mb-1">Your answer:</label> <input type="number" id="quiz-answer-input" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-700 input-field text-lg font-medium" placeholder="Enter frequency">
+        </div><button id="submit-answer-btn" class="w-full px-4 py-3 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-lg transition-colors"> Submit Answer </button>
+       </div>
+       <div id="quiz-feedback" class="hidden mt-4 p-4 rounded-lg">
+        <p class="font-semibold mb-2" id="feedback-title"></p>
+        <p class="text-sm" id="feedback-message"></p>
+        <div class="mt-3 p-3 bg-slate-50 rounded text-sm">
+         <p class="font-medium text-slate-700 mb-1">Explanation:</p>
+         <p id="feedback-explanation" class="text-slate-600"></p>
+        </div><button id="next-question-btn" class="mt-3 w-full px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg transition-colors"> Next Question </button>
+       </div>
+       <div class="mt-4 pt-4 border-t border-slate-100">
+        <div class="flex items-center justify-between text-sm"><span class="text-slate-600">Score:</span> <span class="font-bold text-lg" id="quiz-score">0 / 0</span>
+        </div>
+       </div>
+      </div><!-- Data Table -->
+      <div id="data-table-panel" class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+       <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold text-slate-800">📊 Grouped Data Table</h2><button id="add-row-btn" class="hidden px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors"> + Add Row </button>
+       </div>
+       <div class="overflow-x-auto">
+        <table class="data-table w-full text-sm">
+         <thead>
+          <tr class="bg-slate-100">
+           <th class="px-3 py-2 text-left font-semibold text-slate-700 rounded-tl-lg">Class Interval</th>
+           <th class="px-3 py-2 text-center font-semibold text-slate-700">Class Width</th>
+           <th class="px-3 py-2 text-center font-semibold text-slate-700">Frequency</th>
+           <th class="px-3 py-2 text-center font-semibold text-slate-700 rounded-tr-lg">Freq. Density</th>
+           <th id="delete-col-header" class="hidden px-2 py-2"></th>
+          </tr>
+         </thead>
+         <tbody id="data-table-body"><!-- Rows inserted by JS -->
+         </tbody>
+        </table>
+       </div>
+       <div class="mt-3 pt-3 border-t border-slate-100">
+        <p class="text-xs text-slate-500"><span class="font-medium">Tip:</span> Edit the frequency values to see the histogram update in real-time!</p>
+       </div>
+      </div><!-- Help Panel -->
+      <div class="bg-gradient-to-r from-sky-50 to-emerald-50 rounded-xl border border-sky-200 p-4">
+       <h3 id="help-title" class="font-semibold text-slate-800 mb-2 flex items-center gap-2">💡 Key Concepts</h3>
+       <ul class="space-y-2 text-sm text-slate-700">
+        <li class="flex items-start gap-2"><span class="text-sky-500 mt-0.5">•</span> <span><strong>Frequency Density</strong> = Frequency ÷ Class Width</span></li>
+        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>For unequal class widths, bar <strong>height</strong> shows frequency density, not frequency</span></li>
+        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>The <strong>area</strong> of each bar is proportional to the frequency</span></li>
+        <li class="flex items-start gap-2"><span class="text-rose-500 mt-0.5">•</span> <span>Area = Frequency Density × Class Width = Frequency</span></li>
+       </ul>
+      </div>
+     </div><!-- Right Column: Histogram -->
+     <div class="space-y-4">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+       <h2 class="text-lg font-semibold text-slate-800 mb-4">📈 Histogram</h2><!-- Histogram Container -->
+       <div class="relative">
+        <svg id="histogram-svg" class="w-full" viewbox="0 0 500 350" preserveaspectratio="xMidYMid meet"><!-- Histogram drawn by JS -->
+        </svg>
+       </div><!-- Bar Info Tooltip -->
+       <div id="bar-info" class="hidden mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200 tooltip">
+        <h4 class="font-semibold text-slate-800 mb-2">📌 Selected Bar Details</h4>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+         <div class="text-slate-600">
+          Class Interval:
+         </div>
+         <div id="info-interval" class="font-medium text-slate-800">
+          -
+         </div>
+         <div class="text-slate-600">
+          Frequency:
+         </div>
+         <div id="info-frequency" class="font-medium text-slate-800">
+          -
+         </div>
+         <div class="text-slate-600">
+          Class Width:
+         </div>
+         <div id="info-width" class="font-medium text-slate-800">
+          -
+         </div>
+         <div class="text-slate-600">
+          Frequency Density:
+         </div>
+         <div id="info-density" class="font-medium text-slate-800">
+          -
+         </div>
+         <div class="text-slate-600">
+          Area (= Frequency):
+         </div>
+         <div id="info-area" class="font-medium text-emerald-600">
+          -
+         </div>
+        </div>
+       </div>
+      </div><!-- Instructions -->
+      <div id="explore-instructions" class="bg-amber-50 rounded-xl border border-amber-200 p-4">
+       <h3 class="font-semibold text-amber-800 mb-2">🎯 How to Use</h3>
+       <ol class="space-y-1 text-sm text-amber-900 list-decimal list-inside">
+        <li>Select an SDG data set from the dropdown</li>
+        <li>Edit the frequency values in the table</li>
+        <li>Watch the histogram update automatically</li>
+        <li>Click on any bar to see its details</li>
+        <li>Try "My SDG Scenario" to create your own data!</li>
+       </ol>
+      </div><!-- Quiz Instructions -->
+      <div id="quiz-instructions" class="bg-purple-50 rounded-xl border border-purple-200 p-4 hidden">
+       <h3 class="font-semibold text-purple-800 mb-2">🎯 Quiz Mode</h3>
+       <ol class="space-y-1 text-sm text-purple-900 list-decimal list-inside">
+        <li>Study the histogram carefully</li>
+        <li>Read the question about a class interval</li>
+        <li>Calculate the frequency using: Frequency = Frequency Density × Class Width</li>
+        <li>Enter your answer and submit</li>
+        <li>Learn from the explanation and try the next question!</li>
+       </ol>
+      </div>
+     </div>
+    </div><!-- Footer -->
+    <footer class="mt-6 text-center text-xs text-slate-500">
+     Designed for GCSE Maths students • Exploring frequency density with SDG data
+    </footer>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      app_title: 'Histogram & Frequency Density Explorer',
+      help_title: '💡 Key Concepts',
+      primary_color: '#0ea5e9',
+      secondary_color: '#10b981',
+      background_color: '#f8fafc',
+      text_color: '#1e293b',
+      accent_color: '#f59e0b'
+    };
+
+    let config = { ...defaultConfig };
+
+    // SDG Preset Data
+    const presetData = {
+      sdg6: {
+        name: 'Daily water use per person (litres)',
+        unit: 'litres',
+        intervals: [
+          { lower: 0, upper: 20 },
+          { lower: 20, upper: 40 },
+          { lower: 40, upper: 50 },
+          { lower: 50, upper: 80 },
+          { lower: 80, upper: 100 },
+          { lower: 100, upper: 150 }
+        ],
+        frequencies: [8, 15, 12, 24, 10, 6]
+      },
+      sdg7: {
+        name: 'Daily household electricity use (kWh)',
+        unit: 'kWh',
+        intervals: [
+          { lower: 0, upper: 5 },
+          { lower: 5, upper: 10 },
+          { lower: 10, upper: 15 },
+          { lower: 15, upper: 25 },
+          { lower: 25, upper: 40 }
+        ],
+        frequencies: [5, 18, 22, 30, 15]
+      },
+      sdg11: {
+        name: 'Commute time to school (minutes)',
+        unit: 'minutes',
+        intervals: [
+          { lower: 0, upper: 10 },
+          { lower: 10, upper: 15 },
+          { lower: 15, upper: 20 },
+          { lower: 20, upper: 30 },
+          { lower: 30, upper: 45 },
+          { lower: 45, upper: 60 }
+        ],
+        frequencies: [12, 25, 18, 20, 8, 4]
+      },
+      custom: {
+        name: 'My Custom Variable',
+        unit: '',
+        intervals: [
+          { lower: 0, upper: 10 },
+          { lower: 10, upper: 20 },
+          { lower: 20, upper: 30 },
+          { lower: 30, upper: 50 }
+        ],
+        frequencies: [5, 10, 15, 8]
+      }
+    };
+
+    let currentData = JSON.parse(JSON.stringify(presetData.sdg6));
+    let currentMode = 'sdg6';
+    let selectedBarIndex = -1;
+    let isQuizMode = false;
+    let quizScore = 0;
+    let quizTotal = 0;
+    let currentQuestion = null;
+
+    // DOM Elements
+    const sdgSelect = document.getElementById('sdg-select');
+    const customNameContainer = document.getElementById('custom-name-container');
+    const customVariableName = document.getElementById('custom-variable-name');
+    const dataTableBody = document.getElementById('data-table-body');
+    const addRowBtn = document.getElementById('add-row-btn');
+    const deleteColHeader = document.getElementById('delete-col-header');
+    const histogramSvg = document.getElementById('histogram-svg');
+    const barInfo = document.getElementById('bar-info');
+    
+    // Mode buttons
+    const exploreModeBtn = document.getElementById('explore-mode-btn');
+    const quizModeBtn = document.getElementById('quiz-mode-btn');
+    
+    // Quiz elements
+    const quizPanel = document.getElementById('quiz-panel');
+    const dataTablePanel = document.getElementById('data-table-panel');
+    const quizQuestionText = document.getElementById('quiz-question-text');
+    const quizAnswerInput = document.getElementById('quiz-answer-input');
+    const submitAnswerBtn = document.getElementById('submit-answer-btn');
+    const quizFeedback = document.getElementById('quiz-feedback');
+    const feedbackTitle = document.getElementById('feedback-title');
+    const feedbackMessage = document.getElementById('feedback-message');
+    const feedbackExplanation = document.getElementById('feedback-explanation');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
+    const quizScoreDisplay = document.getElementById('quiz-score');
+    const quizInputArea = document.getElementById('quiz-input-area');
+    const exploreInstructions = document.getElementById('explore-instructions');
+    const quizInstructions = document.getElementById('quiz-instructions');
+
+    // Calculate frequency density
+    function calculateDensity(frequency, width) {
+      return width > 0 ? (frequency / width).toFixed(2) : 0;
+    }
+
+    // Render the data table
+    function renderTable() {
+      dataTableBody.innerHTML = '';
+      const isCustom = currentMode === 'custom';
+
+      currentData.intervals.forEach((interval, index) => {
+        const width = interval.upper - interval.lower;
+        const frequency = currentData.frequencies[index] || 0;
+        const density = calculateDensity(frequency, width);
+
+        const row = document.createElement('tr');
+        row.className = `border-b border-slate-100 hover:bg-slate-50 transition-colors ${selectedBarIndex === index ? 'bg-sky-50' : ''}`;
+        
+        row.innerHTML = `
+          <td class="px-3 py-2">
+            ${isCustom ? `
+              <div class="flex items-center gap-1">
+                <input type="number" class="w-16 px-2 py-1 border border-slate-300 rounded text-center input-field interval-lower" 
+                  data-index="${index}" value="${interval.lower}" step="1">
+                <span class="text-slate-400">–</span>
+                <input type="number" class="w-16 px-2 py-1 border border-slate-300 rounded text-center input-field interval-upper" 
+                  data-index="${index}" value="${interval.upper}" step="1">
+              </div>
+            ` : `
+              <span class="font-medium text-slate-700">${interval.lower} – ${interval.upper}</span>
+            `}
+          </td>
+          <td class="px-3 py-2 text-center">
+            <span class="inline-block px-2 py-1 bg-slate-100 rounded text-slate-600 font-medium">${width}</span>
+          </td>
+          <td class="px-3 py-2 text-center">
+            <input type="number" class="w-20 px-2 py-1.5 border border-slate-300 rounded text-center font-medium input-field frequency-input" 
+              data-index="${index}" value="${frequency}" min="0" step="1">
+          </td>
+          <td class="px-3 py-2 text-center">
+            <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 rounded font-semibold">${density}</span>
+          </td>
+          ${isCustom ? `
+            <td class="px-2 py-2 text-center">
+              <button class="delete-row-btn text-rose-400 hover:text-rose-600 transition-colors p-1" data-index="${index}" title="Delete row">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </td>
+          ` : ''}
+        `;
+        
+        dataTableBody.appendChild(row);
+      });
+
+      // Add event listeners
+      document.querySelectorAll('.frequency-input').forEach(input => {
+        input.addEventListener('change', handleFrequencyChange);
+        input.addEventListener('input', handleFrequencyChange);
+      });
+
+      if (isCustom) {
+        document.querySelectorAll('.interval-lower').forEach(input => {
+          input.addEventListener('change', handleIntervalChange);
+        });
+        document.querySelectorAll('.interval-upper').forEach(input => {
+          input.addEventListener('change', handleIntervalChange);
+        });
+        document.querySelectorAll('.delete-row-btn').forEach(btn => {
+          btn.addEventListener('click', handleDeleteRow);
+        });
+      }
+    }
+
+    // Handle frequency change
+    function handleFrequencyChange(e) {
+      const index = parseInt(e.target.dataset.index);
+      const value = Math.max(0, parseInt(e.target.value) || 0);
+      currentData.frequencies[index] = value;
+      renderTable();
+      renderHistogram();
+      if (selectedBarIndex === index) {
+        updateBarInfo(index);
+      }
+    }
+
+    // Handle interval change (custom mode)
+    function handleIntervalChange(e) {
+      const index = parseInt(e.target.dataset.index);
+      const value = parseFloat(e.target.value) || 0;
+      
+      if (e.target.classList.contains('interval-lower')) {
+        currentData.intervals[index].lower = value;
+      } else {
+        currentData.intervals[index].upper = value;
+      }
+      
+      renderTable();
+      renderHistogram();
+      if (selectedBarIndex >= 0) {
+        updateBarInfo(selectedBarIndex);
+      }
+    }
+
+    // Handle delete row (custom mode)
+    function handleDeleteRow(e) {
+      const index = parseInt(e.target.closest('.delete-row-btn').dataset.index);
+      if (currentData.intervals.length > 1) {
+        currentData.intervals.splice(index, 1);
+        currentData.frequencies.splice(index, 1);
+        selectedBarIndex = -1;
+        barInfo.classList.add('hidden');
+        renderTable();
+        renderHistogram();
+      }
+    }
+
+    // Handle add row (custom mode)
+    function handleAddRow() {
+      const lastInterval = currentData.intervals[currentData.intervals.length - 1];
+      const width = lastInterval.upper - lastInterval.lower;
+      currentData.intervals.push({
+        lower: lastInterval.upper,
+        upper: lastInterval.upper + width
+      });
+      currentData.frequencies.push(0);
+      renderTable();
+      renderHistogram();
+    }
+
+    // Render the histogram
+    function renderHistogram() {
+      const padding = { top: 30, right: 30, bottom: 60, left: 60 };
+      const width = 500;
+      const height = 350;
+      const chartWidth = width - padding.left - padding.right;
+      const chartHeight = height - padding.top - padding.bottom;
+
+      // Calculate scales
+      const minX = Math.min(...currentData.intervals.map(i => i.lower));
+      const maxX = Math.max(...currentData.intervals.map(i => i.upper));
+      const xRange = maxX - minX;
+      
+      const densities = currentData.intervals.map((interval, i) => {
+        const width = interval.upper - interval.lower;
+        return width > 0 ? currentData.frequencies[i] / width : 0;
+      });
+      const maxDensity = Math.max(...densities, 1);
+
+      const xScale = (value) => padding.left + ((value - minX) / xRange) * chartWidth;
+      const yScale = (value) => padding.top + chartHeight - (value / maxDensity) * chartHeight;
+
+      // Bar colors
+      const colors = ['#0ea5e9', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#06b6d4'];
+
+      let svg = `
+        <!-- Background grid -->
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect x="${padding.left}" y="${padding.top}" width="${chartWidth}" height="${chartHeight}" fill="url(#grid)"/>
+        
+        <!-- Y-axis -->
+        <line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${padding.top + chartHeight}" stroke="#64748b" stroke-width="2"/>
+        
+        <!-- X-axis -->
+        <line x1="${padding.left}" y1="${padding.top + chartHeight}" x2="${padding.left + chartWidth}" y2="${padding.top + chartHeight}" stroke="#64748b" stroke-width="2"/>
+      `;
+
+      // Y-axis labels
+      const yTicks = 5;
+      for (let i = 0; i <= yTicks; i++) {
+        const value = (maxDensity * i / yTicks).toFixed(1);
+        const y = yScale(parseFloat(value));
+        svg += `
+          <line x1="${padding.left - 5}" y1="${y}" x2="${padding.left}" y2="${y}" stroke="#64748b" stroke-width="1"/>
+          <text x="${padding.left - 10}" y="${y + 4}" text-anchor="end" font-size="11" fill="#64748b">${value}</text>
+        `;
+      }
+
+      // X-axis labels
+      const xValues = [minX, ...currentData.intervals.map(i => i.upper)];
+      const uniqueX = [...new Set(xValues)].sort((a, b) => a - b);
+      
+      uniqueX.forEach(value => {
+        const x = xScale(value);
+        svg += `
+          <line x1="${x}" y1="${padding.top + chartHeight}" x2="${x}" y2="${padding.top + chartHeight + 5}" stroke="#64748b" stroke-width="1"/>
+          <text x="${x}" y="${padding.top + chartHeight + 18}" text-anchor="middle" font-size="11" fill="#64748b">${value}</text>
+        `;
+      });
+
+      // Bars
+      currentData.intervals.forEach((interval, index) => {
+        const barWidth = interval.upper - interval.lower;
+        const density = densities[index];
+        const x = xScale(interval.lower);
+        const barPixelWidth = xScale(interval.upper) - xScale(interval.lower);
+        const barHeight = (density / maxDensity) * chartHeight;
+        const y = padding.top + chartHeight - barHeight;
+        const color = colors[index % colors.length];
+        const isSelected = selectedBarIndex === index;
+
+        svg += `
+          <rect 
+            class="histogram-bar" 
+            data-index="${index}"
+            x="${x}" 
+            y="${y}" 
+            width="${barPixelWidth}" 
+            height="${barHeight}"
+            fill="${color}"
+            fill-opacity="${isSelected ? '1' : '0.8'}"
+            stroke="${isSelected ? '#1e293b' : color}"
+            stroke-width="${isSelected ? '3' : '1'}"
+            style="cursor: pointer;"
+          />
+        `;
+      });
+
+      // Axis labels
+      const variableName = currentMode === 'custom' 
+        ? (customVariableName.value || 'My Custom Variable')
+        : currentData.name;
+
+      svg += `
+        <text x="${padding.left + chartWidth / 2}" y="${height - 10}" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">${variableName}</text>
+        <text x="${15}" y="${padding.top + chartHeight / 2}" text-anchor="middle" font-size="13" font-weight="600" fill="#334155" transform="rotate(-90, 15, ${padding.top + chartHeight / 2})">Frequency density</text>
+      `;
+
+      histogramSvg.innerHTML = svg;
+
+      // Add click listeners to bars
+      document.querySelectorAll('.histogram-bar').forEach(bar => {
+        bar.addEventListener('click', (e) => {
+          const index = parseInt(e.target.dataset.index);
+          selectedBarIndex = selectedBarIndex === index ? -1 : index;
+          renderTable();
+          renderHistogram();
+          if (selectedBarIndex >= 0) {
+            updateBarInfo(selectedBarIndex);
+            barInfo.classList.remove('hidden');
+          } else {
+            barInfo.classList.add('hidden');
+          }
+        });
+      });
+    }
+
+    // Update bar info panel
+    function updateBarInfo(index) {
+      const interval = currentData.intervals[index];
+      const width = interval.upper - interval.lower;
+      const frequency = currentData.frequencies[index];
+      const density = calculateDensity(frequency, width);
+
+      document.getElementById('info-interval').textContent = `${interval.lower} – ${interval.upper}`;
+      document.getElementById('info-frequency').textContent = frequency;
+      document.getElementById('info-width').textContent = width;
+      document.getElementById('info-density').textContent = density;
+      document.getElementById('info-area').textContent = `${density} × ${width} = ${frequency}`;
+    }
+
+    // Handle SDG selection change
+    function handleSDGChange() {
+      currentMode = sdgSelect.value;
+      selectedBarIndex = -1;
+      barInfo.classList.add('hidden');
+
+      if (currentMode === 'custom') {
+        customNameContainer.classList.remove('hidden');
+        addRowBtn.classList.remove('hidden');
+        deleteColHeader.classList.remove('hidden');
+        currentData = JSON.parse(JSON.stringify(presetData.custom));
+      } else {
+        customNameContainer.classList.add('hidden');
+        addRowBtn.classList.add('hidden');
+        deleteColHeader.classList.add('hidden');
+        currentData = JSON.parse(JSON.stringify(presetData[currentMode]));
+      }
+
+      renderTable();
+      renderHistogram();
+      
+      // Generate new question if in quiz mode
+      if (isQuizMode) {
+        generateQuestion();
+      }
+    }
+
+    // Handle variable name change
+    function handleVariableNameChange() {
+      currentData.name = customVariableName.value || 'My Custom Variable';
+      renderHistogram();
+    }
+
+    // Toggle between Explore and Quiz modes
+    function switchToExploreMode() {
+      isQuizMode = false;
+      
+      // Update button states
+      exploreModeBtn.classList.remove('bg-white', 'text-slate-700', 'border-slate-300');
+      exploreModeBtn.classList.add('bg-sky-500', 'text-white', 'border-sky-500');
+      quizModeBtn.classList.remove('bg-sky-500', 'text-white', 'border-sky-500');
+      quizModeBtn.classList.add('bg-white', 'text-slate-700', 'border-slate-300', 'hover:border-sky-300');
+      
+      // Show/hide panels
+      dataTablePanel.classList.remove('hidden');
+      quizPanel.classList.add('hidden');
+      exploreInstructions.classList.remove('hidden');
+      quizInstructions.classList.add('hidden');
+      
+      // Re-enable custom scenario
+      sdgSelect.disabled = false;
+      
+      renderTable();
+      renderHistogram();
+    }
+
+    function switchToQuizMode() {
+      isQuizMode = true;
+      
+      // Update button states
+      quizModeBtn.classList.remove('bg-white', 'text-slate-700', 'border-slate-300', 'hover:border-sky-300');
+      quizModeBtn.classList.add('bg-sky-500', 'text-white', 'border-sky-500');
+      exploreModeBtn.classList.remove('bg-sky-500', 'text-white', 'border-sky-500');
+      exploreModeBtn.classList.add('bg-white', 'text-slate-700', 'border-slate-300', 'hover:border-sky-300');
+      
+      // Show/hide panels
+      dataTablePanel.classList.add('hidden');
+      quizPanel.classList.remove('hidden');
+      exploreInstructions.classList.add('hidden');
+      quizInstructions.classList.remove('hidden');
+      
+      // Disable custom scenario in quiz mode
+      if (currentMode === 'custom') {
+        currentMode = 'sdg6';
+        sdgSelect.value = 'sdg6';
+        currentData = JSON.parse(JSON.stringify(presetData.sdg6));
+      }
+      sdgSelect.disabled = false;
+      customNameContainer.classList.add('hidden');
+      
+      // Reset quiz
+      quizScore = 0;
+      quizTotal = 0;
+      updateQuizScore();
+      
+      generateQuestion();
+      renderHistogram();
+    }
+
+    // Generate a quiz question
+    function generateQuestion() {
+      // Randomly select a class interval
+      const intervalIndex = Math.floor(Math.random() * currentData.intervals.length);
+      const interval = currentData.intervals[intervalIndex];
+      const frequency = currentData.frequencies[intervalIndex];
+      const width = interval.upper - interval.lower;
+      const density = calculateDensity(frequency, width);
+      
+      currentQuestion = {
+        intervalIndex,
+        interval,
+        frequency,
+        width,
+        density: parseFloat(density)
+      };
+      
+      quizQuestionText.textContent = `What is the frequency for the class interval ${interval.lower}–${interval.upper}?`;
+      quizAnswerInput.value = '';
+      quizAnswerInput.focus();
+      quizFeedback.classList.add('hidden');
+      quizInputArea.classList.remove('hidden');
+      submitAnswerBtn.disabled = false;
+    }
+
+    // Submit quiz answer
+    function submitAnswer() {
+      const userAnswer = parseInt(quizAnswerInput.value);
+      
+      if (isNaN(userAnswer)) {
+        return;
+      }
+      
+      quizTotal++;
+      const isCorrect = userAnswer === currentQuestion.frequency;
+      
+      if (isCorrect) {
+        quizScore++;
+        feedbackTitle.textContent = '✅ Correct!';
+        feedbackMessage.textContent = `Well done! The frequency is ${currentQuestion.frequency}.`;
+        quizFeedback.classList.remove('bg-red-50', 'border-red-200');
+        quizFeedback.classList.add('bg-emerald-50', 'border-emerald-200');
+        feedbackTitle.classList.remove('text-red-800');
+        feedbackTitle.classList.add('text-emerald-800');
+        feedbackMessage.classList.remove('text-red-700');
+        feedbackMessage.classList.add('text-emerald-700');
+      } else {
+        feedbackTitle.textContent = '❌ Not quite!';
+        feedbackMessage.textContent = `The correct frequency is ${currentQuestion.frequency}.`;
+        quizFeedback.classList.remove('bg-emerald-50', 'border-emerald-200');
+        quizFeedback.classList.add('bg-red-50', 'border-red-200');
+        feedbackTitle.classList.remove('text-emerald-800');
+        feedbackTitle.classList.add('text-red-800');
+        feedbackMessage.classList.remove('text-emerald-700');
+        feedbackMessage.classList.add('text-red-700');
+      }
+      
+      // Show explanation
+      feedbackExplanation.innerHTML = `
+        From the histogram for interval ${currentQuestion.interval.lower}–${currentQuestion.interval.upper}:<br>
+        • <strong>Frequency Density</strong> = ${currentQuestion.density}<br>
+        • <strong>Class Width</strong> = ${currentQuestion.interval.upper} − ${currentQuestion.interval.lower} = ${currentQuestion.width}<br>
+        • <strong>Frequency</strong> = Frequency Density × Class Width<br>
+        • <strong>Frequency</strong> = ${currentQuestion.density} × ${currentQuestion.width} = ${currentQuestion.frequency}
+      `;
+      
+      quizInputArea.classList.add('hidden');
+      quizFeedback.classList.remove('hidden');
+      updateQuizScore();
+    }
+
+    // Update quiz score display
+    function updateQuizScore() {
+      quizScoreDisplay.textContent = `${quizScore} / ${quizTotal}`;
+    }
+
+    // Next question
+    function nextQuestion() {
+      generateQuestion();
+    }
+
+    // Initialize Element SDK
+    async function initElementSdk() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...defaultConfig, ...newConfig };
+            
+            // Update app title
+            const titleEl = document.getElementById('app-title');
+            if (titleEl) titleEl.textContent = config.app_title || defaultConfig.app_title;
+            
+            // Update help title
+            const helpTitleEl = document.getElementById('help-title');
+            if (helpTitleEl) helpTitleEl.textContent = config.help_title || defaultConfig.help_title;
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (value) => {
+                  cfg.background_color = value;
+                  window.elementSdk.setConfig({ background_color: value });
+                }
+              },
+              {
+                get: () => cfg.primary_color || defaultConfig.primary_color,
+                set: (value) => {
+                  cfg.primary_color = value;
+                  window.elementSdk.setConfig({ primary_color: value });
+                }
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (value) => {
+                  cfg.text_color = value;
+                  window.elementSdk.setConfig({ text_color: value });
+                }
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['app_title', cfg.app_title || defaultConfig.app_title],
+            ['help_title', cfg.help_title || defaultConfig.help_title]
+          ])
+        });
+      }
+    }
+
+    // Initialize the app
+    function init() {
+      sdgSelect.addEventListener('change', handleSDGChange);
+      customVariableName.addEventListener('input', handleVariableNameChange);
+      addRowBtn.addEventListener('click', handleAddRow);
+      
+      // Mode switching
+      exploreModeBtn.addEventListener('click', switchToExploreMode);
+      quizModeBtn.addEventListener('click', switchToQuizMode);
+      
+      // Quiz event listeners
+      submitAnswerBtn.addEventListener('click', submitAnswer);
+      nextQuestionBtn.addEventListener('click', nextQuestion);
+      quizAnswerInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          submitAnswer();
+        }
+      });
+      
+      renderTable();
+      renderHistogram();
+      initElementSdk();
+    }
+
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1dd9c3b75fd61a',t:'MTc2OTA3MjMxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

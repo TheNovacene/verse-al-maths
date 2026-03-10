@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nested Number Sets Interactive</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .caption {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .sets-container {
+            flex: 2;
+            position: relative;
+            height: 600px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            border: 3px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .number-set {
+            position: absolute;
+            border: 4px solid;
+            border-radius: 50%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 15px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .set-label {
+            background: white;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            border: 1px solid;
+            position: absolute;
+            top: 3px;
+            left: 8px;
+            z-index: 10;
+        }
+
+        .real-numbers {
+            width: 480px;
+            height: 480px;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-color: #c0392b;
+            background: rgba(192, 57, 43, 0.08);
+        }
+
+        .real-numbers .set-label {
+            color: #c0392b;
+            border-color: #c0392b;
+        }
+
+        .rational-numbers {
+            width: 300px;
+            height: 300px;
+            top: 150px;
+            left: 40%;
+            transform: translateX(-50%);
+            border-color: #2980b9;
+            background: rgba(41, 128, 185, 0.1);
+        }
+
+        .rational-numbers .set-label {
+            color: #2980b9;
+            border-color: #2980b9;
+        }
+
+        .integers {
+            width: 200px;
+            height: 200px;
+            top: 200px;
+            left: 40%;
+            transform: translateX(-50%);
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.12);
+        }
+
+        .integers .set-label {
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .natural-numbers {
+            width: 100px;
+            height: 100px;
+            top: 250px;
+            left: 40%;
+            transform: translateX(-50%);
+            border-color: #d68910;
+            background: rgba(214, 137, 16, 0.15);
+        }
+
+        .natural-numbers .set-label {
+            color: #d68910;
+            border-color: #d68910;
+            font-size: 0.45rem;
+            padding: 2px 4px;
+        }
+
+        .irrational-numbers {
+            width: 120px;
+            height: 120px;
+            top: 200px;
+            left: 70%;
+            transform: translateX(-50%);
+            border-color: #7d3c98;
+            background: rgba(125, 60, 152, 0.12);
+        }
+
+        .irrational-numbers .set-label {
+            color: #7d3c98;
+            border-color: #7d3c98;
+            font-size: 0.45rem;
+            padding: 2px 4px;
+        }
+
+        .numbers-panel {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border: 3px solid #e9ecef;
+        }
+
+        .numbers-panel h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .draggable-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .number-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: grab;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            user-select: none;
+            border: 2px solid transparent;
+        }
+
+        .number-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .number-item.dragging {
+            opacity: 0.7;
+            transform: rotate(5deg);
+            cursor: grabbing;
+        }
+
+        .number-item.correct {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-color: #27ae60;
+        }
+
+        .number-item.incorrect {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-color: #c0392b;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .feedback.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .example-page {
+            display: none;
+            text-align: center;
+        }
+
+        .example-content {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .example-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 10px;
+            border-left: 5px solid;
+        }
+
+        .drop-zone {
+            min-height: 40px;
+            border: 2px dashed transparent;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sets-container {
+                height: 400px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔢 Number Sets Universe</h1>
+            <p class="caption">Which numbers belong in which set? Use what you know about number properties.</p>
+        </div>
+
+        <div id="main-page">
+            <div class="main-content">
+                <div class="sets-container">
+                    <div class="number-set real-numbers drop-zone" data-set="real">
+                        <div class="set-label">Real Numbers (ℝ)</div>
+                    </div>
+                    <div class="number-set rational-numbers drop-zone" data-set="rational">
+                        <div class="set-label">Rational Numbers (ℚ)</div>
+                    </div>
+                    <div class="number-set integers drop-zone" data-set="integers">
+                        <div class="set-label">Integers (ℤ)</div>
+                    </div>
+                    <div class="number-set natural-numbers drop-zone" data-set="natural">
+                        <div class="set-label">Natural Numbers (ℕ)</div>
+                    </div>
+                    <div class="number-set irrational-numbers drop-zone" data-set="irrational">
+                        <div class="set-label">Irrational Numbers</div>
+                    </div>
+                </div>
+
+                <div class="numbers-panel">
+                    <h3>📋 Drag these numbers:</h3>
+                    <div class="draggable-numbers" id="numbers-container">
+                        <!-- Numbers will be generated dynamically -->
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn" onclick="checkAnswers()">✅ Check Answers</button>
+                        <button class="btn secondary" onclick="showExample()">💡 Show Example</button>
+                        <button class="btn secondary" onclick="resetGame()">🔄 Reset</button>
+                    </div>
+
+                    <div class="feedback" id="feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="example-page" class="example-page">
+            <h2>📚 Solution Examples</h2>
+            <div class="example-content">
+                <div class="example-item" style="border-left-color: #f39c12;">
+                    <span><strong>Natural Numbers (ℕ):</strong> 1, 4</span>
+                    <span>Counting numbers starting from 1</span>
+                </div>
+                <div class="example-item" style="border-left-color: #2ecc71;">
+                    <span><strong>Integers (ℤ):</strong> 0, -3, -7</span>
+                    <span>Whole numbers including negatives and zero</span>
+                </div>
+                <div class="example-item" style="border-left-color: #3498db;">
+                    <span><strong>Rational Numbers (ℚ):</strong> 5.25, ⅔, 1.5, -½</span>
+                    <span>Numbers that can be written as fractions</span>
+                </div>
+                <div class="example-item" style="border-left-color: #9b59b6;">
+                    <span><strong>Irrational Numbers:</strong> √2, π</span>
+                    <span>Numbers that cannot be written as fractions</span>
+                </div>
+                <div class="example-item" style="border-left-color: #e74c3c;">
+                    <span><strong>Real Numbers (ℝ):</strong> All of the above!</span>
+                    <span>The complete set containing all other number types</span>
+                </div>
+            </div>
+            <button class="btn" onclick="backToMain()">← Back to Activity</button>
+        </div>
+    </div>
+
+    <script>
+        let draggedElement = null;
+        let userAnswers = {};
+
+        // All possible numbers for the activity
+        const allNumbers = [
+            { display: '1', value: '1', correct: 'natural' },
+            { display: '2', value: '2', correct: 'natural' },
+            { display: '3', value: '3', correct: 'natural' },
+            { display: '4', value: '4', correct: 'natural' },
+            { display: '5', value: '5', correct: 'natural' },
+            { display: '10', value: '10', correct: 'natural' },
+            { display: '0', value: '0', correct: 'integers' },
+            { display: '-1', value: '-1', correct: 'integers' },
+            { display: '-2', value: '-2', correct: 'integers' },
+            { display: '-3', value: '-3', correct: 'integers' },
+            { display: '-5', value: '-5', correct: 'integers' },
+            { display: '-7', value: '-7', correct: 'integers' },
+            { display: '-10', value: '-10', correct: 'integers' },
+            { display: '1.5', value: '1.5', correct: 'rational' },
+            { display: '2.25', value: '2.25', correct: 'rational' },
+            { display: '3.75', value: '3.75', correct: 'rational' },
+            { display: '5.25', value: '5.25', correct: 'rational' },
+            { display: '⅓', value: '1/3', correct: 'rational' },
+            { display: '½', value: '1/2', correct: 'rational' },
+            { display: '⅔', value: '2/3', correct: 'rational' },
+            { display: '¾', value: '3/4', correct: 'rational' },
+            { display: '-½', value: '-1/2', correct: 'rational' },
+            { display: '-1.5', value: '-1.5', correct: 'rational' },
+            { display: '-2.75', value: '-2.75', correct: 'rational' },
+            { display: '√2', value: '√2', correct: 'irrational' },
+            { display: '√3', value: '√3', correct: 'irrational' },
+            { display: '√5', value: '√5', correct: 'irrational' },
+            { display: 'π', value: 'π', correct: 'irrational' },
+            { display: 'e', value: 'e', correct: 'irrational' },
+            { display: '√7', value: '√7', correct: 'irrational' }
+        ];
+
+        // Initialize drag and drop
+        document.addEventListener('DOMContentLoaded', function() {
+            generateRandomNumbers();
+            initializeDragAndDrop();
+        });
+
+        function generateRandomNumbers() {
+            // Ensure we have at least 2 from each category
+            const naturalNums = allNumbers.filter(n => n.correct === 'natural');
+            const integerNums = allNumbers.filter(n => n.correct === 'integers');
+            const rationalNums = allNumbers.filter(n => n.correct === 'rational');
+            const irrationalNums = allNumbers.filter(n => n.correct === 'irrational');
+            
+            // Shuffle and pick numbers from each category
+            const selectedNumbers = [
+                ...shuffleArray(naturalNums).slice(0, 2),
+                ...shuffleArray(integerNums).slice(0, 3),
+                ...shuffleArray(rationalNums).slice(0, 4),
+                ...shuffleArray(irrationalNums).slice(0, 2)
+            ];
+            
+            // Shuffle the final selection
+            const finalNumbers = shuffleArray(selectedNumbers);
+            
+            // Clear existing numbers and create new ones
+            const container = document.getElementById('numbers-container');
+            container.innerHTML = '';
+            
+            finalNumbers.forEach(num => {
+                const div = document.createElement('div');
+                div.className = 'number-item';
+                div.draggable = true;
+                div.dataset.number = num.value;
+                div.dataset.correct = num.correct;
+                div.textContent = num.display;
+                container.appendChild(div);
+            });
+        }
+        
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function initializeDragAndDrop() {
+            const numberItems = document.querySelectorAll('.number-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            numberItems.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragend', handleDragEnd);
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('dragenter', handleDragEnter);
+                zone.addEventListener('dragleave', handleDragLeave);
+                zone.addEventListener('drop', handleDrop);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            draggedElement = null;
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+            this.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+            
+            if (draggedElement) {
+                const numberValue = draggedElement.dataset.number;
+                const targetSet = this.dataset.set;
+                
+                // Store user's answer
+                userAnswers[numberValue] = targetSet;
+                
+                // Move the element visually
+                this.appendChild(draggedElement);
+                
+                // Reset any previous feedback styling
+                draggedElement.classList.remove('correct', 'incorrect');
+            }
+        }
+
+        function checkAnswers() {
+            const numberItems = document.querySelectorAll('.number-item');
+            let correct = 0;
+            let total = numberItems.length;
+            
+            numberItems.forEach(item => {
+                const numberValue = item.dataset.number;
+                const correctSet = item.dataset.correct;
+                const userSet = userAnswers[numberValue];
+                
+                item.classList.remove('correct', 'incorrect');
+                
+                if (userSet === correctSet) {
+                    item.classList.add('correct');
+                    correct++;
+                } else if (userSet) {
+                    item.classList.add('incorrect');
+                }
+            });
+            
+            const feedback = document.getElementById('feedback');
+            feedback.style.display = 'block';
+            
+            if (correct === total) {
+                feedback.className = 'feedback success';
+                feedback.textContent = `🎉 Perfect! You got all ${total} numbers correct!`;
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = `You got ${correct} out of ${total} correct. Try moving the highlighted numbers!`;
+            }
+        }
+
+        function showExample() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('example-page').style.display = 'block';
+        }
+
+        function backToMain() {
+            document.getElementById('example-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+        }
+
+        function resetGame() {
+            // Reset user answers
+            userAnswers = {};
+            
+            // Remove all numbers from drop zones first
+            const dropZones = document.querySelectorAll('.drop-zone');
+            dropZones.forEach(zone => {
+                const numbers = zone.querySelectorAll('.number-item');
+                numbers.forEach(num => num.remove());
+            });
+            
+            // Generate new random numbers
+            generateRandomNumbers();
+            
+            // Re-initialize drag and drop for new elements
+            initializeDragAndDrop();
+            
+            // Hide feedback
+            document.getElementById('feedback').style.display = 'none';
+        }
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const feedback = document.getElementById('feedback');
+                if (feedback.style.display === 'block') {
+                    feedback.style.display = 'none';
+                }
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992f599c24614135',t:'MTc2MTIwMjc0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

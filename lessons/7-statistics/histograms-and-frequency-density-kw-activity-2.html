@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histogram Story Matcher – SDG Contexts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+    .histogram-bar {
+      transition: all 0.3s ease;
+    }
+    .histogram-bar:hover {
+      filter: brightness(1.1);
+    }
+    .option-btn {
+      transition: all 0.2s ease;
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .option-btn.selected {
+      ring: 3px solid;
+    }
+    .slider-thumb::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #0891b2;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .slider-thumb::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #0891b2;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+    .tab-btn.active {
+      background: #0891b2;
+      color: white;
+    }
+    .sdg-badge {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-cyan-50 via-white to-teal-50 text-slate-800 overflow-auto">
+  <div id="app" class="w-full min-h-full p-4 md:p-6"><!-- Header -->
+   <header class="text-center mb-6">
+    <h1 id="main-title" class="text-2xl md:text-3xl font-extrabold text-cyan-700 mb-2">📊 Histogram Story Matcher</h1>
+    <p id="main-instruction" class="text-slate-600 text-sm md:text-base">Match each story to the correct histogram – SDG Contexts</p>
+   </header><!-- Tab Navigation -->
+   <div class="flex justify-center gap-2 mb-6"><button id="tab-match" class="tab-btn active px-4 py-2 rounded-full font-semibold text-sm bg-slate-200 text-slate-700 transition-all" onclick="switchMode('match')"> 🎯 Match Stories </button> <button id="tab-challenge" class="tab-btn px-4 py-2 rounded-full font-semibold text-sm bg-slate-200 text-slate-700 transition-all" onclick="switchMode('challenge')"> 🔥 Challenge Mode </button> <button id="tab-build" class="tab-btn px-4 py-2 rounded-full font-semibold text-sm bg-slate-200 text-slate-700 transition-all" onclick="switchMode('build')"> 🔧 Build My Own </button>
+   </div><!-- Match Mode -->
+   <div id="match-mode" class="max-w-4xl mx-auto"><!-- Scenario Header -->
+    <div class="bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-4">
+     <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <div class="flex items-center gap-3"><span id="sdg-badge" class="sdg-badge bg-green-100 text-green-700 font-bold">SDG 3</span>
+       <h2 id="scenario-title" class="text-lg md:text-xl font-bold text-slate-800">Good Health &amp; Well-being</h2>
+      </div>
+      <div class="flex gap-2"><button onclick="prevScenario()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm font-semibold transition-colors">← Prev</button> <button onclick="nextScenario()" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-sm font-semibold transition-colors">Next →</button>
+      </div>
+     </div>
+     <p id="scenario-description" class="text-slate-600 text-sm md:text-base leading-relaxed"></p>
+    </div><!-- Story to Match -->
+    <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl shadow-lg p-4 md:p-6 mb-4 border-l-4 border-amber-400">
+     <div class="flex items-start gap-3"><span class="text-2xl">📖</span>
+      <div>
+       <h3 class="font-bold text-amber-800 mb-1">Story to Match:</h3>
+       <p id="story-text" class="text-slate-700 text-sm md:text-base italic leading-relaxed"></p>
+      </div>
+     </div>
+    </div><!-- Histograms Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+     <div id="histogram-a" class="bg-white rounded-2xl shadow-lg p-4 cursor-pointer" onclick="selectHistogram('A')">
+      <div class="text-center mb-2"><span class="inline-block bg-cyan-100 text-cyan-700 font-bold px-3 py-1 rounded-full text-sm">Histogram A</span>
+      </div>
+      <canvas id="canvas-a" width="280" height="180"></canvas>
+     </div>
+     <div id="histogram-b" class="bg-white rounded-2xl shadow-lg p-4 cursor-pointer" onclick="selectHistogram('B')">
+      <div class="text-center mb-2"><span class="inline-block bg-teal-100 text-teal-700 font-bold px-3 py-1 rounded-full text-sm">Histogram B</span>
+      </div>
+      <canvas id="canvas-b" width="280" height="180"></canvas>
+     </div>
+     <div id="histogram-c" class="bg-white rounded-2xl shadow-lg p-4 cursor-pointer" onclick="selectHistogram('C')">
+      <div class="text-center mb-2"><span class="inline-block bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-full text-sm">Histogram C</span>
+      </div>
+      <canvas id="canvas-c" width="280" height="180"></canvas>
+     </div>
+    </div><!-- Selection Buttons -->
+    <div class="flex justify-center gap-3 mb-4"><button id="btn-a" class="option-btn px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold shadow-md" onclick="selectHistogram('A')">Choose A</button> <button id="btn-b" class="option-btn px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold shadow-md" onclick="selectHistogram('B')">Choose B</button> <button id="btn-c" class="option-btn px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold shadow-md" onclick="selectHistogram('C')">Choose C</button>
+    </div><!-- Feedback -->
+    <div id="feedback" class="hidden bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-4">
+     <div id="feedback-content" class="flex items-start gap-3"></div>
+    </div><!-- Reflection Prompts -->
+    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-lg p-4 md:p-6 border-l-4 border-indigo-400">
+     <h3 class="font-bold text-indigo-800 mb-3 flex items-center gap-2">💭 Reflection Questions</h3>
+     <ul class="space-y-2 text-sm text-slate-700">
+      <li class="flex items-start gap-2"><span class="text-indigo-500">•</span> <span>Where is most of the area (bars) located on the histogram?</span></li>
+      <li class="flex items-start gap-2"><span class="text-indigo-500">•</span> <span>Is the distribution fairly symmetric, or skewed to one side?</span></li>
+      <li class="flex items-start gap-2"><span class="text-indigo-500">•</span> <span id="reflection-sdg">What does the shape suggest about health outcomes in this group?</span></li>
+     </ul>
+    </div>
+   </div><!-- Challenge Mode -->
+   <div id="challenge-mode" class="hidden max-w-4xl mx-auto"><!-- Challenge Header -->
+    <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl shadow-lg p-4 md:p-6 mb-4 border-l-4 border-red-500">
+     <div class="flex items-start gap-3 mb-3"><span class="text-3xl">🔥</span>
+      <div>
+       <h2 class="text-xl font-bold text-red-700 mb-2">Challenge Mode - Advanced Histogram Analysis</h2>
+       <p class="text-slate-700 text-sm leading-relaxed">In Challenge Mode, you'll analyze histograms without multiple choice options. You must describe the distribution shape, identify key features, and interpret what the data reveals about real-world SDG contexts.</p>
+      </div>
+     </div>
+    </div><!-- Challenge Scenario -->
+    <div class="bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-4">
+     <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <div class="flex items-center gap-3"><span id="challenge-sdg-badge" class="sdg-badge bg-green-100 text-green-700 font-bold">SDG 3</span>
+       <h2 id="challenge-title" class="text-lg md:text-xl font-bold text-slate-800">Advanced Analysis Challenge</h2>
+      </div>
+      <div class="flex gap-2"><button onclick="prevChallenge()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm font-semibold transition-colors">← Prev</button> <button onclick="nextChallenge()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-semibold transition-colors">Next →</button>
+      </div>
+     </div>
+     <p id="challenge-description" class="text-slate-600 text-sm md:text-base leading-relaxed mb-4"></p><!-- Challenge Histogram -->
+     <div class="bg-slate-50 rounded-xl p-4 mb-4">
+      <canvas id="canvas-challenge" width="600" height="250" class="mx-auto block"></canvas>
+     </div><!-- Analysis Questions -->
+     <div class="space-y-4">
+      <div><label class="block text-sm font-semibold text-slate-700 mb-2">1. What is the shape of this distribution? (e.g., symmetric, left-skewed, right-skewed, uniform, bimodal)</label> <input type="text" id="answer-shape" class="w-full p-3 border-2 border-slate-200 rounded-xl focus:border-red-500 focus:outline-none" placeholder="Describe the shape...">
+      </div>
+      <div><label class="block text-sm font-semibold text-slate-700 mb-2">2. Where is most of the data concentrated? (e.g., low values, middle values, high values)</label> <input type="text" id="answer-center" class="w-full p-3 border-2 border-slate-200 rounded-xl focus:border-red-500 focus:outline-none" placeholder="Describe the central tendency...">
+      </div>
+      <div><label class="block text-sm font-semibold text-slate-700 mb-2">3. What does this distribution suggest about the real-world context?</label> <textarea id="answer-interpretation" class="w-full p-3 border-2 border-slate-200 rounded-xl focus:border-red-500 focus:outline-none resize-none h-20" placeholder="Interpret the data in the SDG context..."></textarea>
+      </div>
+     </div>
+     <div class="flex justify-center mt-6"><button onclick="submitChallenge()" class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-md transition-colors">Submit Analysis</button>
+     </div>
+    </div><!-- Challenge Feedback -->
+    <div id="challenge-feedback" class="hidden bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-4">
+     <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2"><span id="challenge-feedback-icon"></span> <span>Expert Analysis</span></h3>
+     <div id="challenge-feedback-content" class="space-y-3 text-sm"></div>
+     <div class="mt-4 p-3 bg-indigo-50 rounded-xl">
+      <p class="text-xs text-indigo-700 font-medium">💡 Tip: Compare your answers with the expert analysis. Understanding distribution shapes helps reveal patterns in real-world data!</p>
+     </div>
+    </div><!-- Challenge Tips -->
+    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl shadow-lg p-4 md:p-6 border-l-4 border-purple-400">
+     <h3 class="font-bold text-purple-800 mb-3 flex items-center gap-2">💡 Analysis Tips</h3>
+     <ul class="space-y-2 text-sm text-slate-700">
+      <li class="flex items-start gap-2"><span class="text-purple-500">•</span> <span><strong>Shape:</strong> Is the distribution symmetric (balanced), skewed (tail on one side), uniform (flat), or bimodal (two peaks)?</span></li>
+      <li class="flex items-start gap-2"><span class="text-purple-500">•</span> <span><strong>Center:</strong> Where are the tallest bars? This shows where most values cluster.</span></li>
+      <li class="flex items-start gap-2"><span class="text-purple-500">•</span> <span><strong>Context:</strong> What does the shape reveal about equity, health, consumption, or other SDG themes?</span></li>
+     </ul>
+    </div>
+   </div><!-- Build Mode -->
+   <div id="build-mode" class="hidden max-w-4xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-4">
+     <h2 class="text-xl font-bold text-cyan-700 mb-4 flex items-center gap-2">🔧 Build Your Own Histogram Story</h2><!-- Variable Selection -->
+     <div class="mb-6"><label class="block text-sm font-semibold text-slate-700 mb-2">1. Choose a variable (linked to SDGs):</label> <select id="variable-select" class="w-full p-3 border-2 border-slate-200 rounded-xl focus:border-cyan-500 focus:outline-none font-medium" onchange="updateBuildVariable()"> <option value="walking">Minutes of walking per day (SDG 3: Good Health)</option> <option value="water">Litres of water used for showers weekly (SDG 6: Clean Water)</option> <option value="screen">Daily screen time in hours (SDG 10: Reduced Inequalities)</option> <option value="waste">Kilograms of food waste per week (SDG 12: Responsible Consumption)</option> </select>
+     </div><!-- Story Input -->
+     <div class="mb-6"><label class="block text-sm font-semibold text-slate-700 mb-2">2. Write your distribution story:</label> <textarea id="story-input" class="w-full p-3 border-2 border-slate-200 rounded-xl focus:border-cyan-500 focus:outline-none resize-none h-20" placeholder="Example: Most values are low, but a few people have very high values (right-skewed distribution)"></textarea>
+     </div><!-- Histogram Builder -->
+     <div class="mb-6"><label class="block text-sm font-semibold text-slate-700 mb-3">3. Adjust the bars to match your story:</label>
+      <div class="bg-slate-50 rounded-xl p-4">
+       <canvas id="canvas-build" width="500" height="200" class="mx-auto block"></canvas>
+       <div id="sliders-container" class="mt-4 grid grid-cols-5 gap-2"><!-- Sliders will be added dynamically -->
+       </div>
+       <div id="bar-labels" class="grid grid-cols-5 gap-2 mt-1 text-xs text-center text-slate-500"><!-- Labels will be added dynamically -->
+       </div>
+      </div>
+     </div><!-- Preview Button -->
+     <div class="flex justify-center gap-3"><button onclick="resetBuildBars()" class="px-6 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-bold transition-colors">Reset Bars</button> <button onclick="previewBuild()" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold shadow-md transition-colors">Preview My Story</button>
+     </div>
+    </div><!-- Build Preview -->
+    <div id="build-preview" class="hidden bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl shadow-lg p-4 md:p-6 mb-4 border-l-4 border-green-400">
+     <h3 class="font-bold text-green-800 mb-3 flex items-center gap-2">✨ Your Story &amp; Histogram</h3>
+     <div class="bg-white rounded-xl p-4 mb-3">
+      <p id="preview-story" class="text-slate-700 italic"></p>
+     </div>
+     <div class="text-sm text-slate-600">
+      <p><strong>Variable:</strong> <span id="preview-variable"></span></p>
+      <p><strong>Shape analysis:</strong> <span id="preview-analysis"></span></p>
+     </div>
+    </div><!-- Build Reflection -->
+    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-lg p-4 md:p-6 border-l-4 border-indigo-400">
+     <h3 class="font-bold text-indigo-800 mb-3 flex items-center gap-2">💭 Reflection on Your Histogram</h3>
+     <ul class="space-y-2 text-sm text-slate-700">
+      <li class="flex items-start gap-2"><span class="text-indigo-500">•</span> <span>Does your histogram shape match the story you wrote?</span></li>
+      <li class="flex items-start gap-2"><span class="text-indigo-500">•</span> <span>What would change in real life to shift the distribution?</span></li>
+      <li class="flex items-start gap-2"><span class="text-indigo-500">•</span> <span>Who might be affected most by extreme values in your distribution?</span></li>
+     </ul>
+    </div>
+   </div><!-- Score Tracker -->
+   <div class="fixed bottom-4 right-4 bg-white rounded-full shadow-lg px-4 py-2 flex items-center gap-2"><span class="text-lg">🏆</span> <span class="font-bold text-cyan-700"><span id="score">0</span> / <span id="total">0</span></span>
+   </div>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      app_title: 'Histogram Story Matcher',
+      instruction_text: 'Match each story to the correct histogram – SDG Contexts',
+      primary_color: '#0891b2',
+      secondary_color: '#f8fafc',
+      text_color: '#1e293b',
+      accent_color: '#f59e0b',
+      button_color: '#0d9488'
+    };
+
+    let config = { ...defaultConfig };
+
+    // App State
+    let currentScenarioIndex = 0;
+    let currentStoryIndex = 0;
+    let score = 0;
+    let totalAttempts = 0;
+    let hasAnswered = false;
+    let currentMode = 'match';
+    let buildBarHeights = [3, 5, 7, 4, 2];
+    let currentChallengeIndex = 0;
+    let challengeAnswered = false;
+
+    // SDG Scenarios Data
+    const scenarios = [
+      {
+        sdg: 'SDG 3',
+        sdgColor: 'bg-green-100 text-green-700',
+        title: 'Good Health & Well-being',
+        description: 'Hours of sleep per night for a group of teenagers aged 14-16.',
+        xLabel: 'Hours of Sleep',
+        xScale: [4, 5, 6, 7, 8, 9, 10, 11],
+        classWidths: [1, 1, 1, 1, 1, 1, 1],
+        reflection: 'What does the shape suggest about teenagers\' sleep health in this group?',
+        stories: [
+          {
+            text: '"Most teenagers get between 7 and 9 hours of sleep, with very few below 5 hours or above 10 hours."',
+            correct: 'B',
+            feedback: {
+              correct: 'Correct! The histogram shows most area (frequency) concentrated between 7-9 hours, with small tails at the extremes – a roughly normal distribution.',
+              incorrect: 'Not quite. Look for where most of the area is concentrated. The story says most teenagers get 7-9 hours, so the tallest bars should be in that range.'
+            }
+          }
+        ],
+        histograms: {
+          A: [2, 4, 7, 8, 5, 3, 1], // Left-skewed
+          B: [1, 2, 4, 8, 9, 4, 2], // Normal around 7-9
+          C: [1, 2, 3, 4, 5, 7, 8]  // Right-skewed
+        }
+      },
+      {
+        sdg: 'SDG 6',
+        sdgColor: 'bg-blue-100 text-blue-700',
+        title: 'Clean Water & Sanitation',
+        description: 'Daily water use per person (litres) in a community with some high-usage households.',
+        xLabel: 'Litres per Day',
+        xScale: [0, 50, 100, 150, 200, 250, 300, 350],
+        classWidths: [50, 50, 50, 50, 50, 50, 50],
+        reflection: 'What does this suggest about water equity in the community?',
+        stories: [
+          {
+            text: '"In this community, most people use between 100-200 litres daily, but a small group uses significantly more water than everyone else."',
+            correct: 'C',
+            feedback: {
+              correct: 'Excellent! This is a right-skewed distribution – most people cluster at lower values, but a "tail" of high users extends to the right.',
+              incorrect: 'Look at the story carefully. It says MOST people use moderate amounts, but a SMALL group uses much more. This creates a right-skewed shape with a tail extending to high values.'
+            }
+          }
+        ],
+        histograms: {
+          A: [2, 5, 8, 6, 5, 5, 4], // Fairly uniform
+          B: [8, 6, 4, 3, 2, 1, 1], // Left-heavy (reversed skew)
+          C: [2, 8, 7, 4, 2, 1, 1]  // Right-skewed
+        }
+      },
+      {
+        sdg: 'SDG 10',
+        sdgColor: 'bg-pink-100 text-pink-700',
+        title: 'Reduced Inequalities',
+        description: 'Daily screen time (hours) for two different groups: Group A (students with high parental supervision) vs Group B (students with low parental supervision).',
+        xLabel: 'Screen Time (hours)',
+        xScale: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        classWidths: [1, 1, 1, 1, 1, 1, 1, 1],
+        reflection: 'How might different screen time patterns relate to educational inequalities?',
+        stories: [
+          {
+            text: '"This group of students has screen time spread fairly evenly across all values, with no clear typical amount – some use very little, some use a lot."',
+            correct: 'A',
+            feedback: {
+              correct: 'Correct! A uniform (flat) distribution means all values are roughly equally common – there\'s no clear "typical" value.',
+              incorrect: 'The story describes screen time that\'s "spread fairly evenly" with no clear typical amount. Look for a histogram where all bars are similar heights.'
+            }
+          }
+        ],
+        histograms: {
+          A: [4, 5, 4, 5, 5, 4, 5, 5], // Uniform
+          B: [1, 3, 6, 8, 6, 3, 1, 1], // Normal/bell
+          C: [7, 5, 4, 3, 2, 2, 1, 1]  // Left-heavy
+        }
+      },
+      {
+        sdg: 'SDG 12',
+        sdgColor: 'bg-amber-100 text-amber-700',
+        title: 'Responsible Consumption',
+        description: 'Weekly food waste (kg) per household in a neighbourhood participating in a waste reduction program.',
+        xLabel: 'Food Waste (kg)',
+        xScale: [0, 1, 2, 3, 4, 6, 8, 10],
+        classWidths: [1, 1, 1, 1, 2, 2, 2],
+        reflection: 'What does this distribution suggest about the success of the waste reduction program?',
+        stories: [
+          {
+            text: '"After the program, most households produce very little food waste (under 2kg), with very few households still wasting large amounts."',
+            correct: 'B',
+            feedback: {
+              correct: 'Well done! This right-skewed distribution shows the program\'s success – most households (tall bars on left) have low waste, with few exceptions.',
+              incorrect: 'The story says MOST households produce very little waste. Look for a histogram with the tallest bars on the LEFT side (low values), and smaller bars as you go right.'
+            }
+          }
+        ],
+        histograms: {
+          A: [3, 5, 7, 7, 5, 3, 2], // Symmetric/bell
+          B: [9, 6, 3, 2, 1, 1, 0.5], // Right-skewed (most low)
+          C: [1, 2, 4, 5, 6, 7, 8]  // Left-skewed (most high)
+        }
+      }
+    ];
+
+    // Challenge Mode Data (Advanced Scenarios)
+    const challengeScenarios = [
+      {
+        sdg: 'SDG 1',
+        sdgColor: 'bg-red-100 text-red-700',
+        title: 'No Poverty - Income Distribution',
+        description: 'Monthly household income (in hundreds of dollars) for 100 families in an urban community. Analyze the distribution to understand economic inequality.',
+        xLabel: 'Monthly Income ($00s)',
+        xScale: [5, 10, 15, 20, 25, 30, 40, 50, 70, 100],
+        classWidths: [5, 5, 5, 5, 5, 10, 10, 20, 30],
+        data: [28, 32, 25, 18, 12, 8, 5, 3, 1],
+        expertAnalysis: {
+          shape: 'This is a right-skewed (positively skewed) distribution with a long tail extending toward higher incomes.',
+          center: 'Most families (the tallest bars) are concentrated in the lower income ranges ($500-$2000), with the mode around $1000-$1500.',
+          interpretation: 'This distribution reveals significant income inequality. The majority of families have low to moderate incomes, while a small number of wealthy households create the right tail. This suggests challenges in achieving SDG 1 (No Poverty), as most households cluster at lower income levels with few reaching high incomes. Policy interventions might focus on lifting the majority who are in the lower income brackets.',
+          keywords: ['right-skewed', 'positively skewed', 'tail', 'inequality', 'concentrated', 'low income', 'mode']
+        }
+      },
+      {
+        sdg: 'SDG 4',
+        sdgColor: 'bg-red-100 text-red-700',
+        title: 'Quality Education - Test Scores',
+        description: 'Standardized test scores (0-100) for students across two different school districts with varying resource levels.',
+        xLabel: 'Test Score',
+        xScale: [0, 20, 40, 50, 60, 70, 80, 90, 100],
+        classWidths: [20, 20, 10, 10, 10, 10, 10, 10],
+        data: [3, 2, 5, 12, 18, 16, 8, 4],
+        expertAnalysis: {
+          shape: 'This is approximately symmetric or slightly left-skewed (negatively skewed), resembling a bell curve with most values in the middle ranges.',
+          center: 'The data is concentrated around 60-70, with the peak frequency in the middle score ranges. This suggests a typical central value around 65.',
+          interpretation: 'This distribution suggests moderate educational outcomes overall. Most students score in the middle range (50-80), which indicates reasonable but not exceptional performance. The small tails on both sides show few students are scoring very low or very high. For SDG 4 (Quality Education), this might indicate a need to reduce the lower tail (students struggling) and potentially raise the overall center of achievement through targeted interventions.',
+          keywords: ['symmetric', 'bell', 'normal', 'middle', 'center', 'concentrated', 'moderate']
+        }
+      },
+      {
+        sdg: 'SDG 7',
+        sdgColor: 'bg-yellow-100 text-yellow-700',
+        title: 'Affordable Energy - Electricity Usage',
+        description: 'Daily electricity consumption (kWh) per household in a mixed urban-rural region with varied access to efficient appliances.',
+        xLabel: 'Daily Electricity (kWh)',
+        xScale: [0, 5, 10, 15, 20, 25, 30, 40, 50],
+        classWidths: [5, 5, 5, 5, 5, 5, 10, 10],
+        data: [8, 15, 20, 18, 12, 7, 4, 2],
+        expertAnalysis: {
+          shape: 'This is a right-skewed distribution with a peak in the lower-middle range and a tail extending toward high consumption values.',
+          center: 'Most households consume between 10-20 kWh daily, with the mode around 10-15 kWh. The center of the data is in the moderate consumption range.',
+          interpretation: 'This distribution reveals diverse energy consumption patterns. While most households use moderate amounts of electricity (10-20 kWh), suggesting reasonable energy efficiency, the right tail indicates some households with very high consumption (30-50+ kWh). For SDG 7 (Affordable and Clean Energy), this suggests opportunities to: (1) help high consumers reduce waste, and (2) ensure low consumers have adequate access. The skew might indicate inequality in appliance efficiency or energy access.',
+          keywords: ['right-skewed', 'moderate', 'tail', 'diverse', 'inequality', 'peak']
+        }
+      },
+      {
+        sdg: 'SDG 11',
+        sdgColor: 'bg-orange-100 text-orange-700',
+        title: 'Sustainable Cities - Commute Times',
+        description: 'One-way commute time (minutes) for workers in a metropolitan area, reflecting urban planning and transportation infrastructure.',
+        xLabel: 'Commute Time (minutes)',
+        xScale: [0, 10, 20, 30, 40, 50, 60, 75, 90, 120],
+        classWidths: [10, 10, 10, 10, 10, 10, 15, 15, 30],
+        data: [5, 8, 18, 22, 16, 10, 6, 3, 1],
+        expertAnalysis: {
+          shape: 'This is a slightly right-skewed distribution that is roughly bell-shaped with a mode in the middle and a tail extending toward very long commutes.',
+          center: 'The data is concentrated between 20-40 minutes, with the peak around 30 minutes. This represents the typical commute time for most workers.',
+          interpretation: 'This distribution suggests a moderately functional urban transportation system. Most workers (the peak around 30 minutes) have reasonable commutes, indicating decent urban planning. However, the right tail shows some workers face very long commutes (60+ minutes), which may indicate: (1) urban sprawl, (2) inadequate public transit in certain areas, or (3) housing affordability forcing people to live far from work. For SDG 11 (Sustainable Cities), reducing the right tail through better transit and mixed-use development would improve quality of life.',
+          keywords: ['right-skewed', 'bell-shaped', 'peak', 'middle', 'tail', 'moderate', 'concentrated']
+        }
+      },
+      {
+        sdg: 'SDG 13',
+        sdgColor: 'bg-green-100 text-green-700',
+        title: 'Climate Action - Carbon Footprint',
+        description: 'Personal annual carbon footprint (tonnes CO₂) for individuals in a developed nation, measuring climate impact.',
+        xLabel: 'Carbon Footprint (tonnes CO₂/year)',
+        xScale: [0, 2, 4, 6, 8, 10, 15, 20, 30],
+        classWidths: [2, 2, 2, 2, 2, 5, 5, 10],
+        data: [3, 12, 20, 22, 18, 12, 6, 2],
+        expertAnalysis: {
+          shape: 'This is approximately symmetric or slightly right-skewed, with a clear peak in the middle ranges and relatively balanced tails (though the right extends slightly further).',
+          center: 'Most individuals have carbon footprints between 4-8 tonnes per year, with the mode around 6 tonnes. This represents the typical climate impact per person.',
+          interpretation: 'This distribution reveals concerning patterns for SDG 13 (Climate Action). The data shows most people in this developed nation have substantial carbon footprints (4-8 tonnes), well above the global sustainable target of around 2 tonnes per person. The right tail shows high-impact individuals (15-30 tonnes), likely due to frequent flying, large homes, or vehicles. The relatively small number in the 0-2 tonne range suggests few people are living sustainably. Achieving climate goals requires shifting this entire distribution leftward through lifestyle changes, renewable energy, and policy interventions.',
+          keywords: ['symmetric', 'peak', 'middle', 'mode', 'tail', 'balanced', 'substantial']
+        }
+      }
+    ];
+
+    // Variable options for build mode
+    const buildVariables = {
+      walking: { label: 'Minutes of walking per day', unit: 'minutes', scale: [0, 15, 30, 45, 60, 75], classWidths: [15, 15, 15, 15, 15] },
+      water: { label: 'Litres of water for showers (weekly)', unit: 'litres', scale: [0, 50, 100, 150, 200, 250], classWidths: [50, 50, 50, 50, 50] },
+      screen: { label: 'Daily screen time', unit: 'hours', scale: [0, 2, 4, 6, 8, 10], classWidths: [2, 2, 2, 2, 2] },
+      waste: { label: 'Food waste per week', unit: 'kg', scale: [0, 1, 2, 3, 4, 5], classWidths: [1, 1, 1, 1, 1] }
+    };
+
+    // Drawing functions
+    function drawHistogram(canvasId, data, xLabel, xScale, classWidths, highlightColor = '#0891b2') {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, width, height);
+      
+      // Dimensions
+      const padding = { top: 15, right: 15, bottom: 35, left: 45 };
+      const chartWidth = width - padding.left - padding.right;
+      const chartHeight = height - padding.top - padding.bottom;
+      
+      // Find max value
+      const maxVal = Math.max(...data);
+      
+      // Draw axes
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1;
+      
+      // Y-axis
+      ctx.beginPath();
+      ctx.moveTo(padding.left, padding.top);
+      ctx.lineTo(padding.left, height - padding.bottom);
+      ctx.stroke();
+      
+      // X-axis
+      ctx.beginPath();
+      ctx.moveTo(padding.left, height - padding.bottom);
+      ctx.lineTo(width - padding.right, height - padding.bottom);
+      ctx.stroke();
+      
+      // Y-axis label
+      ctx.save();
+      ctx.translate(12, height / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px Nunito';
+      ctx.textAlign = 'center';
+      ctx.fillText('Frequency Density', 0, 0);
+      ctx.restore();
+      
+      // X-axis label
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px Nunito';
+      ctx.textAlign = 'center';
+      ctx.fillText(xLabel, width / 2, height - 5);
+      
+      // Calculate total width units and bar positions
+      const totalWidthUnits = classWidths ? classWidths.reduce((a, b) => a + b, 0) : data.length;
+      const pixelsPerUnit = chartWidth / totalWidthUnits;
+      
+      let currentX = padding.left;
+      
+      // Draw bars with variable widths
+      data.forEach((value, index) => {
+        const barWidthUnits = classWidths ? classWidths[index] : 1;
+        const barWidth = barWidthUnits * pixelsPerUnit;
+        const barHeight = (value / maxVal) * chartHeight * 0.9;
+        const y = height - padding.bottom - barHeight;
+        
+        // Bar gradient
+        const gradient = ctx.createLinearGradient(currentX, y, currentX, height - padding.bottom);
+        gradient.addColorStop(0, highlightColor);
+        gradient.addColorStop(1, adjustColor(highlightColor, -20));
+        
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.roundRect(currentX, y, barWidth, barHeight, [3, 3, 0, 0]);
+        ctx.fill();
+        
+        // Add distinct outline
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        currentX += barWidth;
+      });
+      
+      // Draw x-axis tick labels at the RIGHT edge of each bar
+      currentX = padding.left;
+      data.forEach((value, index) => {
+        const barWidthUnits = classWidths ? classWidths[index] : 1;
+        const barWidth = barWidthUnits * pixelsPerUnit;
+        
+        // Place label at right edge
+        if (xScale && xScale[index + 1] !== undefined) {
+          ctx.fillStyle = '#64748b';
+          ctx.font = '9px Nunito';
+          ctx.textAlign = 'center';
+          ctx.fillText(xScale[index + 1], currentX + barWidth, height - padding.bottom + 12);
+        }
+        
+        currentX += barWidth;
+      });
+      
+      // Draw first label at the start
+      if (xScale && xScale[0] !== undefined) {
+        ctx.fillStyle = '#64748b';
+        ctx.font = '9px Nunito';
+        ctx.textAlign = 'center';
+        ctx.fillText(xScale[0], padding.left, height - padding.bottom + 12);
+      }
+    }
+
+    function adjustColor(hex, amount) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+      return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
+    }
+
+    // Mode switching
+    function switchMode(mode) {
+      currentMode = mode;
+      document.getElementById('match-mode').classList.toggle('hidden', mode !== 'match');
+      document.getElementById('challenge-mode').classList.toggle('hidden', mode !== 'challenge');
+      document.getElementById('build-mode').classList.toggle('hidden', mode !== 'build');
+      document.getElementById('tab-match').classList.toggle('active', mode === 'match');
+      document.getElementById('tab-challenge').classList.toggle('active', mode === 'challenge');
+      document.getElementById('tab-build').classList.toggle('active', mode === 'build');
+      
+      if (mode === 'build') {
+        initBuildMode();
+      } else if (mode === 'challenge') {
+        loadChallenge();
+      }
+    }
+
+    // Match mode functions
+    function loadScenario() {
+      const scenario = scenarios[currentScenarioIndex];
+      const story = scenario.stories[currentStoryIndex];
+      
+      document.getElementById('sdg-badge').className = `sdg-badge ${scenario.sdgColor} font-bold`;
+      document.getElementById('sdg-badge').textContent = scenario.sdg;
+      document.getElementById('scenario-title').textContent = scenario.title;
+      document.getElementById('scenario-description').textContent = scenario.description;
+      document.getElementById('story-text').textContent = story.text;
+      document.getElementById('reflection-sdg').textContent = scenario.reflection;
+      
+      // Draw histograms
+      drawHistogram('canvas-a', scenario.histograms.A, scenario.xLabel, scenario.xScale, scenario.classWidths, '#0891b2');
+      drawHistogram('canvas-b', scenario.histograms.B, scenario.xLabel, scenario.xScale, scenario.classWidths, '#0d9488');
+      drawHistogram('canvas-c', scenario.histograms.C, scenario.xLabel, scenario.xScale, scenario.classWidths, '#7c3aed');
+      
+      // Reset state
+      hasAnswered = false;
+      document.getElementById('feedback').classList.add('hidden');
+      
+      // Reset button states
+      ['btn-a', 'btn-b', 'btn-c'].forEach(id => {
+        document.getElementById(id).disabled = false;
+        document.getElementById(id).classList.remove('ring-4', 'ring-green-400', 'ring-red-400');
+      });
+      
+      // Reset histogram highlights
+      ['histogram-a', 'histogram-b', 'histogram-c'].forEach(id => {
+        document.getElementById(id).classList.remove('ring-4', 'ring-green-400', 'ring-red-400');
+      });
+    }
+
+    function selectHistogram(choice) {
+      if (hasAnswered) return;
+      
+      hasAnswered = true;
+      totalAttempts++;
+      
+      const scenario = scenarios[currentScenarioIndex];
+      const story = scenario.stories[currentStoryIndex];
+      const isCorrect = choice === story.correct;
+      
+      if (isCorrect) score++;
+      
+      // Update score display
+      document.getElementById('score').textContent = score;
+      document.getElementById('total').textContent = totalAttempts;
+      
+      // Show feedback
+      const feedbackDiv = document.getElementById('feedback');
+      const feedbackContent = document.getElementById('feedback-content');
+      
+      feedbackDiv.classList.remove('hidden');
+      feedbackContent.innerHTML = `
+        <span class="text-3xl">${isCorrect ? '✅' : '❌'}</span>
+        <div>
+          <p class="font-bold ${isCorrect ? 'text-green-700' : 'text-red-700'} mb-1">${isCorrect ? 'Well done!' : 'Not quite right'}</p>
+          <p class="text-slate-600 text-sm">${isCorrect ? story.feedback.correct : story.feedback.incorrect}</p>
+          ${!isCorrect ? `<p class="text-sm mt-2 text-cyan-700 font-medium">The correct answer was Histogram ${story.correct}.</p>` : ''}
+        </div>
+      `;
+      
+      // Highlight correct/incorrect
+      const choiceId = `histogram-${choice.toLowerCase()}`;
+      const correctId = `histogram-${story.correct.toLowerCase()}`;
+      
+      document.getElementById(choiceId).classList.add('ring-4', isCorrect ? 'ring-green-400' : 'ring-red-400');
+      if (!isCorrect) {
+        document.getElementById(correctId).classList.add('ring-4', 'ring-green-400');
+      }
+      
+      // Disable buttons
+      ['btn-a', 'btn-b', 'btn-c'].forEach(id => {
+        document.getElementById(id).disabled = true;
+      });
+    }
+
+    function nextScenario() {
+      currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+      currentStoryIndex = 0;
+      loadScenario();
+    }
+
+    function prevScenario() {
+      currentScenarioIndex = (currentScenarioIndex - 1 + scenarios.length) % scenarios.length;
+      currentStoryIndex = 0;
+      loadScenario();
+    }
+
+    // Challenge mode functions
+    function loadChallenge() {
+      const challenge = challengeScenarios[currentChallengeIndex];
+      
+      document.getElementById('challenge-sdg-badge').className = `sdg-badge ${challenge.sdgColor} font-bold`;
+      document.getElementById('challenge-sdg-badge').textContent = challenge.sdg;
+      document.getElementById('challenge-title').textContent = challenge.title;
+      document.getElementById('challenge-description').textContent = challenge.description;
+      
+      // Draw challenge histogram
+      drawHistogram('canvas-challenge', challenge.data, challenge.xLabel, challenge.xScale, challenge.classWidths, '#dc2626');
+      
+      // Reset state
+      challengeAnswered = false;
+      document.getElementById('challenge-feedback').classList.add('hidden');
+      document.getElementById('answer-shape').value = '';
+      document.getElementById('answer-center').value = '';
+      document.getElementById('answer-interpretation').value = '';
+    }
+
+    function submitChallenge() {
+      if (challengeAnswered) return;
+      
+      challengeAnswered = true;
+      const challenge = challengeScenarios[currentChallengeIndex];
+      
+      const userShape = document.getElementById('answer-shape').value.toLowerCase().trim();
+      const userCenter = document.getElementById('answer-center').value.toLowerCase().trim();
+      const userInterpretation = document.getElementById('answer-interpretation').value.trim();
+      
+      // Check for keywords in user answers
+      const shapeMatch = challenge.expertAnalysis.keywords.some(keyword => 
+        userShape.includes(keyword.toLowerCase())
+      );
+      
+      const feedbackDiv = document.getElementById('challenge-feedback');
+      const feedbackContent = document.getElementById('challenge-feedback-content');
+      const feedbackIcon = document.getElementById('challenge-feedback-icon');
+      
+      // Provide detailed feedback
+      feedbackIcon.textContent = '📊';
+      feedbackContent.innerHTML = `
+        <div class="p-3 bg-blue-50 rounded-lg">
+          <p class="font-semibold text-blue-800 mb-1">Shape Analysis:</p>
+          <p class="text-slate-700">${challenge.expertAnalysis.shape}</p>
+          ${userShape ? `<p class="text-xs text-slate-500 mt-1">Your answer: "${document.getElementById('answer-shape').value}"</p>` : ''}
+        </div>
+        <div class="p-3 bg-green-50 rounded-lg">
+          <p class="font-semibold text-green-800 mb-1">Center & Concentration:</p>
+          <p class="text-slate-700">${challenge.expertAnalysis.center}</p>
+          ${userCenter ? `<p class="text-xs text-slate-500 mt-1">Your answer: "${document.getElementById('answer-center').value}"</p>` : ''}
+        </div>
+        <div class="p-3 bg-purple-50 rounded-lg">
+          <p class="font-semibold text-purple-800 mb-1">Real-World Interpretation:</p>
+          <p class="text-slate-700">${challenge.expertAnalysis.interpretation}</p>
+          ${userInterpretation ? `<p class="text-xs text-slate-500 mt-1">Your answer: "${userInterpretation}"</p>` : ''}
+        </div>
+        ${shapeMatch ? 
+          '<div class="p-2 bg-green-100 rounded text-green-800 text-xs font-medium">✓ Great job identifying key shape characteristics!</div>' : 
+          '<div class="p-2 bg-amber-100 rounded text-amber-800 text-xs font-medium">💡 Try using terms like skewed, symmetric, uniform, or bimodal to describe shape.</div>'
+        }
+      `;
+      
+      feedbackDiv.classList.remove('hidden');
+      
+      // Scroll to feedback
+      feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function nextChallenge() {
+      currentChallengeIndex = (currentChallengeIndex + 1) % challengeScenarios.length;
+      loadChallenge();
+    }
+
+    function prevChallenge() {
+      currentChallengeIndex = (currentChallengeIndex - 1 + challengeScenarios.length) % challengeScenarios.length;
+      loadChallenge();
+    }
+
+    // Build mode functions
+    function initBuildMode() {
+      const container = document.getElementById('sliders-container');
+      const labels = document.getElementById('bar-labels');
+      container.innerHTML = '';
+      labels.innerHTML = '';
+      
+      const variable = buildVariables[document.getElementById('variable-select').value];
+      
+      for (let i = 0; i < 5; i++) {
+        // Slider
+        const slider = document.createElement('input');
+        slider.type = 'range';
+        slider.min = '1';
+        slider.max = '10';
+        slider.value = buildBarHeights[i];
+        slider.className = 'w-full slider-thumb';
+        slider.oninput = (e) => {
+          buildBarHeights[i] = parseInt(e.target.value);
+          drawBuildHistogram();
+        };
+        container.appendChild(slider);
+        
+        // Label (show class interval)
+        const label = document.createElement('span');
+        label.textContent = `${variable.scale[i]}–${variable.scale[i + 1]}`;
+        labels.appendChild(label);
+      }
+      
+      drawBuildHistogram();
+      document.getElementById('build-preview').classList.add('hidden');
+    }
+
+    function updateBuildVariable() {
+      initBuildMode();
+    }
+
+    function drawBuildHistogram() {
+      const variable = buildVariables[document.getElementById('variable-select').value];
+      drawHistogram('canvas-build', buildBarHeights, variable.label + ' (' + variable.unit + ')', variable.scale, variable.classWidths, '#0891b2');
+    }
+
+    function resetBuildBars() {
+      buildBarHeights = [3, 5, 7, 4, 2];
+      initBuildMode();
+    }
+
+    function previewBuild() {
+      const storyText = document.getElementById('story-input').value || 'No story written yet.';
+      const variable = buildVariables[document.getElementById('variable-select').value];
+      
+      document.getElementById('preview-story').textContent = storyText;
+      document.getElementById('preview-variable').textContent = variable.label;
+      
+      // Analyze shape
+      const analysis = analyzeDistribution(buildBarHeights);
+      document.getElementById('preview-analysis').textContent = analysis;
+      
+      document.getElementById('build-preview').classList.remove('hidden');
+    }
+
+    function analyzeDistribution(data) {
+      const max = Math.max(...data);
+      const maxIndex = data.indexOf(max);
+      const leftSum = data.slice(0, Math.floor(data.length / 2)).reduce((a, b) => a + b, 0);
+      const rightSum = data.slice(Math.ceil(data.length / 2)).reduce((a, b) => a + b, 0);
+      
+      // Check for uniformity
+      const range = max - Math.min(...data);
+      if (range <= 2) {
+        return 'This appears to be a uniform distribution – values are spread fairly evenly with no clear peak.';
+      }
+      
+      // Check for skewness
+      if (leftSum > rightSum * 1.3) {
+        return 'This is a left-skewed (or negatively skewed) distribution – most values are high, with a tail extending to lower values.';
+      } else if (rightSum > leftSum * 1.3) {
+        return 'This is a right-skewed (or positively skewed) distribution – most values are low, with a tail extending to higher values.';
+      }
+      
+      // Check for bimodal
+      const peaks = data.filter((v, i) => 
+        (i === 0 || v > data[i-1]) && (i === data.length - 1 || v > data[i+1])
+      );
+      if (peaks.length >= 2) {
+        return 'This appears to be a bimodal distribution – there may be two distinct groups with different typical values.';
+      }
+      
+      // Symmetric/normal-ish
+      if (maxIndex >= 1 && maxIndex <= 3) {
+        return 'This appears to be roughly symmetric (bell-shaped) – values cluster around a central typical value with roughly equal spread on both sides.';
+      }
+      
+      return 'This distribution has its peak towards one end – consider whether this matches your story about where most values lie.';
+    }
+
+    // Initialize SDK and app
+    function onConfigChange(newConfig) {
+      document.getElementById('main-title').textContent = '📊 ' + (newConfig.app_title || defaultConfig.app_title);
+      document.getElementById('main-instruction').textContent = newConfig.instruction_text || defaultConfig.instruction_text;
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['app_title', cfg.app_title || defaultConfig.app_title],
+        ['instruction_text', cfg.instruction_text || defaultConfig.instruction_text]
+      ]);
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (cfg) => {
+          config = { ...defaultConfig, ...cfg };
+          onConfigChange(config);
+        },
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Load first scenario
+    loadScenario();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1e0026e495d61a',t:'MTc2OTA3Mzg5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

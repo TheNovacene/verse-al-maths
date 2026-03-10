@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reveal the Shape - Coordinate Plotting Activity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f7ff;
+        }
+        
+        .coordinate-grid {
+            position: relative;
+            background-color: white;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .grid-line {
+            stroke: #d1d5db;
+            stroke-width: 0.2;
+        }
+        
+        .axis-line {
+            stroke: #6b7280;
+            stroke-width: 0.4;
+        }
+        
+        .point {
+            transition: all 0.3s ease-out;
+        }
+        
+        .point-label {
+            font-size: 0.5;
+            font-weight: bold;
+            user-select: none;
+        }
+        
+        .line {
+            stroke: #2563eb;
+            stroke-width: 0.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 0.8s forwards;
+        }
+        
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .input-field {
+            transition: all 0.2s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn {
+            transition: all 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .shape-card {
+            transition: all 0.3s ease;
+        }
+        
+        .shape-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hint-popup {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .completed-message {
+            animation: celebrate 0.5s ease-out;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen p-4 md:p-8">
+        <div class="max-w-6xl mx-auto">
+            <header class="mb-6 text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">Reveal the Shape</h1>
+                <p class="text-gray-600 text-lg">Plot coordinates on the grid to discover the hidden shape!</p>
+            </header>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Panel: Controls -->
+                <div class="lg:col-span-1 bg-white p-5 rounded-xl shadow-md">
+                    <div class="mb-6">
+                        <label for="coordinate-input" class="block text-lg font-semibold text-gray-700 mb-2">Enter Coordinates</label>
+                        <div class="flex space-x-2">
+                            <input type="text" id="coordinate-input" placeholder="e.g., (3, 4)" 
+                                class="input-field w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none"
+                                aria-label="Enter coordinate pair in the format (x, y)">
+                            <button id="plot-btn" class="btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg">
+                                Plot
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Format: (x, y) - Example: (3, 4)</p>
+                    </div>
+                    
+                    <div class="flex space-x-3 mb-6">
+                        <button id="hint-btn" class="btn flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                            Hint
+                        </button>
+                        <button id="reset-btn" class="btn flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                            Reset
+                        </button>
+                    </div>
+                    
+                    <div id="hint-display" class="hidden hint-popup bg-emerald-100 border-l-4 border-emerald-500 p-4 mb-6 rounded-md">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-emerald-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-emerald-700" id="hint-text">Try plotting the point (0, 0) to start.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">Points Plotted</h3>
+                        <div id="points-list" class="bg-gray-50 rounded-lg p-3 min-h-[100px] max-h-[200px] overflow-y-auto">
+                            <p class="text-gray-500 text-center py-4">No points plotted yet</p>
+                        </div>
+                    </div>
+                    
+                    <div id="shape-selection" class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">Choose a Shape</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="shape-card bg-blue-100 p-3 rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-500 text-center" data-shape="house">
+                                <span class="text-3xl">🏠</span>
+                                <p class="font-medium mt-1">House</p>
+                            </div>
+                            <div class="shape-card bg-pink-100 p-3 rounded-lg cursor-pointer border-2 border-transparent hover:border-pink-500 text-center" data-shape="heart">
+                                <span class="text-3xl">❤️</span>
+                                <p class="font-medium mt-1">Heart</p>
+                            </div>
+                            <div class="shape-card bg-yellow-100 p-3 rounded-lg cursor-pointer border-2 border-transparent hover:border-yellow-500 text-center" data-shape="star">
+                                <span class="text-3xl">⭐</span>
+                                <p class="font-medium mt-1">Star</p>
+                            </div>
+                            <div class="shape-card bg-purple-100 p-3 rounded-lg cursor-pointer border-2 border-transparent hover:border-purple-500 text-center" data-shape="rocket">
+                                <span class="text-3xl">🚀</span>
+                                <p class="font-medium mt-1">Rocket</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Coordinate Grid -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white p-4 rounded-xl shadow-md">
+                        <div class="coordinate-grid w-full aspect-square" id="grid-container">
+                            <svg id="coordinate-grid" width="100%" height="100%" viewBox="-11 -11 22 22" preserveAspectRatio="xMidYMid meet">
+                                <!-- Grid lines will be generated by JavaScript -->
+                                <g id="grid-lines"></g>
+                                
+                                <!-- Axes -->
+                                <line class="axis-line" x1="-10" y1="0" x2="10" y2="0"></line>
+                                <line class="axis-line" x1="0" y1="-10" x2="0" y2="10"></line>
+                                
+                                <!-- Axis labels -->
+                                <text x="10.3" y="0.4" text-anchor="start" font-size="0.5" fill="#4b5563">x</text>
+                                <text x="0.3" y="-10.3" text-anchor="start" font-size="0.5" fill="#4b5563">y</text>
+                                
+                                <!-- Axis numbers -->
+                                <g id="axis-numbers"></g>
+                                
+                                <!-- Points and lines will be added here -->
+                                <g id="shape-lines"></g>
+                                <g id="shape-points"></g>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Reflection Area -->
+                    <div class="mt-6 bg-white p-5 rounded-xl shadow-md">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3">What shape do you see?</h3>
+                        <textarea id="reflection-area" rows="3" class="input-field w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none" 
+                            placeholder="After plotting the points, what shape do you think is being revealed? Why?"></textarea>
+                        
+                        <div id="completion-message" class="hidden completed-message mt-4 bg-green-100 border-l-4 border-green-500 p-4 rounded-md">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-green-700" id="completion-text">Great job! You've successfully revealed the shape!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Shape definitions - Updated with correct orientation (y-axis pointing up)
+            const shapes = {
+                house: [
+                    [-5, 5], [-5, -5], [5, -5], [5, 5], [-5, 5], // square base
+                    [-5, 5], [0, 10], [5, 5] // roof pointing up
+                ],
+                heart: [
+                    [0, 1], [2, 3], [4, 1], [4, -2], [0, -6], [-4, -2], [-4, 1], [-2, 3], [0, 1]
+                ],
+                star: [
+                    [0, 5], [1, 2], [4, 2], [2, 0], [3, -3], [0, -1], [-3, -3], [-2, 0], [-4, 2], [-1, 2], [0, 5]
+                ],
+                rocket: [
+                    [0, 8], [2, 5], [2, -3], [4, -5], [4, -7], [2, -5], [0, -5], [-2, -5], [-4, -7], [-4, -5], [-2, -3], [-2, 5], [0, 8]
+                ]
+            };
+            
+            let currentShape = 'house'; // Default shape
+            let currentPoints = [];
+            let nextPointIndex = 0;
+            
+            // Set up the grid
+            setupGrid();
+            
+            // Event listeners
+            document.getElementById('plot-btn').addEventListener('click', plotPoint);
+            document.getElementById('coordinate-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    plotPoint();
+                }
+            });
+            document.getElementById('hint-btn').addEventListener('click', showHint);
+            document.getElementById('reset-btn').addEventListener('click', resetActivity);
+            
+            // Shape selection
+            document.querySelectorAll('.shape-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const shape = this.dataset.shape;
+                    selectShape(shape);
+                    
+                    // Update UI to show selected shape
+                    document.querySelectorAll('.shape-card').forEach(c => {
+                        c.classList.remove('border-blue-500', 'border-pink-500', 'border-yellow-500', 'border-purple-500');
+                    });
+                    
+                    if (shape === 'house') {
+                        this.classList.add('border-blue-500');
+                    } else if (shape === 'heart') {
+                        this.classList.add('border-pink-500');
+                    } else if (shape === 'star') {
+                        this.classList.add('border-yellow-500');
+                    } else if (shape === 'rocket') {
+                        this.classList.add('border-purple-500');
+                    }
+                });
+            });
+            
+            // Select the default shape
+            document.querySelector('[data-shape="house"]').classList.add('border-blue-500');
+            
+            function setupGrid() {
+                const gridLines = document.getElementById('grid-lines');
+                const axisNumbers = document.getElementById('axis-numbers');
+                
+                // Create grid lines
+                for (let i = -10; i <= 10; i++) {
+                    if (i === 0) continue; // Skip the axes which are drawn separately
+                    
+                    // Vertical lines
+                    const vLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    vLine.setAttribute('class', 'grid-line');
+                    vLine.setAttribute('x1', i);
+                    vLine.setAttribute('y1', -10);
+                    vLine.setAttribute('x2', i);
+                    vLine.setAttribute('y2', 10);
+                    gridLines.appendChild(vLine);
+                    
+                    // Horizontal lines
+                    const hLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    hLine.setAttribute('class', 'grid-line');
+                    hLine.setAttribute('x1', -10);
+                    hLine.setAttribute('y1', i);
+                    hLine.setAttribute('x2', 10);
+                    hLine.setAttribute('y2', i);
+                    gridLines.appendChild(hLine);
+                    
+                    // Add numbers to axes (only for -10, -5, 5, 10)
+                    if (i % 5 === 0) {
+                        // X-axis numbers
+                        const xText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        xText.setAttribute('x', i);
+                        xText.setAttribute('y', 0.5);
+                        xText.setAttribute('text-anchor', 'middle');
+                        xText.setAttribute('font-size', '0.45');
+                        xText.setAttribute('fill', '#4b5563');
+                        xText.textContent = i;
+                        axisNumbers.appendChild(xText);
+                        
+                        // Y-axis numbers (note: y-coordinates are inverted in SVG)
+                        const yText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        yText.setAttribute('x', -0.5);
+                        yText.setAttribute('y', -i + 0.15);
+                        yText.setAttribute('text-anchor', 'end');
+                        yText.setAttribute('font-size', '0.45');
+                        yText.setAttribute('fill', '#4b5563');
+                        yText.textContent = i;
+                        axisNumbers.appendChild(yText);
+                    }
+                }
+            }
+            
+            function selectShape(shape) {
+                if (shapes[shape]) {
+                    currentShape = shape;
+                    resetActivity();
+                }
+            }
+            
+            function plotPoint() {
+                const input = document.getElementById('coordinate-input');
+                const coordStr = input.value.trim();
+                
+                // Parse the input
+                const coordMatch = coordStr.match(/\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/);
+                
+                if (coordMatch) {
+                    const x = parseInt(coordMatch[1]);
+                    const y = parseInt(coordMatch[2]);
+                    
+                    // Check if the coordinates are within range
+                    if (x >= -10 && x <= 10 && y >= -10 && y <= 10) {
+                        // Check if this is the expected next point
+                        const expectedPoint = shapes[currentShape][nextPointIndex];
+                        
+                        if (x === expectedPoint[0] && y === expectedPoint[1]) {
+                            // Correct point
+                            addPoint(x, y);
+                            nextPointIndex++;
+                            
+                            // Check if shape is complete
+                            if (nextPointIndex >= shapes[currentShape].length) {
+                                showCompletionMessage();
+                            }
+                            
+                            input.value = '';
+                            input.focus();
+                        } else {
+                            // Incorrect point
+                            showError(`That's not the next point in the sequence. Try again or use the hint button.`);
+                        }
+                    } else {
+                        showError('Coordinates must be between -10 and 10.');
+                    }
+                } else {
+                    showError('Please enter coordinates in the format (x, y).');
+                }
+            }
+            
+            function addPoint(x, y) {
+                const pointsGroup = document.getElementById('shape-points');
+                const linesGroup = document.getElementById('shape-lines');
+                const pointsList = document.getElementById('points-list');
+                
+                // Add to current points array
+                currentPoints.push([x, y]);
+                
+                // Create the point on the grid
+                const point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                point.setAttribute('class', 'point');
+                point.setAttribute('cx', x);
+                point.setAttribute('cy', -y); // Invert y for SVG coordinates
+                point.setAttribute('r', '0.25');
+                point.setAttribute('fill', '#ef4444');
+                point.setAttribute('stroke', '#ffffff');
+                point.setAttribute('stroke-width', '0.1');
+                pointsGroup.appendChild(point);
+                
+                // Add label for the point
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('class', 'point-label');
+                label.setAttribute('x', x + 0.3);
+                label.setAttribute('y', -y - 0.3);
+                label.setAttribute('font-size', '0.45');
+                label.setAttribute('fill', '#ef4444');
+                label.textContent = `(${x},${y})`;
+                pointsGroup.appendChild(label);
+                
+                // Connect with line if there are at least 2 points
+                if (currentPoints.length > 1) {
+                    const prevPoint = currentPoints[currentPoints.length - 2];
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('class', 'line');
+                    line.setAttribute('x1', prevPoint[0]);
+                    line.setAttribute('y1', -prevPoint[1]); // Invert y for SVG
+                    line.setAttribute('x2', x);
+                    line.setAttribute('y2', -y); // Invert y for SVG
+                    linesGroup.appendChild(line);
+                }
+                
+                // Update the points list
+                if (pointsList.querySelector('p')) {
+                    pointsList.innerHTML = '';
+                }
+                
+                const pointItem = document.createElement('div');
+                pointItem.className = 'flex items-center justify-between py-1 border-b border-gray-200 last:border-0';
+                pointItem.innerHTML = `
+                    <span class="font-medium">Point ${currentPoints.length}</span>
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-md">(${x}, ${y})</span>
+                `;
+                pointsList.appendChild(pointItem);
+                
+                // Hide any previous error or hint
+                document.getElementById('hint-display').classList.add('hidden');
+            }
+            
+            function showHint() {
+                if (nextPointIndex < shapes[currentShape].length) {
+                    const nextPoint = shapes[currentShape][nextPointIndex];
+                    const hintDisplay = document.getElementById('hint-display');
+                    const hintText = document.getElementById('hint-text');
+                    
+                    hintText.textContent = `Try plotting the point (${nextPoint[0]}, ${nextPoint[1]}) next.`;
+                    hintDisplay.classList.remove('hidden');
+                }
+            }
+            
+            function showError(message) {
+                const hintDisplay = document.getElementById('hint-display');
+                const hintText = document.getElementById('hint-text');
+                
+                hintText.textContent = message;
+                hintDisplay.classList.remove('hidden');
+                hintDisplay.classList.remove('bg-emerald-100', 'border-emerald-500');
+                hintDisplay.classList.add('bg-red-100', 'border-red-500');
+                
+                // Reset back to hint styling after 3 seconds
+                setTimeout(() => {
+                    hintDisplay.classList.remove('bg-red-100', 'border-red-500');
+                    hintDisplay.classList.add('bg-emerald-100', 'border-emerald-500');
+                }, 3000);
+            }
+            
+            function resetActivity() {
+                // Clear the grid
+                document.getElementById('shape-points').innerHTML = '';
+                document.getElementById('shape-lines').innerHTML = '';
+                
+                // Reset variables
+                currentPoints = [];
+                nextPointIndex = 0;
+                
+                // Clear the points list
+                const pointsList = document.getElementById('points-list');
+                pointsList.innerHTML = '<p class="text-gray-500 text-center py-4">No points plotted yet</p>';
+                
+                // Clear the input
+                document.getElementById('coordinate-input').value = '';
+                
+                // Hide hint and completion message
+                document.getElementById('hint-display').classList.add('hidden');
+                document.getElementById('completion-message').classList.add('hidden');
+                
+                // Clear reflection area
+                document.getElementById('reflection-area').value = '';
+            }
+            
+            function showCompletionMessage() {
+                const completionMessage = document.getElementById('completion-message');
+                const completionText = document.getElementById('completion-text');
+                
+                completionText.textContent = `Congratulations! You've successfully revealed the ${currentShape}!`;
+                completionMessage.classList.remove('hidden');
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d903efa978ed21d',t:'MTc3Mjk1NjE5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proportion Visualiser & Matching Tool</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1920px;
+            height: 1080px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+
+        .header p {
+            font-size: 1.5rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .right-panel {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .mode-toggle {
+            display: flex;
+            background: #f0f0f0;
+            border-radius: 15px;
+            padding: 8px;
+            gap: 8px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn.active {
+            background: #4f46e5;
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .mode-btn:not(.active) {
+            background: transparent;
+            color: #666;
+        }
+
+        .formula-display {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .formula {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .slider-section {
+            background: #f1f5f9;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #cbd5e1;
+        }
+
+        .slider-label {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #334155;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .slider-container {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+            border: 3px solid white;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+            border: 3px solid white;
+        }
+
+        .value-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .value-box {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .matching-section h3 {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .pairs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .pair-item {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .pair-item:hover {
+            border-color: #4f46e5;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
+        }
+
+        .pair-item.selected {
+            background: #4f46e5;
+            color: white;
+            border-color: #4338ca;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .pair-item.correct {
+            background: #10b981;
+            color: white;
+            border-color: #059669;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .pair-item.incorrect {
+            background: #ef4444;
+            color: white;
+            border-color: #dc2626;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .check-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .check-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .feedback.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #bbf7d0;
+        }
+
+        .feedback.partial {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #fde68a;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .container {
+                height: auto;
+                min-height: 100%;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Proportion Visualiser & Matching Tool</h1>
+            <p>Explore how y changes with x in proportion. Match pairs to formula.</p>
+        </div>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="mode-toggle">
+                    <button class="mode-btn active" id="directBtn" tabindex="0">📈 Direct Proportion</button>
+                    <button class="mode-btn" id="inverseBtn" tabindex="0">📉 Inverse Proportion</button>
+                </div>
+
+                <div class="formula-display">
+                    <div class="formula" id="formulaDisplay">y = 2x</div>
+                </div>
+
+                <div class="slider-section">
+                    <div class="slider-label">Adjust x value:</div>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="100" value="10" class="slider" id="xSlider" tabindex="0">
+                    </div>
+                    <div class="value-display">
+                        <div class="value-box">x = <span id="xValue">10</span></div>
+                        <div class="value-box">y = <span id="yValue">20</span></div>
+                    </div>
+                </div>
+
+                <div class="slider-section">
+                    <div class="slider-label">Adjust k value:</div>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="10" value="2" class="slider" id="kSlider" tabindex="0">
+                    </div>
+                    <div class="value-display">
+                        <div class="value-box">k = <span id="kValue">2</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="matching-section">
+                    <h3>🔍 Match the (x, y) pairs that fit the formula:</h3>
+                    <div class="pairs-grid" id="pairsGrid">
+                        <!-- Pairs will be generated by JavaScript -->
+                    </div>
+                    <button class="check-btn" id="checkBtn" tabindex="0">✅ Check Answers</button>
+                    <div class="feedback" id="feedback" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isDirect = true;
+        let k = 2;
+        let x = 10;
+        let selectedPairs = new Set();
+        let correctPairs = new Set();
+        let hasChecked = false;
+
+        const directBtn = document.getElementById('directBtn');
+        const inverseBtn = document.getElementById('inverseBtn');
+        const formulaDisplay = document.getElementById('formulaDisplay');
+        const xSlider = document.getElementById('xSlider');
+        const kSlider = document.getElementById('kSlider');
+        const xValue = document.getElementById('xValue');
+        const yValue = document.getElementById('yValue');
+        const kValue = document.getElementById('kValue');
+        const pairsGrid = document.getElementById('pairsGrid');
+        const checkBtn = document.getElementById('checkBtn');
+        const feedback = document.getElementById('feedback');
+
+        function updateFormula() {
+            if (isDirect) {
+                formulaDisplay.textContent = `y = ${k}x`;
+            } else {
+                formulaDisplay.textContent = `y = ${k}/x`;
+            }
+        }
+
+        function calculateY(xVal) {
+            if (isDirect) {
+                return k * xVal;
+            } else {
+                return Math.round((k / xVal) * 100) / 100;
+            }
+        }
+
+        function updateValues() {
+            const currentY = calculateY(x);
+            xValue.textContent = x;
+            yValue.textContent = currentY;
+            kValue.textContent = k;
+            updateFormula();
+            generatePairs();
+        }
+
+        function generatePairs() {
+            selectedPairs.clear();
+            correctPairs.clear();
+            hasChecked = false;
+            
+            const pairs = [];
+            
+            // Generate 3 correct pairs
+            const correctXValues = [2, 5, 8];
+            correctXValues.forEach(xVal => {
+                const yVal = calculateY(xVal);
+                pairs.push({ x: xVal, y: yVal, correct: true });
+                correctPairs.add(`${xVal},${yVal}`);
+            });
+            
+            // Generate 3 incorrect pairs
+            const incorrectPairs = isDirect ? 
+                [{ x: 3, y: 8 }, { x: 6, y: 10 }, { x: 4, y: 15 }] :
+                [{ x: 2, y: 8 }, { x: 4, y: 5 }, { x: 5, y: 3 }];
+            
+            incorrectPairs.forEach(pair => {
+                pairs.push({ x: pair.x, y: pair.y, correct: false });
+            });
+            
+            // Shuffle pairs
+            pairs.sort(() => Math.random() - 0.5);
+            
+            pairsGrid.innerHTML = '';
+            pairs.forEach((pair, index) => {
+                const pairElement = document.createElement('div');
+                pairElement.className = 'pair-item';
+                pairElement.textContent = `(${pair.x}, ${pair.y})`;
+                pairElement.tabIndex = 0;
+                pairElement.dataset.pair = `${pair.x},${pair.y}`;
+                
+                pairElement.addEventListener('click', () => togglePair(pairElement));
+                pairElement.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        togglePair(pairElement);
+                    }
+                });
+                
+                pairsGrid.appendChild(pairElement);
+            });
+            
+            feedback.style.display = 'none';
+        }
+
+        function togglePair(element) {
+            if (hasChecked) return;
+            
+            const pairKey = element.dataset.pair;
+            if (selectedPairs.has(pairKey)) {
+                selectedPairs.delete(pairKey);
+                element.classList.remove('selected');
+            } else {
+                selectedPairs.add(pairKey);
+                element.classList.add('selected');
+            }
+        }
+
+        function checkAnswers() {
+            hasChecked = true;
+            let correctCount = 0;
+            let totalCorrect = correctPairs.size;
+            
+            document.querySelectorAll('.pair-item').forEach(element => {
+                const pairKey = element.dataset.pair;
+                const isCorrect = correctPairs.has(pairKey);
+                const isSelected = selectedPairs.has(pairKey);
+                
+                element.classList.remove('selected');
+                
+                if (isCorrect && isSelected) {
+                    element.classList.add('correct');
+                    correctCount++;
+                } else if (!isCorrect && isSelected) {
+                    element.classList.add('incorrect');
+                } else if (isCorrect && !isSelected) {
+                    element.classList.add('correct');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            if (correctCount === totalCorrect && selectedPairs.size === totalCorrect) {
+                feedback.className = 'feedback success';
+                feedback.textContent = '🎉 Perfect! All correct pairs matched!';
+            } else {
+                feedback.className = 'feedback partial';
+                feedback.textContent = `✨ You got ${correctCount} out of ${totalCorrect} correct pairs!`;
+            }
+        }
+
+        // Event listeners
+        directBtn.addEventListener('click', () => {
+            isDirect = true;
+            directBtn.classList.add('active');
+            inverseBtn.classList.remove('active');
+            updateValues();
+        });
+
+        inverseBtn.addEventListener('click', () => {
+            isDirect = false;
+            inverseBtn.classList.add('active');
+            directBtn.classList.remove('active');
+            updateValues();
+        });
+
+        xSlider.addEventListener('input', (e) => {
+            x = parseInt(e.target.value);
+            updateValues();
+        });
+
+        kSlider.addEventListener('input', (e) => {
+            k = parseInt(e.target.value);
+            updateValues();
+        });
+
+        checkBtn.addEventListener('click', checkAnswers);
+
+        // Keyboard navigation for mode buttons
+        [directBtn, inverseBtn].forEach(btn => {
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    btn.click();
+                }
+            });
+        });
+
+        checkBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                checkAnswers();
+            }
+        });
+
+        // Initialize
+        updateValues();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992f51f422864135',t:'MTc2MTIwMjQzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

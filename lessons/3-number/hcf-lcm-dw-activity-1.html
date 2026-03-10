@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HCF & LCM — Prime Powers (v2)</title>
+<style>
+  :root{
+    --bg:#f7f9fc; --card:#ffffff; --ink:#1f2430; --sub:#4b5563;
+    --line:#e6ebf2; --accent:#2563eb; --ok:#059669; --warn:#b45309; --mut:#94a3b8;
+    --chip:#eef2ff; --chip-ink:#1e3a8a; --prime:#10b981; --composite:#ef4444;
+    --hcf:#16a34a; --lcm:#7c3aed;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); background:var(--bg)}
+  .wrap{max-width:980px; margin:24px auto; padding:0 14px}
+  h1{margin:0 0 12px; font-size:26px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:0 2px 10px rgba(31,36,48,.06)}
+  .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  label{color:var(--sub)}
+  input[type=text]{width:360px; max-width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px; font-size:16px}
+  button{background:var(--accent); color:#fff; border:0; padding:9px 14px; border-radius:10px; cursor:pointer; font-weight:600}
+  button.ghost{background:#fff; color:var(--ink); border:1px solid var(--line)}
+  button.alt{background:var(--ok)}
+  small.note{color:var(--sub)}
+  hr.sep{border:0; border-top:1px solid var(--line); margin:14px 0}
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .chip{background:var(--chip); border:1px solid #dbeafe; color:var(--chip-ink); padding:4px 10px; border-radius:999px; font-weight:600}
+  .legend{display:flex; gap:14px; flex-wrap:wrap; color:var(--sub); font-size:14px}
+  .sw{width:14px; height:14px; border-radius:4px; display:inline-block; vertical-align:-2px; margin-right:6px}
+  .sw.hcf{background:var(--hcf)} .sw.lcm{background:var(--lcm)}
+  .sw.pp{background:var(--prime)} .sw.cmp{background:var(--composite)}
+  .table{width:100%; border-collapse:collapse; font-size:15px}
+  .table th,.table td{border:1px solid var(--line); padding:8px 10px; text-align:center}
+  .table th{background:#f3f6fb; font-weight:700}
+  .align-left{text-align:left}
+  .xpill{display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border-radius:999px; border:1px solid var(--line); background:#f8fafc; font-weight:600}
+  .xpill .p{color:#0f172a}
+  .xpill .e{color:#334155}
+  .xpill.hcf{border-color:#bbf7d0; background:#ecfdf5}
+  .xpill.lcm{border-color:#e9d5ff; background:#faf5ff}
+  .formula{display:flex; gap:10px; flex-wrap:wrap}
+  .eq{padding:8px 10px; background:#f8fafc; border:1px solid var(--line); border-radius:10px}
+  .eq strong{color:#0f172a}
+  .tag{font-size:12px; color:#fff; background:var(--mut); padding:2px 6px; border-radius:6px; margin-left:6px}
+  .tag.hcf{background:var(--hcf)} .tag.lcm{background:var(--lcm)}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+  /* SVG factor tree */
+  svg{max-width:100%}
+  .node circle{fill:#fff; stroke:var(--line); stroke-width:2}
+  .node text{font-weight:700; fill:#111827}
+  .node.prime circle{stroke:var(--prime); fill:#ecfdf5}
+  .node.composite circle{stroke:var(--composite); fill:#fef2f2}
+  .edge{stroke:#cbd5e1; stroke-width:2}
+  @media (max-width:760px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>HCF &amp; LCM — See the Prime Powers</h1>
+
+    <!-- SECTION A: Factor tree for a single number -->
+    <div class="card" style="margin-bottom:14px">
+      <h2 style="margin:0 0 8px">1) Prime Factor Tree (one number)</h2>
+      <div class="row" style="margin:6px 0 10px">
+        <label for="oneN">Number:</label>
+        <input id="oneN" type="text" value="60" inputmode="numeric" />
+        <button id="buildTreeBtn" class="alt">Build tree</button>
+        <div class="chips">
+          <span class="chip quick" data-q="12">12</span>
+          <span class="chip quick" data-q="36">36</span>
+          <span class="chip quick" data-q="60">60</span>
+          <span class="chip quick" data-q="84">84</span>
+          <span class="chip quick" data-q="120">120</span>
+        </div>
+      </div>
+      <small class="note">Leaves are primes <span class="sw pp"></span>; composites <span class="sw cmp"></span> are split until only primes remain.</small>
+      <div id="treeHost" style="margin-top:10px; overflow:auto"></div>
+    </div>
+
+    <!-- SECTION B: HCF & LCM for 2–4 numbers -->
+    <div class="card">
+      <h2 style="margin:0 0 8px">2) HCF &amp; LCM (two–four numbers)</h2>
+      <div class="row">
+        <label for="nums">Enter numbers:</label>
+        <input id="nums" type="text" value="12, 70" placeholder="e.g. 12, 70 or 24, 36, 60" />
+        <button id="goBtn">Factorise</button>
+        <button id="clearBtn" class="ghost">Clear</button>
+      </div>
+      <div class="legend" style="margin-top:8px">
+        <div><span class="sw hcf"></span>HCF uses <strong>lowest</strong> powers of primes common to all</div>
+        <div><span class="sw lcm"></span>LCM uses <strong>highest</strong> powers of primes that appear</div>
+      </div>
+
+      <hr class="sep" />
+
+      <div id="chipsRow" class="row"></div>
+
+      <div id="tableWrap" style="margin-top:10px; overflow:auto"></div>
+
+      <div id="formulas" style="margin-top:12px"></div>
+    </div>
+
+    <p style="color:var(--sub); margin-top:12px">
+      Tip: If you prefer, write prime powers in a column for each number, then take <em>mins</em> for HCF and <em>maxes</em> for LCM.
+    </p>
+  </div>
+
+<script>
+/* ——— helpers ——— */
+const byId = id => document.getElementById(id);
+const primesUpTo = n => {
+  const ps=[]; for(let i=2;i<=n;i++){ let p=true;
+    for(let j=2;j*j<=i;j++){ if(i%j===0){ p=false;break } }
+    if(p) ps.push(i);
+  } return ps;
+};
+function factor(n){
+  n = Math.abs(Number(n)||0);
+  const f = {};
+  let d=2;
+  while(d*d<=n){
+    while(n%d===0){ f[d]=(f[d]||0)+1; n/=d; }
+    d++;
+  }
+  if(n>1) f[n]=(f[n]||0)+1;
+  return f;
+}
+function formatPow(p,e){ return e===1 ? `${p}` : `${p}<sup>${e}</sup>`; }
+function product(obj){ let v=1; for(const p in obj){ v*=Math.pow(+p,obj[p]); } return v; }
+function unionKeys(arr){
+  const s=new Set(); arr.forEach(o=>Object.keys(o).forEach(k=>s.add(k)));
+  return Array.from(s).sort((a,b)=>+a-+b);
+}
+function commonKeys(arr){
+  if(arr.length===0) return [];
+  const base = Object.keys(arr[0]);
+  return base.filter(k=>arr.every(o=>o.hasOwnProperty(k))).sort((a,b)=>+a-+b);
+}
+
+/* ——— UI builders ——— */
+function renderPrimeChips(numbers, facts){
+  const host = byId('chipsRow'); host.innerHTML='';
+  numbers.forEach((n,i)=>{
+    const row = document.createElement('div');
+    row.className='row';
+    row.style.cssText='align-items:flex-start; border:1px solid var(--line); border-radius:12px; padding:8px 10px; background:#fff';
+    const title = document.createElement('div');
+    title.innerHTML = `<strong>${n}</strong> = `;
+    const chips = document.createElement('div'); chips.className='chips';
+    const f = facts[i];
+    if(Object.keys(f).length===0){ chips.innerHTML = `<span class="chip">1</span>`; }
+    else{
+      Object.keys(f).sort((a,b)=>+a-+b).forEach(p=>{
+        const e=f[p];
+        const c=document.createElement('span');
+        c.className='xpill';
+        c.innerHTML = `<span class="p">× ${p}</span><span class="e">^${e}</span>`;
+        chips.appendChild(c);
+      });
+    }
+    row.appendChild(title); row.appendChild(chips);
+    host.appendChild(row);
+  });
+}
+
+function renderTable(numbers, facts){
+  const host = byId('tableWrap'); host.innerHTML='';
+  if(facts.length===0) return;
+
+  const primes = unionKeys(facts.map(f=>f));
+  const table = document.createElement('table'); table.className='table mono';
+  const thead = document.createElement('thead');
+  const trh = document.createElement('tr');
+  trh.innerHTML = `<th>Prime</th>` + numbers.map(n=>`<th>${n}</th>`).join('');
+  thead.appendChild(trh); table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+
+  primes.forEach(p=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML = `<td>${p}</td>` + facts.map(f=>{
+      const e=f[p]||0; 
+      return `<td>${e===0?'<span style="color:var(--mut)">0</span>':`<strong>${e}</strong>`}</td>`;
+    }).join('');
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  host.appendChild(table);
+}
+
+function renderFormulas(numbers, facts){
+  const host = byId('formulas'); host.innerHTML='';
+  if(facts.length===0) return;
+
+  const keysLCM = unionKeys(facts);
+  const keysHCF = commonKeys(facts);
+
+  const powLCM = {};
+  keysLCM.forEach(p=>{
+    powLCM[p] = Math.max(...facts.map(f=>f[p]||0));
+  });
+  const powHCF = {};
+  keysHCF.forEach(p=>{
+    powHCF[p] = Math.min(...facts.map(f=>f[p]||0));
+  });
+
+  const lcmVal = product(powLCM);
+  const hcfVal = product(powHCF);
+
+  const sec = document.createElement('div');
+  const eq1 = document.createElement('div'); eq1.className='eq';
+  const eq2 = document.createElement('div'); eq2.className='eq';
+
+  eq1.innerHTML = `<strong>HCF</strong><span class="tag hcf">lowest powers of common primes</span><br>
+  ${Object.keys(powHCF).length ? Object.keys(powHCF).map(p=>formatPow(p,powHCF[p])).join(' × ') : '—'} 
+  ${Object.keys(powHCF).length ? ` = <strong>${hcfVal}</strong>` : ''}`;
+
+  eq2.innerHTML = `<strong>LCM</strong><span class="tag lcm">highest powers across all</span><br>
+  ${Object.keys(powLCM).map(p=>formatPow(p,powLCM[p])).join(' × ')} = <strong>${lcmVal}</strong>`;
+
+  const row = document.createElement('div'); row.className='formula'; row.appendChild(eq1); row.appendChild(eq2);
+  host.appendChild(row);
+}
+
+/* ——— Factor tree (auto, neat layout) ——— */
+function smallestFactor(n){
+  for(let d=2; d*d<=n; d++) if(n%d===0) return d;
+  return n;
+}
+function buildTree(n){
+  n = Math.abs(Number(n)||0);
+  if(n<2) return {value:n, prime:true, children:[]};
+  const d = smallestFactor(n);
+  if(d===n) return {value:n, prime:true, children:[]};
+  return {value:n, prime:false, children:[buildTree(d), buildTree(n/d)]};
+}
+// compute layout
+function layoutTree(root, x=0, y=0, depth=0, nodes=[], edges=[]){
+  // compute width of subtree
+  function width(t){
+    if(!t.children || t.children.length===0) return 1;
+    return t.children.map(width).reduce((a,b)=>a+b,0);
+  }
+  const w = width(root);
+  let cursor=0;
+  function place(t, depth, xOffset){
+    const wSub = width(t);
+    const cx = xOffset + wSub/2;
+    const cy = depth*80 + 24;
+    const id = nodes.length;
+    nodes.push({id, x:cx, y:cy, val:t.value, prime:t.prime});
+    if(t.children&&t.children.length){
+      let childX = xOffset;
+      t.children.forEach(ch=>{
+        const before = nodes.length;
+        place(ch, depth+1, childX);
+        const childId = before; // first node added by child
+        edges.push({from:id, to:childId});
+        childX += width(ch);
+      });
+    }
+  }
+  place(root,0,0);
+  // scale positions
+  const scale = 80;
+  nodes.forEach(n=>{ n.x *= scale; n.y *= 1; });
+  return {nodes, edges, width:w*scale+40, height:(Math.max(...nodes.map(n=>n.y))+80)};
+}
+function renderTree(n){
+  const host = byId('treeHost'); host.innerHTML='';
+  const tree = buildTree(n);
+  const {nodes, edges, width, height} = layoutTree(tree);
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS,'svg');
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  svg.setAttribute('width', '100%'); svg.setAttribute('height','auto');
+
+  // edges
+  edges.forEach(e=>{
+    const a = nodes[e.from], b = nodes[e.to];
+    const line = document.createElementNS(svgNS,'line');
+    line.setAttribute('x1', a.x); line.setAttribute('y1', a.y+20);
+    line.setAttribute('x2', b.x); line.setAttribute('y2', b.y-20);
+    line.setAttribute('class','edge');
+    svg.appendChild(line);
+  });
+
+  // nodes
+  nodes.forEach(nd=>{
+    const g = document.createElementNS(svgNS,'g'); g.setAttribute('class', `node ${nd.prime?'prime':'composite'}`);
+    const c = document.createElementNS(svgNS,'circle'); c.setAttribute('cx', nd.x); c.setAttribute('cy', nd.y); c.setAttribute('r','20');
+    const t = document.createElementNS(svgNS,'text'); t.setAttribute('x', nd.x); t.setAttribute('y', nd.y+6);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('font-size','14'); t.textContent = nd.val;
+    g.appendChild(c); g.appendChild(t); svg.appendChild(g);
+  });
+
+  host.appendChild(svg);
+}
+
+/* ——— events ——— */
+function parseNumbers(str){
+  return String(str).split(/[, ]+/).map(s=>s.trim()).filter(Boolean).map(x=>parseInt(x,10)).filter(n=>Number.isFinite(n)&&n>0);
+}
+function run(){
+  const nums = parseNumbers(byId('nums').value);
+  const facts = nums.map(n=>factor(n));
+  renderPrimeChips(nums, facts);
+  renderTable(nums, facts);
+  renderFormulas(nums, facts);
+}
+byId('goBtn').addEventListener('click', run);
+byId('clearBtn').addEventListener('click', ()=>{
+  byId('nums').value='';
+  byId('chipsRow').innerHTML='';
+  byId('tableWrap').innerHTML='';
+  byId('formulas').innerHTML='';
+  byId('nums').focus();
+});
+byId('buildTreeBtn').addEventListener('click', ()=>renderTree(byId('oneN').value));
+document.querySelectorAll('.quick').forEach(q=>{
+  q.addEventListener('click', ()=>{ byId('oneN').value=q.dataset.q; renderTree(q.dataset.q); });
+});
+
+// boot
+renderTree(byId('oneN').value);
+run();
+</script>
+</body>
+</html>

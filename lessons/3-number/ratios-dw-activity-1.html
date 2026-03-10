@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1328,
+    "height" : 1026,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "The Pentagram",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : -206,
+          "left" : 98,
+          "bottom" : 820,
+          "right" : 1426
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 2,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Interior" : {
+            "color" : "aqua"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif"
+              },
+            "Caption" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-weight" : "bold",
+              "font-style" : "italic",
+              "color" : "blue"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 16,
+              "font-weight" : "bold"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif"
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif"
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Geneva\", "
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 794,
+              "y" : 250
+              }
+            },
+          "label" : "A"
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 790.07888619448647,
+              "y" : 31.047250478391305
+              }
+            },
+          "label" : "A",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -27,
+              "labelOffsetY" : -22
+              }
+            }
+          },
+        "3" : {
+          "kind" : "Circle",
+          "genus" : "Circle",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "2"
+            },
+          "constraint" : "CircleFromTwoPoints",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "2",
+            "center" : "1"
+            },
+          "angle" : -1.2566370614359199,
+          "constraint" : "Rotate",
+          "label" : "B",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -4,
+              "labelOffsetY" : -30
+              }
+            }
+          },
+        "5" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "4",
+            "center" : "1"
+            },
+          "angle" : -1.2566370614359199,
+          "constraint" : "Rotate",
+          "label" : "C",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -27,
+              "labelOffsetY" : -23
+              }
+            }
+          },
+        "6" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "5",
+            "center" : "1"
+            },
+          "angle" : -1.2566370614359199,
+          "constraint" : "Rotate",
+          "label" : "D",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -28,
+              "labelOffsetY" : -2
+              }
+            }
+          },
+        "7" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "6",
+            "center" : "1"
+            },
+          "angle" : -1.2566370614359199,
+          "constraint" : "Rotate",
+          "label" : "E",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -10,
+              "labelOffsetY" : -31
+              }
+            }
+          },
+        "8" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "7",
+            "p1" : "4"
+            },
+          "constraint" : "Segment"
+          },
+        "9" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "6"
+            },
+          "constraint" : "Segment"
+          },
+        "10" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "6",
+            "p1" : "2"
+            },
+          "constraint" : "Segment"
+          },
+        "11" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "2",
+            "p1" : "5"
+            },
+          "constraint" : "Segment"
+          },
+        "12" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "5",
+            "p1" : "7"
+            },
+          "constraint" : "Segment"
+          },
+        "13" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "9",
+            "line1" : "12"
+            },
+          "constraint" : "Intersection",
+          "label" : "H",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "14" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "9",
+            "line1" : "11"
+            },
+          "constraint" : "Intersection",
+          "label" : "I",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -20,
+              "labelOffsetY" : -5
+              }
+            }
+          },
+        "15" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "11",
+            "line1" : "8"
+            },
+          "constraint" : "Intersection",
+          "label" : "J",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -23,
+              "labelOffsetY" : -31
+              }
+            }
+          },
+        "16" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "10",
+            "line1" : "8"
+            },
+          "constraint" : "Intersection",
+          "label" : "F",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : -31
+              }
+            }
+          },
+        "17" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "12",
+            "line1" : "10"
+            },
+          "constraint" : "Intersection",
+          "label" : "G",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : -10
+              }
+            }
+          },
+        "18" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "17",
+            "p1" : "15"
+            },
+          "constraint" : "Segment"
+          },
+        "19" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "15",
+            "p1" : "13"
+            },
+          "constraint" : "Segment"
+          },
+        "20" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "13",
+            "p1" : "16"
+            },
+          "constraint" : "Segment"
+          },
+        "21" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "16",
+            "p1" : "14"
+            },
+          "constraint" : "Segment"
+          },
+        "22" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "14",
+            "p1" : "17"
+            },
+          "constraint" : "Segment"
+          },
+        "23" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "19",
+            "line1" : "22"
+            },
+          "constraint" : "Intersection",
+          "label" : "L",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -19,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "24" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "21",
+            "line1" : "19"
+            },
+          "constraint" : "Intersection",
+          "label" : "M",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -32,
+              "labelOffsetY" : -17
+              }
+            }
+          },
+        "25" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "18",
+            "line1" : "21"
+            },
+          "constraint" : "Intersection",
+          "label" : "N",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -1,
+              "labelOffsetY" : -31
+              }
+            }
+          },
+        "26" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "18",
+            "line1" : "20"
+            },
+          "constraint" : "Intersection",
+          "label" : "P",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 7,
+              "labelOffsetY" : -19
+              }
+            }
+          },
+        "27" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "20",
+            "line1" : "22"
+            },
+          "constraint" : "Intersection",
+          "label" : "K",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 7,
+              "labelOffsetY" : 0
+              }
+            }
+          },
+        "28" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "6",
+            "1" : "17",
+            "2" : "13"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "yellow",
+            "layerOrder" : 0
+            }
+          },
+        "29" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "13",
+            "1" : "5",
+            "2" : "14"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "lime",
+            "layerOrder" : 1
+            }
+          },
+        "30" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "14",
+            "1" : "4",
+            "2" : "15"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "rgb(138,102,217)",
+            "layerOrder" : 2
+            }
+          },
+        "31" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "15",
+            "1" : "2",
+            "2" : "16"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "layerOrder" : 3
+            }
+          },
+        "32" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "16",
+            "1" : "17",
+            "2" : "7"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "rgb(255,128,0)",
+            "layerOrder" : 4
+            }
+          },
+        "33" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "26",
+            "1" : "27",
+            "2" : "17"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "green",
+            "layerOrder" : 5
+            }
+          },
+        "34" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "23",
+            "1" : "27",
+            "2" : "13"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "yellow",
+            "layerOrder" : 6
+            }
+          },
+        "35" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "23",
+            "1" : "14",
+            "2" : "24"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "fuchsia",
+            "layerOrder" : 7
+            }
+          },
+        "36" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "15",
+            "1" : "24",
+            "2" : "25"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "red",
+            "layerOrder" : 8
+            }
+          },
+        "37" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "25",
+            "1" : "26",
+            "2" : "16"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "blue",
+            "layerOrder" : 9
+            }
+          },
+        "38" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "2",
+            "obj0" : "16"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 594,
+              "y" : -138
+              }
+            },
+          "label" : "m[1]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "39" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "16",
+            "obj0" : "17"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 594,
+              "y" : -116
+              }
+            },
+          "label" : "m[2]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "40" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "38",
+            "1" : "39"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 592,
+              "y" : -87
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "@0\/@1",
+          "style" : {
+            "precision" : 5,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "41" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "16",
+            "obj0" : "25"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 749,
+              "y" : -138
+              }
+            },
+          "label" : "m[3]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "42" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "25",
+            "obj0" : "24"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 749,
+              "y" : -116
+              }
+            },
+          "label" : "m[4]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "43" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "41",
+            "1" : "42"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 737,
+              "y" : -85
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "@0\/@1",
+          "style" : {
+            "precision" : 5,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "44" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 696,
+              "y" : -196
+              }
+            },
+          "textMFS" : "<S#18W2<VL<T'The Pentagram'>>>",
+          "style" : {
+            "font-size" : 24,
+            "font-style" : "normal",
+            "color" : "black"
+            }
+          },
+        "45" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "2"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 117,
+              "y" : 15
+              }
+            },
+          "label" : "Change the Pentagram",
+          "constraint" : "ActionButtonAnimate",
+          "messages" : [
+            "Change the Pentagram"
+            ],
+          "animationStates" : [
+            {
+              "rate" : 3,
+              "timeInterval" : 0,
+              "repeat" : true,
+              "motionType" : "forward"
+              }
+            ]
+          },
+        "46" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "17",
+            "obj0" : "26"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 892,
+              "y" : -139
+              }
+            },
+          "label" : "m[5]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "47" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "26",
+            "obj0" : "27"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 892,
+              "y" : -117
+              }
+            },
+          "label" : "m[6]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "48" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "46",
+            "1" : "47"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 894,
+              "y" : -83
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "@0\/@1",
+          "style" : {
+            "precision" : 5,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "49" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 106,
+              "y" : 78
+              }
+            },
+          "textMFS" : "<VL<T'Here we have a pentagram ABCDE with a smaller pentagram,'><T'FGHIJ inscribed inside it.'><0><T'1. Observe the ratios of the sides of the large pentagram'><T'compared with the smaller pentagram.  What do you notice?'><0><T'2. Click on the button to change the dimensions of the'><T'pentagrams.'><0><T'3. Observe the lengths of each of the sides as the pentagrams'><T'change.  '><0><T'4. Click on the button once more to stop the animation.'><0><T'5. Observe the ratios of the sides of the pentagrams once again. '><T'What do you notice now?'><0><T'6. Repeat the process once more and observe the ratios again. '><T'What do you notice?'><0><T'7. Where have you seen this number before?  What is the special'><T'name that we give to this ratio?'><F1Fxx1B2x20x924248x>>"
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    

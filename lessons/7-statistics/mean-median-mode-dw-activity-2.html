@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outlier Investigator – Mean vs Median</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    .app-container {
+      width: 100%;
+      height: 100%;
+      overflow-auto;
+      padding: 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .content-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px solid #667eea;
+    }
+
+    .main-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #2d3748;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: #667eea;
+      margin: 0;
+    }
+
+    .scenario-badge {
+      display: inline-block;
+      background: #f7fafc;
+      color: #4a5568;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      border: 2px solid #e2e8f0;
+    }
+
+    .instructions {
+      background: #edf2f7;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      color: #2d3748;
+      font-size: 0.95rem;
+    }
+
+    .data-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .values-list {
+      background: #f7fafc;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+    }
+
+    .values-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #2d3748;
+      margin: 0 0 1rem 0;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background: white;
+      border-radius: 8px;
+      border: 2px solid #e2e8f0;
+      transition: all 0.2s;
+      gap: 0.5rem;
+    }
+
+    .value-item.excluded {
+      opacity: 0.4;
+      background: #f7fafc;
+    }
+
+    .value-item.modified {
+      border-color: #48bb78;
+      background: #f0fff4;
+    }
+
+    .value-checkbox {
+      margin-right: 0.25rem;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #667eea;
+      flex-shrink: 0;
+    }
+
+    .value-number {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2d3748;
+      flex: 1;
+    }
+
+    .value-input {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2d3748;
+      border: 2px solid #cbd5e0;
+      border-radius: 6px;
+      padding: 0.25rem 0.5rem;
+      width: 80px;
+      flex: 1;
+    }
+
+    .value-input:focus {
+      outline: none;
+      border-color: #48bb78;
+    }
+
+    .value-actions {
+      display: flex;
+      gap: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .value-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .edit-btn {
+      color: #667eea;
+    }
+
+    .edit-btn:hover {
+      background: #edf2f7;
+    }
+
+    .save-btn {
+      color: #48bb78;
+    }
+
+    .save-btn:hover {
+      background: #f0fff4;
+    }
+
+    .reset-btn-small {
+      color: #ed8936;
+    }
+
+    .reset-btn-small:hover {
+      background: #fffaf0;
+    }
+
+    .cancel-btn {
+      color: #a0aec0;
+    }
+
+    .cancel-btn:hover {
+      background: #f7fafc;
+    }
+
+    .chart-container {
+      background: #f7fafc;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+    }
+
+    .chart-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #2d3748;
+      margin: 0 0 1rem 0;
+    }
+
+    .bar-chart {
+      position: relative;
+      background: white;
+      border-radius: 8px;
+      padding: 2rem 1rem 1rem 1rem;
+      min-height: 250px;
+    }
+
+    .y-axis-label {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4a5568;
+      white-space: nowrap;
+    }
+
+    .chart-area {
+      margin-left: 30px;
+      margin-right: 10px;
+      padding: 10px;
+      border-left: 2px solid #cbd5e0;
+      border-bottom: 2px solid #cbd5e0;
+      height: 200px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 8px;
+    }
+
+    .bar-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 40px;
+      max-width: 80px;
+    }
+
+    .bar {
+      width: 100%;
+      background: #667eea;
+      border-radius: 4px 4px 0 0;
+      transition: all 0.3s;
+      position: relative;
+      min-height: 4px;
+    }
+
+    .bar.excluded {
+      opacity: 0.2;
+    }
+
+    .bar-label {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #2d3748;
+      text-align: center;
+    }
+
+    .bar-frequency {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    .x-axis-label {
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4a5568;
+      margin-left: 30px;
+    }
+
+    .statistics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .insight-box {
+      background: #fffaf0;
+      border: 2px solid #fbd38d;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .insight-title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #744210;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .insight-text {
+      color: #744210;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .questions-section {
+      background: #e6fffa;
+      border: 2px solid #81e6d9;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .questions-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #234e52;
+      margin: 0 0 1rem 0;
+    }
+
+    .question-item {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      color: #234e52;
+      font-size: 0.95rem;
+      border-left: 4px solid #4fd1c5;
+    }
+
+    .question-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .question-prompt {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #cbd5e0;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .question-input:focus {
+      outline: none;
+      border-color: #4fd1c5;
+    }
+
+    .check-answer-btn {
+      background: #4fd1c5;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .check-answer-btn:hover {
+      background: #38b2ac;
+    }
+
+    .feedback {
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: #c6f6d5;
+      color: #22543d;
+      border: 2px solid #9ae6b4;
+    }
+
+    .feedback.partial {
+      background: #fef5e7;
+      color: #744210;
+      border: 2px solid #fbd38d;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-secondary {
+      background: #48bb78;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #38a169;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      color: #2d3748;
+      margin: 0 0 1.5rem 0;
+      text-align: center;
+    }
+
+
+
+    .form-instructions {
+      color: #4a5568;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .data-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #cbd5e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      font-family: inherit;
+    }
+
+    .data-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-buttons .btn {
+      flex: 1;
+    }
+
+    .error-message {
+      color: #e53e3e;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      min-height: 1.5rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #a0aec0;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #f7fafc;
+      color: #2d3748;
+    }
+
+    @media (max-width: 768px) {
+      .app-container {
+        padding: 1rem;
+      }
+
+      .content-wrapper {
+        padding: 1.5rem;
+      }
+
+      .data-section {
+        grid-template-columns: 1fr;
+      }
+
+      .statistics {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .modal-buttons {
+        flex-direction: column;
+      }
+
+      .form-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-container">
+   <div class="content-wrapper">
+    <div class="header">
+     <h1 class="main-title" id="app-title">Outlier Investigator</h1>
+     <p class="subtitle" id="app-subtitle">Mean vs Median</p>
+     <div class="scenario-badge" id="scenario-name">
+      Class Test Scores
+     </div>
+    </div>
+    <div class="instructions" id="instructions-text">
+     Click the checkboxes to include or exclude values from your data set. Watch how the mean and median change!
+    </div>
+    <div class="data-section">
+     <div class="values-list">
+      <h3 class="values-title">Data Values</h3>
+      <div id="values-container"></div>
+     </div>
+     <div class="chart-container">
+      <h3 class="chart-title">Bar Chart</h3>
+      <div class="bar-chart" id="bar-chart">
+       <div class="y-axis-label">
+        Frequency
+       </div>
+       <div class="chart-area" id="chart-area"></div>
+       <div class="x-axis-label" id="x-axis-label">
+        Value
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="statistics">
+     <div class="stat-card">
+      <div class="stat-label">
+       Mean (Average)
+      </div>
+      <div class="stat-value" id="mean-value">
+       0
+      </div>
+     </div>
+     <div class="stat-card">
+      <div class="stat-label">
+       Median (Middle)
+      </div>
+      <div class="stat-value" id="median-value">
+       0
+      </div>
+     </div>
+    </div>
+    <div class="insight-box">
+     <h4 class="insight-title">💡 Insight</h4>
+     <p class="insight-text" id="insight-text">Select or deselect values to see how outliers affect the averages!</p>
+    </div>
+    <div class="questions-section">
+     <h3 class="questions-title">🤔 Think About It</h3>
+     <div class="question-item">
+      <div class="question-prompt" id="question-1">
+       Which measure of average seems more fair here?
+      </div><textarea class="question-input" id="answer-1" rows="2" placeholder="Type your answer here..."></textarea> <button class="check-answer-btn" onclick="checkAnswer(1)">Check Answer</button>
+      <div class="feedback" id="feedback-1"></div>
+     </div>
+     <div class="question-item">
+      <div class="question-prompt" id="question-2">
+       What happens if you remove the highest value only?
+      </div><textarea class="question-input" id="answer-2" rows="2" placeholder="Type your answer here..."></textarea> <button class="check-answer-btn" onclick="checkAnswer(2)">Check Answer</button>
+      <div class="feedback" id="feedback-2"></div>
+     </div>
+     <div class="question-item">
+      <div class="question-prompt" id="question-3">
+       What happens if you remove the lowest value only?
+      </div><textarea class="question-input" id="answer-3" rows="2" placeholder="Type your answer here..."></textarea> <button class="check-answer-btn" onclick="checkAnswer(3)">Check Answer</button>
+      <div class="feedback" id="feedback-3"></div>
+     </div>
+    </div>
+    <div class="button-group"><button class="btn btn-primary" id="reset-btn">Create Custom Data</button> <button class="btn btn-secondary" id="new-scenario-btn">New Scenario</button>
+    </div>
+   </div>
+   <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content">
+     <h2 class="modal-title">Create Your Own Data Set</h2>
+     <p class="form-instructions">Enter your own data values (separated by commas):</p><input type="text" class="data-input" id="data-input" placeholder="e.g. 10, 15, 12, 14, 30, 13">
+     <div class="form-buttons"><button class="btn btn-primary" id="submit-data-btn">Apply Data</button> <button class="btn btn-secondary" id="cancel-custom-btn">Cancel</button>
+     </div>
+     <div class="error-message" id="error-message"></div><button class="modal-close" id="modal-close">��</button>
+    </div>
+   </div>
+  </div>
+  <script>
+    const scenarios = [
+      {
+        name: "Class Test Scores",
+        values: [65, 72, 68, 70, 95, 69, 71, 67, 73, 66],
+        context: "test scores",
+        unit: "Score",
+        customData: null
+      },
+      {
+        name: "Sprint Times (seconds)",
+        values: [12.3, 11.8, 12.1, 11.9, 15.2, 12.0, 11.7, 12.2, 11.8, 12.0],
+        context: "sprint times",
+        unit: "Time (s)",
+        customData: null
+      },
+      {
+        name: "Daily Messages Sent",
+        values: [23, 28, 25, 27, 24, 26, 89, 25, 24, 27],
+        context: "messages",
+        unit: "Messages",
+        customData: null
+      },
+      {
+        name: "Weekly Study Hours",
+        values: [5, 6, 7, 5, 6, 22, 6, 5, 7, 6],
+        context: "study hours",
+        unit: "Hours",
+        customData: null
+      },
+      {
+        name: "Basketball Points Scored",
+        values: [12, 15, 14, 13, 16, 14, 2, 15, 13, 14],
+        context: "points scored",
+        unit: "Points",
+        customData: null
+      }
+    ];
+
+    let currentScenario = 0;
+    let dataState = [];
+    let originalData = [];
+
+    const defaultConfig = {
+      background_color: "#667eea",
+      surface_color: "#ffffff",
+      text_color: "#2d3748",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#48bb78",
+      font_family: "sans-serif",
+      font_size: 16,
+      app_title: "Outlier Investigator",
+      app_subtitle: "Mean vs Median",
+      instructions_text: "Click the checkboxes to include or exclude values from your data set. Watch how the mean and median change!",
+      question_1: "Which measure of average seems more fair here?",
+      question_2: "What happens if you remove the highest value only?",
+      question_3: "What happens if you remove the lowest value only?",
+      reset_button_text: "Create Custom Data",
+      new_scenario_button_text: "New Scenario"
+    };
+
+    function initializeScenario() {
+      const scenario = scenarios[currentScenario];
+      const values = scenario.customData || scenario.values;
+      originalData = values.map((value, index) => ({
+        value,
+        included: true,
+        id: index
+      }));
+      dataState = JSON.parse(JSON.stringify(originalData));
+      
+      document.getElementById('scenario-name').textContent = scenario.name;
+      document.getElementById('x-axis-label').textContent = scenario.unit;
+      renderValues();
+      updateCalculations();
+      clearAnswers();
+    }
+
+    function clearAnswers() {
+      document.getElementById('answer-1').value = '';
+      document.getElementById('answer-2').value = '';
+      document.getElementById('answer-3').value = '';
+      document.getElementById('feedback-1').classList.remove('show');
+      document.getElementById('feedback-2').classList.remove('show');
+      document.getElementById('feedback-3').classList.remove('show');
+    }
+
+    function renderValues() {
+      const container = document.getElementById('values-container');
+      container.innerHTML = '';
+      
+      dataState.forEach((item, index) => {
+        const div = document.createElement('div');
+        const isModified = item.value !== originalData[index].value;
+        div.className = `value-item ${!item.included ? 'excluded' : ''} ${isModified ? 'modified' : ''}`;
+        div.dataset.itemId = item.id;
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'value-checkbox';
+        checkbox.checked = item.included;
+        checkbox.setAttribute('aria-label', `Include value ${item.value}`);
+        checkbox.addEventListener('change', () => {
+          item.included = checkbox.checked;
+          renderValues();
+          updateCalculations();
+        });
+        
+        if (item.editing) {
+          const input = document.createElement('input');
+          input.type = 'number';
+          input.className = 'value-input';
+          input.value = item.value;
+          input.setAttribute('aria-label', `Edit value ${item.value}`);
+          
+          const actions = document.createElement('div');
+          actions.className = 'value-actions';
+          
+          const saveBtn = document.createElement('button');
+          saveBtn.className = 'value-btn save-btn';
+          saveBtn.textContent = '��';
+          saveBtn.setAttribute('aria-label', 'Save');
+          saveBtn.addEventListener('click', () => {
+            const newValue = parseFloat(input.value);
+            if (!isNaN(newValue)) {
+              item.value = newValue;
+              item.editing = false;
+              renderValues();
+              updateCalculations();
+            }
+          });
+          
+          const cancelBtn = document.createElement('button');
+          cancelBtn.className = 'value-btn cancel-btn';
+          cancelBtn.textContent = '✕';
+          cancelBtn.setAttribute('aria-label', 'Cancel');
+          cancelBtn.addEventListener('click', () => {
+            item.editing = false;
+            renderValues();
+          });
+          
+          actions.appendChild(saveBtn);
+          actions.appendChild(cancelBtn);
+          
+          div.appendChild(checkbox);
+          div.appendChild(input);
+          div.appendChild(actions);
+          
+          setTimeout(() => input.focus(), 0);
+        } else {
+          const number = document.createElement('span');
+          number.className = 'value-number';
+          number.textContent = item.value;
+          
+          const actions = document.createElement('div');
+          actions.className = 'value-actions';
+          
+          const editBtn = document.createElement('button');
+          editBtn.className = 'value-btn edit-btn';
+          editBtn.textContent = 'Edit';
+          editBtn.setAttribute('aria-label', 'Edit value');
+          editBtn.addEventListener('click', () => {
+            item.editing = true;
+            renderValues();
+          });
+          
+          const resetBtn = document.createElement('button');
+          resetBtn.className = 'value-btn reset-btn-small';
+          resetBtn.textContent = '↺';
+          resetBtn.setAttribute('aria-label', 'Reset to original');
+          resetBtn.addEventListener('click', () => {
+            item.value = originalData[index].value;
+            item.included = originalData[index].included;
+            renderValues();
+            updateCalculations();
+          });
+          
+          actions.appendChild(editBtn);
+          if (isModified || !item.included) {
+            actions.appendChild(resetBtn);
+          }
+          
+          div.appendChild(checkbox);
+          div.appendChild(number);
+          div.appendChild(actions);
+        }
+        
+        container.appendChild(div);
+      });
+    }
+
+    function updateCalculations() {
+      const includedValues = dataState.filter(item => item.included).map(item => item.value);
+      
+      if (includedValues.length === 0) {
+        document.getElementById('mean-value').textContent = '—';
+        document.getElementById('median-value').textContent = '—';
+        document.getElementById('insight-text').textContent = 'Include at least one value to calculate averages!';
+        renderBarChart();
+        return;
+      }
+      
+      const mean = includedValues.reduce((sum, val) => sum + val, 0) / includedValues.length;
+      const sortedValues = [...includedValues].sort((a, b) => a - b);
+      const median = sortedValues.length % 2 === 0
+        ? (sortedValues[sortedValues.length / 2 - 1] + sortedValues[sortedValues.length / 2]) / 2
+        : sortedValues[Math.floor(sortedValues.length / 2)];
+      
+      document.getElementById('mean-value').textContent = mean.toFixed(1);
+      document.getElementById('median-value').textContent = median.toFixed(1);
+      
+      generateInsight(mean, median, includedValues.length, dataState.length);
+      renderBarChart();
+    }
+
+    function generateInsight(mean, median, included, total) {
+      const excluded = total - included;
+      const difference = Math.abs(mean - median);
+      
+      let insight = '';
+      
+      if (excluded === 0) {
+        if (difference < 1) {
+          insight = 'The mean and median are very close! This suggests the data is fairly balanced with no strong outliers.';
+        } else if (difference < 3) {
+          insight = 'The mean and median are slightly different. There might be some outliers affecting the mean.';
+        } else {
+          insight = 'The mean and median are quite different! Outliers are pulling the mean away from the median.';
+        }
+      } else {
+        if (difference < 1) {
+          insight = `Removing ${excluded} value(s) made the mean closer to the median! The outliers were affecting the average.`;
+        } else if (difference < 3) {
+          insight = `With ${excluded} value(s) removed, the mean and median are becoming more similar.`;
+        } else {
+          insight = `Even with ${excluded} value(s) removed, there's still a difference. Try removing more extreme values!`;
+        }
+      }
+      
+      document.getElementById('insight-text').textContent = insight;
+    }
+
+    function renderBarChart() {
+      const chartArea = document.getElementById('chart-area');
+      chartArea.innerHTML = '';
+      
+      const frequencyMap = {};
+      dataState.forEach((item) => {
+        if (!frequencyMap[item.value]) {
+          frequencyMap[item.value] = { total: 0, included: 0 };
+        }
+        frequencyMap[item.value].total++;
+        if (item.included) {
+          frequencyMap[item.value].included++;
+        }
+      });
+      
+      const sortedValues = Object.keys(frequencyMap).sort((a, b) => parseFloat(a) - parseFloat(b));
+      const maxFrequency = Math.max(...Object.values(frequencyMap).map(f => f.included));
+      
+      if (maxFrequency === 0) {
+        chartArea.innerHTML = '<div style="text-align: center; color: #a0aec0; padding: 2rem;">No data selected</div>';
+        return;
+      }
+      
+      sortedValues.forEach((value) => {
+        const freq = frequencyMap[value];
+        const includedFreq = freq.included;
+        const hasExcluded = freq.total > freq.included;
+        
+        const barContainer = document.createElement('div');
+        barContainer.className = 'bar-container';
+        barContainer.style.height = '100%';
+        barContainer.style.justifyContent = 'flex-end';
+        
+        const bar = document.createElement('div');
+        bar.className = `bar ${hasExcluded ? 'excluded' : ''}`;
+        
+        if (includedFreq === 0) {
+          bar.style.height = '0px';
+        } else {
+          const heightPixels = (includedFreq / maxFrequency) * 180;
+          bar.style.height = `${heightPixels}px`;
+        }
+        
+        if (includedFreq > 0) {
+          const freqLabel = document.createElement('div');
+          freqLabel.className = 'bar-frequency';
+          freqLabel.textContent = includedFreq;
+          bar.appendChild(freqLabel);
+        }
+        
+        const label = document.createElement('div');
+        label.className = 'bar-label';
+        label.textContent = value;
+        
+        barContainer.appendChild(bar);
+        barContainer.appendChild(label);
+        chartArea.appendChild(barContainer);
+      });
+    }
+
+    function checkAnswer(questionNum) {
+      const answerInput = document.getElementById(`answer-${questionNum}`);
+      const feedback = document.getElementById(`feedback-${questionNum}`);
+      const answer = answerInput.value.trim().toLowerCase();
+      
+      if (!answer) {
+        feedback.className = 'feedback show partial';
+        feedback.textContent = '���� Please type an answer first!';
+        return;
+      }
+      
+      let response = '';
+      let isCorrect = false;
+      
+      if (questionNum === 1) {
+        const meanValue = parseFloat(document.getElementById('mean-value').textContent);
+        const medianValue = parseFloat(document.getElementById('median-value').textContent);
+        const difference = Math.abs(meanValue - medianValue);
+        
+        if (answer.includes('median') || answer.includes('middle')) {
+          if (difference > 2) {
+            response = '✅ Great thinking! The median is usually more representative when there are outliers, as it\'s not affected by extreme values.';
+            isCorrect = true;
+          } else {
+            response = '💭 Good thought! In this case, both measures are quite similar. When there are no strong outliers, either measure can be fair.';
+          }
+        } else if (answer.includes('mean') || answer.includes('average')) {
+          if (difference < 2) {
+            response = '✅ Good observation! When the mean and median are close together, the mean works well as it uses all the data.';
+            isCorrect = true;
+          } else {
+            response = '💭 Think about how the outliers might be pulling the mean away from the typical values. Which measure stays stable?';
+          }
+        } else {
+          response = '💭 Consider: which measure (mean or median) is affected more by extreme outliers?';
+        }
+      } else if (questionNum === 2) {
+        if (answer.includes('mean') || answer.includes('closer') || answer.includes('decrease') || answer.includes('lower') || answer.includes('change')) {
+          response = '✅ Excellent! Removing extreme values typically brings the mean closer to the median and better represents the typical value.';
+          isCorrect = true;
+        } else if (answer.includes('median') && (answer.includes('same') || answer.includes('stay') || answer.includes('not'))) {
+          response = '✅ Well spotted! The median often stays the same or changes very little when outliers are removed.';
+          isCorrect = true;
+        } else {
+          response = '💭 Try removing the highest value and observe what happens to both the mean and median. Which one changes more?';
+        }
+      } else if (questionNum === 3) {
+        if (answer.includes('mean') || answer.includes('increase') || answer.includes('higher') || answer.includes('change') || answer.includes('closer')) {
+          response = '✅ Great observation! Removing the lowest value typically increases the mean, showing how outliers on either end affect the average.';
+          isCorrect = true;
+        } else if (answer.includes('median') && (answer.includes('same') || answer.includes('stay') || answer.includes('not') || answer.includes('little'))) {
+          response = '✅ Excellent! The median is resistant to outliers on either end and often stays stable or changes very little.';
+          isCorrect = true;
+        } else {
+          response = '💭 Try removing the lowest value and observe what happens to the mean and median. Compare this to removing the highest value!';
+        }
+      }
+      
+      feedback.className = `feedback show ${isCorrect ? 'correct' : 'partial'}`;
+      feedback.textContent = response;
+    }
+
+    function showModal() {
+      document.getElementById('modal-overlay').classList.add('show');
+      document.getElementById('error-message').textContent = '';
+      setTimeout(() => document.getElementById('data-input').focus(), 100);
+    }
+
+    function hideModal() {
+      document.getElementById('modal-overlay').classList.remove('show');
+      document.getElementById('data-input').value = '';
+    }
+
+    function submitCustomData() {
+      const input = document.getElementById('data-input').value;
+      const errorMsg = document.getElementById('error-message');
+      
+      const values = input.split(',').map(v => v.trim()).filter(v => v);
+      const numbers = values.map(v => parseFloat(v));
+      
+      if (numbers.length < 3) {
+        errorMsg.textContent = '⚠️ Please enter at least 3 numbers.';
+        return;
+      }
+      
+      if (numbers.some(n => isNaN(n))) {
+        errorMsg.textContent = '⚠️ Please ensure all values are valid numbers.';
+        return;
+      }
+      
+      scenarios[currentScenario].customData = numbers;
+      initializeScenario();
+      hideModal();
+      document.getElementById('data-input').value = '';
+    }
+
+    function loadNewScenario() {
+      currentScenario = (currentScenario + 1) % scenarios.length;
+      initializeScenario();
+    }
+
+    document.getElementById('reset-btn').addEventListener('click', showModal);
+    document.getElementById('new-scenario-btn').addEventListener('click', loadNewScenario);
+    document.getElementById('modal-close').addEventListener('click', hideModal);
+    document.getElementById('submit-data-btn').addEventListener('click', submitCustomData);
+    document.getElementById('cancel-custom-btn').addEventListener('click', hideModal);
+    
+    document.getElementById('modal-overlay').addEventListener('click', (e) => {
+      if (e.target.id === 'modal-overlay') {
+        hideModal();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      updateCalculations();
+    });
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif';
+      const fontSize = config.font_size || defaultConfig.font_size;
+      
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const appContainer = document.querySelector('.app-container');
+      appContainer.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.primary_action_color || defaultConfig.primary_action_color} 100%)`;
+      
+      const contentWrapper = document.querySelector('.content-wrapper');
+      contentWrapper.style.background = config.surface_color || defaultConfig.surface_color;
+      
+      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+      document.getElementById('app-title').style.color = config.text_color || defaultConfig.text_color;
+      document.getElementById('app-title').style.fontSize = `${fontSize * 2}px`;
+      
+      document.getElementById('app-subtitle').textContent = config.app_subtitle || defaultConfig.app_subtitle;
+      document.getElementById('app-subtitle').style.color = config.primary_action_color || defaultConfig.primary_action_color;
+      document.getElementById('app-subtitle').style.fontSize = `${fontSize * 1.25}px`;
+      
+      document.getElementById('instructions-text').textContent = config.instructions_text || defaultConfig.instructions_text;
+      document.getElementById('instructions-text').style.fontSize = `${fontSize * 0.95}px`;
+      
+      document.getElementById('question-1').textContent = config.question_1 || defaultConfig.question_1;
+      document.getElementById('question-1').style.fontSize = `${fontSize * 0.95}px`;
+      
+      document.getElementById('question-2').textContent = config.question_2 || defaultConfig.question_2;
+      document.getElementById('question-2').style.fontSize = `${fontSize * 0.95}px`;
+      
+      document.getElementById('question-3').textContent = config.question_3 || defaultConfig.question_3;
+      document.getElementById('question-3').style.fontSize = `${fontSize * 0.95}px`;
+      
+      document.getElementById('reset-btn').textContent = config.reset_button_text || defaultConfig.reset_button_text;
+      document.getElementById('reset-btn').style.background = config.primary_action_color || defaultConfig.primary_action_color;
+      document.getElementById('reset-btn').style.fontSize = `${fontSize}px`;
+      
+      document.getElementById('new-scenario-btn').textContent = config.new_scenario_button_text || defaultConfig.new_scenario_button_text;
+      document.getElementById('new-scenario-btn').style.background = config.secondary_action_color || defaultConfig.secondary_action_color;
+      document.getElementById('new-scenario-btn').style.fontSize = `${fontSize}px`;
+      
+      const allText = document.querySelectorAll('.values-title, .chart-title, .stat-label, .insight-title, .questions-title');
+      allText.forEach(el => {
+        el.style.color = config.text_color || defaultConfig.text_color;
+      });
+      
+      const valueNumbers = document.querySelectorAll('.value-number');
+      valueNumbers.forEach(el => {
+        el.style.color = config.text_color || defaultConfig.text_color;
+        el.style.fontSize = `${fontSize * 1.1}px`;
+      });
+      
+      const statCards = document.querySelectorAll('.stat-card');
+      statCards.forEach(card => {
+        card.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color} 0%, ${config.background_color || defaultConfig.background_color} 100%)`;
+      });
+      
+      const bars = document.querySelectorAll('.bar');
+      bars.forEach(bar => {
+        if (!bar.classList.contains('excluded')) {
+          bar.style.background = config.primary_action_color || defaultConfig.primary_action_color;
+        }
+      });
+      
+      const checkBtns = document.querySelectorAll('.check-answer-btn');
+      checkBtns.forEach(btn => {
+        btn.style.fontSize = `${fontSize * 0.9}px`;
+      });
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["app_title", config.app_title || defaultConfig.app_title],
+          ["app_subtitle", config.app_subtitle || defaultConfig.app_subtitle],
+          ["instructions_text", config.instructions_text || defaultConfig.instructions_text],
+          ["question_1", config.question_1 || defaultConfig.question_1],
+          ["question_2", config.question_2 || defaultConfig.question_2],
+          ["question_3", config.question_3 || defaultConfig.question_3],
+          ["reset_button_text", config.reset_button_text || defaultConfig.reset_button_text],
+          ["new_scenario_button_text", config.new_scenario_button_text || defaultConfig.new_scenario_button_text]
+        ])
+      });
+    }
+
+    initializeScenario();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9af6561410ca26ad',t:'MTc2NTk3MzYyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

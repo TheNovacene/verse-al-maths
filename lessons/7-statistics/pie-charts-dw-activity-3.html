@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparing Pie Charts – SDG Fair Share</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+    .pie-slice {
+      transition: transform 0.2s ease, filter 0.2s ease;
+      transform-origin: center;
+    }
+    .pie-slice:hover, .pie-slice.highlighted {
+      filter: brightness(1.15);
+      cursor: pointer;
+    }
+    .pie-slice.dimmed {
+      opacity: 0.3;
+    }
+    .category-row:hover {
+      background: rgba(99, 102, 241, 0.1);
+    }
+    .category-row.selected {
+      background: rgba(99, 102, 241, 0.2);
+    }
+    .gradient-header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%);
+    }
+    .card-shadow {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    .input-focus:focus {
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 overflow-auto">
+  <div class="w-full min-h-full p-4 md:p-6"><!-- Header -->
+   <header class="gradient-header rounded-2xl p-5 mb-6 text-white card-shadow animate-in">
+    <h1 id="main-title" class="text-2xl md:text-3xl font-extrabold text-center tracking-tight">🥧 Comparing Pie Charts – SDG Fair Share</h1>
+    <p id="instruction-text" class="text-center text-indigo-100 mt-2 text-sm md:text-base">Select a scenario to compare data distributions, or create your own comparison story!</p>
+   </header><!-- Scenario Selector -->
+   <div class="bg-white rounded-xl p-4 mb-5 card-shadow animate-in" style="animation-delay: 0.1s">
+    <div class="flex flex-wrap items-center gap-3"><label class="font-bold text-indigo-900 text-sm">Choose Scenario:</label> <select id="scenario-select" class="flex-1 min-w-48 px-4 py-2 border-2 border-indigo-200 rounded-lg text-indigo-900 font-semibold input-focus focus:border-indigo-500 focus:outline-none transition-all"> <option value="sdg10">🎯 SDG 10: Government Budget (Region A vs B)</option> <option value="sdg11">🏙️ SDG 11: Transport Modes (City A vs B)</option> <option value="sdg7">⚡ SDG 7: Energy Mix (Country X vs Y)</option> <option value="custom">✏️ My Fair Share Story (Create Your Own)</option> </select>
+    </div>
+   </div><!-- Custom Input Section (Hidden by default) -->
+   <div id="custom-section" class="hidden bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-5 mb-5 card-shadow border-2 border-amber-200 animate-in">
+    <h3 class="font-bold text-amber-800 text-lg mb-4">📝 Create Your Own Comparison</h3>
+    <div class="mb-4"><label class="block text-amber-700 font-semibold mb-1 text-sm">Context Title:</label> <input type="text" id="custom-context" placeholder="e.g., How my school spends its budget" class="w-full px-4 py-2 border-2 border-amber-300 rounded-lg input-focus focus:border-amber-500 focus:outline-none">
+    </div>
+    <div class="mb-4"><label class="block text-amber-700 font-semibold mb-1 text-sm">Pie A Label:</label> <input type="text" id="pie-a-label" placeholder="e.g., Last Year" class="w-full px-4 py-2 border-2 border-amber-300 rounded-lg input-focus focus:border-amber-500 focus:outline-none">
+    </div>
+    <div class="mb-4"><label class="block text-amber-700 font-semibold mb-1 text-sm">Pie B Label:</label> <input type="text" id="pie-b-label" placeholder="e.g., This Year" class="w-full px-4 py-2 border-2 border-amber-300 rounded-lg input-focus focus:border-amber-500 focus:outline-none">
+    </div>
+    <div class="grid md:grid-cols-2 gap-4 mb-4">
+     <div><label class="block text-amber-700 font-semibold mb-1 text-sm">Categories (one per line):</label> <textarea id="custom-categories" rows="5" placeholder="Education
+Health
+Transport
+Other" class="w-full px-4 py-2 border-2 border-amber-300 rounded-lg input-focus focus:border-amber-500 focus:outline-none text-sm"></textarea>
+     </div>
+     <div class="grid grid-cols-2 gap-3">
+      <div><label class="block text-amber-700 font-semibold mb-1 text-sm">Pie A %:</label> <textarea id="custom-pie-a" rows="5" placeholder="40
+25
+20
+15" class="w-full px-4 py-2 border-2 border-amber-300 rounded-lg input-focus focus:border-amber-500 focus:outline-none text-sm"></textarea>
+      </div>
+      <div><label class="block text-amber-700 font-semibold mb-1 text-sm">Pie B %:</label> <textarea id="custom-pie-b" rows="5" placeholder="35
+30
+25
+10" class="w-full px-4 py-2 border-2 border-amber-300 rounded-lg input-focus focus:border-amber-500 focus:outline-none text-sm"></textarea>
+      </div>
+     </div>
+    </div><button id="generate-custom" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02]"> 🎨 Generate My Pie Charts </button>
+    <p id="custom-error" class="text-red-600 text-sm mt-2 hidden"></p>
+   </div><!-- Context Description -->
+   <div id="context-box" class="bg-white rounded-xl p-4 mb-5 card-shadow animate-in" style="animation-delay: 0.15s">
+    <p id="context-description" class="text-indigo-800 font-semibold text-center"></p>
+   </div><!-- Pie Charts Container -->
+   <div class="grid md:grid-cols-2 gap-5 mb-5"><!-- Pie A -->
+    <div class="bg-white rounded-xl p-4 card-shadow animate-in" style="animation-delay: 0.2s">
+     <h3 id="pie-a-title" class="font-bold text-indigo-900 text-center text-lg mb-3">Pie A</h3>
+     <div class="flex justify-center">
+      <svg id="pie-a-svg" viewbox="0 0 200 200" class="w-48 h-48 md:w-56 md:h-56"></svg>
+     </div>
+    </div><!-- Pie B -->
+    <div class="bg-white rounded-xl p-4 card-shadow animate-in" style="animation-delay: 0.25s">
+     <h3 id="pie-b-title" class="font-bold text-indigo-900 text-center text-lg mb-3">Pie B</h3>
+     <div class="flex justify-center">
+      <svg id="pie-b-svg" viewbox="0 0 200 200" class="w-48 h-48 md:w-56 md:h-56"></svg>
+     </div>
+    </div>
+   </div><!-- Comparison Bar (shows when category selected) -->
+   <div id="comparison-bar-section" class="hidden bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4 mb-5 card-shadow border-2 border-indigo-200 animate-in">
+    <h4 class="font-bold text-indigo-800 mb-3 text-center">📊 Category Comparison: <span id="selected-category-name" class="text-purple-600"></span></h4>
+    <div class="flex items-center gap-4 justify-center">
+     <div class="text-center">
+      <div id="bar-a" class="h-8 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg transition-all duration-500"></div>
+      <p id="bar-a-label" class="text-sm font-semibold text-indigo-700 mt-1">Pie A: 0%</p>
+     </div>
+     <div class="text-center">
+      <div id="bar-b" class="h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg transition-all duration-500"></div>
+      <p id="bar-b-label" class="text-sm font-semibold text-purple-700 mt-1">Pie B: 0%</p>
+     </div>
+    </div>
+    <p id="difference-text" class="text-center mt-3 font-bold text-lg"></p>
+   </div><!-- Data Table -->
+   <div class="bg-white rounded-xl p-4 mb-5 card-shadow animate-in" style="animation-delay: 0.3s">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+     <h3 class="font-bold text-indigo-900 text-lg">📋 Data Table</h3>
+     <div class="flex items-center gap-2"><span class="text-sm font-semibold text-indigo-700">View:</span> <button id="view-percent" class="px-3 py-1 rounded-lg text-sm font-semibold bg-indigo-600 text-white transition-all">Percentages</button> <button id="view-freq" class="px-3 py-1 rounded-lg text-sm font-semibold bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition-all">Frequencies</button>
+     </div>
+    </div>
+    <p class="text-indigo-600 text-sm mb-3">💡 Click a category row to highlight it in both pie charts!</p>
+    <div class="overflow-x-auto">
+     <table class="w-full text-sm">
+      <thead>
+       <tr class="bg-gradient-to-r from-indigo-100 to-purple-100">
+        <th class="px-4 py-3 text-left font-bold text-indigo-900 rounded-tl-lg">Category</th>
+        <th id="col-a-header" class="px-4 py-3 text-center font-bold text-indigo-900">Pie A</th>
+        <th id="col-b-header" class="px-4 py-3 text-center font-bold text-indigo-900">Pie B</th>
+        <th class="px-4 py-3 text-center font-bold text-indigo-900 rounded-tr-lg">Difference</th>
+       </tr>
+      </thead>
+      <tbody id="data-table-body"></tbody>
+     </table>
+    </div>
+   </div><!-- Guided Questions -->
+   <div class="bg-white rounded-xl p-5 mb-5 card-shadow animate-in" style="animation-delay: 0.35s">
+    <h3 class="font-bold text-indigo-900 text-lg mb-4">🤔 Guided Questions</h3>
+    <div id="questions-container" class="space-y-4"></div>
+   </div><!-- Legend -->
+   <div class="bg-white rounded-xl p-4 card-shadow animate-in" style="animation-delay: 0.4s">
+    <h3 class="font-bold text-indigo-900 text-lg mb-3">🎨 Legend</h3>
+    <div id="legend-container" class="flex flex-wrap gap-3 justify-center"></div>
+   </div><!-- Footer -->
+   <footer class="text-center text-indigo-400 text-xs mt-6 pb-4">
+    GCSE Maths • SDG Fair Share Explorer • KS4 Learning Tool
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: '🥧 Comparing Pie Charts – SDG Fair Share',
+      instruction_text: 'Select a scenario to compare data distributions, or create your own comparison story!'
+    };
+
+    // Scenario data
+    const scenarios = {
+      sdg10: {
+        name: 'SDG 10: Reduced Inequalities',
+        context: 'Government budget allocation comparing Region A (less developed) and Region B (more developed)',
+        pieALabel: 'Region A',
+        pieBLabel: 'Region B',
+        categories: ['Education', 'Health', 'Transport', 'Housing', 'Other'],
+        pieA: [15, 20, 10, 12, 43],
+        pieB: [28, 25, 18, 15, 14],
+        frequencies: { pieA: [150, 200, 100, 120, 430], pieB: [280, 250, 180, 150, 140] },
+        questions: [
+          { q: 'Which category shows the biggest increase in share from Region A to Region B?', hint: 'Compare the percentages for each category.' },
+          { q: 'What does the "Other" category change suggest about government priorities?', hint: 'Think about what "Other" might include and why it decreased.' },
+          { q: 'In terms of reducing inequalities (SDG 10), which region\'s budget seems fairer? Why?', hint: 'Consider which services help reduce inequality the most.' }
+        ]
+      },
+      sdg11: {
+        name: 'SDG 11: Sustainable Cities',
+        context: 'Transport modes used by residents in City A (car-dependent) vs City B (sustainable-focused)',
+        pieALabel: 'City A (Car-Dependent)',
+        pieBLabel: 'City B (Sustainable)',
+        categories: ['Walking', 'Cycling', 'Public Transport', 'Car', 'Other'],
+        pieA: [8, 5, 15, 65, 7],
+        pieB: [22, 18, 35, 18, 7],
+        frequencies: { pieA: [80, 50, 150, 650, 70], pieB: [220, 180, 350, 180, 70] },
+        questions: [
+          { q: 'Which sustainable transport modes have increased their share in City B?', hint: 'Look at walking, cycling, and public transport.' },
+          { q: 'By how much has car usage decreased as a proportion?', hint: 'Calculate the difference between the two percentages.' },
+          { q: 'What policies might City B have implemented to achieve this change?', hint: 'Think about bike lanes, bus routes, pedestrian areas.' }
+        ]
+      },
+      sdg7: {
+        name: 'SDG 7: Affordable & Clean Energy',
+        context: 'Electricity generation mix comparing Country X (fossil-heavy) vs Country Y (transitioning)',
+        pieALabel: 'Country X',
+        pieBLabel: 'Country Y',
+        categories: ['Coal', 'Gas', 'Renewables', 'Nuclear', 'Other'],
+        pieA: [45, 30, 10, 10, 5],
+        pieB: [15, 20, 45, 15, 5],
+        frequencies: { pieA: [450, 300, 100, 100, 50], pieB: [150, 200, 450, 150, 50] },
+        questions: [
+          { q: 'Which energy source has increased the most in Country Y?', hint: 'Compare the renewable percentages.' },
+          { q: 'What is the total percentage of fossil fuels (Coal + Gas) in each country?', hint: 'Add coal and gas together for each.' },
+          { q: 'Is Country Y\'s energy mix better for the SDG 7 goal? Explain.', hint: 'Think about clean energy and sustainability.' }
+        ]
+      }
+    };
+
+    // Color palette for categories
+    const colors = [
+      '#6366f1', // Indigo
+      '#8b5cf6', // Purple
+      '#ec4899', // Pink
+      '#f59e0b', // Amber
+      '#10b981', // Emerald
+      '#06b6d4', // Cyan
+      '#f43f5e', // Rose
+      '#84cc16'  // Lime
+    ];
+
+    // State
+    let currentScenario = 'sdg10';
+    let currentData = null;
+    let selectedCategory = null;
+    let viewMode = 'percent';
+    let config = { ...defaultConfig };
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['instruction_text', cfg.instruction_text || defaultConfig.instruction_text]
+        ])
+      });
+    }
+
+    function updateUI() {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('instruction-text').textContent = config.instruction_text || defaultConfig.instruction_text;
+    }
+
+    // Pie chart drawing function
+    function drawPie(svgId, data, categories) {
+      const svg = document.getElementById(svgId);
+      svg.innerHTML = '';
+      
+      const total = data.reduce((a, b) => a + b, 0);
+      const cx = 100, cy = 100, r = 80;
+      let startAngle = -90;
+      
+      data.forEach((value, index) => {
+        const percentage = (value / total) * 100;
+        const angle = (percentage / 100) * 360;
+        const endAngle = startAngle + angle;
+        
+        const startRad = (startAngle * Math.PI) / 180;
+        const endRad = (endAngle * Math.PI) / 180;
+        
+        const x1 = cx + r * Math.cos(startRad);
+        const y1 = cy + r * Math.sin(startRad);
+        const x2 = cx + r * Math.cos(endRad);
+        const y2 = cy + r * Math.sin(endRad);
+        
+        const largeArc = angle > 180 ? 1 : 0;
+        
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const d = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+        path.setAttribute('d', d);
+        path.setAttribute('fill', colors[index % colors.length]);
+        path.setAttribute('class', `pie-slice slice-${index}`);
+        path.setAttribute('data-category', categories[index]);
+        path.setAttribute('data-index', index);
+        
+        // Add tooltip
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        title.textContent = `${categories[index]}: ${percentage.toFixed(1)}%`;
+        path.appendChild(title);
+        
+        // Click handler
+        path.addEventListener('click', () => selectCategory(index));
+        
+        svg.appendChild(path);
+        startAngle = endAngle;
+      });
+    }
+
+    // Update data table
+    function updateTable() {
+      const tbody = document.getElementById('data-table-body');
+      tbody.innerHTML = '';
+      
+      if (!currentData) return;
+      
+      const { categories, pieA, pieB, frequencies } = currentData;
+      
+      document.getElementById('col-a-header').textContent = currentData.pieALabel || 'Pie A';
+      document.getElementById('col-b-header').textContent = currentData.pieBLabel || 'Pie B';
+      
+      categories.forEach((cat, index) => {
+        const tr = document.createElement('tr');
+        tr.className = `category-row border-b border-indigo-100 cursor-pointer transition-all ${selectedCategory === index ? 'selected' : ''}`;
+        tr.setAttribute('data-index', index);
+        tr.addEventListener('click', () => selectCategory(index));
+        
+        let valA, valB;
+        if (viewMode === 'percent') {
+          valA = `${pieA[index]}%`;
+          valB = `${pieB[index]}%`;
+        } else {
+          valA = frequencies?.pieA?.[index] ?? Math.round(pieA[index] * 10);
+          valB = frequencies?.pieB?.[index] ?? Math.round(pieB[index] * 10);
+        }
+        
+        const diff = pieB[index] - pieA[index];
+        const diffColor = diff > 0 ? 'text-emerald-600' : diff < 0 ? 'text-rose-600' : 'text-gray-500';
+        const diffText = diff > 0 ? `+${diff}%` : `${diff}%`;
+        
+        tr.innerHTML = `
+          <td class="px-4 py-3 font-semibold text-indigo-900">
+            <span class="inline-block w-3 h-3 rounded-full mr-2" style="background: ${colors[index % colors.length]}"></span>
+            ${cat}
+          </td>
+          <td class="px-4 py-3 text-center font-medium text-indigo-700">${valA}</td>
+          <td class="px-4 py-3 text-center font-medium text-purple-700">${valB}</td>
+          <td class="px-4 py-3 text-center font-bold ${diffColor}">${diffText}</td>
+        `;
+        
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Update legend
+    function updateLegend() {
+      const container = document.getElementById('legend-container');
+      container.innerHTML = '';
+      
+      if (!currentData) return;
+      
+      currentData.categories.forEach((cat, index) => {
+        const item = document.createElement('div');
+        item.className = `flex items-center gap-2 px-3 py-1 rounded-full cursor-pointer transition-all hover:bg-indigo-100 ${selectedCategory === index ? 'bg-indigo-200 ring-2 ring-indigo-400' : 'bg-gray-100'}`;
+        item.innerHTML = `
+          <span class="w-4 h-4 rounded-full" style="background: ${colors[index % colors.length]}"></span>
+          <span class="text-sm font-semibold text-indigo-900">${cat}</span>
+        `;
+        item.addEventListener('click', () => selectCategory(index));
+        container.appendChild(item);
+      });
+    }
+
+    // Update questions
+    function updateQuestions() {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = '';
+      
+      if (!currentData || !currentData.questions) return;
+      
+      currentData.questions.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4';
+        div.innerHTML = `
+          <p class="font-semibold text-indigo-900 mb-2">${index + 1}. ${item.q}</p>
+          <p class="text-xs text-indigo-500 mb-2">💡 Hint: ${item.hint}</p>
+          <textarea class="w-full px-3 py-2 border-2 border-indigo-200 rounded-lg text-sm input-focus focus:border-indigo-500 focus:outline-none resize-none" rows="2" placeholder="Type your answer here..."></textarea>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Select category for highlighting
+    function selectCategory(index) {
+      if (selectedCategory === index) {
+        selectedCategory = null;
+        document.getElementById('comparison-bar-section').classList.add('hidden');
+      } else {
+        selectedCategory = index;
+        showComparison(index);
+      }
+      
+      // Update pie slices
+      document.querySelectorAll('.pie-slice').forEach(slice => {
+        const sliceIndex = parseInt(slice.getAttribute('data-index'));
+        slice.classList.remove('highlighted', 'dimmed');
+        if (selectedCategory !== null) {
+          if (sliceIndex === selectedCategory) {
+            slice.classList.add('highlighted');
+          } else {
+            slice.classList.add('dimmed');
+          }
+        }
+      });
+      
+      // Update table rows
+      document.querySelectorAll('.category-row').forEach(row => {
+        const rowIndex = parseInt(row.getAttribute('data-index'));
+        row.classList.toggle('selected', rowIndex === selectedCategory);
+      });
+      
+      updateLegend();
+    }
+
+    // Show comparison bar
+    function showComparison(index) {
+      if (!currentData) return;
+      
+      const section = document.getElementById('comparison-bar-section');
+      section.classList.remove('hidden');
+      
+      const { categories, pieA, pieB, pieALabel, pieBLabel } = currentData;
+      const catName = categories[index];
+      const valA = pieA[index];
+      const valB = pieB[index];
+      const diff = valB - valA;
+      
+      document.getElementById('selected-category-name').textContent = catName;
+      document.getElementById('bar-a').style.width = `${Math.max(valA * 2, 20)}px`;
+      document.getElementById('bar-b').style.width = `${Math.max(valB * 2, 20)}px`;
+      document.getElementById('bar-a-label').textContent = `${pieALabel || 'Pie A'}: ${valA}%`;
+      document.getElementById('bar-b-label').textContent = `${pieBLabel || 'Pie B'}: ${valB}%`;
+      
+      const diffText = document.getElementById('difference-text');
+      if (diff > 0) {
+        diffText.textContent = `📈 Increased by ${diff} percentage points`;
+        diffText.className = 'text-center mt-3 font-bold text-lg text-emerald-600';
+      } else if (diff < 0) {
+        diffText.textContent = `📉 Decreased by ${Math.abs(diff)} percentage points`;
+        diffText.className = 'text-center mt-3 font-bold text-lg text-rose-600';
+      } else {
+        diffText.textContent = `➡️ No change (same percentage)`;
+        diffText.className = 'text-center mt-3 font-bold text-lg text-gray-600';
+      }
+    }
+
+    // Load scenario
+    function loadScenario(scenarioId) {
+      currentScenario = scenarioId;
+      selectedCategory = null;
+      document.getElementById('comparison-bar-section').classList.add('hidden');
+      
+      if (scenarioId === 'custom') {
+        document.getElementById('custom-section').classList.remove('hidden');
+        document.getElementById('context-box').classList.add('hidden');
+        return;
+      }
+      
+      document.getElementById('custom-section').classList.add('hidden');
+      document.getElementById('context-box').classList.remove('hidden');
+      
+      const scenario = scenarios[scenarioId];
+      currentData = { ...scenario };
+      
+      document.getElementById('context-description').textContent = `${scenario.name}: ${scenario.context}`;
+      document.getElementById('pie-a-title').textContent = scenario.pieALabel;
+      document.getElementById('pie-b-title').textContent = scenario.pieBLabel;
+      
+      drawPie('pie-a-svg', scenario.pieA, scenario.categories);
+      drawPie('pie-b-svg', scenario.pieB, scenario.categories);
+      updateTable();
+      updateLegend();
+      updateQuestions();
+    }
+
+    // Generate custom pies
+    function generateCustomPies() {
+      const context = document.getElementById('custom-context').value.trim() || 'My Custom Comparison';
+      const pieALabel = document.getElementById('pie-a-label').value.trim() || 'Pie A';
+      const pieBLabel = document.getElementById('pie-b-label').value.trim() || 'Pie B';
+      const categoriesText = document.getElementById('custom-categories').value.trim();
+      const pieAText = document.getElementById('custom-pie-a').value.trim();
+      const pieBText = document.getElementById('custom-pie-b').value.trim();
+      
+      const errorEl = document.getElementById('custom-error');
+      
+      if (!categoriesText || !pieAText || !pieBText) {
+        errorEl.textContent = '⚠️ Please fill in all fields: categories, Pie A percentages, and Pie B percentages.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      
+      const categories = categoriesText.split('\n').map(s => s.trim()).filter(s => s);
+      const pieA = pieAText.split('\n').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+      const pieB = pieBText.split('\n').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+      
+      if (categories.length < 2) {
+        errorEl.textContent = '⚠️ Please enter at least 2 categories.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      
+      if (categories.length !== pieA.length || categories.length !== pieB.length) {
+        errorEl.textContent = `⚠️ Number of values must match! You have ${categories.length} categories but ${pieA.length} values for Pie A and ${pieB.length} values for Pie B.`;
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      
+      const sumA = pieA.reduce((a, b) => a + b, 0);
+      const sumB = pieB.reduce((a, b) => a + b, 0);
+      
+      if (Math.abs(sumA - 100) > 5 || Math.abs(sumB - 100) > 5) {
+        errorEl.textContent = `⚠️ Percentages should sum to approximately 100%. Pie A sums to ${sumA}%, Pie B sums to ${sumB}%.`;
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      
+      errorEl.classList.add('hidden');
+      
+      currentData = {
+        name: 'Custom Comparison',
+        context: context,
+        pieALabel,
+        pieBLabel,
+        categories,
+        pieA,
+        pieB,
+        frequencies: null,
+        questions: [
+          { q: 'Which category shows the biggest change between the two pies?', hint: 'Look at the difference column in the table.' },
+          { q: 'Is this change a positive or negative development in your context?', hint: 'Think about what the categories represent.' },
+          { q: 'What might have caused this change?', hint: 'Consider real-world factors that could affect these proportions.' }
+        ]
+      };
+      
+      document.getElementById('context-box').classList.remove('hidden');
+      document.getElementById('context-description').textContent = context;
+      document.getElementById('pie-a-title').textContent = pieALabel;
+      document.getElementById('pie-b-title').textContent = pieBLabel;
+      
+      selectedCategory = null;
+      document.getElementById('comparison-bar-section').classList.add('hidden');
+      
+      drawPie('pie-a-svg', pieA, categories);
+      drawPie('pie-b-svg', pieB, categories);
+      updateTable();
+      updateLegend();
+      updateQuestions();
+    }
+
+    // Event listeners
+    document.getElementById('scenario-select').addEventListener('change', (e) => {
+      loadScenario(e.target.value);
+    });
+
+    document.getElementById('generate-custom').addEventListener('click', (e) => {
+      e.preventDefault();
+      generateCustomPies();
+    });
+
+    document.getElementById('view-percent').addEventListener('click', () => {
+      viewMode = 'percent';
+      document.getElementById('view-percent').className = 'px-3 py-1 rounded-lg text-sm font-semibold bg-indigo-600 text-white transition-all';
+      document.getElementById('view-freq').className = 'px-3 py-1 rounded-lg text-sm font-semibold bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition-all';
+      updateTable();
+    });
+
+    document.getElementById('view-freq').addEventListener('click', () => {
+      viewMode = 'frequency';
+      document.getElementById('view-freq').className = 'px-3 py-1 rounded-lg text-sm font-semibold bg-indigo-600 text-white transition-all';
+      document.getElementById('view-percent').className = 'px-3 py-1 rounded-lg text-sm font-semibold bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition-all';
+      updateTable();
+    });
+
+    // Initialize
+    loadScenario('sdg10');
+    updateUI();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c3f199f2650e341',t:'MTc2OTQyMDk2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

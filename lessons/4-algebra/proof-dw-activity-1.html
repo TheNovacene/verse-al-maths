@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Proof Tool</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #4a5568;
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .statement-section {
+            margin-bottom: 30px;
+        }
+
+        .statement-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .statement-card {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .statement-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .statement-card.selected {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+
+        .statement-card h3 {
+            margin: 0 0 10px 0;
+            color: #2d3748;
+            font-size: 1.1rem;
+        }
+
+        .statement-card p {
+            margin: 0;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .proof-workspace {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .toolbox {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .toolbox h3 {
+            margin: 0 0 20px 0;
+            color: #2d3748;
+            text-align: center;
+        }
+
+        .tool-category {
+            margin-bottom: 20px;
+        }
+
+        .tool-category h4 {
+            margin: 0 0 10px 0;
+            color: #4a5568;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .draggable-item {
+            background: white;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            cursor: grab;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            user-select: none;
+        }
+
+        .draggable-item:hover {
+            border-color: #667eea;
+            transform: scale(1.02);
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+
+        .proof-area {
+            background: #ffffff;
+            border: 3px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 30px;
+            min-height: 400px;
+            position: relative;
+        }
+
+        .proof-area.drag-over {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .proof-step {
+            background: #e6fffa;
+            border: 2px solid #38b2ac;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+            cursor: move;
+        }
+
+        .proof-step .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            background: #e53e3e;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #a0aec0;
+            font-style: italic;
+            margin-top: 100px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .feedback.success {
+            background: #f0fff4;
+            border: 2px solid #68d391;
+            color: #22543d;
+        }
+
+        .feedback.info {
+            background: #ebf8ff;
+            border: 2px solid #63b3ed;
+            color: #2a4365;
+        }
+
+        .custom-statement {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .custom-statement input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .proof-workspace {
+                grid-template-columns: 1fr;
+            }
+            
+            .statement-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🧮 Interactive Proof Tool</h1>
+            <p>Explore mathematical proofs through drag-and-drop reasoning</p>
+        </header>
+
+        <section class="statement-section">
+            <h2>Choose a Statement to Prove:</h2>
+            <div class="statement-cards">
+                <div class="statement-card" data-statement="odd-sum">
+                    <h3>Sum of Odd Numbers</h3>
+                    <p>"The sum of two odd numbers is even"</p>
+                </div>
+                <div class="statement-card" data-statement="n-squared">
+                    <h3>n² - n Property</h3>
+                    <p>"n² - n is always even"</p>
+                </div>
+                <div class="statement-card" data-statement="even-square">
+                    <h3>Even Number Squares</h3>
+                    <p>"The square of an even number is divisible by 4"</p>
+                </div>
+                <div class="statement-card" data-statement="prime-trick">
+                    <h3>Prime Numbers</h3>
+                    <p>"All primes > 2 are odd" (Find the issue!)</p>
+                </div>
+                <div class="statement-card" data-statement="triangle-angles">
+                    <h3>Triangle Angles</h3>
+                    <p>"Angles in a triangle add to 180°"</p>
+                </div>
+            </div>
+
+            <div class="custom-statement">
+                <h3>Create Your Own Statement:</h3>
+                <input type="text" id="customStatement" placeholder="Enter your mathematical statement to prove...">
+                <button class="btn btn-secondary" onclick="addCustomStatement()">Add Statement</button>
+            </div>
+        </section>
+
+        <div class="proof-workspace" id="workspace" style="display: none;">
+            <div class="toolbox">
+                <h3>Proof Building Blocks</h3>
+                
+                <div class="tool-category">
+                    <h4>Definitions</h4>
+                    <div id="definitions"></div>
+                </div>
+
+                <div class="tool-category">
+                    <h4>Algebraic Steps</h4>
+                    <div id="algebra"></div>
+                </div>
+
+                <div class="tool-category">
+                    <h4>Logic Connectors</h4>
+                    <div id="logic"></div>
+                </div>
+
+                <div class="tool-category">
+                    <h4>Conclusions</h4>
+                    <div id="conclusions"></div>
+                </div>
+            </div>
+
+            <div class="proof-area" id="proofArea">
+                <div class="empty-state">
+                    <p>Drag proof steps here to build your argument</p>
+                    <p>📝 Start with definitions, then work through logical steps</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="checkProof()" id="checkBtn" style="display: none;">Check My Proof</button>
+            <button class="btn btn-secondary" onclick="resetProof()">Reset</button>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        let currentStatement = null;
+        let proofSteps = [];
+        let draggedElement = null;
+
+        const statements = {
+            'odd-sum': {
+                title: 'The sum of two odd numbers is even',
+                tools: {
+                    definitions: [
+                        'Let the first odd number be 2k + 1',
+                        'Let the second odd number be 2m + 1',
+                        'An even number has the form 2n',
+                        'k and m are integers'
+                    ],
+                    algebra: [
+                        '(2k + 1) + (2m + 1)',
+                        '= 2k + 2m + 2',
+                        '= 2(k + m + 1)',
+                        'Let n = k + m + 1'
+                    ],
+                    logic: [
+                        'Therefore',
+                        'Since',
+                        'This implies',
+                        'We can conclude'
+                    ],
+                    conclusions: [
+                        'The sum equals 2n, which is even',
+                        'This proves our statement',
+                        'QED (Quod Erat Demonstrandum)'
+                    ]
+                },
+                correctOrder: [
+                    'Let the first odd number be 2k + 1',
+                    'Let the second odd number be 2m + 1',
+                    '(2k + 1) + (2m + 1)',
+                    '= 2k + 2m + 2',
+                    '= 2(k + m + 1)',
+                    'The sum equals 2n, which is even'
+                ]
+            },
+            'n-squared': {
+                title: 'n² - n is always even',
+                tools: {
+                    definitions: [
+                        'Let n be any integer',
+                        'Factor n² - n as n(n - 1)',
+                        'Consecutive integers: n and (n - 1)'
+                    ],
+                    algebra: [
+                        'n² - n = n(n - 1)',
+                        'One of n or (n-1) must be even',
+                        'Even × Odd = Even',
+                        'Odd × Even = Even'
+                    ],
+                    logic: [
+                        'Therefore',
+                        'Since',
+                        'In both cases',
+                        'This means'
+                    ],
+                    conclusions: [
+                        'n(n - 1) is always even',
+                        'This proves n² - n is even',
+                        'QED'
+                    ]
+                }
+            },
+            'even-square': {
+                title: 'The square of an even number is divisible by 4',
+                tools: {
+                    definitions: [
+                        'Let the even number be 2k',
+                        'k is an integer',
+                        'Divisible by 4 means = 4m for some integer m'
+                    ],
+                    algebra: [
+                        '(2k)² = 4k²',
+                        'Let m = k²',
+                        '4k² = 4m'
+                    ],
+                    logic: [
+                        'Therefore',
+                        'Since k² is an integer',
+                        'This shows'
+                    ],
+                    conclusions: [
+                        '(2k)² is divisible by 4',
+                        'This proves our statement',
+                        'QED'
+                    ]
+                }
+            },
+            'prime-trick': {
+                title: 'All primes > 2 are odd (Find the issue!)',
+                tools: {
+                    definitions: [
+                        'A prime has exactly two factors: 1 and itself',
+                        'Even numbers are divisible by 2',
+                        'The number 2 is prime'
+                    ],
+                    algebra: [
+                        'If p > 2 and p is even, then p = 2k',
+                        'This means p is divisible by 2',
+                        'So p has factors: 1, 2, k, p'
+                    ],
+                    logic: [
+                        'Therefore',
+                        'This contradicts the definition',
+                        'Hence'
+                    ],
+                    conclusions: [
+                        'No even number > 2 can be prime',
+                        'All primes > 2 must be odd',
+                        'Statement is TRUE! (No issue found)'
+                    ]
+                }
+            },
+            'triangle-angles': {
+                title: 'Angles in a triangle add to 180°',
+                tools: {
+                    definitions: [
+                        'Draw triangle ABC with angles α, β, γ',
+                        'Draw line through A parallel to BC',
+                        'Parallel lines create equal alternate angles'
+                    ],
+                    algebra: [
+                        'Angles on straight line = 180°',
+                        'α + β + γ = 180°'
+                    ],
+                    logic: [
+                        'By parallel line properties',
+                        'Therefore',
+                        'This proves'
+                    ],
+                    conclusions: [
+                        'Triangle angles sum to 180°',
+                        'QED'
+                    ]
+                }
+            }
+        };
+
+        // Event listeners for statement selection
+        document.querySelectorAll('.statement-card').forEach(card => {
+            card.addEventListener('click', () => selectStatement(card.dataset.statement));
+        });
+
+        function selectStatement(statementKey) {
+            // Clear previous selection
+            document.querySelectorAll('.statement-card').forEach(c => c.classList.remove('selected'));
+            
+            // Select new statement
+            document.querySelector(`[data-statement="${statementKey}"]`).classList.add('selected');
+            
+            currentStatement = statementKey;
+            setupWorkspace();
+        }
+
+        function addCustomStatement() {
+            const input = document.getElementById('customStatement');
+            const statement = input.value.trim();
+            
+            if (statement) {
+                // Create a simple custom statement with basic tools
+                statements['custom'] = {
+                    title: statement,
+                    tools: {
+                        definitions: [
+                            'Define key terms',
+                            'Let x be...',
+                            'Assume...'
+                        ],
+                        algebra: [
+                            'Substitute values',
+                            'Simplify expression',
+                            'Apply properties'
+                        ],
+                        logic: [
+                            'Therefore',
+                            'Since',
+                            'This implies',
+                            'Hence'
+                        ],
+                        conclusions: [
+                            'This proves the statement',
+                            'QED'
+                        ]
+                    }
+                };
+                
+                currentStatement = 'custom';
+                setupWorkspace();
+                input.value = '';
+            }
+        }
+
+        function setupWorkspace() {
+            const workspace = document.getElementById('workspace');
+            const checkBtn = document.getElementById('checkBtn');
+            
+            workspace.style.display = 'grid';
+            checkBtn.style.display = 'inline-block';
+            
+            // Clear previous proof
+            proofSteps = [];
+            updateProofArea();
+            
+            // Setup toolbox
+            const statement = statements[currentStatement];
+            
+            ['definitions', 'algebra', 'logic', 'conclusions'].forEach(category => {
+                const container = document.getElementById(category);
+                container.innerHTML = '';
+                
+                statement.tools[category].forEach(tool => {
+                    const item = document.createElement('div');
+                    item.className = 'draggable-item';
+                    item.textContent = tool;
+                    item.draggable = true;
+                    
+                    item.addEventListener('dragstart', (e) => {
+                        draggedElement = tool;
+                        e.dataTransfer.effectAllowed = 'copy';
+                    });
+                    
+                    container.appendChild(item);
+                });
+            });
+            
+            // Setup drop zone
+            const proofArea = document.getElementById('proofArea');
+            
+            proofArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                proofArea.classList.add('drag-over');
+            });
+            
+            proofArea.addEventListener('dragleave', () => {
+                proofArea.classList.remove('drag-over');
+            });
+            
+            proofArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                proofArea.classList.remove('drag-over');
+                
+                if (draggedElement) {
+                    proofSteps.push(draggedElement);
+                    updateProofArea();
+                    draggedElement = null;
+                }
+            });
+        }
+
+        function updateProofArea() {
+            const proofArea = document.getElementById('proofArea');
+            
+            if (proofSteps.length === 0) {
+                proofArea.innerHTML = `
+                    <div class="empty-state">
+                        <p>Drag proof steps here to build your argument</p>
+                        <p>📝 Start with definitions, then work through logical steps</p>
+                    </div>
+                `;
+            } else {
+                proofArea.innerHTML = proofSteps.map((step, index) => `
+                    <div class="proof-step">
+                        ${step}
+                        <button class="remove-btn" onclick="removeStep(${index})">×</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function removeStep(index) {
+            proofSteps.splice(index, 1);
+            updateProofArea();
+        }
+
+        function checkProof() {
+            const feedback = document.getElementById('feedback');
+            const statement = statements[currentStatement];
+            
+            if (proofSteps.length === 0) {
+                showFeedback('Please add some proof steps first!', 'info');
+                return;
+            }
+            
+            let feedbackText = `<h3>Proof Analysis for: "${statement.title}"</h3>`;
+            
+            if (statement.correctOrder) {
+                const correctSteps = statement.correctOrder;
+                const matchingSteps = proofSteps.filter(step => correctSteps.includes(step));
+                const coverage = (matchingSteps.length / correctSteps.length) * 100;
+                
+                feedbackText += `<p><strong>Coverage:</strong> ${Math.round(coverage)}% of key steps included</p>`;
+                
+                if (coverage >= 80) {
+                    feedbackText += `<p>🎉 Excellent work! Your proof covers the essential logical steps.</p>`;
+                } else if (coverage >= 50) {
+                    feedbackText += `<p>👍 Good start! Consider adding these missing steps:</p><ul>`;
+                    correctSteps.forEach(step => {
+                        if (!proofSteps.includes(step)) {
+                            feedbackText += `<li>${step}</li>`;
+                        }
+                    });
+                    feedbackText += `</ul>`;
+                } else {
+                    feedbackText += `<p>💡 Your proof needs more key steps. Try including definitions and algebraic manipulations.</p>`;
+                }
+            } else {
+                feedbackText += `<p>Great effort! For custom statements, focus on:</p>
+                    <ul>
+                        <li>Clear definitions of terms</li>
+                        <li>Logical progression of steps</li>
+                        <li>Strong conclusion</li>
+                    </ul>`;
+            }
+            
+            // Special case for the "trick" question
+            if (currentStatement === 'prime-trick') {
+                feedbackText += `<p><strong>Surprise!</strong> This statement is actually TRUE! All primes greater than 2 are indeed odd. The "trick" was expecting you to find an issue where none exists. Well done if you proved it correctly! 🎯</p>`;
+            }
+            
+            showFeedback(feedbackText, 'success');
+        }
+
+        function showFeedback(text, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = text;
+            feedback.className = `feedback ${type}`;
+            feedback.style.display = 'block';
+            feedback.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetProof() {
+            // Clear selection
+            document.querySelectorAll('.statement-card').forEach(c => c.classList.remove('selected'));
+            
+            // Hide workspace
+            document.getElementById('workspace').style.display = 'none';
+            document.getElementById('checkBtn').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            
+            // Clear data
+            currentStatement = null;
+            proofSteps = [];
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d88ff1cd3948a12',t:'MTc3Mjg4MDE3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1424,
+    "height" : 969,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "The Slope of a Line",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : 24,
+          "left" : -331,
+          "bottom" : 993,
+          "right" : 1093
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Straights" : {
+            "color" : "red"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 36
+              },
+            "Caption" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 18,
+              "font-weight" : "bold",
+              "font-style" : "italic",
+              "color" : "blue"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 24,
+              "font-weight" : "bold"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 18
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "OriginPoint",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 360,
+              "y" : 651
+              }
+            },
+          "label" : "O",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 1,
+              "labelOffsetY" : -2
+              }
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "origin" : "1"
+            },
+          "value" : 74.346456692913364,
+          "constraint" : "HorizontalUnitPoint"
+          },
+        "3" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "2"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "horizontal",
+          "label" : "x",
+          "style" : {
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "unitPoint" : "2"
+            },
+          "constraint" : "UnitPointInternalSquare",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "5" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "4"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "vertical",
+          "label" : "y",
+          "style" : {
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "6" : {
+          "kind" : "CoordSys",
+          "genus" : "CoordSys",
+          "parents" : {
+            "axisX" : "3",
+            "axisY" : "5"
+            },
+          "constraint" : "CoordSys",
+          "shape" : "square",
+          "style" : {
+            "grid" : "gridlines"
+            }
+          },
+        "7" : {
+          "kind" : "Expression",
+          "genus" : "Function",
+          "parents" : {},
+          "constraint" : "Function",
+          "geom" : {
+            "loc" : {
+              "x" : 846,
+              "y" : 178
+              }
+            },
+          "expressionType" : "YofX_FunctionExprType",
+          "functionExpr" : {
+            "notation" : "dependentVariable",
+            "name" : "f",
+            "dependentVar" : "y",
+            "independentVar" : "x"
+            },
+          "expression" : "x",
+          "label" : "f"
+          },
+        "8" : {
+          "kind" : "Sampler",
+          "genus" : "FunctionPlot",
+          "parents" : {
+            "function" : "7",
+            "coordSys" : "6"
+            },
+          "constraint" : "FunctionPlot",
+          "label" : "y = f(x)",
+          "style" : {
+            "line-style" : "solid",
+            "width" : 3,
+            "endpointRadius" : 2.5,
+            "arrowheadRadius" : 8
+            },
+          "numSamples" : 750,
+          "isDiscrete" : false,
+          "showEndpoints" : true,
+          "driverDomain" : {
+            "low" : -12.70000000000001,
+            "high" : 27.022777777777797
+            }
+          },
+        "9" : {
+          "kind" : "Expression",
+          "genus" : "ScalarParameter",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -198,
+              "y" : 165
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "0",
+          "label" : "x[1]",
+          "style" : {
+            "precision" : 0,
+            "nameOrigin" : "namedFromLabel",
+            "contenteditable" : true
+            }
+          },
+        "10" : {
+          "kind" : "Expression",
+          "genus" : "ScalarParameter",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -113,
+              "y" : 165
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "0",
+          "label" : "y[1]",
+          "style" : {
+            "precision" : 0,
+            "nameOrigin" : "namedFromLabel",
+            "contenteditable" : true
+            }
+          },
+        "11" : {
+          "kind" : "Expression",
+          "genus" : "ScalarParameter",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -199,
+              "y" : 260
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "1",
+          "label" : "x[2]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel",
+            "contenteditable" : true
+            }
+          },
+        "12" : {
+          "kind" : "Expression",
+          "genus" : "ScalarParameter",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -79,
+              "y" : 260
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "1",
+          "label" : "y[2]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel",
+            "contenteditable" : true
+            }
+          },
+        "13" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -198,
+              "y" : 122
+              }
+            },
+          "textMFS" : "<S#12<VL<T'O is the point on the'><T'line with coordinates'><F19xxB4x20x8x>>>",
+          "style" : {
+            "color" : "black"
+            }
+          },
+        "14" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -200,
+              "y" : 209
+              }
+            },
+          "textMFS" : "<VL<T'A is the point on the'><T'line with coordinates'><F19xxB4x20x8x>>",
+          "style" : {
+            "color" : "black"
+            }
+          },
+        "15" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordX" : "9",
+            "coordY" : "10",
+            "coordSys" : "6"
+            },
+          "constraint" : "PlotMarkedXMarkedY"
+          },
+        "16" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordX" : "11",
+            "coordY" : "12",
+            "coordSys" : "6"
+            },
+          "constraint" : "PlotMarkedXMarkedY",
+          "label" : "A",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "17" : {
+          "kind" : "Straight",
+          "genus" : "Line",
+          "parents" : {
+            "p0" : "16",
+            "p1" : "1"
+            },
+          "constraint" : "Line"
+          },
+        "18" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "12"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 788,
+              "y" : 441
+              }
+            },
+          "label" : "Change the value of y[2]",
+          "constraint" : "ActionButtonAnimate",
+          "messages" : [
+            "Change the value of y[2]"
+            ],
+          "animationStates" : [
+            {
+              "rate" : 1,
+              "timeInterval" : 1,
+              "repeat" : true,
+              "motionType" : "both",
+              "lowerParamBound" : -5,
+              "upperParamBound" : 5,
+              "discrete" : true
+              }
+            ]
+          },
+        "19" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "12",
+            "1" : "10",
+            "2" : "11",
+            "3" : "9"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : -194,
+              "y" : 426
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "(@0-@1)\/(@2-@3)",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "20" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "seg" : "17",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementAnalyticSlope",
+          "geom" : {
+            "loc" : {
+              "x" : -198,
+              "y" : 353
+              }
+            },
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "21" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 732,
+              "y" : 280
+              }
+            },
+          "textMFS" : "<VL<T'Compare the value of the Slope with the'><T'result of the calculation using the'><H<T'formula '><\/<H<T'('><-<T'y'><S+1<T'2 '>>><T'- '><-<T'y'><S+1<T'1'>>><T')'>><H<T'('><-<T'x'><T'2'>><T' - '><-<T'x'><S+1<T'1'>>><T')'>>><T'.'>><0><T'Click on the button to change the value'><T'of the y - coordinate of A.'><0><0><0><T'Compare the value of the Slope and the'><T'calculation for each new line.'><0><T'What do you notice each time?'><0><T'Write down what you think would be a'><T'formula for calculating the slope of a'><T'straight line.'><F1Exx157x20xC8430x>>"
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    

@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map Scale Design Challenge</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+      min-height: 100%;
+    }
+
+    .header {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      margin: 0 0 12px 0;
+      font-size: 28px;
+      color: #2d3748;
+    }
+
+    .instructions {
+      color: #4a5568;
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .map-container {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .map-canvas {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #e8f4e8;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      position: relative;
+      cursor: crosshair;
+      overflow: hidden;
+    }
+
+    .map-road {
+      position: absolute;
+      background: #d4d4d4;
+      border: 1px solid #a0a0a0;
+    }
+
+    .map-road.horizontal {
+      height: 8%;
+      width: 100%;
+    }
+
+    .map-road.vertical {
+      width: 8%;
+      height: 100%;
+    }
+
+    .map-river {
+      position: absolute;
+      background: linear-gradient(90deg, #7eb3d5 0%, #a8d5e8 50%, #7eb3d5 100%);
+      border-radius: 20px;
+      opacity: 0.7;
+    }
+
+    .map-park {
+      position: absolute;
+      background: #98d98e;
+      border-radius: 8px;
+      border: 2px dashed #6fa85f;
+    }
+
+    .map-building {
+      position: absolute;
+      background: #cbd5e0;
+      border: 1px solid #a0aec0;
+    }
+
+    .road-marking {
+      position: absolute;
+      background: white;
+      opacity: 0.8;
+    }
+
+    .landmark {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: #4299e1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: all 0.2s;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .landmark:hover {
+      transform: translate(-50%, -50%) scale(1.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .landmark.selected {
+      background: #f6ad55;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+      50% { box-shadow: 0 4px 16px rgba(246, 173, 85, 0.6); }
+    }
+
+    .landmark-label {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      color: #2d3748;
+    }
+
+    .landmark-number {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 24px;
+      height: 24px;
+      background: #48bb78;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      border: 2px solid white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .route-line {
+      position: absolute;
+      background: #48bb78;
+      height: 4px;
+      transform-origin: left center;
+      pointer-events: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .control-panel {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+    }
+
+    .control-section {
+      margin-bottom: 24px;
+    }
+
+    .control-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-section h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      color: #2d3748;
+      font-weight: 600;
+    }
+
+    .scale-selector {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .scale-selector:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .toggle-container {
+      display: flex;
+      gap: 8px;
+      background: #f7fafc;
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: #4a5568;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toggle-btn.active {
+      background: white;
+      color: #667eea;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .challenge-box {
+      background: #edf2f7;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .challenge-text {
+      font-size: 14px;
+      color: #2d3748;
+      margin: 0 0 8px 0;
+      font-weight: 500;
+    }
+
+    .challenge-value {
+      font-size: 20px;
+      color: #667eea;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 6px;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+    }
+
+    .btn:last-child {
+      margin-bottom: 0;
+    }
+
+    .btn-primary {
+      background: #48bb78;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #38a169;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #4a5568;
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e0;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .feedback {
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: #c6f6d5;
+      color: #22543d;
+      border: 2px solid #48bb78;
+    }
+
+    .feedback.incorrect {
+      background: #fed7d7;
+      color: #742a2a;
+      border: 2px solid #f56565;
+    }
+
+    .route-info {
+      background: #f7fafc;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #4a5568;
+      margin-bottom: 16px;
+    }
+
+    .route-info p {
+      margin: 0 0 4px 0;
+    }
+
+    .route-info p:last-child {
+      margin: 0;
+    }
+
+    @media (max-width: 968px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <div class="header">
+    <h1 id="appTitle">Map Scale Design Challenge</h1>
+    <p class="instructions" id="instructionText">Use the scale to calculate either the map distance or the real-world distance for the route shown. Choose your scale, make your calculations, and check your answer!</p>
+   </div>
+   <div class="main-content">
+    <div class="map-container">
+     <div class="map-canvas" id="mapCanvas"><!-- Landmarks will be dynamically positioned -->
+     </div>
+    </div>
+    <div class="control-panel">
+     <div class="control-section">
+      <h3>Scale Selection</h3><select class="scale-selector" id="scaleSelector"> <option value="1000">1:1,000 (1cm = 10m)</option> <option value="5000">1:5,000 (1cm = 50m)</option> <option value="10000" selected>1:10,000 (1cm = 100m)</option> <option value="25000">1:25,000 (1cm = 250m)</option> <option value="50000">1:50,000 (1cm = 500m)</option> </select>
+     </div>
+     <div class="control-section">
+      <h3>Challenge Mode</h3>
+      <div class="toggle-container"><button class="toggle-btn active" data-mode="map-to-real">Map → Real</button> <button class="toggle-btn" data-mode="real-to-map">Real → Map</button>
+      </div>
+     </div>
+     <div class="route-info" id="routeInfo">
+      <p><strong>Instructions:</strong></p>
+      <p>Click two landmarks to create a route, then solve the challenge!</p>
+     </div>
+     <div class="challenge-box" id="challengeBox" style="display: none;">
+      <p class="challenge-text" id="challengeQuestion">Given distance:</p>
+      <p class="challenge-value" id="challengeValue">-</p>
+     </div>
+     <div class="input-group" id="answerGroup" style="display: none;"><label for="answerInput" id="answerLabel">Your answer:</label> <input type="number" class="answer-input" id="answerInput" placeholder="Enter your answer" step="0.01">
+     </div><button class="btn btn-primary" id="checkBtn" disabled>Check Answer</button> <button class="btn btn-secondary" id="resetBtn">Reset Route</button>
+     <div class="feedback" id="feedback"></div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      app_title: "Map Scale Design Challenge",
+      instruction_text: "Use the scale to calculate either the map distance or the real-world distance for the route shown. Choose your scale, make your calculations, and check your answer!",
+      landmark_1: "Library",
+      landmark_2: "Park",
+      landmark_3: "Train Station",
+      landmark_4: "School",
+      landmark_5: "Hospital",
+      landmark_6: "Shopping Center",
+      landmark_7: "Sports Complex",
+      landmark_8: "Theater",
+      correct_message: "Well done! You've applied the scale accurately.",
+      incorrect_message: "Try again. Check how the scale converts cm to km.",
+      primary_color: "#667eea",
+      secondary_color: "#48bb78",
+      surface_color: "#ffffff",
+      text_color: "#2d3748",
+      accent_color: "#f6ad55"
+    };
+
+    let selectedLandmarks = [];
+    let currentMode = 'map-to-real';
+    let currentScale = 10000;
+    let actualDistance = 0;
+    let correctAnswer = 0;
+
+    const landmarks = [
+      { id: 1, icon: '📚', position: { x: 20, y: 25 } },
+      { id: 2, icon: '🌳', position: { x: 75, y: 30 } },
+      { id: 3, icon: '🚂', position: { x: 35, y: 75 } },
+      { id: 4, icon: '🏫', position: { x: 80, y: 70 } },
+      { id: 5, icon: '🏥', position: { x: 50, y: 15 } },
+      { id: 6, icon: '🏪', position: { x: 15, y: 60 } },
+      { id: 7, icon: '⚽', position: { x: 60, y: 85 } },
+      { id: 8, icon: '🎭', position: { x: 90, y: 45 } }
+    ];
+
+    function initializeMap() {
+      const canvas = document.getElementById('mapCanvas');
+      canvas.innerHTML = '';
+
+      // Add roads
+      const mainRoadH = document.createElement('div');
+      mainRoadH.className = 'map-road horizontal';
+      mainRoadH.style.top = '48%';
+      canvas.appendChild(mainRoadH);
+
+      const mainRoadV = document.createElement('div');
+      mainRoadV.className = 'map-road vertical';
+      mainRoadV.style.left = '46%';
+      canvas.appendChild(mainRoadV);
+
+      // Add road markings to horizontal road
+      for (let i = 0; i < 10; i++) {
+        const marking = document.createElement('div');
+        marking.className = 'road-marking';
+        marking.style.width = '6%';
+        marking.style.height = '2%';
+        marking.style.left = `${i * 10 + 2}%`;
+        marking.style.top = '50%';
+        marking.style.transform = 'translateY(-50%)';
+        canvas.appendChild(marking);
+      }
+
+      // Add road markings to vertical road
+      for (let i = 0; i < 10; i++) {
+        const marking = document.createElement('div');
+        marking.className = 'road-marking';
+        marking.style.width = '2%';
+        marking.style.height = '6%';
+        marking.style.left = '48%';
+        marking.style.top = `${i * 10 + 2}%`;
+        marking.style.transform = 'translateX(-50%)';
+        canvas.appendChild(marking);
+      }
+
+
+
+      // Add park areas
+      const park1 = document.createElement('div');
+      park1.className = 'map-park';
+      park1.style.width = '18%';
+      park1.style.height = '22%';
+      park1.style.left = '68%';
+      park1.style.top = '22%';
+      canvas.appendChild(park1);
+
+      const park2 = document.createElement('div');
+      park2.className = 'map-park';
+      park2.style.width = '15%';
+      park2.style.height = '18%';
+      park2.style.left = '55%';
+      park2.style.top = '78%';
+      canvas.appendChild(park2);
+
+      // Add buildings
+      const buildings = [
+        { left: '10%', top: '15%', width: '6%', height: '5%' },
+        { left: '25%', top: '12%', width: '5%', height: '6%' },
+        { left: '8%', top: '60%', width: '7%', height: '8%' },
+        { left: '28%', top: '65%', width: '5%', height: '7%' },
+        { left: '85%', top: '55%', width: '6%', height: '9%' },
+        { left: '42%', top: '8%', width: '5%', height: '4%' },
+        { left: '55%', top: '10%', width: '4%', height: '3%' },
+        { left: '92%', top: '35%', width: '5%', height: '6%' },
+        { left: '45%', top: '82%', width: '6%', height: '5%' },
+        { left: '68%', top: '88%', width: '4%', height: '4%' }
+      ];
+
+      buildings.forEach(building => {
+        const buildingEl = document.createElement('div');
+        buildingEl.className = 'map-building';
+        buildingEl.style.left = building.left;
+        buildingEl.style.top = building.top;
+        buildingEl.style.width = building.width;
+        buildingEl.style.height = building.height;
+        canvas.appendChild(buildingEl);
+      });
+
+      // Add landmarks (on top of everything)
+      landmarks.forEach((landmark, index) => {
+        const landmarkEl = document.createElement('div');
+        landmarkEl.className = 'landmark';
+        landmarkEl.style.left = `${landmark.position.x}%`;
+        landmarkEl.style.top = `${landmark.position.y}%`;
+        landmarkEl.innerHTML = landmark.icon;
+        landmarkEl.dataset.id = landmark.id;
+
+        const label = document.createElement('div');
+        label.className = 'landmark-label';
+        const configKey = `landmark_${index + 1}`;
+        label.textContent = window.elementSdk?.config?.[configKey] || defaultConfig[configKey];
+        landmarkEl.appendChild(label);
+
+        landmarkEl.addEventListener('click', () => selectLandmark(landmark.id, landmarkEl));
+        canvas.appendChild(landmarkEl);
+      });
+    }
+
+    function selectLandmark(id, element) {
+      if (selectedLandmarks.includes(id)) {
+        return;
+      }
+
+      selectedLandmarks.push(id);
+      element.classList.add('selected');
+      
+      // Add number indicator
+      const numberIndicator = document.createElement('div');
+      numberIndicator.className = 'landmark-number';
+      numberIndicator.textContent = selectedLandmarks.length;
+      element.appendChild(numberIndicator);
+
+      if (selectedLandmarks.length >= 2) {
+        drawRoute();
+      }
+
+      if (selectedLandmarks.length >= 2) {
+        generateChallenge();
+      }
+
+      updateRouteInfo();
+    }
+
+    function clearSelection() {
+      selectedLandmarks = [];
+      document.querySelectorAll('.landmark').forEach(el => {
+        el.classList.remove('selected');
+        const numberIndicator = el.querySelector('.landmark-number');
+        if (numberIndicator) {
+          numberIndicator.remove();
+        }
+      });
+      document.querySelectorAll('.route-line').forEach(el => el.remove());
+      document.getElementById('challengeBox').style.display = 'none';
+      document.getElementById('answerGroup').style.display = 'none';
+      document.getElementById('checkBtn').disabled = true;
+      document.getElementById('feedback').classList.remove('show');
+      document.getElementById('answerInput').value = '';
+      updateRouteInfo();
+    }
+
+    function drawRoute() {
+      const canvas = document.getElementById('mapCanvas');
+      const canvasRect = canvas.getBoundingClientRect();
+      
+      // Clear existing route lines
+      document.querySelectorAll('.route-line').forEach(el => el.remove());
+      
+      actualDistance = 0;
+
+      // Draw lines between consecutive landmarks
+      for (let i = 0; i < selectedLandmarks.length - 1; i++) {
+        const landmark1 = landmarks.find(l => l.id === selectedLandmarks[i]);
+        const landmark2 = landmarks.find(l => l.id === selectedLandmarks[i + 1]);
+
+        const x1 = (landmark1.position.x / 100) * canvasRect.width;
+        const y1 = (landmark1.position.y / 100) * canvasRect.height;
+        const x2 = (landmark2.position.x / 100) * canvasRect.width;
+        const y2 = (landmark2.position.y / 100) * canvasRect.height;
+
+        const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+
+        actualDistance += distance;
+
+        const line = document.createElement('div');
+        line.className = 'route-line';
+        line.style.width = `${distance}px`;
+        line.style.left = `${x1}px`;
+        line.style.top = `${y1}px`;
+        line.style.transform = `rotate(${angle}deg)`;
+        line.style.background = window.elementSdk?.config?.secondary_color || defaultConfig.secondary_color;
+
+        canvas.appendChild(line);
+      }
+    }
+
+    function updateRouteInfo() {
+      if (selectedLandmarks.length === 0) {
+        document.getElementById('routeInfo').innerHTML = '<p><strong>Instructions:</strong></p><p>Click landmarks in order to create your route!</p>';
+        return;
+      }
+
+      const landmarkNames = [
+        window.elementSdk?.config?.landmark_1 || defaultConfig.landmark_1,
+        window.elementSdk?.config?.landmark_2 || defaultConfig.landmark_2,
+        window.elementSdk?.config?.landmark_3 || defaultConfig.landmark_3,
+        window.elementSdk?.config?.landmark_4 || defaultConfig.landmark_4,
+        window.elementSdk?.config?.landmark_5 || defaultConfig.landmark_5,
+        window.elementSdk?.config?.landmark_6 || defaultConfig.landmark_6,
+        window.elementSdk?.config?.landmark_7 || defaultConfig.landmark_7,
+        window.elementSdk?.config?.landmark_8 || defaultConfig.landmark_8
+      ];
+
+      const routeNames = selectedLandmarks.map(id => {
+        const landmark = landmarks.find(l => l.id === id);
+        return landmarkNames[landmark.id - 1];
+      });
+
+      const routeText = routeNames.join(' → ');
+      const stopCount = selectedLandmarks.length;
+
+      document.getElementById('routeInfo').innerHTML = `<p><strong>Route (${stopCount} stop${stopCount > 1 ? 's' : ''}):</strong></p><p>${routeText}</p>`;
+    }
+
+    function generateChallenge() {
+      const mapDistanceCm = actualDistance / 10;
+      const realDistanceM = (mapDistanceCm / 100) * currentScale;
+      const realDistanceKm = realDistanceM / 1000;
+
+      const questionEl = document.getElementById('challengeQuestion');
+      const valueEl = document.getElementById('challengeValue');
+      const labelEl = document.getElementById('answerLabel');
+
+      if (currentMode === 'map-to-real') {
+        questionEl.textContent = 'Map distance:';
+        valueEl.textContent = `${mapDistanceCm.toFixed(1)} cm`;
+        labelEl.textContent = 'Real-world distance (km):';
+        correctAnswer = realDistanceKm;
+      } else {
+        questionEl.textContent = 'Real-world distance:';
+        valueEl.textContent = `${realDistanceKm.toFixed(2)} km`;
+        labelEl.textContent = 'Map distance (cm):';
+        correctAnswer = mapDistanceCm;
+      }
+
+      document.getElementById('challengeBox').style.display = 'block';
+      document.getElementById('answerGroup').style.display = 'block';
+      document.getElementById('checkBtn').disabled = false;
+      document.getElementById('feedback').classList.remove('show');
+      document.getElementById('answerInput').value = '';
+      document.getElementById('answerInput').focus();
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseFloat(document.getElementById('answerInput').value);
+      const tolerance = correctAnswer * 0.05;
+      const feedbackEl = document.getElementById('feedback');
+
+      if (Math.abs(userAnswer - correctAnswer) <= tolerance) {
+        feedbackEl.textContent = window.elementSdk?.config?.correct_message || defaultConfig.correct_message;
+        feedbackEl.className = 'feedback correct show';
+      } else {
+        feedbackEl.textContent = window.elementSdk?.config?.incorrect_message || defaultConfig.incorrect_message;
+        feedbackEl.className = 'feedback incorrect show';
+      }
+    }
+
+    document.getElementById('scaleSelector').addEventListener('change', (e) => {
+      currentScale = parseInt(e.target.value);
+      if (selectedLandmarks.length === 2) {
+        generateChallenge();
+      }
+    });
+
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentMode = e.target.dataset.mode;
+        if (selectedLandmarks.length === 2) {
+          generateChallenge();
+        }
+      });
+    });
+
+    document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+    document.getElementById('resetBtn').addEventListener('click', clearSelection);
+
+    document.getElementById('answerInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !document.getElementById('checkBtn').disabled) {
+        checkAnswer();
+      }
+    });
+
+    async function onConfigChange(config) {
+      const title = config.app_title || defaultConfig.app_title;
+      const instructions = config.instruction_text || defaultConfig.instruction_text;
+      
+      document.getElementById('appTitle').textContent = title;
+      document.getElementById('instructionText').textContent = instructions;
+
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      
+      document.body.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${accentColor} 100%)`;
+      
+      const routeLine = document.querySelector('.route-line');
+      if (routeLine) {
+        routeLine.style.background = secondaryColor;
+      }
+
+      document.querySelectorAll('.landmark').forEach((el, index) => {
+        const configKey = `landmark_${index + 1}`;
+        const label = el.querySelector('.landmark-label');
+        if (label) {
+          label.textContent = config[configKey] || defaultConfig[configKey];
+        }
+      });
+
+      if (selectedLandmarks.length === 2) {
+        updateRouteInfo();
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["app_title", config.app_title || defaultConfig.app_title],
+          ["instruction_text", config.instruction_text || defaultConfig.instruction_text],
+          ["landmark_1", config.landmark_1 || defaultConfig.landmark_1],
+          ["landmark_2", config.landmark_2 || defaultConfig.landmark_2],
+          ["landmark_3", config.landmark_3 || defaultConfig.landmark_3],
+          ["landmark_4", config.landmark_4 || defaultConfig.landmark_4],
+          ["landmark_5", config.landmark_5 || defaultConfig.landmark_5],
+          ["landmark_6", config.landmark_6 || defaultConfig.landmark_6],
+          ["landmark_7", config.landmark_7 || defaultConfig.landmark_7],
+          ["landmark_8", config.landmark_8 || defaultConfig.landmark_8],
+          ["correct_message", config.correct_message || defaultConfig.correct_message],
+          ["incorrect_message", config.incorrect_message || defaultConfig.incorrect_message]
+        ])
+      });
+    }
+
+    initializeMap();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d89120d85558a12',t:'MTc3Mjg4MDk1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

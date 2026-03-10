@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1003,
+    "height" : 855,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "Area of a Circle",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : 134,
+          "left" : 73,
+          "bottom" : 989,
+          "right" : 1076
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Points" : {
+            "color" : "blue"
+            },
+          "Interior" : {
+            "color" : "aqua"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "color" : "rgb(32,5,255)"
+              },
+            "Caption" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 12,
+              "font-weight" : "bold",
+              "font-style" : "italic"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-weight" : "bold"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 24,
+                "color" : "rgb(231,13,37)"
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "color" : "rgb(255,128,0)"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "OriginPoint",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 424,
+              "y" : 964
+              }
+            },
+          "label" : "F",
+          "style" : {
+            "color" : "red"
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "origin" : "1"
+            },
+          "value" : 31.346456692913421,
+          "constraint" : "HorizontalUnitPoint",
+          "style" : {
+            "color" : "red"
+            }
+          },
+        "3" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "2"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "horizontal",
+          "label" : "x",
+          "style" : {
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "unitPoint" : "2"
+            },
+          "constraint" : "UnitPointInternalSquare",
+          "style" : {
+            "hidden" : true,
+            "color" : "red"
+            }
+          },
+        "5" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "4"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "vertical",
+          "label" : "y",
+          "style" : {
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "6" : {
+          "kind" : "CoordSys",
+          "genus" : "CoordSys",
+          "parents" : {
+            "axisX" : "3",
+            "axisY" : "5"
+            },
+          "constraint" : "CoordSys",
+          "shape" : "square",
+          "style" : {
+            "grid" : "gridlines"
+            }
+          },
+        "7" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 142,
+              "y" : 309
+              }
+            },
+          "label" : "A",
+          "style" : {
+            "color" : "red",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -27,
+              "labelOffsetY" : -19
+              }
+            }
+          },
+        "8" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 193,
+              "y" : 306
+              }
+            },
+          "label" : "B",
+          "style" : {
+            "hidden" : true,
+            "color" : "red",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : -20,
+              "font-size" : 36
+              }
+            }
+          },
+        "9" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "7",
+            "p1" : "8"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "10" : {
+          "kind" : "Point",
+          "genus" : "Midpoint",
+          "parents" : {
+            "path" : "9"
+            },
+          "constraint" : "Midpoint",
+          "label" : "O",
+          "style" : {
+            "color" : "red",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -1,
+              "labelOffsetY" : -4
+              }
+            }
+          },
+        "11" : {
+          "kind" : "Circle",
+          "genus" : "Circle",
+          "parents" : {
+            "p0" : "10",
+            "p1" : "8"
+            },
+          "constraint" : "CircleFromTwoPoints"
+          },
+        "12" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 192,
+              "y" : 374
+              }
+            },
+          "label" : "E",
+          "style" : {
+            "hidden" : true,
+            "color" : "red"
+            }
+          },
+        "13" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 340,
+              "y" : 374
+              }
+            },
+          "label" : "D",
+          "style" : {
+            "hidden" : true,
+            "color" : "red"
+            }
+          },
+        "14" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 381,
+              "y" : 305
+              }
+            },
+          "style" : {
+            "hidden" : true,
+            "color" : "red"
+            }
+          },
+        "15" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "14",
+            "1" : "8"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 620,
+              "y" : 183
+              }
+            },
+          "label" : "Change the Circle",
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Change the Circle"
+            ],
+          "rate" : 1
+          },
+        "16" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 193,
+              "y" : 306
+              }
+            },
+          "style" : {
+            "hidden" : true,
+            "color" : "red"
+            }
+          },
+        "17" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "16",
+            "1" : "8"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 618,
+              "y" : 230
+              }
+            },
+          "label" : "Reset",
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Reset"
+            ],
+          "rate" : 0
+          },
+        "18" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "7",
+            "p1" : "10"
+            },
+          "constraint" : "Segment"
+          },
+        "19" : {
+          "kind" : "Measure",
+          "genus" : "AreaMeasure",
+          "parents" : {
+            "shape" : "11"
+            },
+          "constraint" : "MeasurementArea",
+          "geom" : {
+            "loc" : {
+              "x" : 106,
+              "y" : 231
+              }
+            },
+          "label" : "Area (A)",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "20" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "shape" : "11"
+            },
+          "constraint" : "MeasurementRadius",
+          "geom" : {
+            "loc" : {
+              "x" : 112,
+              "y" : 156
+              }
+            },
+          "label" : "Radius (r)",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "21" : {
+          "kind" : "CircleInterior",
+          "genus" : "CircleInt",
+          "parents" : {
+            "circle" : "11"
+            },
+          "constraint" : "CircleInterior",
+          "style" : {
+            "layerOrder" : 0
+            }
+          },
+        "22" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 4.0700000000000003,
+          "coordY" : 52.159999999999997,
+          "constraint" : "PlotFixedXFixedY"
+          },
+        "23" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "20"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 109,
+              "y" : 190
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "@0^2",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "24" : {
+          "kind" : "Table",
+          "genus" : "UserEditableTable",
+          "parents" : {
+            "0" : "23",
+            "1" : "19"
+            },
+          "constraint" : "UserTabulation",
+          "geom" : {
+            "loc" : {
+              "x" : 115,
+              "y" : 432
+              }
+            },
+          "rows" : [
+            [
+              "<H<H<T'1.99'>><H<T' '><+<T'cm'><T'2'>>>>",
+              "<H<H<T'6.26'>><H<T' '><+<T'cm'><T'2'>>>>"
+              ],
+            [
+              "<H<H<T'3.50'>><H<T' '><+<T'cm'><T'2'>>>>",
+              "<H<H<T'10.98'>><H<T' '><+<T'cm'><T'2'>>>>"
+              ],
+            [
+              "<H<H<T'1.05'>><H<T' '><+<T'cm'><T'2'>>>>",
+              "<H<H<T'3.29'>><H<T' '><+<T'cm'><T'2'>>>>"
+              ]
+            ]
+          },
+        "25" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 1.99,
+          "coordY" : 6.2599999999999998,
+          "constraint" : "PlotFixedXFixedY",
+          "style" : {
+            "color" : "red"
+            }
+          },
+        "26" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 3.5,
+          "coordY" : 10.98,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "L",
+          "style" : {
+            "color" : "red"
+            }
+          },
+        "27" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 6.7199999999999998,
+          "coordY" : 21.120000000000001,
+          "constraint" : "PlotFixedXFixedY",
+          "style" : {
+            "color" : "red"
+            }
+          },
+        "28" : {
+          "kind" : "Straight",
+          "genus" : "Ray",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "26"
+            },
+          "constraint" : "Ray",
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "29" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "seg" : "28",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementAnalyticSlope",
+          "geom" : {
+            "loc" : {
+              "x" : 95,
+              "y" : 747
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "Gradient",
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "30" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "28"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 85,
+              "y" : 651
+              }
+            },
+          "label" : "Draw Graph of A against r^2",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Draw Graph of A against r^2",
+            "Draw Graph of A against r^2"
+            ],
+          "fade" : true
+          },
+        "31" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "29"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 95,
+              "y" : 708
+              }
+            },
+          "label" : "Gradient",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Gradient",
+            "Gradient"
+            ],
+          "fade" : true
+          },
+        "32" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordX" : "23",
+            "coordY" : "19",
+            "coordSys" : "6"
+            },
+          "constraint" : "PlotMarkedXMarkedY"
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    

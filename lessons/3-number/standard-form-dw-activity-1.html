@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Form Matching Tool</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .column {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .column-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .measurements-title {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .standard-form-title {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .category-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 20px 0 15px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .astronomical {
+            background: #fbb6ce;
+            color: #97266d;
+        }
+
+        .microscopic {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
+        .measurement-item {
+            background: white;
+            border: 2px solid #cbd5e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            position: relative;
+        }
+
+        .measurement-item:hover {
+            border-color: #4299e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .measurement-item.selected {
+            border-color: #f56565;
+            background: #fed7d7;
+            transform: scale(1.02);
+        }
+
+        .drop-zone {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 8px 0;
+            min-height: 50px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .drop-zone:hover {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+
+        .drop-zone.filled {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .drop-zone.correct {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .drop-zone.incorrect {
+            border-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .status-icon {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .correct-icon {
+            background: #48bb78;
+            color: white;
+        }
+
+        .incorrect-icon {
+            background: #f56565;
+            color: white;
+        }
+
+        .example-slide {
+            display: none;
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .example-slide.active {
+            display: block;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .example-pair {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #4299e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .measurement {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: #4299e1;
+        }
+
+        .standard-form {
+            font-weight: 600;
+            color: #2f855a;
+            font-family: 'Courier New', monospace;
+        }
+
+        .score {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #e6fffa;
+            color: #234e52;
+        }
+
+        .instruction {
+            text-align: center;
+            background: #e6fffa;
+            color: #234e52;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🔢 Standard Form Matching</h1>
+            <p class="subtitle">Can you pair each measurement with its standard form?</p>
+            <div class="instruction" id="instruction">
+                Click a measurement, then click its matching standard form box!
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" id="checkBtn">
+                    ✓ Check Answers
+                </button>
+                <button class="btn btn-secondary" id="exampleBtn">
+                    📖 Show Example
+                </button>
+                <button class="btn btn-primary" id="resetBtn">
+                    🔄 Reset
+                </button>
+            </div>
+        </div>
+
+        <div id="gameArea" class="game-area">
+            <div class="column">
+                <div class="column-title measurements-title">Real-World Measurements</div>
+                
+                <div class="category-header astronomical">
+                    🪐 Astronomical (Large)
+                </div>
+                <div class="measurement-item" data-id="earth-sun">
+                    Distance Earth → Sun = 149,600,000 km
+                </div>
+                <div class="measurement-item" data-id="earth-moon">
+                    Distance to Moon = 384,400 km
+                </div>
+                <div class="measurement-item" data-id="earth-mars">
+                    Distance to Mars = 225,000,000 km
+                </div>
+                <div class="measurement-item" data-id="jupiter-diameter">
+                    Diameter of Jupiter = 142,984 km
+                </div>
+
+                <div class="category-header microscopic">
+                    🔬 Microscopic (Small)
+                </div>
+                <div class="measurement-item" data-id="hair">
+                    Diameter of human hair ≈ 0.000075 m
+                </div>
+                <div class="measurement-item" data-id="blood-cell">
+                    Red blood cell ≈ 0.000007 m
+                </div>
+                <div class="measurement-item" data-id="bacterium">
+                    Bacterium ≈ 0.000002 m
+                </div>
+                <div class="measurement-item" data-id="dna">
+                    Width of DNA strand ≈ 0.0000002 m
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="column-title standard-form-title">Standard Form</div>
+                
+                <div class="category-header astronomical">
+                    🪐 Large Numbers
+                </div>
+                <div id="large-drop-zones"></div>
+
+                <div class="category-header microscopic">
+                    🔬 Small Numbers
+                </div>
+                <div id="small-drop-zones"></div>
+            </div>
+        </div>
+
+        <div id="score" class="score" style="display: none;"></div>
+
+        <div id="exampleSlide" class="example-slide">
+            <h2 style="text-align: center; color: #2d3748; margin-bottom: 20px;">📖 Correct Matches</h2>
+            <div class="example-grid">
+                <div class="example-pair">
+                    <span class="measurement">Distance Earth → Sun = 149,600,000 km</span>
+                    <span class="arrow">→</span>
+                    <span class="standard-form">1.496 × 10⁸ km</span>
+                </div>
+                <div class="example-pair">
+                    <span class="measurement">Distance to Moon = 384,400 km</span>
+                    <span class="arrow">→</span>
+                    <span class="standard-form">3.844 × 10⁵ km</span>
+                </div>
+                <div class="example-pair">
+                    <span class="measurement">Distance to Mars = 225,000,000 km</span>
+                    <span class="arrow">→</span>
+                    <span class="standard-form">2.25 × 10⁸ km</span>
+                </div>
+                <div class="example-pair">
+                    <span class="measurement">Diameter of Jupiter = 142,984 km</span>
+                    <span class="arrow">→</span>
+                    <span class="standard-form">1.42984 × 10⁵ km</span>
+                </div>
+                <div class="example-pair">
+                    <span class="measurement">Diameter of human hair ≈ 0.000075 m</span>
+                    <span class="arrow">→</span>
+                    <span class="standard-form">7.5 × 10⁻⁵ m</span>
+                </div>
+                <div class="example-pair">
+                    <span class="measurement">Red blood cell ≈ 0.000007 m</span>
+                    <span class="arrow">→</span>
+                    <span class="standard-form">7 × 10⁻⁶ m</span>
+                </div>
+                <div class="example-pair">
+                    <span class="measurement">Bacterium ≈ 0.000002 m</span>
+                    <span class="arrow">→</span>
+                    <span class="standard-form">2 × 10⁻⁶ m</span>
+                </div>
+                <div class="example-pair">
+                    <span class="measurement">Width of DNA strand ≈ 0.0000002 m</span>
+                    <span class="arrow">→</span>
+                    <span class="standard-form">2 × 10⁻⁷ m</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let selectedMeasurement = null;
+        let matches = {};
+        let originalDropZoneTexts = {};
+
+        // Different measurement sets
+        const measurementSets = [
+            {
+                large: [
+                    { id: 'earth-sun', text: 'Distance Earth → Sun = 149,600,000 km', answer: '1.496 × 10⁸ km' },
+                    { id: 'earth-moon', text: 'Distance to Moon = 384,400 km', answer: '3.844 × 10⁵ km' },
+                    { id: 'earth-mars', text: 'Distance to Mars = 225,000,000 km', answer: '2.25 × 10⁸ km' },
+                    { id: 'jupiter-diameter', text: 'Diameter of Jupiter = 142,984 km', answer: '1.42984 × 10⁵ km' }
+                ],
+                small: [
+                    { id: 'hair', text: 'Diameter of human hair ≈ 0.000075 m', answer: '7.5 × 10⁻⁵ m' },
+                    { id: 'blood-cell', text: 'Red blood cell ≈ 0.000007 m', answer: '7 × 10⁻⁶ m' },
+                    { id: 'bacterium', text: 'Bacterium ≈ 0.000002 m', answer: '2 × 10⁻⁶ m' },
+                    { id: 'dna', text: 'Width of DNA strand ≈ 0.0000002 m', answer: '2 × 10⁻⁷ m' }
+                ]
+            },
+            {
+                large: [
+                    { id: 'light-year', text: 'One light year = 9,460,000,000,000 km', answer: '9.46 × 10¹² km' },
+                    { id: 'sun-diameter', text: 'Diameter of Sun = 1,392,000 km', answer: '1.392 × 10⁶ km' },
+                    { id: 'galaxy-width', text: 'Width of Milky Way ≈ 950,000,000,000,000 km', answer: '9.5 × 10¹⁴ km' },
+                    { id: 'earth-diameter', text: 'Diameter of Earth = 12,742 km', answer: '1.2742 × 10⁴ km' }
+                ],
+                small: [
+                    { id: 'atom', text: 'Diameter of hydrogen atom ≈ 0.0000000001 m', answer: '1 × 10⁻¹⁰ m' },
+                    { id: 'virus', text: 'Size of flu virus ≈ 0.0000001 m', answer: '1 × 10⁻⁷ m' },
+                    { id: 'molecule', text: 'Water molecule ≈ 0.0000000003 m', answer: '3 × 10⁻¹⁰ m' },
+                    { id: 'cell-wall', text: 'Cell wall thickness ≈ 0.00000001 m', answer: '1 × 10⁻⁸ m' }
+                ]
+            },
+            {
+                large: [
+                    { id: 'nearest-star', text: 'Distance to nearest star = 40,000,000,000 km', answer: '4 × 10¹⁰ km' },
+                    { id: 'saturn-rings', text: 'Width of Saturn rings = 282,000 km', answer: '2.82 × 10⁵ km' },
+                    { id: 'moon-diameter', text: 'Diameter of Moon = 3,474 km', answer: '3.474 × 10³ km' },
+                    { id: 'asteroid', text: 'Large asteroid diameter ≈ 950,000 m', answer: '9.5 × 10⁵ m' }
+                ],
+                small: [
+                    { id: 'wavelength', text: 'Wavelength of red light ≈ 0.0000007 m', answer: '7 × 10⁻⁷ m' },
+                    { id: 'protein', text: 'Size of protein molecule ≈ 0.000000005 m', answer: '5 × 10⁻⁹ m' },
+                    { id: 'pollen', text: 'Pollen grain ≈ 0.00003 m', answer: '3 × 10⁻⁵ m' },
+                    { id: 'mitochondria', text: 'Mitochondria length ≈ 0.000002 m', answer: '2 × 10⁻⁶ m' }
+                ]
+            }
+        ];
+
+        let currentSet = 0;
+
+        // Shuffle array function
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Generate new game content
+        function generateGameContent() {
+            const set = measurementSets[currentSet];
+            
+            // Clear existing content
+            const measurementsContainer = document.querySelector('.column');
+            const existingMeasurements = measurementsContainer.querySelectorAll('.measurement-item');
+            existingMeasurements.forEach(item => item.remove());
+            
+            // Add measurements in order
+            const astronomicalHeader = document.querySelector('.astronomical');
+            [...set.large].forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'measurement-item';
+                div.dataset.id = item.id;
+                div.textContent = item.text;
+                div.addEventListener('click', function() {
+                    selectMeasurement(this);
+                });
+                astronomicalHeader.parentNode.insertBefore(div, astronomicalHeader.nextSibling);
+            });
+            
+            const microscopicHeader = document.querySelector('.microscopic');
+            [...set.small].forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'measurement-item';
+                div.dataset.id = item.id;
+                div.textContent = item.text;
+                div.addEventListener('click', function() {
+                    selectMeasurement(this);
+                });
+                microscopicHeader.parentNode.insertBefore(div, microscopicHeader.nextSibling);
+            });
+            
+            // Shuffle and add drop zones
+            const shuffledLarge = shuffleArray(set.large);
+            const shuffledSmall = shuffleArray(set.small);
+            
+            const largeContainer = document.getElementById('large-drop-zones');
+            const smallContainer = document.getElementById('small-drop-zones');
+            
+            largeContainer.innerHTML = '';
+            smallContainer.innerHTML = '';
+            
+            shuffledLarge.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'drop-zone';
+                div.dataset.answer = item.id;
+                div.textContent = item.answer;
+                div.addEventListener('click', function() {
+                    dropInZone(this);
+                });
+                largeContainer.appendChild(div);
+                originalDropZoneTexts[item.id] = item.answer;
+            });
+            
+            shuffledSmall.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'drop-zone';
+                div.dataset.answer = item.id;
+                div.textContent = item.answer;
+                div.addEventListener('click', function() {
+                    dropInZone(this);
+                });
+                smallContainer.appendChild(div);
+                originalDropZoneTexts[item.id] = item.answer;
+            });
+        }
+
+        // Initialize the game
+        function init() {
+            generateGameContent();
+
+            // Add event listeners to buttons
+            document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+            document.getElementById('exampleBtn').addEventListener('click', showExample);
+            document.getElementById('resetBtn').addEventListener('click', resetGame);
+        }
+
+        function selectMeasurement(element) {
+            // Clear previous selection
+            document.querySelectorAll('.measurement-item').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Select this measurement
+            element.classList.add('selected');
+            selectedMeasurement = element;
+            
+            // Update instruction
+            const instruction = document.getElementById('instruction');
+            instruction.textContent = 'Now click the matching standard form box!';
+            instruction.style.background = '#fed7d7';
+            instruction.style.color = '#c53030';
+        }
+
+        function dropInZone(zone) {
+            if (!selectedMeasurement) {
+                const instruction = document.getElementById('instruction');
+                instruction.textContent = 'Please select a measurement first!';
+                instruction.style.background = '#fed7d7';
+                instruction.style.color = '#c53030';
+                return;
+            }
+
+            // Remove any existing match in this drop zone
+            if (matches[zone.dataset.answer]) {
+                const existingEl = document.querySelector(`[data-id="${matches[zone.dataset.answer]}"]`);
+                if (existingEl) {
+                    existingEl.style.display = 'block';
+                    existingEl.classList.remove('selected');
+                }
+            }
+
+            // Remove this measurement from any other drop zone
+            for (let key in matches) {
+                if (matches[key] === selectedMeasurement.dataset.id) {
+                    const otherZone = document.querySelector(`[data-answer="${key}"]`);
+                    if (otherZone) {
+                        otherZone.innerHTML = originalDropZoneTexts[key];
+                        otherZone.classList.remove('filled');
+                    }
+                    delete matches[key];
+                    break;
+                }
+            }
+
+            // Add the measurement to this drop zone
+            zone.innerHTML = `
+                <div style="text-align: center; width: 100%;">
+                    <div style="font-size: 0.9rem; margin-bottom: 8px; padding: 8px; background: white; border-radius: 6px; border: 1px solid #cbd5e0;">
+                        ${selectedMeasurement.textContent}
+                    </div>
+                    <div style="font-weight: 600; color: #2f855a; font-family: 'Courier New', monospace;">
+                        ${originalDropZoneTexts[zone.dataset.answer]}
+                    </div>
+                </div>
+            `;
+            
+            zone.classList.add('filled');
+            selectedMeasurement.style.display = 'none';
+            matches[zone.dataset.answer] = selectedMeasurement.dataset.id;
+            
+            clearStatus(zone);
+            
+            // Reset instruction
+            const instruction = document.getElementById('instruction');
+            instruction.textContent = 'Great! Click another measurement to continue, or check your answers!';
+            instruction.style.background = '#c6f6d5';
+            instruction.style.color = '#22543d';
+            
+            selectedMeasurement = null;
+        }
+
+        function checkAnswers() {
+            let correct = 0;
+            let total = 0;
+
+            const dropZones = document.querySelectorAll('.drop-zone');
+            
+            dropZones.forEach(zone => {
+                total++;
+                const correctAnswer = zone.dataset.answer;
+                const userAnswer = matches[correctAnswer];
+
+                clearStatus(zone);
+
+                if (userAnswer === correctAnswer) {
+                    zone.classList.add('correct');
+                    zone.classList.remove('incorrect');
+                    addStatusIcon(zone, '✓', 'correct-icon');
+                    correct++;
+                } else if (userAnswer) {
+                    zone.classList.add('incorrect');
+                    zone.classList.remove('correct');
+                    addStatusIcon(zone, '✗', 'incorrect-icon');
+                } else {
+                    zone.classList.remove('correct', 'incorrect');
+                }
+            });
+
+            // Show score
+            const scoreElement = document.getElementById('score');
+            scoreElement.textContent = `Score: ${correct}/${total} correct matches!`;
+            scoreElement.style.display = 'block';
+
+            if (correct === total) {
+                scoreElement.textContent += ' 🎉 Perfect! You\'ve mastered standard form!';
+                scoreElement.style.background = '#c6f6d5';
+                scoreElement.style.color = '#22543d';
+            }
+        }
+
+        function addStatusIcon(zone, symbol, className) {
+            const icon = document.createElement('div');
+            icon.className = `status-icon ${className}`;
+            icon.textContent = symbol;
+            zone.appendChild(icon);
+        }
+
+        function clearStatus(zone) {
+            const existingIcon = zone.querySelector('.status-icon');
+            if (existingIcon) {
+                existingIcon.remove();
+            }
+            zone.classList.remove('correct', 'incorrect');
+        }
+
+        function showExample() {
+            const gameArea = document.getElementById('gameArea');
+            const exampleSlide = document.getElementById('exampleSlide');
+            
+            if (exampleSlide.classList.contains('active')) {
+                exampleSlide.classList.remove('active');
+                gameArea.style.display = 'grid';
+            } else {
+                exampleSlide.classList.add('active');
+                gameArea.style.display = 'none';
+            }
+        }
+
+        function resetGame() {
+            // Clear all matches and selection
+            matches = {};
+            selectedMeasurement = null;
+            originalDropZoneTexts = {};
+
+            // Move to next set (cycle through all sets)
+            currentSet = (currentSet + 1) % measurementSets.length;
+            
+            // Generate new content
+            generateGameContent();
+
+            // Reset instruction
+            const instruction = document.getElementById('instruction');
+            instruction.textContent = 'Click a measurement, then click its matching standard form box!';
+            instruction.style.background = '#e6fffa';
+            instruction.style.color = '#234e52';
+
+            // Hide score and example
+            document.getElementById('score').style.display = 'none';
+            document.getElementById('exampleSlide').classList.remove('active');
+            document.getElementById('gameArea').style.display = 'grid';
+        }
+
+        // Start the game when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992f56c7d21f4135',t:'MTc2MTIwMjYzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

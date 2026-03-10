@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangle Side Labeling Activity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f9ff;
+        }
+        
+        .triangle-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        
+        .right-angle-symbol {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-right: 3px solid #333;
+            border-top: 3px solid #333;
+            z-index: 5;
+        }
+        
+        .drop-zone {
+            position: absolute;
+            width: 120px;
+            height: 40px;
+            background-color: #e5e7eb;
+            border: 2px dashed #6b7280;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #9ca3af;
+            z-index: 10;
+        }
+        
+        .draggable {
+            width: 120px;
+            height: 40px;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: grab;
+            user-select: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        
+        .draggable:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .draggable.correct {
+            background-color: #10b981;
+        }
+        
+        .draggable.incorrect {
+            background-color: #ef4444;
+        }
+        
+        /* Triangle 1 - Standard upright triangle */
+        .triangle-1-container {
+            position: relative;
+            height: 200px;
+            width: 200px;
+        }
+        
+        .triangle-1 {
+            position: absolute;
+            height: 0;
+            width: 0;
+            border-bottom: 200px solid #60a5fa;
+            border-right: 200px solid transparent;
+        }
+        
+        /* Triangle 2 - Tilted left triangle */
+        .triangle-2-container {
+            position: relative;
+            height: 200px;
+            width: 200px;
+        }
+        
+        .triangle-2 {
+            position: absolute;
+            height: 0;
+            width: 0;
+            border-bottom: 200px solid #f472b6;
+            border-left: 200px solid transparent;
+        }
+        
+        /* Triangle 3 - Horizontal right-angled triangle */
+        .triangle-3-container {
+            position: relative;
+            height: 200px;
+            width: 200px;
+        }
+        
+        .triangle-3 {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+            background-color: #a78bfa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h1 class="text-3xl font-bold text-center mb-2 text-blue-800">Triangle Side Labeling Activity</h1>
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md">
+                <p class="text-lg">Look at each triangle. Drag the correct label (Hypotenuse, Opposite, Adjacent) to each side of the triangle based on the marked angle θ.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Triangle 1 - Standard upright triangle -->
+            <div class="bg-white rounded-xl shadow-lg p-6 relative">
+                <h2 class="text-xl font-bold mb-4 text-center">Triangle 1</h2>
+                <div class="triangle-container">
+                    <div class="triangle-1-container mx-auto">
+                        <div class="triangle-1"></div>
+                        
+                        <!-- Right angle symbol - bottom left corner -->
+                        <div class="right-angle-symbol" style="bottom: 0; left: 0;"></div>
+                        
+                        <!-- Drop zones - Aligned with sides -->
+                        <div class="drop-zone" data-correct="Adjacent" style="bottom: -50px; left: 40px;">Drop here</div>
+                        <div class="drop-zone" data-correct="Opposite" style="left: -130px; bottom: 80px; transform: rotate(90deg);">Drop here</div>
+                        <div class="drop-zone" data-correct="Hypotenuse" style="top: 80px; right: -60px; transform: rotate(-45deg);">Drop here</div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-16 space-x-2">
+                    <div class="draggable" data-triangle="1" data-label="Hypotenuse">Hypotenuse</div>
+                    <div class="draggable" data-triangle="1" data-label="Opposite">Opposite</div>
+                    <div class="draggable" data-triangle="1" data-label="Adjacent">Adjacent</div>
+                </div>
+            </div>
+            
+            <!-- Triangle 2 - Tilted left triangle -->
+            <div class="bg-white rounded-xl shadow-lg p-6 relative">
+                <h2 class="text-xl font-bold mb-4 text-center">Triangle 2</h2>
+                <div class="triangle-container">
+                    <div class="triangle-2-container mx-auto">
+                        <div class="triangle-2"></div>
+                        
+                        <!-- Right angle symbol - bottom right corner -->
+                        <div class="right-angle-symbol" style="bottom: 0; right: 0; transform: rotate(90deg);"></div>
+                        
+                        <!-- Drop zones - Aligned with sides -->
+                        <div class="drop-zone" data-correct="Adjacent" style="bottom: -50px; right: 40px;">Drop here</div>
+                        <div class="drop-zone" data-correct="Opposite" style="right: -130px; bottom: 80px; transform: rotate(90deg);">Drop here</div>
+                        <div class="drop-zone" data-correct="Hypotenuse" style="top: 80px; left: -60px; transform: rotate(45deg);">Drop here</div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-16 space-x-2">
+                    <div class="draggable" data-triangle="2" data-label="Hypotenuse">Hypotenuse</div>
+                    <div class="draggable" data-triangle="2" data-label="Opposite">Opposite</div>
+                    <div class="draggable" data-triangle="2" data-label="Adjacent">Adjacent</div>
+                </div>
+            </div>
+            
+            <!-- Triangle 3 - Horizontal right-angled triangle -->
+            <div class="bg-white rounded-xl shadow-lg p-6 relative">
+                <h2 class="text-xl font-bold mb-4 text-center">Triangle 3</h2>
+                <div class="triangle-container">
+                    <div class="triangle-3-container mx-auto">
+                        <div class="triangle-3"></div>
+                        
+                        <!-- Right angle symbol - top left corner -->
+                        <div class="right-angle-symbol" style="top: 0; left: 0;"></div>
+                        
+                        <!-- Drop zones - Adjusted positions to avoid overlap -->
+                        <div class="drop-zone" data-correct="Hypotenuse" style="left: 50px; top: 150px; transform: rotate(45deg);">Drop here</div>
+                        <div class="drop-zone" data-correct="Opposite" style="left: -130px; top: 75px; transform: rotate(90deg);">Drop here</div>
+                        <div class="drop-zone" data-correct="Adjacent" style="top: -80px; left: 100px;">Drop here</div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-16 space-x-2">
+                    <div class="draggable" data-triangle="3" data-label="Hypotenuse">Hypotenuse</div>
+                    <div class="draggable" data-triangle="3" data-label="Opposite">Opposite</div>
+                    <div class="draggable" data-triangle="3" data-label="Adjacent">Adjacent</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center">
+            <button id="check-answers" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300">
+                Check Answers
+            </button>
+            <button id="reset" class="ml-4 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300">
+                Reset
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let draggables = document.querySelectorAll('.draggable');
+            let dropZones = document.querySelectorAll('.drop-zone');
+            let draggedElement = null;
+            let originalPosition = null;
+            
+            // Initialize draggable elements
+            draggables.forEach(draggable => {
+                draggable.addEventListener('mousedown', startDrag);
+                draggable.addEventListener('touchstart', startDrag, { passive: false });
+            });
+            
+            // Initialize drop zones
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', preventDefault);
+                zone.addEventListener('drop', handleDrop);
+            });
+            
+            // Add event listeners for check and reset buttons
+            document.getElementById('check-answers').addEventListener('click', checkAnswers);
+            document.getElementById('reset').addEventListener('click', resetActivity);
+            
+            // Prevent default behavior for dragover
+            function preventDefault(e) {
+                e.preventDefault();
+            }
+            
+            // Start dragging
+            function startDrag(e) {
+                if (e.type === 'touchstart') {
+                    e.preventDefault();
+                }
+                
+                draggedElement = this;
+                originalPosition = {
+                    parent: draggedElement.parentNode,
+                    nextSibling: draggedElement.nextSibling
+                };
+                
+                // Create a clone for visual feedback during drag
+                const rect = draggedElement.getBoundingClientRect();
+                const offsetX = e.clientX ? e.clientX - rect.left : e.touches[0].clientX - rect.left;
+                const offsetY = e.clientY ? e.clientY - rect.top : e.touches[0].clientY - rect.top;
+                
+                draggedElement.style.position = 'absolute';
+                draggedElement.style.zIndex = 1000;
+                
+                function moveAt(pageX, pageY) {
+                    draggedElement.style.left = pageX - offsetX + 'px';
+                    draggedElement.style.top = pageY - offsetY + 'px';
+                }
+                
+                // Move the element on mousemove
+                function onMouseMove(event) {
+                    const pageX = event.clientX || event.touches[0].clientX;
+                    const pageY = event.clientY || event.touches[0].clientY;
+                    moveAt(pageX, pageY);
+                    
+                    // Check if over a drop zone
+                    dropZones.forEach(zone => {
+                        const zoneRect = zone.getBoundingClientRect();
+                        if (
+                            pageX > zoneRect.left && 
+                            pageX < zoneRect.right && 
+                            pageY > zoneRect.top && 
+                            pageY < zoneRect.bottom
+                        ) {
+                            zone.style.backgroundColor = '#d1fae5';
+                        } else {
+                            zone.style.backgroundColor = '#e5e7eb';
+                        }
+                    });
+                }
+                
+                // Add the mousemove event listener
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('touchmove', onMouseMove, { passive: false });
+                
+                // Remove the mousemove event listener on mouseup
+                function onMouseUp(event) {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.removeEventListener('touchmove', onMouseMove);
+                    document.removeEventListener('mouseup', onMouseUp);
+                    document.removeEventListener('touchend', onMouseUp);
+                    
+                    // Check if dropped on a drop zone
+                    const pageX = event.clientX || (event.changedTouches && event.changedTouches[0].clientX);
+                    const pageY = event.clientY || (event.changedTouches && event.changedTouches[0].clientY);
+                    
+                    let droppedOnZone = false;
+                    
+                    dropZones.forEach(zone => {
+                        const zoneRect = zone.getBoundingClientRect();
+                        if (
+                            pageX > zoneRect.left && 
+                            pageX < zoneRect.right && 
+                            pageY > zoneRect.top && 
+                            pageY < zoneRect.bottom
+                        ) {
+                            // If the zone already has a draggable, return it to its original position
+                            if (zone.querySelector('.draggable')) {
+                                const existingDraggable = zone.querySelector('.draggable');
+                                existingDraggable.style.position = '';
+                                existingDraggable.style.left = '';
+                                existingDraggable.style.top = '';
+                                existingDraggable.style.zIndex = '';
+                                
+                                // Find the original container for this triangle
+                                const triangleId = existingDraggable.getAttribute('data-triangle');
+                                const originalContainer = document.querySelector(`.draggable[data-triangle="${triangleId}"]`).closest('.bg-white').querySelector('.flex');
+                                originalContainer.appendChild(existingDraggable);
+                            }
+                            
+                            // Place the dragged element in the drop zone
+                            draggedElement.style.position = '';
+                            draggedElement.style.left = '';
+                            draggedElement.style.top = '';
+                            draggedElement.style.zIndex = '';
+                            zone.innerHTML = '';
+                            zone.appendChild(draggedElement);
+                            droppedOnZone = true;
+                        }
+                        
+                        zone.style.backgroundColor = '#e5e7eb';
+                    });
+                    
+                    // If not dropped on a zone, return to original position
+                    if (!droppedOnZone) {
+                        draggedElement.style.position = '';
+                        draggedElement.style.left = '';
+                        draggedElement.style.top = '';
+                        draggedElement.style.zIndex = '';
+                        
+                        if (originalPosition.nextSibling) {
+                            originalPosition.parent.insertBefore(draggedElement, originalPosition.nextSibling);
+                        } else {
+                            originalPosition.parent.appendChild(draggedElement);
+                        }
+                    }
+                    
+                    draggedElement = null;
+                }
+                
+                document.addEventListener('mouseup', onMouseUp);
+                document.addEventListener('touchend', onMouseUp);
+            }
+            
+            // Handle drop
+            function handleDrop(e) {
+                e.preventDefault();
+            }
+            
+            // Check answers
+            function checkAnswers() {
+                let allCorrect = true;
+                let correctCount = 0;
+                let totalCount = 0;
+                
+                dropZones.forEach(zone => {
+                    const draggable = zone.querySelector('.draggable');
+                    if (draggable) {
+                        totalCount++;
+                        const correctLabel = zone.getAttribute('data-correct');
+                        const userLabel = draggable.getAttribute('data-label');
+                        
+                        if (correctLabel === userLabel) {
+                            draggable.classList.add('correct');
+                            draggable.classList.remove('incorrect');
+                            correctCount++;
+                        } else {
+                            draggable.classList.add('incorrect');
+                            draggable.classList.remove('correct');
+                            allCorrect = false;
+                        }
+                    } else {
+                        allCorrect = false;
+                    }
+                });
+                
+                if (allCorrect && totalCount === 9) {
+                    alert('Congratulations! All answers are correct!');
+                } else {
+                    alert(`You have ${correctCount} correct answers out of 9. Keep trying!`);
+                }
+            }
+            
+            // Reset activity
+            function resetActivity() {
+                dropZones.forEach(zone => {
+                    const draggable = zone.querySelector('.draggable');
+                    if (draggable) {
+                        draggable.classList.remove('correct', 'incorrect');
+                        draggable.style.position = '';
+                        draggable.style.left = '';
+                        draggable.style.top = '';
+                        draggable.style.zIndex = '';
+                        
+                        // Find the original container for this triangle
+                        const triangleId = draggable.getAttribute('data-triangle');
+                        const originalContainer = document.querySelector(`.draggable[data-triangle="${triangleId}"]`).closest('.bg-white').querySelector('.flex');
+                        originalContainer.appendChild(draggable);
+                    }
+                    zone.innerHTML = 'Drop here';
+                });
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d90dba856b8e32f',t:'MTc3Mjk2MjYxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

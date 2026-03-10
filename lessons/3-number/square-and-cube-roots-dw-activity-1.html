@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square & Cube Root Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .draggable {
+            cursor: move;
+            user-select: none;
+            transition: transform 0.2s ease;
+        }
+        
+        .draggable:hover {
+            transform: scale(1.05);
+        }
+        
+        .dragging {
+            opacity: 0.7;
+            z-index: 1000;
+            transform: rotate(2deg);
+        }
+        
+        .drop-zone {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        
+        .drop-zone.drag-over {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        
+        .square-tile {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .cube-tile {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .non-perfect {
+            background: linear-gradient(135deg, #64748b, #475569);
+        }
+        
+        .answer-box {
+            min-height: 60px;
+            border: 2px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        
+        .correct {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        
+        .page-2 {
+            display: none;
+        }
+        
+        .show-page-2 .page-1 {
+            display: none;
+        }
+        
+        .show-page-2 .page-2 {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-full font-sans">
+    <div class="container mx-auto p-6 max-w-7xl">
+        <!-- Page 1: Interactive Visualizer -->
+        <div class="page-1">
+            <!-- Instructions -->
+            <div class="bg-white rounded-lg p-4 mb-6 shadow-sm border-l-4 border-blue-500">
+                <p class="text-sm text-gray-600">
+                    <strong>Keyboard:</strong> Tab to elements • <strong>Fractions/roots:</strong> Use ^ and √ keys • <strong>Touch:</strong> Use drag only for bold targets
+                </p>
+            </div>
+
+            <!-- Main Content Frame -->
+            <div class="bg-white rounded-xl shadow-lg p-8 border-2 border-gray-200">
+                <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Square & Cube Root Visualizer</h1>
+                
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Square Roots Section -->
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold text-amber-600 border-b-2 border-amber-200 pb-2">Square Roots</h2>
+                        
+                        <!-- Perfect Squares -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Perfect Squares</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Square 4 -->
+                                <div class="text-center">
+                                    <div class="square-tile w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2">4</div>
+                                    <div class="answer-box rounded-lg p-2 flex items-center justify-center" data-answer="2">
+                                        <span class="draggable bg-amber-500 text-white px-3 py-2 rounded-lg font-bold" data-value="2">√4 = 2</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Square 9 -->
+                                <div class="text-center">
+                                    <div class="square-tile w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2">9</div>
+                                    <div class="answer-box rounded-lg p-2 flex items-center justify-center" data-answer="3">
+                                        <span class="draggable bg-amber-500 text-white px-3 py-2 rounded-lg font-bold" data-value="3">√9 = 3</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Square 16 -->
+                                <div class="text-center">
+                                    <div class="square-tile w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2">16</div>
+                                    <div class="answer-box rounded-lg p-2 flex items-center justify-center" data-answer="4">
+                                        <span class="draggable bg-amber-500 text-white px-3 py-2 rounded-lg font-bold" data-value="4">√16 = 4</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Square 25 -->
+                                <div class="text-center">
+                                    <div class="square-tile w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2">25</div>
+                                    <div class="answer-box rounded-lg p-2 flex items-center justify-center" data-answer="5">
+                                        <span class="draggable bg-amber-500 text-white px-3 py-2 rounded-lg font-bold" data-value="5">√25 = 5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Non-Perfect Squares -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Estimate These Roots</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Non-perfect 12 -->
+                                <div class="text-center">
+                                    <div class="non-perfect w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2">12</div>
+                                    <div class="answer-box drop-zone rounded-lg p-2 flex items-center justify-center" data-answer="3.5">
+                                        <span class="text-gray-400 text-sm">Drop estimate here</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Non-perfect 20 -->
+                                <div class="text-center">
+                                    <div class="non-perfect w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2">20</div>
+                                    <div class="answer-box drop-zone rounded-lg p-2 flex items-center justify-center" data-answer="4.5">
+                                        <span class="text-gray-400 text-sm">Drop estimate here</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Draggable Estimates for Squares -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-700 mb-3">Drag to Estimate:</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="draggable bg-blue-500 text-white px-3 py-2 rounded-lg font-bold" data-value="3.5">≈ 3.5</span>
+                                <span class="draggable bg-blue-500 text-white px-3 py-2 rounded-lg font-bold" data-value="4.5">≈ 4.5</span>
+                                <span class="draggable bg-blue-500 text-white px-3 py-2 rounded-lg font-bold" data-value="3.2">≈ 3.2</span>
+                                <span class="draggable bg-blue-500 text-white px-3 py-2 rounded-lg font-bold" data-value="4.8">≈ 4.8</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cube Roots Section -->
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold text-purple-600 border-b-2 border-purple-200 pb-2">Cube Roots</h2>
+                        
+                        <!-- Perfect Cubes -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Perfect Cubes</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <!-- Cube 8 -->
+                                <div class="text-center">
+                                    <div class="cube-tile w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2 relative">
+                                        8
+                                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-purple-400 rounded-sm opacity-70"></div>
+                                    </div>
+                                    <div class="answer-box rounded-lg p-2 flex items-center justify-center" data-answer="2">
+                                        <span class="draggable bg-purple-500 text-white px-3 py-2 rounded-lg font-bold" data-value="2">∛8 = 2</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Cube 27 -->
+                                <div class="text-center">
+                                    <div class="cube-tile w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2 relative">
+                                        27
+                                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-purple-400 rounded-sm opacity-70"></div>
+                                    </div>
+                                    <div class="answer-box rounded-lg p-2 flex items-center justify-center" data-answer="3">
+                                        <span class="draggable bg-purple-500 text-white px-3 py-2 rounded-lg font-bold" data-value="3">∛27 = 3</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Cube 64 -->
+                                <div class="text-center">
+                                    <div class="cube-tile w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2 relative">
+                                        64
+                                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-purple-400 rounded-sm opacity-70"></div>
+                                    </div>
+                                    <div class="answer-box rounded-lg p-2 flex items-center justify-center" data-answer="4">
+                                        <span class="draggable bg-purple-500 text-white px-3 py-2 rounded-lg font-bold" data-value="4">∛64 = 4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Non-Perfect Cubes -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Estimate These Roots</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Non-perfect 20 -->
+                                <div class="text-center">
+                                    <div class="non-perfect w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2 relative">
+                                        20
+                                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-gray-400 rounded-sm opacity-70"></div>
+                                    </div>
+                                    <div class="answer-box drop-zone rounded-lg p-2 flex items-center justify-center" data-answer="2.7">
+                                        <span class="text-gray-400 text-sm">Drop estimate here</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Non-perfect 50 -->
+                                <div class="text-center">
+                                    <div class="non-perfect w-20 h-20 rounded-lg flex items-center justify-center text-white font-bold text-xl mx-auto mb-2 relative">
+                                        50
+                                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-gray-400 rounded-sm opacity-70"></div>
+                                    </div>
+                                    <div class="answer-box drop-zone rounded-lg p-2 flex items-center justify-center" data-answer="3.7">
+                                        <span class="text-gray-400 text-sm">Drop estimate here</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Draggable Estimates for Cubes -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-700 mb-3">Drag to Estimate:</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="draggable bg-green-500 text-white px-3 py-2 rounded-lg font-bold" data-value="2.7">≈ 2.7</span>
+                                <span class="draggable bg-green-500 text-white px-3 py-2 rounded-lg font-bold" data-value="3.7">≈ 3.7</span>
+                                <span class="draggable bg-green-500 text-white px-3 py-2 rounded-lg font-bold" data-value="2.5">≈ 2.5</span>
+                                <span class="draggable bg-green-500 text-white px-3 py-2 rounded-lg font-bold" data-value="3.9">≈ 3.9</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Note -->
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+                            <p class="text-sm text-yellow-800"><strong>Note:</strong> Use ≈ for rounded answers.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="text-center mt-8 space-x-4">
+                    <button id="checkAnswers" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 min-h-[48px]">
+                        🔍 Check Answers
+                    </button>
+                    <button id="resetButton" class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 min-h-[48px]">
+                        🔄 New Numbers
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2: Answers -->
+        <div class="page-2">
+            <div class="bg-white rounded-xl shadow-lg p-8 border-2 border-gray-200">
+                <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Answer Key & Approximations</h1>
+                
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Square Root Answers -->
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold text-amber-600 border-b-2 border-amber-200 pb-2">Square Root Answers</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <h3 class="font-bold text-green-800 mb-3">Perfect Squares ✓</h3>
+                                <div class="grid grid-cols-2 gap-3 text-sm">
+                                    <div>√4 = 2 (exactly)</div>
+                                    <div>√9 = 3 (exactly)</div>
+                                    <div>√16 = 4 (exactly)</div>
+                                    <div>√25 = 5 (exactly)</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <h3 class="font-bold text-blue-800 mb-3">Approximations</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div>√12 ≈ 3.46 (between √9=3 and √16=4)</div>
+                                    <div>√20 ≈ 4.47 (between √16=4 and √25=5)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cube Root Answers -->
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold text-purple-600 border-b-2 border-purple-200 pb-2">Cube Root Answers</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <h3 class="font-bold text-green-800 mb-3">Perfect Cubes ✓</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div>∛8 = 2 (exactly)</div>
+                                    <div>∛27 = 3 (exactly)</div>
+                                    <div>∛64 = 4 (exactly)</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <h3 class="font-bold text-blue-800 mb-3">Approximations</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div>∛20 ≈ 2.71 (between ∛8=2 and ∛27=3)</div>
+                                    <div>∛50 ≈ 3.68 (between ∛27=3 and ∛64=4)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Back Button -->
+                <div class="text-center mt-8">
+                    <button id="backToPage1" class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 min-h-[48px]">
+                        ← Back to Visualizer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let draggedElement = null;
+        let dragOffset = { x: 0, y: 0 };
+
+        // Make elements draggable
+        document.querySelectorAll('.draggable').forEach(element => {
+            element.addEventListener('mousedown', startDrag);
+            element.addEventListener('touchstart', startDrag, { passive: false });
+            element.tabIndex = 0; // Make focusable for keyboard navigation
+        });
+
+        function startDrag(e) {
+            e.preventDefault();
+            draggedElement = e.target;
+            draggedElement.classList.add('dragging');
+            
+            const rect = draggedElement.getBoundingClientRect();
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+            
+            dragOffset.x = clientX - rect.left;
+            dragOffset.y = clientY - rect.top;
+            
+            // Add event listeners for drag and drop
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('touchend', endDrag);
+        }
+
+        function drag(e) {
+            if (!draggedElement) return;
+            e.preventDefault();
+            
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+            
+            draggedElement.style.position = 'fixed';
+            draggedElement.style.left = (clientX - dragOffset.x) + 'px';
+            draggedElement.style.top = (clientY - dragOffset.y) + 'px';
+            draggedElement.style.zIndex = '1000';
+            
+            // Check for drop zones
+            const elementBelow = document.elementFromPoint(clientX, clientY);
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('drag-over');
+            });
+            
+            if (elementBelow && elementBelow.classList.contains('drop-zone')) {
+                elementBelow.classList.add('drag-over');
+            }
+        }
+
+        function endDrag(e) {
+            if (!draggedElement) return;
+            
+            const clientX = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchend' ? e.changedTouches[0].clientY : e.clientY;
+            
+            // Temporarily hide the dragged element to get the element below
+            draggedElement.style.display = 'none';
+            const elementBelow = document.elementFromPoint(clientX, clientY);
+            draggedElement.style.display = '';
+            
+            // Find the drop zone
+            let dropZone = null;
+            if (elementBelow) {
+                if (elementBelow.classList.contains('drop-zone')) {
+                    dropZone = elementBelow;
+                } else {
+                    dropZone = elementBelow.closest('.drop-zone');
+                }
+            }
+            
+            // Reset all styles first
+            draggedElement.style.position = '';
+            draggedElement.style.left = '';
+            draggedElement.style.top = '';
+            draggedElement.style.zIndex = '';
+            draggedElement.style.transform = '';
+            draggedElement.classList.remove('dragging');
+            
+            if (dropZone) {
+                // Drop successful - clear the drop zone and add the element
+                dropZone.innerHTML = '';
+                dropZone.appendChild(draggedElement);
+                dropZone.classList.add('correct');
+                dropZone.classList.remove('drag-over');
+            }
+            
+            draggedElement = null;
+            
+            // Remove event listeners
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', endDrag);
+            
+            // Clear all drag-over states
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('drag-over');
+            });
+        }
+
+        // Generate random numbers for practice
+        function generateRandomNumbers() {
+            // Generate random non-perfect squares between 5 and 30
+            const nonPerfectSquares = [];
+            const perfectSquares = [1, 4, 9, 16, 25, 36];
+            
+            while (nonPerfectSquares.length < 2) {
+                const num = Math.floor(Math.random() * 26) + 5; // 5-30
+                if (!perfectSquares.includes(num) && !nonPerfectSquares.includes(num)) {
+                    nonPerfectSquares.push(num);
+                }
+            }
+            
+            // Generate random non-perfect cubes between 10 and 60
+            const nonPerfectCubes = [];
+            const perfectCubes = [1, 8, 27, 64, 125];
+            
+            while (nonPerfectCubes.length < 2) {
+                const num = Math.floor(Math.random() * 51) + 10; // 10-60
+                if (!perfectCubes.includes(num) && !nonPerfectCubes.includes(num)) {
+                    nonPerfectCubes.push(num);
+                }
+            }
+            
+            return { squares: nonPerfectSquares, cubes: nonPerfectCubes };
+        }
+
+        function resetPractice() {
+            const newNumbers = generateRandomNumbers();
+            
+            // Update square root numbers - get all non-perfect elements
+            const allNonPerfectElements = document.querySelectorAll('.non-perfect');
+            
+            // First two are square roots, last two are cube roots
+            allNonPerfectElements[0].textContent = newNumbers.squares[0];
+            allNonPerfectElements[1].textContent = newNumbers.squares[1];
+            allNonPerfectElements[2].textContent = newNumbers.cubes[0];
+            allNonPerfectElements[3].textContent = newNumbers.cubes[1];
+            
+            // Calculate correct answers for the new numbers
+            const sqrt1 = Math.sqrt(newNumbers.squares[0]);
+            const sqrt2 = Math.sqrt(newNumbers.squares[1]);
+            const cbrt1 = Math.cbrt(newNumbers.cubes[0]);
+            const cbrt2 = Math.cbrt(newNumbers.cubes[1]);
+            
+            // Round to 1 decimal place for cleaner estimates
+            const sqrt1Rounded = Math.round(sqrt1 * 10) / 10;
+            const sqrt2Rounded = Math.round(sqrt2 * 10) / 10;
+            const cbrt1Rounded = Math.round(cbrt1 * 10) / 10;
+            const cbrt2Rounded = Math.round(cbrt2 * 10) / 10;
+            
+            // Generate estimate options for square roots (include correct + some distractors)
+            const squareEstimates = [
+                sqrt1Rounded, // Correct answer for first square
+                sqrt2Rounded, // Correct answer for second square
+                Math.round((sqrt1Rounded - 0.4) * 10) / 10, // Lower distractor for first
+                Math.round((sqrt2Rounded + 0.4) * 10) / 10  // Higher distractor for second
+            ];
+            
+            // Add two more varied distractors for squares
+            squareEstimates.push(Math.round((Math.min(sqrt1Rounded, sqrt2Rounded) - 0.6) * 10) / 10);
+            squareEstimates.push(Math.round((Math.max(sqrt1Rounded, sqrt2Rounded) + 0.6) * 10) / 10);
+            
+            // Generate estimate options for cube roots (include correct + some distractors)
+            const cubeEstimates = [
+                cbrt1Rounded, // Correct answer for first cube
+                cbrt2Rounded, // Correct answer for second cube
+                Math.round((cbrt1Rounded - 0.3) * 10) / 10, // Lower distractor for first
+                Math.round((cbrt2Rounded + 0.3) * 10) / 10  // Higher distractor for second
+            ];
+            
+            // Add two more varied distractors for cubes
+            cubeEstimates.push(Math.round((Math.min(cbrt1Rounded, cbrt2Rounded) - 0.5) * 10) / 10);
+            cubeEstimates.push(Math.round((Math.max(cbrt1Rounded, cbrt2Rounded) + 0.5) * 10) / 10);
+            
+            // Ensure all estimates are positive and reasonable
+            for (let i = 0; i < squareEstimates.length; i++) {
+                if (squareEstimates[i] < 0.1) squareEstimates[i] = 0.1;
+                if (squareEstimates[i] > 10) squareEstimates[i] = 10;
+            }
+            
+            for (let i = 0; i < cubeEstimates.length; i++) {
+                if (cubeEstimates[i] < 0.1) cubeEstimates[i] = 0.1;
+                if (cubeEstimates[i] > 10) cubeEstimates[i] = 10;
+            }
+            
+            // Remove duplicates and ensure we have exactly 4 unique estimates for each
+            const uniqueSquareEstimates = [...new Set(squareEstimates)];
+            const uniqueCubeEstimates = [...new Set(cubeEstimates)];
+            
+            // If we don't have enough unique estimates, add some more
+            while (uniqueSquareEstimates.length < 4) {
+                const randomOffset = (Math.random() - 0.5) * 2; // Random between -1 and 1
+                const newEstimate = Math.round((Math.random() * 3 + 2 + randomOffset) * 10) / 10;
+                if (!uniqueSquareEstimates.includes(newEstimate) && newEstimate > 0) {
+                    uniqueSquareEstimates.push(newEstimate);
+                }
+            }
+            
+            while (uniqueCubeEstimates.length < 4) {
+                const randomOffset = (Math.random() - 0.5) * 2; // Random between -1 and 1
+                const newEstimate = Math.round((Math.random() * 3 + 2 + randomOffset) * 10) / 10;
+                if (!uniqueCubeEstimates.includes(newEstimate) && newEstimate > 0) {
+                    uniqueCubeEstimates.push(newEstimate);
+                }
+            }
+            
+            // Shuffle the estimates to randomize their order
+            function shuffleArray(array) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
+            }
+            
+            // Take only 4 estimates and shuffle them
+            const shuffledSquareEstimates = shuffleArray(uniqueSquareEstimates.slice(0, 4));
+            const shuffledCubeEstimates = shuffleArray(uniqueCubeEstimates.slice(0, 4));
+            
+            // Update drop zone data attributes with correct answers
+            const dropZones = document.querySelectorAll('.drop-zone');
+            dropZones[0].setAttribute('data-answer', sqrt1Rounded);
+            dropZones[1].setAttribute('data-answer', sqrt2Rounded);
+            dropZones[2].setAttribute('data-answer', cbrt1Rounded);
+            dropZones[3].setAttribute('data-answer', cbrt2Rounded);
+            
+            // Reset all drop zones
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.innerHTML = '<span class="text-gray-400 text-sm">Drop estimate here</span>';
+                zone.classList.remove('correct');
+            });
+            
+            // Find the estimate containers correctly
+            const squareEstimateContainer = document.querySelectorAll('.bg-gray-50')[0];
+            const cubeEstimateContainer = document.querySelectorAll('.bg-gray-50')[1];
+            
+            // Clear and rebuild square estimates with 4 new values
+            squareEstimateContainer.querySelector('.flex').innerHTML = '';
+            shuffledSquareEstimates.forEach((value, index) => {
+                const span = document.createElement('span');
+                span.className = 'draggable bg-blue-500 text-white px-3 py-2 rounded-lg font-bold';
+                span.setAttribute('data-value', value);
+                span.textContent = `≈ ${value}`;
+                span.addEventListener('mousedown', startDrag);
+                span.addEventListener('touchstart', startDrag, { passive: false });
+                span.tabIndex = 0;
+                squareEstimateContainer.querySelector('.flex').appendChild(span);
+            });
+            
+            // Clear and rebuild cube estimates with 4 new values
+            cubeEstimateContainer.querySelector('.flex').innerHTML = '';
+            shuffledCubeEstimates.forEach((value, index) => {
+                const span = document.createElement('span');
+                span.className = 'draggable bg-green-500 text-white px-3 py-2 rounded-lg font-bold';
+                span.setAttribute('data-value', value);
+                span.textContent = `≈ ${value}`;
+                span.addEventListener('mousedown', startDrag);
+                span.addEventListener('touchstart', startDrag, { passive: false });
+                span.tabIndex = 0;
+                cubeEstimateContainer.querySelector('.flex').appendChild(span);
+            });
+        }
+
+        // Page navigation
+        document.getElementById('checkAnswers').addEventListener('click', function() {
+            document.body.classList.add('show-page-2');
+        });
+
+        document.getElementById('backToPage1').addEventListener('click', function() {
+            document.body.classList.remove('show-page-2');
+        });
+
+        document.getElementById('resetButton').addEventListener('click', resetPractice);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                // Tab navigation is handled by browser
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992f4cd511ab99f8',t:'MTc2MTIwMjIyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1254 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission: Climate Code</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-orbitron { font-family: 'Orbitron', monospace; }
+    .font-inter { font-family: 'Inter', sans-serif; }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes scan-line {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+    
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    
+    .node-locked { opacity: 0.5; filter: grayscale(0.8); }
+    .node-active { animation: pulse-glow 1.5s ease-in-out infinite; }
+    .node-complete { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    
+    .number-line-marker {
+      transition: left 0.5s ease-out;
+    }
+    
+    .drag-item {
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+    }
+    
+    .drag-item:active { cursor: grabbing; }
+    .drag-over { background: rgba(34, 197, 94, 0.2); border: 2px dashed #22c55e; }
+    
+    .code-digit {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 2px solid #22c55e;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.3), inset 0 0 10px rgba(34, 197, 94, 0.1);
+    }
+    
+    .code-digit.revealed {
+      animation: pulse-glow 0.5s ease-out;
+    }
+    
+    .hint-box {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
+      border-left: 4px solid #fbbf24;
+    }
+    
+    .success-box {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+      border-left: 4px solid #22c55e;
+    }
+    
+    .error-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+      border-left: 4px solid #ef4444;
+    }
+    
+    .glassmorphism {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+    
+    .number-line {
+      background: linear-gradient(90deg, #1e40af, #3b82f6, #22c55e, #eab308, #ef4444);
+      height: 6px;
+      border-radius: 3px;
+    }
+    
+    .stage-path {
+      stroke-dasharray: 10, 5;
+      animation: dash 20s linear infinite;
+    }
+    
+    @keyframes dash {
+      to { stroke-dashoffset: -1000; }
+    }
+    
+    .completion-celebration {
+      background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.2) 0%, transparent 70%);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-inter bg-slate-900 text-white overflow-auto">
+  <div id="app" class="min-h-full w-full"><!-- Main Menu Screen -->
+   <div id="main-menu" class="min-h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto"><!-- Header -->
+     <header class="text-center mb-8">
+      <div class="inline-block mb-4 px-4 py-2 bg-emerald-500/20 rounded-full border border-emerald-500/30"><span class="text-emerald-400 text-sm font-medium">🌍 SDG 13: Climate Action</span>
+      </div>
+      <h1 id="game-title" class="font-orbitron text-3xl md:text-5xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-4">Mission: Climate Code</h1>
+      <p id="mission-briefing" class="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed">You are part of a climate science team. A satellite system needs a 5-digit access code to stabilise sensors and share accurate climate data with communities worldwide.</p>
+     </header><!-- SDG Info Card -->
+     <div class="glassmorphism rounded-xl p-6 mb-8">
+      <div class="flex items-start gap-4">
+       <div class="text-4xl">
+        🛰️
+       </div>
+       <div>
+        <h2 class="font-orbitron text-emerald-400 text-lg mb-2">Your Mission</h2>
+        <p class="text-slate-300">Complete 5 stages of mathematical challenges to unlock each digit of the Climate Code. Accurate data helps people plan and protect the environment. Every calculation counts!</p>
+       </div>
+      </div>
+     </div><!-- Climate Code Display -->
+     <div class="text-center mb-8">
+      <p class="text-slate-400 text-sm mb-3 font-medium tracking-wider">CLIMATE ACCESS CODE</p>
+      <div id="code-display-menu" class="flex justify-center gap-3">
+       <div class="code-digit w-14 h-16 md:w-16 md:h-20 rounded-lg flex items-center justify-center font-orbitron text-2xl md:text-3xl text-emerald-400">
+        ?
+       </div>
+       <div class="code-digit w-14 h-16 md:w-16 md:h-20 rounded-lg flex items-center justify-center font-orbitron text-2xl md:text-3xl text-emerald-400">
+        ?
+       </div>
+       <div class="code-digit w-14 h-16 md:w-16 md:h-20 rounded-lg flex items-center justify-center font-orbitron text-2xl md:text-3xl text-emerald-400">
+        ?
+       </div>
+       <div class="code-digit w-14 h-16 md:w-16 md:h-20 rounded-lg flex items-center justify-center font-orbitron text-2xl md:text-3xl text-emerald-400">
+        ?
+       </div>
+       <div class="code-digit w-14 h-16 md:w-16 md:h-20 rounded-lg flex items-center justify-center font-orbitron text-2xl md:text-3xl text-emerald-400">
+        ?
+       </div>
+      </div>
+     </div><!-- Mission Map -->
+     <div class="glassmorphism rounded-xl p-6 mb-8">
+      <h3 class="font-orbitron text-emerald-400 text-center mb-6">Mission Progress</h3>
+      <div class="relative"><!-- Stage Nodes -->
+       <div id="stage-nodes" class="flex flex-wrap justify-center gap-4 md:gap-6">
+        <div class="stage-node node-locked text-center p-4 rounded-xl bg-slate-800/50 border border-slate-600 w-32" data-stage="1">
+         <div class="text-3xl mb-2">
+          📡
+         </div>
+         <p class="text-sm font-medium text-slate-300">Stage 1</p>
+         <p class="text-xs text-slate-400">Sensor Calibration</p>
+         <div class="mt-2 text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">
+          🔒 Locked
+         </div>
+        </div>
+        <div class="stage-node node-locked text-center p-4 rounded-xl bg-slate-800/50 border border-slate-600 w-32" data-stage="2">
+         <div class="text-3xl mb-2">
+          🧭
+         </div>
+         <p class="text-sm font-medium text-slate-300">Stage 2</p>
+         <p class="text-xs text-slate-400">Drift Correction</p>
+         <div class="mt-2 text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">
+          🔒 Locked
+         </div>
+        </div>
+        <div class="stage-node node-locked text-center p-4 rounded-xl bg-slate-800/50 border border-slate-600 w-32" data-stage="3">
+         <div class="text-3xl mb-2">
+          🌡️
+         </div>
+         <p class="text-sm font-medium text-slate-300">Stage 3</p>
+         <p class="text-xs text-slate-400">Temperature Log</p>
+         <div class="mt-2 text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">
+          🔒 Locked
+         </div>
+        </div>
+        <div class="stage-node node-locked text-center p-4 rounded-xl bg-slate-800/50 border border-slate-600 w-32" data-stage="4">
+         <div class="text-3xl mb-2">
+          ⚡
+         </div>
+         <p class="text-sm font-medium text-slate-300">Stage 4</p>
+         <p class="text-xs text-slate-400">Energy Balance</p>
+         <div class="mt-2 text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">
+          🔒 Locked
+         </div>
+        </div>
+        <div class="stage-node node-locked text-center p-4 rounded-xl bg-slate-800/50 border border-slate-600 w-32" data-stage="5">
+         <div class="text-3xl mb-2">
+          🎯
+         </div>
+         <p class="text-sm font-medium text-slate-300">Stage 5</p>
+         <p class="text-xs text-slate-400">Final Stabilisation</p>
+         <div class="mt-2 text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">
+          🔒 Locked
+         </div>
+        </div>
+       </div>
+      </div><!-- Progress Bar -->
+      <div class="mt-6">
+       <div class="flex justify-between text-sm text-slate-400 mb-2"><span>Mission Progress</span> <span id="progress-text">0/5 Stages Complete</span>
+       </div>
+       <div class="w-full h-3 bg-slate-700 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-500" style="width: 0%"></div>
+       </div>
+      </div>
+     </div><!-- Settings -->
+     <div class="glassmorphism rounded-xl p-6 mb-8">
+      <h3 class="font-orbitron text-emerald-400 mb-4">Mission Settings</h3>
+      <div class="grid md:grid-cols-2 gap-6"><!-- Difficulty -->
+       <div><label class="block text-sm text-slate-300 mb-2">Difficulty Level</label>
+        <div class="flex gap-2"><button id="diff-easy" class="difficulty-btn px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500 text-emerald-400 text-sm font-medium transition-all" data-difficulty="easy">Easy</button> <button id="diff-medium" class="difficulty-btn px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 text-slate-300 text-sm font-medium transition-all hover:bg-slate-600" data-difficulty="medium">Medium</button> <button id="diff-hard" class="difficulty-btn px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 text-slate-300 text-sm font-medium transition-all hover:bg-slate-600" data-difficulty="hard">Hard</button>
+        </div>
+       </div><!-- Teacher Toggle -->
+       <div><label class="block text-sm text-slate-300 mb-2">Teacher Options</label> <label class="flex items-center gap-3 cursor-pointer">
+         <div class="relative"><input type="checkbox" id="correction-toggle" class="sr-only peer">
+          <div class="w-11 h-6 bg-slate-700 rounded-full peer-checked:bg-emerald-500 transition-colors"></div>
+          <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"></div>
+         </div><span class="text-sm text-slate-300">Enable correction steps (subtracting negatives)</span> </label>
+       </div>
+      </div>
+     </div><!-- Code Rule Explanation -->
+     <div class="glassmorphism rounded-xl p-6 mb-8">
+      <h3 class="font-orbitron text-emerald-400 mb-3">🔢 How the Code Works</h3>
+      <p class="text-slate-300 mb-3">Each stage reveals one digit of the 5-digit Climate Code.</p>
+      <div class="bg-slate-800/50 rounded-lg p-4">
+       <p class="text-cyan-400 font-mono mb-2">Digit = |final answer| mod 10</p>
+       <p class="text-slate-400 text-sm">This means: take the absolute value (ignore negatives), then find the last digit.</p>
+       <p class="text-slate-400 text-sm mt-2"><strong>Example:</strong> If your answer is -17, the digit is 7 (because |-17| = 17, and 17 mod 10 = 7)</p>
+      </div>
+     </div><!-- Start Button -->
+     <div class="text-center"><button id="start-btn" class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-xl font-orbitron text-lg font-bold text-white shadow-lg hover:shadow-emerald-500/30 transition-all transform hover:scale-105 animate-pulse-glow"> 🚀 Start Mission </button>
+     </div>
+    </div>
+   </div><!-- Game Screen -->
+   <div id="game-screen" class="hidden min-h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 p-4 md:p-8">
+    <div class="max-w-3xl mx-auto"><!-- Game Header -->
+     <div class="flex justify-between items-center mb-6"><button id="back-btn" class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm transition-colors"> ← Back to Map </button>
+      <div class="text-center">
+       <p class="text-slate-400 text-xs">CLIMATE CODE</p>
+       <div id="code-display-game" class="flex gap-1"><span class="code-digit-small w-8 h-10 rounded flex items-center justify-center font-orbitron text-emerald-400 bg-slate-800 border border-emerald-500/30">?</span> <span class="code-digit-small w-8 h-10 rounded flex items-center justify-center font-orbitron text-emerald-400 bg-slate-800 border border-emerald-500/30">?</span> <span class="code-digit-small w-8 h-10 rounded flex items-center justify-center font-orbitron text-emerald-400 bg-slate-800 border border-emerald-500/30">?</span> <span class="code-digit-small w-8 h-10 rounded flex items-center justify-center font-orbitron text-emerald-400 bg-slate-800 border border-emerald-500/30">?</span> <span class="code-digit-small w-8 h-10 rounded flex items-center justify-center font-orbitron text-emerald-400 bg-slate-800 border border-emerald-500/30">?</span>
+       </div>
+      </div>
+      <div class="text-right">
+       <p class="text-slate-400 text-xs">ATTEMPTS</p>
+       <p id="attempts-display" class="font-orbitron text-emerald-400">2/2</p>
+      </div>
+     </div><!-- Stage Content Area -->
+     <div id="stage-content" class="glassmorphism rounded-xl p-6 mb-6"><!-- Dynamic content loaded here -->
+     </div><!-- Hint Area -->
+     <div id="hint-area" class="hidden mb-6"><!-- Hints shown here -->
+     </div><!-- Answer Input Area -->
+     <div id="answer-area" class="glassmorphism rounded-xl p-6"><!-- Dynamic input area -->
+     </div>
+    </div>
+   </div><!-- Victory Screen -->
+   <div id="victory-screen" class="hidden min-h-full w-full bg-gradient-to-br from-slate-900 via-emerald-900 to-cyan-900 p-4 md:p-8 completion-celebration">
+    <div class="max-w-2xl mx-auto text-center">
+     <div class="animate-float mb-8">
+      <div class="text-8xl mb-4">
+       🎉
+      </div>
+      <h1 class="font-orbitron text-4xl md:text-5xl font-bold text-emerald-400 mb-4">Mission Complete!</h1>
+     </div>
+     <div class="glassmorphism rounded-xl p-8 mb-8">
+      <p class="text-slate-300 text-lg mb-6">You've successfully unlocked the Climate Code!</p>
+      <div class="mb-6">
+       <p class="text-slate-400 text-sm mb-3">FINAL ACCESS CODE</p>
+       <div id="final-code-display" class="flex justify-center gap-3"><!-- Filled by JS -->
+       </div>
+      </div>
+      <div class="bg-emerald-500/10 rounded-lg p-4 border border-emerald-500/30">
+       <p class="text-emerald-400 font-medium mb-2">🌍 Impact Achieved</p>
+       <p class="text-slate-300">The satellite sensors are now calibrated! Accurate climate data will help communities worldwide prepare for and adapt to environmental changes.</p>
+      </div>
+     </div><button id="restart-btn" class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-xl font-orbitron text-lg font-bold text-white shadow-lg hover:shadow-emerald-500/30 transition-all transform hover:scale-105"> 🔄 Play Again </button>
+    </div>
+   </div>
+  </div>
+  <script>
+    // ==================== GAME STATE ====================
+    const gameState = {
+      currentStage: 0,
+      completedStages: [],
+      climateCode: ['?', '?', '?', '?', '?'],
+      difficulty: 'easy',
+      correctionEnabled: false,
+      attempts: 2,
+      currentPuzzle: null,
+      usedPuzzles: { 1: [], 2: [], 3: [], 4: [], 5: [] },
+      hintsShown: 0
+    };
+
+    // ==================== PUZZLE BANKS ====================
+    const puzzleBanks = {
+      // Stage 1: Ordering
+      1: {
+        easy: [
+          { numbers: [-4, 3, 0, -1, 5], id: 'e1' },
+          { numbers: [-7, -2, 4, 1, 0], id: 'e2' },
+          { numbers: [2, -6, -3, 0, 7], id: 'e3' }
+        ],
+        medium: [
+          { numbers: [-9, -1, -6, 2, 0], id: 'm1' },
+          { numbers: [-5, -8, -2, 1, -3], id: 'm2' },
+          { numbers: [4, -7, -4, -6, 0], id: 'm3' }
+        ],
+        hard: [
+          { numbers: [-10, -3, -8, 5, 1], extraQ: { q: 'Which is greater: -3 or -8?', answer: -3 }, id: 'h1' },
+          { numbers: [0, -11, -2, -9, 6], extraQ: { q: 'Which is greater: -2 or 0?', answer: 0 }, id: 'h2' }
+        ]
+      },
+      // Stage 2: Number Line
+      2: {
+        easy: [
+          { start: -3, operations: [{ op: 'add', value: 7 }], id: 'e1' },
+          { start: 6, operations: [{ op: 'add', value: -9 }], id: 'e2' },
+          { start: -5, operations: [{ op: 'subtract', value: 4 }], id: 'e3' }
+        ],
+        medium: [
+          { start: 4, operations: [{ op: 'subtract', value: -6 }], id: 'm1' },
+          { start: -8, operations: [{ op: 'subtract', value: -2 }], id: 'm2' },
+          { start: 1, operations: [{ op: 'subtract', value: -9 }], id: 'm3' }
+        ],
+        hard: [
+          { start: -6, operations: [{ op: 'add', value: 9 }, { op: 'add', value: -4 }], id: 'h1' },
+          { start: 7, operations: [{ op: 'subtract', value: 12 }, { op: 'subtract', value: -3 }], id: 'h2' }
+        ]
+      },
+      // Stage 3: Temperature
+      3: {
+        easy: [
+          { start: -4, changes: [{ type: 'rise', value: 6 }, { type: 'drop', value: 3 }], id: 'e1' },
+          { start: 2, changes: [{ type: 'drop', value: 7 }, { type: 'rise', value: 1 }], id: 'e2' }
+        ],
+        medium: [
+          { start: -8, changes: [{ type: 'rise', value: 5 }, { type: 'drop', value: 9 }, { type: 'rise', value: 3 }], id: 'm1' },
+          { start: 6, changes: [{ type: 'drop', value: 10 }, { type: 'rise', value: 4 }, { type: 'drop', value: 2 }], id: 'm2' }
+        ],
+        hard: [
+          { start: -10, changes: [{ type: 'rise', value: 7 }, { type: 'drop', value: 6 }, { type: 'rise', value: 5 }, { type: 'drop', value: 4 }], id: 'h1' },
+          { start: -3, changes: [{ type: 'drop', value: 8 }, { type: 'rise', value: 6 }, { type: 'correction', value: -2 }], id: 'h2' }
+        ]
+      },
+      // Stage 4: Energy Balance (Equations)
+      4: {
+        easy: [
+          { equation: '? + 5 = 2', answer: -3, id: 'e1' },
+          { equation: '? − 3 = −7', answer: -4, id: 'e2' },
+          { equation: '6 + ? = 1', answer: -5, id: 'e3' }
+        ],
+        medium: [
+          { equation: '? − (−4) = 7', answer: 3, id: 'm1' },
+          { equation: '−5 + ? = −12', answer: -7, id: 'm2' },
+          { equation: '? + (−8) = −3', answer: 5, id: 'm3' }
+        ],
+        hard: [
+          { equation: '? − (−6) + 2 = 5', answer: -3, id: 'h1' },
+          { equation: '−4 + ? − (−3) = 8', answer: 9, id: 'h2' }
+        ]
+      },
+      // Stage 5: Mixed Operations
+      5: {
+        easy: [
+          { expression: '−5 + 8 − 2', answer: 1, id: 'e1' },
+          { expression: '3 − 7 + 1', answer: -3, id: 'e2' },
+          { expression: '−2 − 4 + 9', answer: 3, id: 'e3' }
+        ],
+        medium: [
+          { expression: '−6 − (−4) + 3', answer: 1, id: 'm1' },
+          { expression: '5 − (−2) − 8', answer: -1, id: 'm2' },
+          { expression: '−3 + (−5) − (−10)', answer: 2, id: 'm3' }
+        ],
+        hard: [
+          { expression: '−8 − (−3) + (−5) − (−7)', answer: -3, id: 'h1' },
+          { expression: '4 − (−6) − 9 + (−2)', answer: -1, id: 'h2' }
+        ]
+      }
+    };
+
+    // ==================== CONFIG & SDK ====================
+    const defaultConfig = {
+      game_title: 'Mission: Climate Code',
+      mission_briefing: 'You are part of a climate science team. A satellite system needs a 5-digit access code to stabilise sensors and share accurate climate data with communities worldwide.',
+      primary_color: '#22c55e',
+      secondary_color: '#0f172a',
+      text_color: '#e2e8f0',
+      accent_color: '#06b6d4',
+      bg_color: '#1e293b'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.bg_color || defaultConfig.bg_color,
+              set: (v) => { cfg.bg_color = v; window.elementSdk.setConfig({ bg_color: v }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['game_title', cfg.game_title || defaultConfig.game_title],
+          ['mission_briefing', cfg.mission_briefing || defaultConfig.mission_briefing]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      document.getElementById('game-title').textContent = config.game_title || defaultConfig.game_title;
+      document.getElementById('mission-briefing').textContent = config.mission_briefing || defaultConfig.mission_briefing;
+      
+      // Apply colors
+      document.documentElement.style.setProperty('--primary', config.primary_color || defaultConfig.primary_color);
+      document.documentElement.style.setProperty('--accent', config.accent_color || defaultConfig.accent_color);
+    }
+
+    // ==================== UTILITY FUNCTIONS ====================
+    function calculateDigit(answer) {
+      return Math.abs(answer) % 10;
+    }
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function getRandomPuzzle(stage) {
+      const bank = puzzleBanks[stage][gameState.difficulty];
+      const used = gameState.usedPuzzles[stage];
+      const available = bank.filter(p => !used.includes(p.id));
+      
+      if (available.length === 0) {
+        gameState.usedPuzzles[stage] = [];
+        return bank[Math.floor(Math.random() * bank.length)];
+      }
+      
+      const puzzle = available[Math.floor(Math.random() * available.length)];
+      gameState.usedPuzzles[stage].push(puzzle.id);
+      return puzzle;
+    }
+
+    function updateCodeDisplay() {
+      const menuDisplay = document.getElementById('code-display-menu');
+      const gameDisplay = document.getElementById('code-display-game');
+      
+      menuDisplay.innerHTML = gameState.climateCode.map((d, i) => 
+        `<div class="code-digit w-14 h-16 md:w-16 md:h-20 rounded-lg flex items-center justify-center font-orbitron text-2xl md:text-3xl ${d !== '?' ? 'text-emerald-400 revealed' : 'text-slate-500'}">${d}</div>`
+      ).join('');
+      
+      gameDisplay.innerHTML = gameState.climateCode.map((d, i) => 
+        `<span class="code-digit-small w-8 h-10 rounded flex items-center justify-center font-orbitron ${d !== '?' ? 'text-emerald-400' : 'text-slate-500'} bg-slate-800 border ${d !== '?' ? 'border-emerald-500' : 'border-emerald-500/30'}">${d}</span>`
+      ).join('');
+    }
+
+    function updateProgress() {
+      const completed = gameState.completedStages.length;
+      document.getElementById('progress-text').textContent = `${completed}/5 Stages Complete`;
+      document.getElementById('progress-bar').style.width = `${(completed / 5) * 100}%`;
+      
+      // Update stage nodes
+      const nodes = document.querySelectorAll('.stage-node');
+      nodes.forEach((node, i) => {
+        const stageNum = i + 1;
+        node.classList.remove('node-locked', 'node-active', 'node-complete');
+        
+        if (gameState.completedStages.includes(stageNum)) {
+          node.classList.add('node-complete');
+          node.querySelector('div:last-child').innerHTML = `<span class="text-white">✓ Digit: ${gameState.climateCode[i]}</span>`;
+          node.style.opacity = '1';
+          node.style.filter = 'none';
+        } else if (stageNum === gameState.currentStage + 1) {
+          node.classList.add('node-active');
+          node.querySelector('div:last-child').innerHTML = `<span class="text-emerald-400">🔓 Unlocked</span>`;
+          node.style.opacity = '1';
+          node.style.filter = 'none';
+        } else {
+          node.classList.add('node-locked');
+          node.querySelector('div:last-child').innerHTML = `<span class="text-slate-400">🔒 Locked</span>`;
+        }
+      });
+    }
+
+    // ==================== STAGE RENDERERS ====================
+    
+    function renderStage1() {
+      const puzzle = getRandomPuzzle(1);
+      gameState.currentPuzzle = puzzle;
+      
+      const shuffled = shuffleArray(puzzle.numbers);
+      const content = document.getElementById('stage-content');
+      const answerArea = document.getElementById('answer-area');
+      
+      content.innerHTML = `
+        <div class="text-center mb-6">
+          <div class="inline-block px-3 py-1 bg-emerald-500/20 rounded-full text-emerald-400 text-sm mb-4">Stage 1 of 5</div>
+          <h2 class="font-orbitron text-2xl text-emerald-400 mb-2">📡 Sensor Calibration</h2>
+          <p class="text-slate-300">The satellite sensors need calibrating. Arrange these temperature readings from <strong>smallest to largest</strong> (left to right).</p>
+        </div>
+        
+        <div class="bg-slate-800/50 rounded-lg p-6">
+          <p class="text-slate-400 text-sm mb-4 text-center">Drag and drop to arrange, or click numbers in order:</p>
+          
+          <div id="number-pool" class="flex flex-wrap justify-center gap-3 mb-6">
+            ${shuffled.map((n, i) => `
+              <div class="drag-item px-6 py-4 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl border-2 border-slate-600 hover:border-emerald-500 cursor-pointer transition-all text-xl font-bold text-white" data-value="${n}" data-index="${i}">
+                ${n}
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="border-t border-slate-600 pt-4">
+            <p class="text-slate-400 text-sm mb-3 text-center">Your answer (smallest → largest):</p>
+            <div id="answer-slots" class="flex justify-center gap-2">
+              ${puzzle.numbers.map((_, i) => `
+                <div class="answer-slot w-14 h-14 bg-slate-900 rounded-lg border-2 border-dashed border-slate-600 flex items-center justify-center text-xl font-bold text-emerald-400" data-slot="${i}"></div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+        
+        ${gameState.difficulty === 'hard' && puzzle.extraQ ? `
+          <div id="extra-question" class="hidden mt-4 bg-cyan-500/10 rounded-lg p-4 border border-cyan-500/30">
+            <p class="text-cyan-400 font-medium mb-3">🤔 Bonus Question: ${puzzle.extraQ.q}</p>
+            <div class="flex gap-3 justify-center">
+              <button class="extra-answer-btn px-6 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors" data-answer="${puzzle.numbers[1]}">${puzzle.numbers[1]}</button>
+              <button class="extra-answer-btn px-6 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors" data-answer="${puzzle.numbers[2]}">${puzzle.numbers[2]}</button>
+            </div>
+          </div>
+        ` : ''}
+      `;
+      
+      answerArea.innerHTML = `
+        <div class="flex justify-between items-center">
+          <button id="clear-btn" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-300 transition-colors">
+            Clear
+          </button>
+          <button id="submit-btn" class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg font-bold text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            Check Answer
+          </button>
+        </div>
+      `;
+      
+      setupStage1Interactions();
+    }
+
+    function setupStage1Interactions() {
+      const pool = document.getElementById('number-pool');
+      const slots = document.getElementById('answer-slots');
+      const submitBtn = document.getElementById('submit-btn');
+      const clearBtn = document.getElementById('clear-btn');
+      let selectedOrder = [];
+      
+      // Click to select
+      pool.addEventListener('click', (e) => {
+        const item = e.target.closest('.drag-item');
+        if (!item || item.classList.contains('used')) return;
+        
+        const value = parseInt(item.dataset.value);
+        selectedOrder.push(value);
+        item.classList.add('used', 'opacity-30');
+        
+        // Fill slot
+        const slotElements = slots.querySelectorAll('.answer-slot');
+        slotElements[selectedOrder.length - 1].textContent = value;
+        slotElements[selectedOrder.length - 1].classList.add('border-emerald-500', 'bg-emerald-500/10');
+        
+        // Enable submit if all filled
+        if (selectedOrder.length === gameState.currentPuzzle.numbers.length) {
+          submitBtn.disabled = false;
+        }
+      });
+      
+      // Clear button
+      clearBtn.addEventListener('click', () => {
+        selectedOrder = [];
+        pool.querySelectorAll('.drag-item').forEach(item => {
+          item.classList.remove('used', 'opacity-30');
+        });
+        slots.querySelectorAll('.answer-slot').forEach(slot => {
+          slot.textContent = '';
+          slot.classList.remove('border-emerald-500', 'bg-emerald-500/10');
+        });
+        submitBtn.disabled = true;
+      });
+      
+      // Submit
+      submitBtn.addEventListener('click', () => {
+        const correct = [...gameState.currentPuzzle.numbers].sort((a, b) => a - b);
+        const isCorrect = selectedOrder.every((n, i) => n === correct[i]);
+        
+        if (isCorrect) {
+          // Check if hard mode has extra question
+          if (gameState.difficulty === 'hard' && gameState.currentPuzzle.extraQ) {
+            document.getElementById('extra-question').classList.remove('hidden');
+            submitBtn.disabled = true;
+            
+            document.querySelectorAll('.extra-answer-btn').forEach(btn => {
+              btn.addEventListener('click', (e) => {
+                const answer = parseInt(e.target.dataset.answer);
+                if (answer === gameState.currentPuzzle.extraQ.answer) {
+                  completeStage(correct[Math.floor(correct.length / 2)]);
+                } else {
+                  handleWrongAnswer();
+                }
+              });
+            });
+          } else {
+            // Median for digit calculation
+            const median = correct[Math.floor(correct.length / 2)];
+            completeStage(median);
+          }
+        } else {
+          handleWrongAnswer();
+        }
+      });
+    }
+
+    function renderStage2() {
+      const puzzle = getRandomPuzzle(2);
+      gameState.currentPuzzle = puzzle;
+      
+      const content = document.getElementById('stage-content');
+      const answerArea = document.getElementById('answer-area');
+      
+      let operationText = puzzle.operations.map(op => {
+        if (op.op === 'add') {
+          return op.value < 0 ? `add (${op.value})` : `add ${op.value}`;
+        } else {
+          return op.value < 0 ? `subtract (${op.value})` : `subtract ${op.value}`;
+        }
+      }).join(', then ');
+      
+      content.innerHTML = `
+        <div class="text-center mb-6">
+          <div class="inline-block px-3 py-1 bg-emerald-500/20 rounded-full text-emerald-400 text-sm mb-4">Stage 2 of 5</div>
+          <h2 class="font-orbitron text-2xl text-emerald-400 mb-2">🧭 Drift Correction</h2>
+          <p class="text-slate-300">The sensor readings have drifted. Start at <strong class="text-cyan-400">${puzzle.start}</strong> and ${operationText}.</p>
+        </div>
+        
+        <div class="bg-slate-800/50 rounded-lg p-6">
+          <p class="text-slate-400 text-sm mb-4 text-center">Use the number line to help visualise the calculation:</p>
+          
+          <!-- Number Line -->
+          <div class="relative py-8">
+            <div class="number-line w-full"></div>
+            <div class="flex justify-between text-xs text-slate-400 mt-2">
+              ${[-15, -10, -5, 0, 5, 10, 15].map(n => `<span>${n}</span>`).join('')}
+            </div>
+            <div id="marker" class="absolute top-4 w-6 h-6 bg-emerald-500 rounded-full transform -translate-x-1/2 transition-all duration-500 flex items-center justify-center text-xs font-bold" style="left: ${((puzzle.start + 15) / 30) * 100}%">
+              ${puzzle.start}
+            </div>
+          </div>
+          
+          <div class="text-center mt-4">
+            <p class="text-slate-300">Starting position: <span class="font-bold text-cyan-400">${puzzle.start}</span></p>
+            <p class="text-slate-300 mt-2">Operation: <span class="font-mono text-yellow-400">${puzzle.start} ${puzzle.operations.map(op => {
+              if (op.op === 'add') {
+                return op.value < 0 ? `+ (${op.value})` : `+ ${op.value}`;
+              } else {
+                return op.value < 0 ? `− (${op.value})` : `− ${op.value}`;
+              }
+            }).join(' ')}</span></p>
+          </div>
+        </div>
+      `;
+      
+      answerArea.innerHTML = `
+        <div class="text-center">
+          <label class="block text-slate-300 mb-3">What is the final position?</label>
+          <input type="number" id="answer-input" class="w-32 px-4 py-3 bg-slate-800 border-2 border-slate-600 rounded-lg text-center text-xl font-bold text-white focus:border-emerald-500 focus:outline-none" placeholder="?">
+          <button id="submit-btn" class="ml-4 px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg font-bold text-white hover:opacity-90 transition-opacity">
+            Check Answer
+          </button>
+        </div>
+      `;
+      
+      setupStage2Interactions();
+    }
+
+    function setupStage2Interactions() {
+      const input = document.getElementById('answer-input');
+      const submitBtn = document.getElementById('submit-btn');
+      const marker = document.getElementById('marker');
+      
+      // Calculate correct answer
+      let answer = gameState.currentPuzzle.start;
+      gameState.currentPuzzle.operations.forEach(op => {
+        if (op.op === 'add') {
+          answer += op.value;
+        } else {
+          answer -= op.value;
+        }
+      });
+      gameState.currentPuzzle.answer = answer;
+      
+      // Animate marker on input
+      input.addEventListener('input', () => {
+        const val = parseInt(input.value) || 0;
+        const pos = Math.min(Math.max((val + 15) / 30, 0), 1) * 100;
+        marker.style.left = `${pos}%`;
+        marker.textContent = val;
+      });
+      
+      submitBtn.addEventListener('click', () => {
+        const userAnswer = parseInt(input.value);
+        if (userAnswer === answer) {
+          completeStage(answer);
+        } else {
+          handleWrongAnswer();
+        }
+      });
+      
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    }
+
+    function renderStage3() {
+      let puzzle = getRandomPuzzle(3);
+      
+      // Filter out correction type if not enabled
+      if (!gameState.correctionEnabled) {
+        puzzle = {
+          ...puzzle,
+          changes: puzzle.changes.filter(c => c.type !== 'correction')
+        };
+      }
+      
+      gameState.currentPuzzle = puzzle;
+      
+      const content = document.getElementById('stage-content');
+      const answerArea = document.getElementById('answer-area');
+      
+      const changesText = puzzle.changes.map(c => {
+        if (c.type === 'rise') return `rises ${c.value}°C`;
+        if (c.type === 'drop') return `drops ${c.value}°C`;
+        if (c.type === 'correction') return `correction removes an error of ${c.value}°C`;
+      }).join(', then ');
+      
+      content.innerHTML = `
+        <div class="text-center mb-6">
+          <div class="inline-block px-3 py-1 bg-emerald-500/20 rounded-full text-emerald-400 text-sm mb-4">Stage 3 of 5</div>
+          <h2 class="font-orbitron text-2xl text-emerald-400 mb-2">🌡️ Temperature Anomaly Log</h2>
+          <p class="text-slate-300">Track the temperature changes in the climate data log.</p>
+        </div>
+        
+        <div class="bg-slate-800/50 rounded-lg p-6">
+          <div class="bg-slate-900 rounded-lg p-4 mb-6 font-mono">
+            <p class="text-slate-400 text-sm mb-2">📋 Temperature Log Entry:</p>
+            <p class="text-white">Starting temperature: <span class="text-cyan-400 font-bold">${puzzle.start}°C</span></p>
+            <ul class="mt-2 space-y-1">
+              ${puzzle.changes.map((c, i) => {
+                let text = '';
+                let icon = '';
+                if (c.type === 'rise') {
+                  text = `Temperature rises by ${c.value}°C`;
+                  icon = '🔺';
+                } else if (c.type === 'drop') {
+                  text = `Temperature drops by ${c.value}°C`;
+                  icon = '🔻';
+                } else if (c.type === 'correction') {
+                  text = `Correction removes an error of ${c.value}°C`;
+                  icon = '🔧';
+                }
+                return `<li class="text-slate-300">${icon} Step ${i + 1}: ${text}</li>`;
+              }).join('')}
+            </ul>
+          </div>
+          
+          ${gameState.correctionEnabled && puzzle.changes.some(c => c.type === 'correction') ? `
+            <div class="bg-yellow-500/10 rounded-lg p-4 border border-yellow-500/30 mb-4">
+              <p class="text-yellow-400 text-sm">💡 <strong>Correction Step Hint:</strong> When we "remove an error of ${puzzle.changes.find(c => c.type === 'correction')?.value}°C", we subtract that negative value. Remember: subtracting a negative is like adding the positive!</p>
+              <p class="font-mono text-slate-300 mt-2">a − (${puzzle.changes.find(c => c.type === 'correction')?.value}) = a + ${Math.abs(puzzle.changes.find(c => c.type === 'correction')?.value || 0)}</p>
+            </div>
+          ` : ''}
+          
+          <button id="toggle-steps" class="text-sm text-emerald-400 hover:underline">Show step-by-step breakdown</button>
+          <div id="step-breakdown" class="hidden mt-4 space-y-2">
+            <!-- Will be filled if wrong -->
+          </div>
+        </div>
+      `;
+      
+      answerArea.innerHTML = `
+        <div class="text-center">
+          <label class="block text-slate-300 mb-3">What is the final temperature?</label>
+          <div class="flex items-center justify-center gap-2">
+            <input type="number" id="answer-input" class="w-32 px-4 py-3 bg-slate-800 border-2 border-slate-600 rounded-lg text-center text-xl font-bold text-white focus:border-emerald-500 focus:outline-none" placeholder="?">
+            <span class="text-xl text-slate-400">°C</span>
+            <button id="submit-btn" class="ml-4 px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg font-bold text-white hover:opacity-90 transition-opacity">
+              Check Answer
+            </button>
+          </div>
+        </div>
+      `;
+      
+      setupStage3Interactions();
+    }
+
+    function setupStage3Interactions() {
+      const input = document.getElementById('answer-input');
+      const submitBtn = document.getElementById('submit-btn');
+      const toggleSteps = document.getElementById('toggle-steps');
+      const stepBreakdown = document.getElementById('step-breakdown');
+      
+      // Calculate correct answer
+      let answer = gameState.currentPuzzle.start;
+      const steps = [`Start: ${answer}°C`];
+      
+      gameState.currentPuzzle.changes.forEach((c, i) => {
+        const before = answer;
+        if (c.type === 'rise') {
+          answer += c.value;
+          steps.push(`Step ${i + 1}: ${before} + ${c.value} = ${answer}°C (rises)`);
+        } else if (c.type === 'drop') {
+          answer -= c.value;
+          steps.push(`Step ${i + 1}: ${before} − ${c.value} = ${answer}°C (drops)`);
+        } else if (c.type === 'correction') {
+          answer -= c.value; // Subtracting a negative
+          steps.push(`Step ${i + 1}: ${before} − (${c.value}) = ${before} + ${Math.abs(c.value)} = ${answer}°C (correction)`);
+        }
+      });
+      
+      gameState.currentPuzzle.answer = answer;
+      gameState.currentPuzzle.steps = steps;
+      
+      toggleSteps.addEventListener('click', () => {
+        stepBreakdown.classList.toggle('hidden');
+        if (!stepBreakdown.classList.contains('hidden') && stepBreakdown.innerHTML === '') {
+          stepBreakdown.innerHTML = '<p class="text-slate-400 text-sm">Complete the problem first to see the breakdown!</p>';
+        }
+      });
+      
+      submitBtn.addEventListener('click', () => {
+        const userAnswer = parseInt(input.value);
+        if (userAnswer === answer) {
+          completeStage(answer);
+        } else {
+          handleWrongAnswer();
+        }
+      });
+      
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    }
+
+    function renderStage4() {
+      const puzzle = getRandomPuzzle(4);
+      gameState.currentPuzzle = puzzle;
+      
+      const content = document.getElementById('stage-content');
+      const answerArea = document.getElementById('answer-area');
+      
+      content.innerHTML = `
+        <div class="text-center mb-6">
+          <div class="inline-block px-3 py-1 bg-emerald-500/20 rounded-full text-emerald-400 text-sm mb-4">Stage 4 of 5</div>
+          <h2 class="font-orbitron text-2xl text-emerald-400 mb-2">⚡ Energy Balance</h2>
+          <p class="text-slate-300">The satellite's energy systems need balancing. Find the missing value to complete the equation.</p>
+        </div>
+        
+        <div class="bg-slate-800/50 rounded-lg p-8">
+          <div class="text-center">
+            <p class="text-slate-400 mb-4">Solve for the missing value:</p>
+            <p class="font-mono text-4xl md:text-5xl text-white tracking-wider">
+              ${puzzle.equation.replace('?', '<span class="text-yellow-400 animate-pulse">?</span>')}
+            </p>
+          </div>
+        </div>
+        
+        <div class="mt-4 bg-cyan-500/10 rounded-lg p-4 border border-cyan-500/30">
+          <p class="text-cyan-400 text-sm">💡 <strong>Remember:</strong> What do we need to add or subtract to get from one side to the other?</p>
+        </div>
+      `;
+      
+      answerArea.innerHTML = `
+        <div class="text-center">
+          <label class="block text-slate-300 mb-3">What value replaces the <span class="text-yellow-400">?</span></label>
+          <div class="flex items-center justify-center gap-2">
+            <span class="text-xl text-slate-400">? =</span>
+            <input type="number" id="answer-input" class="w-32 px-4 py-3 bg-slate-800 border-2 border-slate-600 rounded-lg text-center text-xl font-bold text-white focus:border-emerald-500 focus:outline-none" placeholder="?">
+            <button id="submit-btn" class="ml-4 px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg font-bold text-white hover:opacity-90 transition-opacity">
+              Check Answer
+            </button>
+          </div>
+        </div>
+      `;
+      
+      setupStage4Interactions();
+    }
+
+    function setupStage4Interactions() {
+      const input = document.getElementById('answer-input');
+      const submitBtn = document.getElementById('submit-btn');
+      
+      submitBtn.addEventListener('click', () => {
+        const userAnswer = parseInt(input.value);
+        if (userAnswer === gameState.currentPuzzle.answer) {
+          completeStage(gameState.currentPuzzle.answer);
+        } else {
+          handleWrongAnswer();
+        }
+      });
+      
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    }
+
+    function renderStage5() {
+      const puzzle = getRandomPuzzle(5);
+      gameState.currentPuzzle = puzzle;
+      
+      const content = document.getElementById('stage-content');
+      const answerArea = document.getElementById('answer-area');
+      
+      content.innerHTML = `
+        <div class="text-center mb-6">
+          <div class="inline-block px-3 py-1 bg-emerald-500/20 rounded-full text-emerald-400 text-sm mb-4">Stage 5 of 5 - FINAL</div>
+          <h2 class="font-orbitron text-2xl text-emerald-400 mb-2">🎯 Final Stabilisation</h2>
+          <p class="text-slate-300">Complete the final calculation to stabilise the satellite system!</p>
+        </div>
+        
+        <div class="bg-slate-800/50 rounded-lg p-8">
+          <div class="text-center">
+            <p class="text-slate-400 mb-4">Calculate the result:</p>
+            <p class="font-mono text-3xl md:text-4xl text-white tracking-wider">
+              ${puzzle.expression}
+            </p>
+          </div>
+        </div>
+        
+        <div class="mt-4 bg-cyan-500/10 rounded-lg p-4 border border-cyan-500/30">
+          <p class="text-cyan-400 text-sm">💡 <strong>Remember:</strong> Work left to right. When subtracting a negative, add the positive instead!</p>
+          <p class="font-mono text-slate-300 text-sm mt-1">a − (−b) = a + b</p>
+        </div>
+      `;
+      
+      answerArea.innerHTML = `
+        <div class="text-center">
+          <label class="block text-slate-300 mb-3">What is the result?</label>
+          <div class="flex items-center justify-center gap-2">
+            <span class="text-xl text-slate-400">=</span>
+            <input type="number" id="answer-input" class="w-32 px-4 py-3 bg-slate-800 border-2 border-slate-600 rounded-lg text-center text-xl font-bold text-white focus:border-emerald-500 focus:outline-none" placeholder="?">
+            <button id="submit-btn" class="ml-4 px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg font-bold text-white hover:opacity-90 transition-opacity">
+              Check Answer
+            </button>
+          </div>
+        </div>
+      `;
+      
+      setupStage5Interactions();
+    }
+
+    function setupStage5Interactions() {
+      const input = document.getElementById('answer-input');
+      const submitBtn = document.getElementById('submit-btn');
+      
+      submitBtn.addEventListener('click', () => {
+        const userAnswer = parseInt(input.value);
+        if (userAnswer === gameState.currentPuzzle.answer) {
+          completeStage(gameState.currentPuzzle.answer);
+        } else {
+          handleWrongAnswer();
+        }
+      });
+      
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    }
+
+    // ==================== GAME FLOW ====================
+    
+    function handleWrongAnswer() {
+      gameState.attempts--;
+      document.getElementById('attempts-display').textContent = `${gameState.attempts}/2`;
+      
+      const hintArea = document.getElementById('hint-area');
+      hintArea.classList.remove('hidden');
+      
+      if (gameState.attempts === 1) {
+        gameState.hintsShown = 1;
+        hintArea.innerHTML = `
+          <div class="hint-box rounded-lg p-4">
+            <p class="text-yellow-400 font-medium mb-2">💡 Hint 1:</p>
+            <p class="text-slate-300">Use the number line: right is bigger, left is smaller. Negative numbers are to the left of zero.</p>
+          </div>
+        `;
+      } else if (gameState.attempts === 0) {
+        gameState.hintsShown = 2;
+        
+        // Show worked solution and generate new puzzle
+        let workedSolution = '';
+        
+        if (gameState.currentStage === 1) {
+          const correct = [...gameState.currentPuzzle.numbers].sort((a, b) => a - b);
+          workedSolution = `
+            <p class="text-slate-300 mb-2">The correct order from smallest to largest is:</p>
+            <p class="font-mono text-cyan-400">${correct.join(' < ')}</p>
+            <p class="text-slate-400 mt-2 text-sm">Remember: On a number line, numbers further left are smaller. All negative numbers are less than zero.</p>
+          `;
+        } else if (gameState.currentStage === 2) {
+          let answer = gameState.currentPuzzle.start;
+          const steps = gameState.currentPuzzle.operations.map(op => {
+            const before = answer;
+            if (op.op === 'add') {
+              answer += op.value;
+              return op.value < 0 ? 
+                `${before} + (${op.value}) = ${answer}` : 
+                `${before} + ${op.value} = ${answer}`;
+            } else {
+              if (op.value < 0) {
+                answer -= op.value;
+                return `${before} − (${op.value}) = ${before} + ${Math.abs(op.value)} = ${answer}`;
+              } else {
+                answer -= op.value;
+                return `${before} − ${op.value} = ${answer}`;
+              }
+            }
+          });
+          workedSolution = `
+            <p class="text-slate-300 mb-2">Step by step:</p>
+            <div class="font-mono text-cyan-400 space-y-1">${steps.map(s => `<p>${s}</p>`).join('')}</div>
+            <p class="text-slate-300 mt-2">Final answer: <span class="text-emerald-400 font-bold">${answer}</span></p>
+          `;
+        } else if (gameState.currentStage === 3) {
+          workedSolution = `
+            <p class="text-slate-300 mb-2">Step by step:</p>
+            <div class="font-mono text-cyan-400 space-y-1">${gameState.currentPuzzle.steps.map(s => `<p>${s}</p>`).join('')}</div>
+            <p class="text-slate-300 mt-2">Final answer: <span class="text-emerald-400 font-bold">${gameState.currentPuzzle.answer}°C</span></p>
+          `;
+        } else if (gameState.currentStage === 4) {
+          workedSolution = `
+            <p class="text-slate-300 mb-2">To solve ${gameState.currentPuzzle.equation}:</p>
+            <p class="text-slate-300">The missing value is <span class="text-emerald-400 font-bold">${gameState.currentPuzzle.answer}</span></p>
+            <p class="text-slate-400 mt-2 text-sm">Check: substitute back into the equation to verify.</p>
+          `;
+        } else if (gameState.currentStage === 5) {
+          workedSolution = `
+            <p class="text-slate-300 mb-2">Calculate ${gameState.currentPuzzle.expression}:</p>
+            <p class="text-slate-300">Working left to right, handling negative subtractions:</p>
+            <p class="text-slate-300 mt-2">The answer is <span class="text-emerald-400 font-bold">${gameState.currentPuzzle.answer}</span></p>
+          `;
+        }
+        
+        hintArea.innerHTML = `
+          <div class="hint-box rounded-lg p-4 mb-4">
+            <p class="text-yellow-400 font-medium mb-2">💡 Hint 2:</p>
+            <p class="text-slate-300 mb-4">Rewrite: a − (−b) = a + b. Use brackets to keep track of operations.</p>
+          </div>
+          <div class="error-box rounded-lg p-4 mb-4">
+            <p class="text-red-400 font-medium mb-2">📝 Worked Solution:</p>
+            ${workedSolution}
+          </div>
+          <div class="success-box rounded-lg p-4">
+            <p class="text-emerald-400 font-medium mb-2">🔄 Try Again!</p>
+            <p class="text-slate-300">Here's a new similar problem. You've got this!</p>
+            <button id="retry-btn" class="mt-3 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-lg text-white font-medium transition-colors">
+              New Problem
+            </button>
+          </div>
+        `;
+        
+        document.getElementById('retry-btn').addEventListener('click', () => {
+          gameState.attempts = 2;
+          gameState.hintsShown = 0;
+          hintArea.classList.add('hidden');
+          hintArea.innerHTML = '';
+          loadStage(gameState.currentStage);
+        });
+      }
+    }
+
+    function completeStage(answer) {
+      const digit = calculateDigit(answer);
+      gameState.climateCode[gameState.currentStage - 1] = digit;
+      gameState.completedStages.push(gameState.currentStage);
+      
+      const hintArea = document.getElementById('hint-area');
+      const answerArea = document.getElementById('answer-area');
+      
+      hintArea.classList.remove('hidden');
+      hintArea.innerHTML = `
+        <div class="success-box rounded-lg p-6 text-center">
+          <div class="text-4xl mb-3">🎉</div>
+          <p class="text-emerald-400 font-bold text-xl mb-2">Excellent Work!</p>
+          <p class="text-slate-300 mb-4">You found the correct answer: <span class="font-bold text-cyan-400">${answer}</span></p>
+          <div class="bg-slate-800/50 rounded-lg p-4 inline-block">
+            <p class="text-slate-400 text-sm mb-1">Code digit revealed:</p>
+            <p class="text-3xl font-orbitron text-emerald-400">|${answer}| mod 10 = ${digit}</p>
+          </div>
+        </div>
+      `;
+      
+      answerArea.innerHTML = `
+        <div class="text-center">
+          <button id="next-stage-btn" class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg font-bold text-white hover:opacity-90 transition-opacity">
+            ${gameState.completedStages.length < 5 ? 'Continue to Next Stage →' : 'Complete Mission! 🚀'}
+          </button>
+        </div>
+      `;
+      
+      document.getElementById('next-stage-btn').addEventListener('click', () => {
+        if (gameState.completedStages.length >= 5) {
+          showVictory();
+        } else {
+          showMainMenu();
+        }
+      });
+      
+      updateCodeDisplay();
+      updateProgress();
+    }
+
+    function loadStage(stageNum) {
+      gameState.currentStage = stageNum;
+      gameState.attempts = 2;
+      gameState.hintsShown = 0;
+      
+      document.getElementById('main-menu').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+      document.getElementById('victory-screen').classList.add('hidden');
+      document.getElementById('hint-area').classList.add('hidden');
+      document.getElementById('hint-area').innerHTML = '';
+      document.getElementById('attempts-display').textContent = '2/2';
+      
+      updateCodeDisplay();
+      
+      switch (stageNum) {
+        case 1: renderStage1(); break;
+        case 2: renderStage2(); break;
+        case 3: renderStage3(); break;
+        case 4: renderStage4(); break;
+        case 5: renderStage5(); break;
+      }
+    }
+
+    function showMainMenu() {
+      document.getElementById('main-menu').classList.remove('hidden');
+      document.getElementById('game-screen').classList.add('hidden');
+      document.getElementById('victory-screen').classList.add('hidden');
+      updateProgress();
+      updateCodeDisplay();
+    }
+
+    function showVictory() {
+      document.getElementById('main-menu').classList.add('hidden');
+      document.getElementById('game-screen').classList.add('hidden');
+      document.getElementById('victory-screen').classList.remove('hidden');
+      
+      const finalDisplay = document.getElementById('final-code-display');
+      finalDisplay.innerHTML = gameState.climateCode.map(d => 
+        `<div class="code-digit w-16 h-20 rounded-lg flex items-center justify-center font-orbitron text-3xl text-emerald-400">${d}</div>`
+      ).join('');
+    }
+
+    function resetGame() {
+      gameState.currentStage = 0;
+      gameState.completedStages = [];
+      gameState.climateCode = ['?', '?', '?', '?', '?'];
+      gameState.attempts = 2;
+      gameState.currentPuzzle = null;
+      gameState.usedPuzzles = { 1: [], 2: [], 3: [], 4: [], 5: [] };
+      gameState.hintsShown = 0;
+      updateProgress();
+      updateCodeDisplay();
+      showMainMenu();
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    
+    document.getElementById('start-btn').addEventListener('click', () => {
+      const nextStage = gameState.completedStages.length + 1;
+      if (nextStage <= 5) {
+        loadStage(nextStage);
+      }
+    });
+
+    document.getElementById('back-btn').addEventListener('click', showMainMenu);
+    document.getElementById('restart-btn').addEventListener('click', resetGame);
+
+    // Difficulty buttons
+    document.querySelectorAll('.difficulty-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.difficulty-btn').forEach(b => {
+          b.classList.remove('bg-emerald-500/20', 'border-emerald-500', 'text-emerald-400');
+          b.classList.add('bg-slate-700', 'border-slate-600', 'text-slate-300');
+        });
+        btn.classList.add('bg-emerald-500/20', 'border-emerald-500', 'text-emerald-400');
+        btn.classList.remove('bg-slate-700', 'border-slate-600', 'text-slate-300');
+        gameState.difficulty = btn.dataset.difficulty;
+      });
+    });
+
+    // Correction toggle
+    document.getElementById('correction-toggle').addEventListener('change', (e) => {
+      gameState.correctionEnabled = e.target.checked;
+    });
+
+    // Stage node clicks
+    document.querySelectorAll('.stage-node').forEach(node => {
+      node.addEventListener('click', () => {
+        const stageNum = parseInt(node.dataset.stage);
+        if (stageNum === gameState.completedStages.length + 1 || gameState.completedStages.includes(stageNum)) {
+          if (!gameState.completedStages.includes(stageNum)) {
+            loadStage(stageNum);
+          }
+        }
+      });
+    });
+
+    // Initialize
+    applyConfig();
+    updateProgress();
+    updateCodeDisplay();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c6131d6e522f4ed',t:'MTc2OTc3ODQ3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

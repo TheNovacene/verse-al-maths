@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1531,
+    "height" : 882,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "perpendicular bisector",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : 178,
+          "left" : -18,
+          "bottom" : 1060,
+          "right" : 1513
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 36,
+              "color" : "rgb(32,5,255)"
+              },
+            "Caption" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24,
+              "font-weight" : "bold",
+              "font-style" : "italic",
+              "color" : "blue"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-weight" : "bold"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 24,
+                "color" : "rgb(231,13,37)"
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "color" : "rgb(255,128,0)"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 738.05761674735709,
+              "y" : 708.79212751373052
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "A",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -37,
+              "labelOffsetY" : -19
+              }
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 920,
+              "y" : 706
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "B",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : -20
+              }
+            }
+          },
+        "3" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "2"
+            },
+          "constraint" : "Segment",
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "4" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "3",
+            "1" : "1",
+            "2" : "2"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -20,
+              "y" : 101
+              }
+            },
+          "label" : "Construct a Line Segment AB",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Construct a Line Segment AB",
+            "Construct a Line Segment AB"
+            ],
+          "fade" : true
+          },
+        "5" : {
+          "kind" : "Circle",
+          "genus" : "Circle",
+          "parents" : {
+            "p0" : "1",
+            "radius" : "3"
+            },
+          "constraint" : "CircleByRadius",
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "6" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "5"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -22,
+              "y" : 163
+              }
+            },
+          "label" : "Construct Circle, Centre A and Radius AB",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Construct Circle, Centre A and Radius AB",
+            "Construct Circle, Centre A and Radius AB"
+            ],
+          "fade" : true
+          },
+        "7" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "4",
+            "1" : "6"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 91,
+              "y" : 282
+              }
+            },
+          "label" : "Construct Circle Centre A and Radius AB",
+          "constraint" : "ActionButtonPresentSequentially",
+          "messages" : [
+            "Construct Circle Centre A and Radius AB"
+            ],
+          "waitTime" : 1
+          },
+        "8" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "path" : "3"
+            },
+          "constraint" : "MeasurementLength",
+          "geom" : {
+            "loc" : {
+              "x" : 93,
+              "y" : 471
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "AB ",
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "9" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "8"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 1153,
+              "y" : 160
+              }
+            },
+          "label" : "Length of AB",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Length of AB",
+            "Length of AB"
+            ],
+          "fade" : true
+          },
+        "10" : {
+          "kind" : "Circle",
+          "genus" : "Circle",
+          "parents" : {
+            "p0" : "2",
+            "radius" : "3"
+            },
+          "constraint" : "CircleByRadius",
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "11" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "obj" : "10",
+            "circle" : "5"
+            },
+          "constraint" : "Intersection1",
+          "latentVisibility" : true,
+          "label" : "C",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -14,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "12" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "obj" : "10",
+            "circle" : "5"
+            },
+          "constraint" : "Intersection2",
+          "latentVisibility" : true,
+          "label" : "D",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -15,
+              "labelOffsetY" : -44
+              }
+            }
+          },
+        "13" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "11",
+            "p1" : "12"
+            },
+          "constraint" : "Segment",
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "14" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "13",
+            "line1" : "3"
+            },
+          "constraint" : "Intersection",
+          "latentVisibility" : true,
+          "label" : "E",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 1,
+              "labelOffsetY" : -2
+              }
+            }
+          },
+        "15" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "1",
+            "obj0" : "14"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 92,
+              "y" : 505
+              }
+            },
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "16" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "15"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 1156,
+              "y" : 220
+              }
+            },
+          "label" : "Length AE",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Length AE",
+            "Length AE"
+            ],
+          "fade" : true
+          },
+        "17" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "14"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -27,
+              "y" : 803
+              }
+            },
+          "label" : "Construct Point of intersection of lines AB and CD",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Construct Point of intersection of lines AB and CD",
+            "Construct Point of intersection of lines AB and CD"
+            ],
+          "fade" : true
+          },
+        "18" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "13"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -28,
+              "y" : 750
+              }
+            },
+          "label" : "Construct Line Segment CD",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Construct Line Segment CD",
+            "Construct Line Segment CD"
+            ],
+          "fade" : true
+          },
+        "19" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "14",
+            "p2" : "12"
+            },
+          "constraint" : "MeasurementAngle",
+          "geom" : {
+            "loc" : {
+              "x" : 91,
+              "y" : 537
+              }
+            },
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true,
+            "precision" : 0,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "20" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "19"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 1157,
+              "y" : 280
+              }
+            },
+          "label" : "Angle AED",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Angle AED",
+            "Angle AED"
+            ],
+          "fade" : true
+          },
+        "21" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "11",
+            "1" : "12"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -28,
+              "y" : 689
+              }
+            },
+          "label" : "Construct the Points of Intersection C and D",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Construct the Points of Intersection C and D",
+            "Construct the Points of Intersection C and D"
+            ],
+          "fade" : true
+          },
+        "22" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "10"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 92,
+              "y" : 326
+              }
+            },
+          "label" : "Construct Circle, Centre B and Radius BA",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Construct Circle, Centre B and Radius BA",
+            "Construct Circle, Centre B and Radius BA"
+            ],
+          "fade" : true
+          },
+        "23" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "21",
+            "1" : "18",
+            "2" : "17"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 92,
+              "y" : 371
+              }
+            },
+          "label" : "Construct Line CD joining points of Intersection of 2 circles.",
+          "constraint" : "ActionButtonPresentSequentially",
+          "messages" : [
+            "Construct Line CD joining points of Intersection of 2 circles."
+            ],
+          "waitTime" : 2
+          },
+        "24" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "9",
+            "1" : "16",
+            "2" : "20"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 95,
+              "y" : 418
+              }
+            },
+          "label" : "Check Lengths and Angles",
+          "constraint" : "ActionButtonPresentSequentially",
+          "messages" : [
+            "Check Lengths and Angles"
+            ],
+          "waitTime" : 1
+          },
+        "25" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -13,
+              "y" : 284
+              }
+            },
+          "textMFS" : "<T'Step 1'>"
+          },
+        "26" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -18,
+              "y" : 327
+              }
+            },
+          "textMFS" : "<T'Step 2'>"
+          },
+        "27" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -17,
+              "y" : 368
+              }
+            },
+          "textMFS" : "<T'Step 3'>"
+          },
+        "28" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -18,
+              "y" : 416
+              }
+            },
+          "textMFS" : "<T'Step 4'>"
+          },
+        "29" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "24",
+            "1" : "23",
+            "2" : "22",
+            "3" : "7"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 1103,
+              "y" : 270
+              }
+            },
+          "label" : "Reset",
+          "constraint" : "ActionButtonPresentSimultaneously",
+          "messages" : [
+            "Reset"
+            ]
+          },
+        "30" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 484,
+              "y" : 184
+              }
+            },
+          "textMFS" : "<T'Constructing the Perpendicular Bisector of a Line'>"
+          },
+        "31" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "1"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 91,
+              "y" : 588
+              }
+            },
+          "label" : "Change AB",
+          "constraint" : "ActionButtonAnimate",
+          "messages" : [
+            "Change AB"
+            ],
+          "animationStates" : [
+            {
+              "rate" : 3,
+              "timeInterval" : 0,
+              "repeat" : true,
+              "motionType" : "forward"
+              }
+            ]
+          },
+        "32" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -15,
+              "y" : 590
+              }
+            },
+          "textMFS" : "<T'Step 5'>"
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    

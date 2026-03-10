@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mean, Median and Mode Data Lab</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .bar {
+            transition: height 0.3s ease, background-color 0.2s ease;
+        }
+        .bar:hover {
+            opacity: 0.8;
+        }
+        .stat-card {
+            transition: transform 0.2s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+   <div class="max-w-5xl mx-auto p-6"><!-- Header -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+     <h1 id="app-title" class="text-3xl font-bold text-center mb-2" style="color: #667eea;">Mean, Median and Mode Data Lab</h1>
+     <p class="text-center text-gray-600">Build your data set and watch the statistics change!</p>
+    </div><!-- Data Entry Section -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+     <h2 class="text-xl font-bold mb-4" style="color: #667eea;">📊 Enter Your Data</h2><label for="data-input" class="block text-sm font-medium text-gray-700 mb-2"> Type numbers separated by commas (e.g., 2, 4, 4, 7, 9): </label>
+     <div class="flex gap-3 mb-4"><input type="text" id="data-input" class="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 text-lg" placeholder="2, 4, 4, 7, 9"> <button id="add-from-input" class="px-6 py-2 rounded-lg font-semibold text-white transition-colors" style="background-color: #667eea;"> Add Values </button>
+     </div>
+     <div class="flex gap-3 mb-4"><input type="number" id="single-value" class="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 text-lg" placeholder="Add single number"> <button id="add-single" class="px-6 py-2 rounded-lg font-semibold text-white transition-colors" style="background-color: #667eea;"> + Add </button>
+     </div>
+     <div class="flex flex-wrap gap-3"><button id="add-outlier-high" class="px-6 py-2 rounded-lg font-semibold text-white transition-colors" style="background-color: #f59e0b;"> 🚀 Add High Outlier (100) </button> <button id="add-outlier-low" class="px-6 py-2 rounded-lg font-semibold text-white transition-colors" style="background-color: #f59e0b;"> ⬇️ Add Low Outlier (1) </button> <button id="reset-data" class="px-6 py-2 rounded-lg font-semibold transition-colors" style="background-color: #e5e7eb; color: #374151;"> 🔄 Reset Data </button>
+     </div>
+    </div><!-- Current Data Set -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+     <h2 class="text-xl font-bold mb-4" style="color: #667eea;">📋 Your Data Set</h2>
+     <div id="data-list" class="mb-6 min-h-12 text-gray-500 italic">
+      No data yet. Add some numbers to get started!
+     </div><!-- Bar Chart -->
+     <div class="bg-gray-50 rounded-lg p-4">
+      <h3 class="text-sm font-semibold mb-3 text-gray-700">Frequency Chart</h3>
+      <div class="flex gap-4"><!-- Y-axis label -->
+       <div class="flex flex-col items-center justify-center"><span class="text-xs font-semibold text-gray-600 transform -rotate-90 whitespace-nowrap">Frequency</span>
+       </div><!-- Chart area -->
+       <div class="flex-1">
+        <div id="bar-chart" class="flex items-end justify-center gap-3 h-48 border-l-2 border-b-2 border-gray-400 pl-2 pb-2">
+         <p class="text-gray-400 text-sm self-center">Add data to see the chart</p>
+        </div><!-- X-axis label -->
+        <div class="text-center mt-2"><span class="text-xs font-semibold text-gray-600">Scores</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Statistics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"><!-- Mean Card -->
+     <div class="stat-card bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-2" style="color: #667eea;">📈 Mean (Average)</h3>
+      <p id="mean-value" class="text-4xl font-bold text-gray-800 mb-2">—</p>
+      <p class="text-sm text-gray-600">Sum ÷ Count</p>
+     </div><!-- Median Card -->
+     <div class="stat-card bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-2" style="color: #667eea;">🎯 Median (Middle)</h3>
+      <p id="median-value" class="text-4xl font-bold text-gray-800 mb-2">—</p>
+      <p class="text-sm text-gray-600">Middle value</p>
+     </div><!-- Mode Card -->
+     <div class="stat-card bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-2" style="color: #667eea;">🔢 Mode (Most Common)</h3>
+      <p id="mode-value" class="text-4xl font-bold text-gray-800 mb-2">—</p>
+      <p class="text-sm text-gray-600">Most frequent</p>
+     </div>
+    </div><!-- Explanation Panel -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+     <h2 class="text-xl font-bold mb-4" style="color: #667eea;">💡 What's Happening?</h2>
+     <p id="explanation" class="text-gray-700 leading-relaxed">Add some data to see how mean, median, and mode are calculated. Try adding an outlier to see how it affects each measure!</p>
+    </div>
+   </div>
+  </div>
+  <script>
+        let dataSet = [];
+        let previousStats = { mean: null, median: null, mode: null };
+
+        const defaultConfig = {
+            app_title: "Mean, Median and Mode Data Lab",
+            explanation_text: "Add some data to see how mean, median, and mode are calculated. Try adding an outlier to see how it affects each measure!",
+            primary_color: "#667eea",
+            secondary_color: "#764ba2",
+            accent_color: "#f59e0b",
+            surface_color: "#ffffff",
+            text_color: "#374151"
+        };
+
+        async function onConfigChange(config) {
+            const appTitle = config.app_title || defaultConfig.app_title;
+            const explanationText = config.explanation_text || defaultConfig.explanation_text;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+
+            document.getElementById('app-title').textContent = appTitle;
+            document.getElementById('app-title').style.color = primaryColor;
+            
+            const h2Elements = document.querySelectorAll('h2');
+            h2Elements.forEach(h2 => h2.style.color = primaryColor);
+            
+            const h3Elements = document.querySelectorAll('h3');
+            h3Elements.forEach(h3 => h3.style.color = primaryColor);
+
+            document.getElementById('app').style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+
+            const primaryButtons = [
+                document.getElementById('add-from-input'),
+                document.getElementById('add-single')
+            ];
+            primaryButtons.forEach(btn => {
+                btn.style.backgroundColor = primaryColor;
+            });
+
+            const accentButtons = [
+                document.getElementById('add-outlier-high'),
+                document.getElementById('add-outlier-low')
+            ];
+            accentButtons.forEach(btn => {
+                btn.style.backgroundColor = accentColor;
+            });
+
+            const surfaces = document.querySelectorAll('.bg-white');
+            surfaces.forEach(surface => {
+                surface.style.backgroundColor = surfaceColor;
+            });
+
+            if (dataSet.length === 0) {
+                document.getElementById('explanation').textContent = explanationText;
+            }
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ primary_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.secondary_color || defaultConfig.secondary_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ secondary_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ accent_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ surface_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["app_title", config.app_title || defaultConfig.app_title],
+                ["explanation_text", config.explanation_text || defaultConfig.explanation_text]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        function calculateMean(data) {
+            if (data.length === 0) return null;
+            const sum = data.reduce((acc, val) => acc + val, 0);
+            return (sum / data.length).toFixed(2);
+        }
+
+        function calculateMedian(data) {
+            if (data.length === 0) return null;
+            const sorted = [...data].sort((a, b) => a - b);
+            const mid = Math.floor(sorted.length / 2);
+            
+            if (sorted.length % 2 === 0) {
+                return ((sorted[mid - 1] + sorted[mid]) / 2).toFixed(2);
+            } else {
+                return sorted[mid].toFixed(2);
+            }
+        }
+
+        function calculateMode(data) {
+            if (data.length === 0) return null;
+            
+            const frequency = {};
+            data.forEach(num => {
+                frequency[num] = (frequency[num] || 0) + 1;
+            });
+            
+            const maxFreq = Math.max(...Object.values(frequency));
+            if (maxFreq === 1) return "No mode";
+            
+            const modes = Object.keys(frequency).filter(key => frequency[key] === maxFreq);
+            return modes.join(", ");
+        }
+
+        function updateDisplay() {
+            const dataList = document.getElementById('data-list');
+            const meanValue = document.getElementById('mean-value');
+            const medianValue = document.getElementById('median-value');
+            const modeValue = document.getElementById('mode-value');
+            const explanation = document.getElementById('explanation');
+
+            if (dataSet.length === 0) {
+                dataList.innerHTML = '<span class="text-gray-500 italic">No data yet. Add some numbers to get started!</span>';
+                meanValue.textContent = '—';
+                medianValue.textContent = '—';
+                modeValue.textContent = '—';
+                const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+                explanation.textContent = config.explanation_text || defaultConfig.explanation_text;
+                renderBarChart([]);
+                return;
+            }
+
+            const sorted = [...dataSet].sort((a, b) => a - b);
+            dataList.innerHTML = sorted.map(num => 
+                `<span class="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full mr-2 mb-2 font-semibold">${num}</span>`
+            ).join('');
+
+            const currentStats = {
+                mean: calculateMean(dataSet),
+                median: calculateMedian(dataSet),
+                mode: calculateMode(dataSet)
+            };
+
+            meanValue.textContent = currentStats.mean;
+            medianValue.textContent = currentStats.median;
+            modeValue.textContent = currentStats.mode;
+
+            updateExplanation(currentStats);
+            renderBarChart(dataSet);
+
+            previousStats = currentStats;
+        }
+
+        function updateExplanation(currentStats) {
+            const explanation = document.getElementById('explanation');
+            const lastValue = dataSet[dataSet.length - 1];
+            
+            let text = '';
+
+            if (dataSet.length === 1) {
+                text = `You have one value: ${lastValue}. The mean, median, and mode are all ${lastValue}.`;
+            } else if (dataSet.length === 2) {
+                text = `With two values, the mean is their average: ${currentStats.mean}. The median is also ${currentStats.median}. ${currentStats.mode === "No mode" ? "There's no mode yet since no value repeats." : `The mode is ${currentStats.mode}.`}`;
+            } else {
+                const sorted = [...dataSet].sort((a, b) => a - b);
+                const min = sorted[0];
+                const max = sorted[sorted.length - 1];
+                const range = max - min;
+
+                if (lastValue >= 50 || (range > 30 && (lastValue === max || lastValue === min))) {
+                    if (previousStats.mean !== null) {
+                        const meanDiff = (parseFloat(currentStats.mean) - parseFloat(previousStats.mean)).toFixed(2);
+                        const medianDiff = (parseFloat(currentStats.median) - parseFloat(previousStats.median)).toFixed(2);
+                        
+                        text = `🚀 That's an outlier! The mean changed by ${meanDiff > 0 ? '+' : ''}${meanDiff}, but the median only changed by ${medianDiff > 0 ? '+' : ''}${medianDiff}. Notice how the median is more resistant to extreme values!`;
+                    } else {
+                        text = `🚀 You added an outlier (${lastValue})! The mean is ${currentStats.mean}, heavily influenced by this extreme value. The median is ${currentStats.median}, which is less affected by outliers.`;
+                    }
+                } else {
+                    text = `Your data set has ${dataSet.length} values ranging from ${min} to ${max}. `;
+                    text += `The mean (${currentStats.mean}) is the average of all values. `;
+                    text += `The median (${currentStats.median}) is the middle value when sorted. `;
+                    text += currentStats.mode === "No mode" 
+                        ? "There's no mode since no value repeats more than once."
+                        : `The mode is ${currentStats.mode} because it appears most often.`;
+                }
+            }
+
+            explanation.textContent = text;
+        }
+
+        function renderBarChart(data) {
+            const barChart = document.getElementById('bar-chart');
+            
+            if (data.length === 0) {
+                barChart.innerHTML = '<p class="text-gray-400 text-sm self-center">Add data to see the chart</p>';
+                return;
+            }
+
+            // Calculate frequency for each unique score
+            const frequency = {};
+            data.forEach(num => {
+                frequency[num] = (frequency[num] || 0) + 1;
+            });
+
+            // Sort scores numerically
+            const sortedScores = Object.keys(frequency).sort((a, b) => parseFloat(a) - parseFloat(b));
+            const maxFrequency = Math.max(...Object.values(frequency));
+            
+            const primaryColor = window.elementSdk ? (window.elementSdk.config.primary_color || defaultConfig.primary_color) : defaultConfig.primary_color;
+            
+            barChart.innerHTML = sortedScores.map((score) => {
+                const freq = frequency[score];
+                const heightPercent = (freq / maxFrequency) * 100;
+                const heightPx = (freq / maxFrequency) * 160; // 160px is the usable height
+                return `
+                    <div class="flex flex-col items-center flex-1" style="max-width: 80px;">
+                        <div class="w-full flex flex-col items-center justify-end" style="height: 180px;">
+                            <span class="text-xs font-bold mb-1 text-gray-700">${freq}</span>
+                            <div class="bar w-full rounded-t" style="height: ${heightPx}px; background-color: ${primaryColor}; min-height: 20px;"></div>
+                        </div>
+                        <span class="text-xs mt-2 font-semibold text-gray-700">${score}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        document.getElementById('add-from-input').addEventListener('click', () => {
+            const input = document.getElementById('data-input');
+            const values = input.value.split(',').map(v => parseFloat(v.trim())).filter(v => !isNaN(v));
+            
+            if (values.length > 0) {
+                dataSet.push(...values);
+                input.value = '';
+                updateDisplay();
+            }
+        });
+
+        document.getElementById('add-single').addEventListener('click', () => {
+            const input = document.getElementById('single-value');
+            const value = parseFloat(input.value);
+            
+            if (!isNaN(value)) {
+                dataSet.push(value);
+                input.value = '';
+                updateDisplay();
+            }
+        });
+
+        document.getElementById('add-outlier-high').addEventListener('click', () => {
+            dataSet.push(100);
+            updateDisplay();
+        });
+
+        document.getElementById('add-outlier-low').addEventListener('click', () => {
+            dataSet.push(1);
+            updateDisplay();
+        });
+
+        document.getElementById('reset-data').addEventListener('click', () => {
+            dataSet = [];
+            previousStats = { mean: null, median: null, mode: null };
+            document.getElementById('data-input').value = '';
+            document.getElementById('single-value').value = '';
+            updateDisplay();
+        });
+
+        document.getElementById('data-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('add-from-input').click();
+            }
+        });
+
+        document.getElementById('single-value').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('add-single').click();
+            }
+        });
+
+        updateDisplay();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9af5ec9fb054d5ef',t:'MTc2NTk2OTMwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

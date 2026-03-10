@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparing Histograms – SDG Frequency Density</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    .histogram-bar-a {
+      fill: #3b82f6;
+      opacity: 0.7;
+      stroke: #1e3a8a;
+      stroke-width: 2;
+    }
+    .histogram-bar-b {
+      fill: #f59e0b;
+      opacity: 0.7;
+      stroke: #92400e;
+      stroke-width: 2;
+    }
+    .histogram-bar-a:hover, .histogram-bar-b:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+    .histogram-bar-a.highlighted {
+      opacity: 1;
+      stroke: #1e40af;
+      stroke-width: 3;
+    }
+    .histogram-bar-b.highlighted {
+      opacity: 1;
+      stroke: #b45309;
+      stroke-width: 3;
+    }
+    .data-table {
+      font-size: 0.85rem;
+    }
+    .data-table th, .data-table td {
+      padding: 0.4rem 0.6rem;
+      text-align: center;
+      border: 1px solid #d1d5db;
+    }
+    .data-table th {
+      background: #f3f4f6;
+      font-weight: 600;
+    }
+    .editable-input {
+      width: 60px;
+      text-align: center;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+    .editable-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+    .tab-button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem 0.5rem 0 0;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .tab-button.active {
+      background: #3b82f6;
+      color: white;
+    }
+    .tab-button:not(.active) {
+      background: #e5e7eb;
+      color: #374151;
+    }
+    .tab-button:not(.active):hover {
+      background: #d1d5db;
+    }
+    .toggle-btn {
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.375rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .toggle-btn.active-a {
+      background: #3b82f6;
+      color: white;
+    }
+    .toggle-btn.active-b {
+      background: #f59e0b;
+      color: white;
+    }
+    .toggle-btn:not(.active-a):not(.active-b) {
+      background: #e5e7eb;
+      color: #6b7280;
+    }
+    .info-card {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-left: 4px solid #3b82f6;
+    }
+    .question-card {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-slate-50 to-blue-50">
+  <div id="app-container" class="h-full overflow-auto p-4">
+   <div class="max-w-6xl mx-auto"><!-- Header -->
+    <header class="text-center mb-6">
+     <h1 id="app-title" class="text-2xl font-bold text-slate-800 mb-2">Comparing Histograms – SDG Frequency Density</h1>
+     <p class="text-slate-600">Compare two distributions using histograms with frequency density</p>
+    </header><!-- Tabs -->
+    <div class="flex gap-1 mb-4"><button id="tab-scenarios" class="tab-button active" onclick="switchTab('scenarios')"> 📊 SDG Scenarios </button> <button id="tab-custom" class="tab-button" onclick="switchTab('custom')"> ✏️ My SDG Comparison </button>
+    </div><!-- Scenario Selection Panel -->
+    <div id="scenarios-panel" class="bg-white rounded-xl shadow-lg p-4 mb-4">
+     <div class="flex flex-wrap items-center gap-4 mb-4"><label class="font-semibold text-slate-700">Select SDG Scenario:</label> <select id="scenario-select" class="border border-slate-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="loadScenario()"> <option value="0">SDG 7: Daily Electricity Use (kWh)</option> <option value="1">SDG 11: Commute Times (minutes)</option> <option value="2">SDG 4: Weekly Study Time (hours)</option> </select>
+     </div>
+     <div id="scenario-description" class="info-card p-3 rounded-lg text-slate-700 text-sm"></div>
+    </div><!-- Custom Scenario Panel (Hidden by default) -->
+    <div id="custom-panel" class="bg-white rounded-xl shadow-lg p-4 mb-4 hidden">
+     <h3 class="font-bold text-slate-800 mb-3">🌍 Create Your Own SDG Comparison</h3>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-sm font-semibold text-slate-700 mb-1">Variable Name:</label> <input type="text" id="custom-variable" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., Daily water usage (litres)" value="Daily screen time (minutes)">
+      </div>
+      <div><label class="block text-sm font-semibold text-slate-700 mb-1">SDG Context (optional):</label> <input type="text" id="custom-context" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., SDG 6: Clean Water" value="SDG 3: Good Health">
+      </div>
+     </div>
+     <div class="mb-4"><label class="block text-sm font-semibold text-slate-700 mb-2">Define Class Intervals (shared by both groups):</label>
+      <div id="custom-intervals" class="space-y-2"><!-- Intervals will be added here -->
+      </div>
+      <div class="flex gap-2 mt-2"><button onclick="addCustomInterval()" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm font-semibold transition">+ Add Interval</button> <button onclick="removeCustomInterval()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm font-semibold transition">− Remove Last</button>
+      </div>
+     </div><button onclick="applyCustomScenario()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition"> Generate Histograms </button>
+    </div><!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4"><!-- Data Tables -->
+     <div class="bg-white rounded-xl shadow-lg p-4">
+      <div class="flex justify-between items-center mb-3">
+       <h3 class="font-bold text-slate-800">📋 Data Tables</h3>
+       <div class="flex gap-3 items-center text-sm"><label class="flex items-center gap-2"> <input type="checkbox" id="edit-mode" onchange="toggleEditMode()" class="rounded"> <span>Edit mode</span> </label> <select id="edit-type" class="border border-slate-300 rounded px-2 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed" onchange="changeEditType()" disabled> <option value="frequency">Edit Frequency</option> <option value="density">Edit Freq. Density</option> </select>
+       </div>
+      </div><!-- Group A Table -->
+      <div class="mb-4">
+       <h4 id="group-a-title" class="font-semibold text-blue-600 mb-2 flex items-center gap-2"><span class="w-4 h-4 bg-blue-500 rounded"></span> <span id="group-a-label-display">Group A</span></h4>
+       <div class="overflow-x-auto">
+        <table id="table-a" class="data-table w-full">
+         <thead>
+          <tr>
+           <th>Class Interval</th>
+           <th>Class Width</th>
+           <th id="freq-header-a">Frequency</th>
+           <th id="density-header-a">Freq. Density</th>
+          </tr>
+         </thead>
+         <tbody></tbody>
+         <tfoot>
+          <tr class="bg-blue-50">
+           <td colspan="2" class="font-semibold text-right">Total Frequency:</td>
+           <td id="total-a" class="font-bold text-blue-600">0</td>
+           <td></td>
+          </tr>
+         </tfoot>
+        </table>
+       </div>
+      </div><!-- Group B Table -->
+      <div>
+       <h4 id="group-b-title" class="font-semibold text-amber-600 mb-2 flex items-center gap-2"><span class="w-4 h-4 bg-amber-500 rounded"></span> <span id="group-b-label-display">Group B</span></h4>
+       <div class="overflow-x-auto">
+        <table id="table-b" class="data-table w-full">
+         <thead>
+          <tr>
+           <th>Class Interval</th>
+           <th>Class Width</th>
+           <th id="freq-header-b">Frequency</th>
+           <th id="density-header-b">Freq. Density</th>
+          </tr>
+         </thead>
+         <tbody></tbody>
+         <tfoot>
+          <tr class="bg-amber-50">
+           <td colspan="2" class="font-semibold text-right">Total Frequency:</td>
+           <td id="total-b" class="font-bold text-amber-600">0</td>
+           <td></td>
+          </tr>
+         </tfoot>
+        </table>
+       </div>
+      </div>
+     </div><!-- Histogram -->
+     <div class="bg-white rounded-xl shadow-lg p-4">
+      <div class="flex justify-between items-center mb-3">
+       <h3 class="font-bold text-slate-800">📊 Histogram Comparison</h3>
+       <div class="flex gap-2"><button id="toggle-a" class="toggle-btn active-a" onclick="toggleGroup('A')"> Show A </button> <button id="toggle-b" class="toggle-btn active-b" onclick="toggleGroup('B')"> Show B </button>
+       </div>
+      </div>
+      <div id="histogram-container" class="relative">
+       <svg id="histogram" width="100%" height="320" viewbox="0 0 500 320"></svg>
+      </div><!-- Highlight Info -->
+      <div id="highlight-info" class="hidden mt-3 p-3 bg-slate-100 rounded-lg text-sm">
+       <h4 class="font-semibold text-slate-800 mb-2">📍 Selected Bar Details</h4>
+       <div id="highlight-content" class="grid grid-cols-2 gap-2 text-slate-700"></div>
+      </div>
+     </div>
+    </div><!-- Guided Analysis -->
+    <div class="bg-white rounded-xl shadow-lg p-4 mb-4">
+     <h3 class="font-bold text-slate-800 mb-3">🎯 Guided Analysis Questions</h3>
+     <div id="analysis-questions" class="space-y-3"><!-- Questions will be inserted here -->
+     </div>
+    </div><!-- Key Learning Point -->
+    <div class="info-card rounded-xl p-4">
+     <h3 class="font-bold text-slate-800 mb-2">💡 Key GCSE Concept</h3>
+     <p class="text-slate-700 text-sm"><strong>Frequency Density = Frequency ÷ Class Width</strong><br>
+       This formula ensures that the <em>area</em> of each bar represents the frequency, making it fair to compare classes with different widths. When reading a histogram, remember: Area = Frequency, not height!</p>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      app_title: "Comparing Histograms – SDG Frequency Density",
+      group_a_label: "Group A",
+      group_b_label: "Group B"
+    };
+
+    let config = { ...defaultConfig };
+
+    // SDG Scenarios Data
+    const scenarios = [
+      {
+        id: "sdg7",
+        name: "SDG 7: Daily Electricity Use (kWh)",
+        variable: "Daily electricity use (kWh)",
+        description: "Compare daily electricity consumption between two communities. SDG 7 aims to ensure access to affordable, reliable, sustainable and modern energy for all.",
+        groupAName: "Community A (Rural)",
+        groupBName: "Community B (Urban)",
+        intervals: [
+          { lower: 0, upper: 5 },
+          { lower: 5, upper: 10 },
+          { lower: 10, upper: 20 },
+          { lower: 20, upper: 30 },
+          { lower: 30, upper: 50 }
+        ],
+        freqA: [12, 28, 35, 18, 7],
+        freqB: [4, 15, 25, 32, 24],
+        questions: [
+          "Which community tends to use less electricity per day? Look at where most of the area is concentrated.",
+          "Which community has households using more than 30 kWh daily? What might explain this difference?",
+          "If both communities have the same total frequency, why do the histograms look different in shape?"
+        ]
+      },
+      {
+        id: "sdg11",
+        name: "SDG 11: Commute Times (minutes)",
+        variable: "Commute time (minutes)",
+        description: "Compare commute times before and after introducing a new bus/cycle route. SDG 11 focuses on making cities inclusive, safe, resilient and sustainable.",
+        groupAName: "Before New Route",
+        groupBName: "After New Route",
+        intervals: [
+          { lower: 0, upper: 10 },
+          { lower: 10, upper: 20 },
+          { lower: 20, upper: 40 },
+          { lower: 40, upper: 60 },
+          { lower: 60, upper: 90 }
+        ],
+        freqA: [5, 12, 38, 30, 15],
+        freqB: [18, 35, 32, 12, 3],
+        questions: [
+          "How has the distribution of commute times changed after introducing the new route?",
+          "What percentage of commuters now have journeys under 20 minutes compared to before?",
+          "Has the new route helped reduce longer commutes (over 40 minutes)? Use the histogram areas to explain."
+        ]
+      },
+      {
+        id: "sdg4",
+        name: "SDG 4: Weekly Study Time (hours)",
+        variable: "Weekly study time (hours)",
+        description: "Compare weekly independent study time between two classes. SDG 4 aims to ensure inclusive and equitable quality education for all.",
+        groupAName: "Class 1 (Morning)",
+        groupBName: "Class 2 (Afternoon)",
+        intervals: [
+          { lower: 0, upper: 2 },
+          { lower: 2, upper: 5 },
+          { lower: 5, upper: 8 },
+          { lower: 8, upper: 12 },
+          { lower: 12, upper: 20 }
+        ],
+        freqA: [3, 8, 15, 12, 7],
+        freqB: [6, 14, 18, 8, 4],
+        questions: [
+          "Which class tends to study more hours per week? Compare the shapes of the distributions.",
+          "Are there any students studying more than 12 hours? Which class has more dedicated studiers?",
+          "If you wanted to encourage more study time, which class might need more support?"
+        ]
+      }
+    ];
+
+    // Current state
+    let currentData = {
+      variable: "",
+      intervals: [],
+      freqA: [],
+      freqB: [],
+      groupAName: "",
+      groupBName: ""
+    };
+    let showGroupA = true;
+    let showGroupB = true;
+    let editMode = false;
+    let editType = 'frequency';
+    let highlightedBar = null;
+    let currentTab = 'scenarios';
+    let customIntervals = [
+      { lower: 0, upper: 30 },
+      { lower: 30, upper: 60 },
+      { lower: 60, upper: 120 },
+      { lower: 120, upper: 180 }
+    ];
+    let customFreqA = [8, 15, 20, 12];
+    let customFreqB = [5, 22, 18, 10];
+
+    // Initialize the app
+    function init() {
+      loadScenario();
+      renderCustomIntervals();
+    }
+
+    // Switch between tabs
+    function switchTab(tab) {
+      currentTab = tab;
+      const scenariosPanel = document.getElementById('scenarios-panel');
+      const customPanel = document.getElementById('custom-panel');
+      const tabScenarios = document.getElementById('tab-scenarios');
+      const tabCustom = document.getElementById('tab-custom');
+
+      if (tab === 'scenarios') {
+        scenariosPanel.classList.remove('hidden');
+        customPanel.classList.add('hidden');
+        tabScenarios.classList.add('active');
+        tabCustom.classList.remove('active');
+        loadScenario();
+      } else {
+        scenariosPanel.classList.add('hidden');
+        customPanel.classList.remove('hidden');
+        tabScenarios.classList.remove('active');
+        tabCustom.classList.add('active');
+      }
+    }
+
+    // Load a scenario
+    function loadScenario() {
+      const select = document.getElementById('scenario-select');
+      const scenario = scenarios[parseInt(select.value)];
+      
+      currentData = {
+        variable: scenario.variable,
+        intervals: [...scenario.intervals],
+        freqA: [...scenario.freqA],
+        freqB: [...scenario.freqB],
+        groupAName: scenario.groupAName,
+        groupBName: scenario.groupBName,
+        questions: scenario.questions
+      };
+
+      document.getElementById('scenario-description').innerHTML = `
+        <strong>${scenario.name}</strong><br>
+        ${scenario.description}<br>
+        <em>Comparing: ${scenario.groupAName} vs ${scenario.groupBName}</em>
+      `;
+
+      updateDisplay();
+    }
+
+    // Calculate frequency density
+    function calculateDensity(frequency, classWidth) {
+      return frequency / classWidth;
+    }
+
+    // Update all displays
+    function updateDisplay() {
+      updateTables();
+      drawHistogram();
+      updateQuestions();
+      updateLabels();
+    }
+
+    // Update group labels
+    function updateLabels() {
+      const groupALabel = config.group_a_label !== defaultConfig.group_a_label ? 
+        config.group_a_label : currentData.groupAName;
+      const groupBLabel = config.group_b_label !== defaultConfig.group_b_label ? 
+        config.group_b_label : currentData.groupBName;
+      
+      document.getElementById('group-a-label-display').textContent = groupALabel;
+      document.getElementById('group-b-label-display').textContent = groupBLabel;
+    }
+
+    // Update data tables
+    function updateTables() {
+      const tableA = document.getElementById('table-a').querySelector('tbody');
+      const tableB = document.getElementById('table-b').querySelector('tbody');
+      
+      // Update header highlights
+      const freqHeaderA = document.getElementById('freq-header-a');
+      const densityHeaderA = document.getElementById('density-header-a');
+      const freqHeaderB = document.getElementById('freq-header-b');
+      const densityHeaderB = document.getElementById('density-header-b');
+      
+      if (editMode && editType === 'frequency') {
+        freqHeaderA.style.background = '#dbeafe';
+        densityHeaderA.style.background = '#f3f4f6';
+        freqHeaderB.style.background = '#dbeafe';
+        densityHeaderB.style.background = '#f3f4f6';
+      } else if (editMode && editType === 'density') {
+        freqHeaderA.style.background = '#f3f4f6';
+        densityHeaderA.style.background = '#dbeafe';
+        freqHeaderB.style.background = '#f3f4f6';
+        densityHeaderB.style.background = '#dbeafe';
+      } else {
+        freqHeaderA.style.background = '#f3f4f6';
+        densityHeaderA.style.background = '#f3f4f6';
+        freqHeaderB.style.background = '#f3f4f6';
+        densityHeaderB.style.background = '#f3f4f6';
+      }
+      
+      let totalA = 0, totalB = 0;
+      let htmlA = '', htmlB = '';
+
+      currentData.intervals.forEach((interval, i) => {
+        const width = interval.upper - interval.lower;
+        const freqA = currentData.freqA[i] || 0;
+        const freqB = currentData.freqB[i] || 0;
+        const densityA = calculateDensity(freqA, width);
+        const densityB = calculateDensity(freqB, width);
+        
+        totalA += freqA;
+        totalB += freqB;
+
+        const intervalStr = `${interval.lower} ≤ x < ${interval.upper}`;
+        
+        if (editMode && editType === 'frequency') {
+          htmlA += `<tr class="hover:bg-blue-50 cursor-pointer" onclick="highlightBar('A', ${i})">
+            <td>${intervalStr}</td>
+            <td>${width}</td>
+            <td><input type="number" class="editable-input" value="${freqA}" onchange="updateFrequency('A', ${i}, this.value)" min="0"></td>
+            <td>${densityA.toFixed(2)}</td>
+          </tr>`;
+          htmlB += `<tr class="hover:bg-amber-50 cursor-pointer" onclick="highlightBar('B', ${i})">
+            <td>${intervalStr}</td>
+            <td>${width}</td>
+            <td><input type="number" class="editable-input" value="${freqB}" onchange="updateFrequency('B', ${i}, this.value)" min="0"></td>
+            <td>${densityB.toFixed(2)}</td>
+          </tr>`;
+        } else if (editMode && editType === 'density') {
+          htmlA += `<tr class="hover:bg-blue-50 cursor-pointer" onclick="highlightBar('A', ${i})">
+            <td>${intervalStr}</td>
+            <td>${width}</td>
+            <td>${freqA}</td>
+            <td><input type="number" step="0.1" class="editable-input" value="${densityA.toFixed(2)}" onchange="updateDensity('A', ${i}, this.value)" min="0"></td>
+          </tr>`;
+          htmlB += `<tr class="hover:bg-amber-50 cursor-pointer" onclick="highlightBar('B', ${i})">
+            <td>${intervalStr}</td>
+            <td>${width}</td>
+            <td>${freqB}</td>
+            <td><input type="number" step="0.1" class="editable-input" value="${densityB.toFixed(2)}" onchange="updateDensity('B', ${i}, this.value)" min="0"></td>
+          </tr>`;
+        } else {
+          htmlA += `<tr class="hover:bg-blue-50 cursor-pointer" onclick="highlightBar('A', ${i})">
+            <td>${intervalStr}</td>
+            <td>${width}</td>
+            <td>${freqA}</td>
+            <td>${densityA.toFixed(2)}</td>
+          </tr>`;
+          htmlB += `<tr class="hover:bg-amber-50 cursor-pointer" onclick="highlightBar('B', ${i})">
+            <td>${intervalStr}</td>
+            <td>${width}</td>
+            <td>${freqB}</td>
+            <td>${densityB.toFixed(2)}</td>
+          </tr>`;
+        }
+      });
+
+      tableA.innerHTML = htmlA;
+      tableB.innerHTML = htmlB;
+      document.getElementById('total-a').textContent = totalA;
+      document.getElementById('total-b').textContent = totalB;
+    }
+
+    // Draw histogram
+    function drawHistogram() {
+      const svg = document.getElementById('histogram');
+      const width = 500;
+      const height = 320;
+      const margin = { top: 30, right: 20, bottom: 50, left: 60 };
+      const chartWidth = width - margin.left - margin.right;
+      const chartHeight = height - margin.top - margin.bottom;
+
+      // Find max values for scaling
+      const allLowers = currentData.intervals.map(i => i.lower);
+      const allUppers = currentData.intervals.map(i => i.upper);
+      const xMin = Math.min(...allLowers);
+      const xMax = Math.max(...allUppers);
+
+      let maxDensity = 0;
+      currentData.intervals.forEach((interval, i) => {
+        const classWidth = interval.upper - interval.lower;
+        if (showGroupA) maxDensity = Math.max(maxDensity, calculateDensity(currentData.freqA[i] || 0, classWidth));
+        if (showGroupB) maxDensity = Math.max(maxDensity, calculateDensity(currentData.freqB[i] || 0, classWidth));
+      });
+      maxDensity = maxDensity * 1.1 || 1;
+
+      // Scale functions
+      const xScale = (val) => margin.left + ((val - xMin) / (xMax - xMin)) * chartWidth;
+      const yScale = (val) => margin.top + chartHeight - (val / maxDensity) * chartHeight;
+
+      let svgContent = '';
+
+      // Grid lines
+      for (let i = 0; i <= 5; i++) {
+        const y = margin.top + (i * chartHeight / 5);
+        const density = maxDensity * (1 - i / 5);
+        svgContent += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e5e7eb" stroke-dasharray="3,3"/>`;
+        svgContent += `<text x="${margin.left - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="#6b7280">${density.toFixed(1)}</text>`;
+      }
+
+      // X-axis
+      svgContent += `<line x1="${margin.left}" y1="${margin.top + chartHeight}" x2="${width - margin.right}" y2="${margin.top + chartHeight}" stroke="#374151" stroke-width="2"/>`;
+      
+      // X-axis labels
+      const xStep = (xMax - xMin) / 5;
+      for (let i = 0; i <= 5; i++) {
+        const x = xMin + i * xStep;
+        svgContent += `<text x="${xScale(x)}" y="${margin.top + chartHeight + 20}" text-anchor="middle" font-size="11" fill="#374151">${x.toFixed(0)}</text>`;
+      }
+
+      // Y-axis
+      svgContent += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${margin.top + chartHeight}" stroke="#374151" stroke-width="2"/>`;
+
+      // Axis labels
+      svgContent += `<text x="${width / 2}" y="${height - 8}" text-anchor="middle" font-size="12" fill="#374151" font-weight="600">${currentData.variable}</text>`;
+      svgContent += `<text x="15" y="${height / 2}" text-anchor="middle" font-size="12" fill="#374151" font-weight="600" transform="rotate(-90, 15, ${height / 2})">Frequency Density</text>`;
+
+      // Draw bars for Group A
+      if (showGroupA) {
+        currentData.intervals.forEach((interval, i) => {
+          const classWidth = interval.upper - interval.lower;
+          const freq = currentData.freqA[i] || 0;
+          const density = calculateDensity(freq, classWidth);
+          const x = xScale(interval.lower);
+          const barWidth = xScale(interval.upper) - x;
+          const barHeight = (density / maxDensity) * chartHeight;
+          const y = margin.top + chartHeight - barHeight;
+          
+          const isHighlighted = highlightedBar && highlightedBar.group === 'A' && highlightedBar.index === i;
+          svgContent += `<rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" class="histogram-bar-a ${isHighlighted ? 'highlighted' : ''}" onclick="highlightBar('A', ${i})" data-group="A" data-index="${i}"/>`;
+        });
+      }
+
+      // Draw bars for Group B (slightly offset for visibility)
+      if (showGroupB) {
+        currentData.intervals.forEach((interval, i) => {
+          const classWidth = interval.upper - interval.lower;
+          const freq = currentData.freqB[i] || 0;
+          const density = calculateDensity(freq, classWidth);
+          const x = xScale(interval.lower);
+          const barWidth = xScale(interval.upper) - x;
+          const barHeight = (density / maxDensity) * chartHeight;
+          const y = margin.top + chartHeight - barHeight;
+          
+          const isHighlighted = highlightedBar && highlightedBar.group === 'B' && highlightedBar.index === i;
+          svgContent += `<rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" class="histogram-bar-b ${isHighlighted ? 'highlighted' : ''}" onclick="highlightBar('B', ${i})" data-group="B" data-index="${i}"/>`;
+        });
+      }
+
+      // Legend
+      const legendY = 12;
+      if (showGroupA) {
+        const groupALabel = config.group_a_label !== defaultConfig.group_a_label ? 
+          config.group_a_label : currentData.groupAName;
+        svgContent += `<rect x="${margin.left}" y="${legendY}" width="12" height="12" fill="#3b82f6" opacity="0.7"/>`;
+        svgContent += `<text x="${margin.left + 16}" y="${legendY + 10}" font-size="11" fill="#374151">${groupALabel}</text>`;
+      }
+      if (showGroupB) {
+        const groupBLabel = config.group_b_label !== defaultConfig.group_b_label ? 
+          config.group_b_label : currentData.groupBName;
+        const offsetX = showGroupA ? 150 : 0;
+        svgContent += `<rect x="${margin.left + offsetX}" y="${legendY}" width="12" height="12" fill="#f59e0b" opacity="0.7"/>`;
+        svgContent += `<text x="${margin.left + offsetX + 16}" y="${legendY + 10}" font-size="11" fill="#374151">${groupBLabel}</text>`;
+      }
+
+      svg.innerHTML = svgContent;
+    }
+
+    // Toggle group visibility
+    function toggleGroup(group) {
+      if (group === 'A') {
+        showGroupA = !showGroupA;
+        const btn = document.getElementById('toggle-a');
+        btn.classList.toggle('active-a', showGroupA);
+      } else {
+        showGroupB = !showGroupB;
+        const btn = document.getElementById('toggle-b');
+        btn.classList.toggle('active-b', showGroupB);
+      }
+      drawHistogram();
+    }
+
+    // Toggle edit mode
+    function toggleEditMode() {
+      editMode = document.getElementById('edit-mode').checked;
+      document.getElementById('edit-type').disabled = !editMode;
+      updateTables();
+    }
+
+    // Change edit type
+    function changeEditType() {
+      editType = document.getElementById('edit-type').value;
+      updateTables();
+    }
+
+    // Update frequency
+    function updateFrequency(group, index, value) {
+      const freq = parseInt(value) || 0;
+      if (group === 'A') {
+        currentData.freqA[index] = freq;
+      } else {
+        currentData.freqB[index] = freq;
+      }
+      updateDisplay();
+    }
+
+    // Update frequency density
+    function updateDensity(group, index, value) {
+      const density = parseFloat(value) || 0;
+      const interval = currentData.intervals[index];
+      const classWidth = interval.upper - interval.lower;
+      const freq = Math.round(density * classWidth);
+      
+      if (group === 'A') {
+        currentData.freqA[index] = freq;
+      } else {
+        currentData.freqB[index] = freq;
+      }
+      updateDisplay();
+    }
+
+    // Highlight a bar
+    function highlightBar(group, index) {
+      highlightedBar = { group, index };
+      drawHistogram();
+      showHighlightInfo(group, index);
+    }
+
+    // Show highlight info
+    function showHighlightInfo(group, index) {
+      const infoDiv = document.getElementById('highlight-info');
+      const contentDiv = document.getElementById('highlight-content');
+      
+      const interval = currentData.intervals[index];
+      const classWidth = interval.upper - interval.lower;
+      const freq = group === 'A' ? currentData.freqA[index] : currentData.freqB[index];
+      const density = calculateDensity(freq, classWidth);
+      const area = freq;
+
+      const groupLabel = group === 'A' ? 
+        (config.group_a_label !== defaultConfig.group_a_label ? config.group_a_label : currentData.groupAName) :
+        (config.group_b_label !== defaultConfig.group_b_label ? config.group_b_label : currentData.groupBName);
+      const groupColor = group === 'A' ? 'blue' : 'amber';
+
+      contentDiv.innerHTML = `
+        <div><strong>Group:</strong> <span class="text-${groupColor}-600">${groupLabel}</span></div>
+        <div><strong>Class Interval:</strong> ${interval.lower} ≤ x < ${interval.upper}</div>
+        <div><strong>Class Width:</strong> ${classWidth}</div>
+        <div><strong>Frequency:</strong> ${freq}</div>
+        <div><strong>Frequency Density:</strong> ${density.toFixed(2)}</div>
+        <div><strong>Bar Area:</strong> ${classWidth} × ${density.toFixed(2)} = ${area} (= frequency ✓)</div>
+      `;
+      
+      infoDiv.classList.remove('hidden');
+    }
+
+    // Update analysis questions
+    function updateQuestions() {
+      const questionsDiv = document.getElementById('analysis-questions');
+      const questions = currentData.questions || [
+        "Which group tends to have lower values? Look at where most of the histogram area is concentrated.",
+        "Compare the spread of the two distributions. Which one is more spread out?",
+        "Are there any notable differences in the upper ranges of the two groups?"
+      ];
+
+      questionsDiv.innerHTML = questions.map((q, i) => `
+        <div class="question-card p-3 rounded-lg">
+          <p class="text-slate-800 mb-3"><strong>Q${i + 1}:</strong> ${q}</p>
+          <textarea id="answer-${i}" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 mb-2" rows="3" placeholder="Type your answer here..."></textarea>
+          <div class="flex gap-2">
+            <button onclick="checkAnswer(${i})" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+              Check Answer
+            </button>
+            <button onclick="clearAnswer(${i})" class="bg-slate-300 hover:bg-slate-400 text-slate-700 px-4 py-2 rounded-lg text-sm font-semibold transition">
+              Clear
+            </button>
+          </div>
+          <div id="feedback-${i}" class="hidden mt-3 p-3 rounded-lg"></div>
+        </div>
+      `).join('');
+    }
+
+    // Check answer function
+    function checkAnswer(questionIndex) {
+      const answerField = document.getElementById(`answer-${questionIndex}`);
+      const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+      const answer = answerField.value.trim().toLowerCase();
+      
+      if (!answer) {
+        feedbackDiv.innerHTML = `
+          <p class="text-slate-700">⚠️ Please write your answer first before checking!</p>
+        `;
+        feedbackDiv.className = 'mt-3 p-3 rounded-lg bg-slate-100 border-l-4 border-slate-400';
+        feedbackDiv.classList.remove('hidden');
+        return;
+      }
+
+      let feedback = '';
+      let feedbackClass = '';
+      
+      // Get current scenario ID or use generic
+      const scenarioId = currentTab === 'scenarios' ? scenarios[document.getElementById('scenario-select').value].id : 'custom';
+      
+      // Generate contextual feedback based on scenario and question
+      if (scenarioId === 'sdg7') {
+        // SDG 7: Electricity Use
+        if (questionIndex === 0) {
+          if (answer.includes('community a') || answer.includes('rural') || answer.includes('lower') || answer.includes('less')) {
+            feedback = `<p class="text-green-800"><strong>✓ Excellent observation!</strong> Community A (Rural) tends to use less electricity. Looking at the histogram, most of Community A's area is concentrated in the lower intervals (0-20 kWh), while Community B (Urban) has more area in the higher ranges (20-50 kWh). This suggests rural households typically have lower electricity consumption.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Consider this:</strong> Look at where the largest bars (by area) appear for each community. Community A has more concentration in the 0-20 kWh range, while Community B has significant area in the 20-50 kWh range. Remember: the <em>area</em> of the bars represents frequency. Which community has more area in the lower intervals?</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        } else if (questionIndex === 1) {
+          if (answer.includes('community b') || answer.includes('urban') || answer.includes('30')) {
+            feedback = `<p class="text-green-800"><strong>✓ Well done!</strong> Community B (Urban) has more households using over 30 kWh daily. You can see this by comparing the bar areas in the 30-50 kWh interval. Urban areas often have higher electricity consumption due to more appliances, air conditioning, and larger living spaces. This links to SDG 7's goal of ensuring access to sustainable energy.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Hint:</strong> Focus on the intervals above 30 kWh (30-50 kWh range). Calculate or estimate the frequencies for both communities in this range by looking at the bar areas. Which community has a larger total frequency for values over 30 kWh? Think about why urban areas might differ from rural areas.</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        } else if (questionIndex === 2) {
+          if (answer.includes('width') || answer.includes('density') || answer.includes('class') || answer.includes('different width')) {
+            feedback = `<p class="text-green-800"><strong>✓ Fantastic thinking!</strong> Even if both have the same total frequency (same total number of households), the histograms look different because they have different <em>distributions</em>. The class widths vary (5, 5, 10, 10, 20), so frequency density adjusts the bar heights to ensure areas remain proportional to frequency. This is why histograms show the <em>shape</em> of distributions, not just totals!</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Think about this:</strong> Total frequency just tells you the total number of observations (households). But <em>how</em> those observations are spread across the intervals matters! The histogram shows the <em>distribution</em> - where the data is concentrated. Two groups can have the same total but very different shapes if the data is distributed differently across intervals.</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        }
+      } else if (scenarioId === 'sdg11') {
+        // SDG 11: Commute Times
+        if (questionIndex === 0) {
+          if (answer.includes('shorter') || answer.includes('reduced') || answer.includes('decreased') || answer.includes('less') || answer.includes('improved') || answer.includes('better')) {
+            feedback = `<p class="text-green-800"><strong>✓ Excellent analysis!</strong> After the new route was introduced, commute times have significantly decreased. The histogram shows more area concentrated in the 0-20 minute range after the new route, compared to before when more area was in the 20-60 minute range. This demonstrates how improved public transport (SDG 11) can make cities more sustainable and reduce commute times.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Look closely:</strong> Compare where most of the histogram area is concentrated before and after the new route. Has the distribution shifted toward lower or higher commute times? Count the frequencies in the lower intervals (0-20 minutes) - has this increased or decreased after the new route?</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        } else if (questionIndex === 1) {
+          if (answer.includes('53') || answer.includes('23') || answer.includes('increase') || answer.includes('more') || answer.includes('percent')) {
+            feedback = `<p class="text-green-800"><strong>✓ Great calculation!</strong> Before: 5 + 12 = 17 people under 20 minutes out of 100 total (17%). After: 18 + 35 = 53 people under 20 minutes out of 100 total (53%). That's a huge improvement! The new route has more than tripled the percentage of short commutes, showing real impact on people's daily lives.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Try this method:</strong> Add up the frequencies for the 0-10 and 10-20 minute intervals for both "Before" and "After". Then calculate: (frequency under 20 min ÷ total frequency) × 100%. Compare the before and after percentages. What do you notice?</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        } else if (questionIndex === 2) {
+          if (answer.includes('yes') || answer.includes('reduced') || answer.includes('decreased') || answer.includes('help')) {
+            feedback = `<p class="text-green-800"><strong>✓ Well reasoned!</strong> Yes, the new route has significantly reduced longer commutes. Looking at the 40-90 minute intervals, the total area (frequency) has dropped from 45 people to just 15 people. The area in the 60-90 minute range especially has decreased from 15 to 3. This shows the new route is making sustainable transport more accessible (SDG 11).</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Compare carefully:</strong> Focus on the intervals for commutes over 40 minutes (40-60 and 60-90 minute intervals). Add up the frequencies (areas) in these intervals before and after the new route. Has this total increased or decreased? What does this tell you about the effectiveness of the new route?</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        }
+      } else if (scenarioId === 'sdg4') {
+        // SDG 4: Study Time
+        if (questionIndex === 0) {
+          if (answer.includes('class 1') || answer.includes('morning') || answer.includes('more') || answer.includes('higher')) {
+            feedback = `<p class="text-green-800"><strong>✓ Good observation!</strong> Class 1 (Morning) tends to study more hours per week overall. While both classes have similar peaks in the 5-8 hour range, Class 1 has more students studying 8+ hours (19 students vs 12 students). The distribution for Class 1 is slightly shifted toward higher study times, which might reflect better focus in morning classes.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Look at the shape:</strong> Both histograms peak in the middle ranges, but compare the upper intervals (8-12 and 12-20 hours). Which class has more area (frequency) in these higher study time intervals? Also consider where each distribution is "centered" - toward lower or higher values?</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        } else if (questionIndex === 1) {
+          if (answer.includes('yes') || answer.includes('class 1') || answer.includes('morning') || answer.includes('12')) {
+            feedback = `<p class="text-green-800"><strong>✓ Correct!</strong> Yes, there are students studying more than 12 hours per week. Class 1 has 7 students in the 12-20 hour range, while Class 2 has 4 students. These are the dedicated studiers putting in extra independent learning time. This links to SDG 4's emphasis on quality education - independent study is a key skill for lifelong learning.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Check the data:</strong> Look at the rightmost interval (12-20 hours). What are the frequencies for both classes in this interval? Remember, the area of each bar equals the frequency, so you can read this from your data table. Which class has more dedicated studiers?</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        } else if (questionIndex === 2) {
+          if (answer.includes('class 2') || answer.includes('afternoon') || answer.includes('lower') || answer.includes('less')) {
+            feedback = `<p class="text-green-800"><strong>✓ Thoughtful answer!</strong> Class 2 (Afternoon) might need more support to increase study time. They have more students in the lower study time ranges (0-5 hours: 20 students vs 11 in Class 1) and fewer in the higher ranges. Encouraging good study habits, providing after-school study spaces, or addressing fatigue in afternoon classes could help achieve SDG 4's quality education goals.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Consider the distributions:</strong> Which class has more students studying fewer than 5 hours per week? Which class has fewer students in the higher study time ranges? Think about what interventions or support might help shift the distribution toward more study time. There's no single "right" answer here - it's about your reasoning!</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        }
+      } else {
+        // Generic feedback for custom scenarios
+        if (questionIndex === 0) {
+          if (answer.length > 20) {
+            feedback = `<p class="text-green-800"><strong>✓ Good effort!</strong> You've provided a thoughtful answer. When comparing distributions, look at where most of the histogram area is concentrated. Remember: larger bar areas = higher frequencies. Consider calculating the median or modal class interval for each group to support your comparison.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Expand your answer:</strong> Try to be more specific. Which group has more area in the lower intervals? You could mention specific class intervals or calculate approximate percentages. Look at the data tables to support your observations about the histogram shapes.</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        } else if (questionIndex === 1) {
+          if (answer.includes('spread') || answer.includes('range') || answer.includes('vary')) {
+            feedback = `<p class="text-green-800"><strong>✓ Well done!</strong> You're thinking about the spread of the data. To describe spread more precisely, you could compare: the range (difference between highest and lowest values), whether one distribution is more concentrated in the middle or more evenly spread out, or calculate measures like the interquartile range.</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Think about spread:</strong> "Spread" refers to how widely the data is distributed. Is one histogram's area concentrated in just a few intervals, or spread across many? Compare the range of values where each group has significant frequencies. Which distribution is more "stretched out"?</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        } else {
+          if (answer.length > 30) {
+            feedback = `<p class="text-green-800"><strong>✓ Thoughtful response!</strong> You've considered the upper ranges and made comparisons. Strong analytical answers should reference specific intervals, mention the frequencies or areas in those intervals, and connect observations back to the real-world context of your data. Well done!</p>`;
+            feedbackClass = 'bg-green-100 border-l-4 border-green-500';
+          } else {
+            feedback = `<p class="text-amber-800"><strong>💡 Develop your answer:</strong> Be more specific about what you observe in the upper ranges. Quote actual intervals, compare the frequencies (areas) between the two groups, and try to explain what this might mean in the context of your variable and SDG theme.</p>`;
+            feedbackClass = 'bg-amber-100 border-l-4 border-amber-500';
+          }
+        }
+      }
+      
+      feedbackDiv.innerHTML = feedback;
+      feedbackDiv.className = `mt-3 p-3 rounded-lg ${feedbackClass}`;
+      feedbackDiv.classList.remove('hidden');
+    }
+
+    // Clear answer function
+    function clearAnswer(questionIndex) {
+      document.getElementById(`answer-${questionIndex}`).value = '';
+      const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+      feedbackDiv.classList.add('hidden');
+    }
+
+    // Custom scenario functions
+    function renderCustomIntervals() {
+      const container = document.getElementById('custom-intervals');
+      container.innerHTML = customIntervals.map((interval, i) => `
+        <div class="grid grid-cols-4 gap-2 items-center">
+          <input type="number" class="border border-slate-300 rounded px-2 py-1 text-sm" value="${interval.lower}" onchange="updateCustomInterval(${i}, 'lower', this.value)" placeholder="Lower">
+          <span class="text-center text-slate-500">≤ x <</span>
+          <input type="number" class="border border-slate-300 rounded px-2 py-1 text-sm" value="${interval.upper}" onchange="updateCustomInterval(${i}, 'upper', this.value)" placeholder="Upper">
+          <div class="grid grid-cols-2 gap-1">
+            <input type="number" class="border border-blue-300 rounded px-2 py-1 text-sm bg-blue-50" value="${customFreqA[i] || 0}" onchange="updateCustomFreq('A', ${i}, this.value)" placeholder="A" title="Group A Frequency">
+            <input type="number" class="border border-amber-300 rounded px-2 py-1 text-sm bg-amber-50" value="${customFreqB[i] || 0}" onchange="updateCustomFreq('B', ${i}, this.value)" placeholder="B" title="Group B Frequency">
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateCustomInterval(index, bound, value) {
+      customIntervals[index][bound] = parseFloat(value) || 0;
+    }
+
+    function updateCustomFreq(group, index, value) {
+      const freq = parseInt(value) || 0;
+      if (group === 'A') {
+        customFreqA[index] = freq;
+      } else {
+        customFreqB[index] = freq;
+      }
+    }
+
+    function addCustomInterval() {
+      const last = customIntervals[customIntervals.length - 1];
+      const newUpper = last ? last.upper + (last.upper - last.lower) : 10;
+      customIntervals.push({ 
+        lower: last ? last.upper : 0, 
+        upper: newUpper 
+      });
+      customFreqA.push(0);
+      customFreqB.push(0);
+      renderCustomIntervals();
+    }
+
+    function removeCustomInterval() {
+      if (customIntervals.length > 1) {
+        customIntervals.pop();
+        customFreqA.pop();
+        customFreqB.pop();
+        renderCustomIntervals();
+      }
+    }
+
+    function applyCustomScenario() {
+      const variable = document.getElementById('custom-variable').value || 'Custom variable';
+      const context = document.getElementById('custom-context').value || 'My SDG Comparison';
+
+      currentData = {
+        variable: variable,
+        intervals: [...customIntervals],
+        freqA: [...customFreqA],
+        freqB: [...customFreqB],
+        groupAName: "Group A",
+        groupBName: "Group B",
+        questions: [
+          `Looking at your ${variable.toLowerCase()} data, which group tends to have lower values?`,
+          "How do the shapes of the two distributions compare? Is one more spread out?",
+          "Based on your comparison, what conclusions can you draw about the two groups in the context of " + context + "?"
+        ]
+      };
+
+      updateDisplay();
+    }
+
+    // Element SDK Integration
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      // Update title
+      const titleEl = document.getElementById('app-title');
+      if (titleEl) {
+        titleEl.textContent = config.app_title || defaultConfig.app_title;
+      }
+
+      // Update group labels
+      updateLabels();
+      drawHistogram();
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["app_title", config.app_title || defaultConfig.app_title],
+        ["group_a_label", config.group_a_label || defaultConfig.group_a_label],
+        ["group_b_label", config.group_b_label || defaultConfig.group_b_label]
+      ]);
+    }
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Initialize app
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1e2f7e8244d61a',t:'MTc2OTA3NTgyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polygon Explorer</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Comic Neue', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
+            color: #2d3748;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .polygon-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        .controls {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        .slider-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        .slider-label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4a5568;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .sides-display {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 10px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+
+        .checkbox-item label {
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+        }
+
+        .svg-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+
+        #polygon-svg {
+            max-width: 100%;
+            max-height: 100%;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+        }
+
+        .info-panel {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .info-section h3 {
+            margin: 0 0 15px 0;
+            color: #2d3748;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .angle-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .angle-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .angle-card.exterior {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .angle-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .angle-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .triangulation-controls {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .triangulation-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .triangulation-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .triangulation-button.active {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .clear-button {
+            width: 100%;
+            padding: 8px;
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-button:hover {
+            background: #cbd5e0;
+        }
+
+        .investigation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .investigation-table th {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .investigation-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .investigation-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .investigation-table input {
+            width: 60px;
+            padding: 4px;
+            border: 2px solid #e2e8f0;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .investigation-table input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .investigation-table input.correct {
+            background: #c6f6d5;
+            border-color: #38a169;
+        }
+
+        .investigation-table input.incorrect {
+            background: #fed7d7;
+            border-color: #e53e3e;
+        }
+
+        .discovery-section {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .discovery-section h4 {
+            margin: 0 0 10px 0;
+            color: #2d3748;
+            font-size: 1.1rem;
+        }
+
+        .formula-input {
+            width: 200px;
+            padding: 8px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .formula-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .formula-input.correct {
+            background: #c6f6d5;
+            border-color: #38a169;
+        }
+
+        .formula-input.incorrect {
+            background: #fed7d7;
+            border-color: #e53e3e;
+        }
+
+        .hint {
+            font-size: 0.85rem;
+            color: #4a5568;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .angle-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .polygon {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .vertex-label {
+            transition: all 0.3s ease;
+        }
+
+        .angle-arc {
+            transition: all 0.3s ease;
+        }
+
+        .circumcircle {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <main class="container">
+   <header class="header">
+    <h1 id="app-title">Polygon Explorer</h1>
+    <p id="instruction-text">Discover how angles change as you add more sides to regular polygons!</p>
+   </header>
+   <div class="main-content">
+    <div class="polygon-area">
+     <div class="controls">
+      <div class="slider-container">
+       <div class="slider-label">
+        Number of Sides
+       </div>
+       <div class="slider-wrapper"><input type="range" id="sides-slider" class="slider" min="3" max="12" value="5">
+       </div>
+       <div class="sides-display" id="sides-display">
+        5 sides
+       </div>
+      </div>
+      <div class="checkbox-container">
+       <div class="checkbox-item"><input type="checkbox" id="show-labels" checked> <label for="show-labels">Show vertex labels</label>
+       </div>
+       <div class="checkbox-item"><input type="checkbox" id="show-circle"> <label for="show-circle">Show circumcircle</label>
+       </div>
+      </div>
+     </div>
+     <div class="triangulation-controls">
+      <h4 style="margin: 0 0 10px 0; color: #4a5568;">Investigation Tools</h4><button id="triangulation-button" class="triangulation-button"> Draw Triangulation Lines </button> <button id="clear-triangulation" class="clear-button"> Clear Lines </button>
+      <div class="hint">
+       Click to draw lines from one vertex to all non-adjacent vertices
+      </div>
+     </div>
+     <div class="svg-container">
+      <svg id="polygon-svg" width="400" height="400" viewbox="0 0 400 400"><defs>
+        <marker id="arrowhead" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+         <polygon points="0 0, 10 3.5, 0 7" fill="#667eea" />
+        </marker>
+       </defs> <g id="polygon-group" transform="translate(200,200)"></g>
+      </svg>
+     </div>
+    </div>
+    <aside class="info-panel">
+     <div class="info-section">
+      <h3>Current Polygon</h3>
+      <div id="polygon-name" style="font-size: 1.3rem; font-weight: bold; color: #667eea; margin-bottom: 10px; text-align: center;">
+       Pentagon
+      </div>
+      <div style="color: #4a5568; line-height: 1.5; text-align: center;">
+       <div>
+        <strong>Sides:</strong> <span id="sides-count">5</span>
+       </div>
+       <div>
+        <strong>Triangles formed:</strong> <span id="triangles-count">3</span>
+       </div>
+      </div>
+     </div>
+     <div class="info-section">
+      <h3>Investigation Table</h3>
+      <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 15px;">Complete the table by drawing triangulation lines and counting triangles for each polygon:</p>
+      <table class="investigation-table">
+       <thead>
+        <tr>
+         <th>Sides (n)</th>
+         <th>Triangles</th>
+         <th>Sum of Interior Angles</th>
+        </tr>
+       </thead>
+       <tbody id="investigation-tbody">
+        <tr data-sides="3">
+         <td>3</td>
+         <td><input type="number" class="triangles-input" data-correct="1" min="0" max="10"></td>
+         <td><input type="number" class="sum-input" data-correct="180" min="0" max="3600" step="10">°</td>
+        </tr>
+        <tr data-sides="4">
+         <td>4</td>
+         <td><input type="number" class="triangles-input" data-correct="2" min="0" max="10"></td>
+         <td><input type="number" class="sum-input" data-correct="360" min="0" max="3600" step="10">°</td>
+        </tr>
+        <tr data-sides="5">
+         <td>5</td>
+         <td><input type="number" class="triangles-input" data-correct="3" min="0" max="10"></td>
+         <td><input type="number" class="sum-input" data-correct="540" min="0" max="3600" step="10">°</td>
+        </tr>
+        <tr data-sides="6">
+         <td>6</td>
+         <td><input type="number" class="triangles-input" data-correct="4" min="0" max="10"></td>
+         <td><input type="number" class="sum-input" data-correct="720" min="0" max="3600" step="10">°</td>
+        </tr>
+        <tr data-sides="7">
+         <td>7</td>
+         <td><input type="number" class="triangles-input" data-correct="5" min="0" max="10"></td>
+         <td><input type="number" class="sum-input" data-correct="900" min="0" max="3600" step="10">°</td>
+        </tr>
+        <tr data-sides="8">
+         <td>8</td>
+         <td><input type="number" class="triangles-input" data-correct="6" min="0" max="10"></td>
+         <td><input type="number" class="sum-input" data-correct="1080" min="0" max="3600" step="10">°</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <div class="discovery-section">
+      <h4>Can you discover the pattern?</h4>
+      <p style="font-size: 0.9rem; margin: 10px 0;">Write a formula for the sum of interior angles of a polygon with n sides:</p><input type="text" id="formula-input" class="formula-input" placeholder="Enter your formula here">
+      <div class="hint">
+       Hint: Look at the relationship between the number of sides and triangles!
+      </div>
+     </div>
+     <div class="info-section">
+      <h3>Check Your Formula</h3>
+      <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 15px; text-align: center;">Once you've discovered the pattern, click to test your formula:</p><button id="check-formula-button" class="triangulation-button" style="margin-bottom: 0;"> Check My Formula </button>
+      <div id="formula-result" style="margin-top: 10px; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; display: none;"></div>
+     </div>
+    </aside>
+   </div>
+  </main>
+  <script>
+        // Configuration object for editable features
+        const defaultConfig = {
+            app_title: "Polygon Explorer",
+            instruction_text: "Discover how angles change as you add more sides to regular polygons!",
+            primary_color: "#667eea",
+            secondary_color: "#4facfe",
+            accent_color: "#fa709a",
+            background_color: "#f8fafc",
+            text_color: "#2d3748"
+        };
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange: async (config) => {
+                    // Update text content
+                    document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+                    document.getElementById('instruction-text').textContent = config.instruction_text || defaultConfig.instruction_text;
+                    
+                    // Update colors throughout the app
+                    const primaryColor = config.primary_color || defaultConfig.primary_color;
+                    const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+                    const accentColor = config.accent_color || defaultConfig.accent_color;
+                    const backgroundColor = config.background_color || defaultConfig.background_color;
+                    const textColor = config.text_color || defaultConfig.text_color;
+                    
+                    // Update CSS custom properties for dynamic color changes
+                    document.documentElement.style.setProperty('--primary-color', primaryColor);
+                    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+                    document.documentElement.style.setProperty('--accent-color', accentColor);
+                    document.documentElement.style.setProperty('--background-color', backgroundColor);
+                    document.documentElement.style.setProperty('--text-color', textColor);
+                    
+                    // Update specific elements
+                    document.querySelector('.polygon-area').style.backgroundColor = backgroundColor;
+                    document.querySelector('.info-panel').style.backgroundColor = backgroundColor;
+                    document.body.style.color = textColor;
+                    
+                    // Redraw polygon with new colors
+                    drawPolygon();
+                },
+                mapToCapabilities: (config) => ({
+                    recolorables: [
+                        {
+                            get: () => config.primary_color || defaultConfig.primary_color,
+                            set: (value) => {
+                                config.primary_color = value;
+                                window.elementSdk.setConfig({ primary_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.secondary_color || defaultConfig.secondary_color,
+                            set: (value) => {
+                                config.secondary_color = value;
+                                window.elementSdk.setConfig({ secondary_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.accent_color || defaultConfig.accent_color,
+                            set: (value) => {
+                                config.accent_color = value;
+                                window.elementSdk.setConfig({ accent_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.background_color || defaultConfig.background_color,
+                            set: (value) => {
+                                config.background_color = value;
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.text_color || defaultConfig.text_color,
+                            set: (value) => {
+                                config.text_color = value;
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        }
+                    ],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ["app_title", config.app_title || defaultConfig.app_title],
+                    ["instruction_text", config.instruction_text || defaultConfig.instruction_text]
+                ])
+            });
+        }
+
+        // Polygon names
+        const polygonNames = {
+            3: "Triangle",
+            4: "Square", 
+            5: "Pentagon",
+            6: "Hexagon",
+            7: "Heptagon",
+            8: "Octagon",
+            9: "Nonagon",
+            10: "Decagon",
+            11: "Hendecagon",
+            12: "Dodecagon"
+        };
+
+        // Get DOM elements
+        const sidesSlider = document.getElementById('sides-slider');
+        const sidesDisplay = document.getElementById('sides-display');
+        const showLabelsCheckbox = document.getElementById('show-labels');
+        const showCircleCheckbox = document.getElementById('show-circle');
+        const triangulationButton = document.getElementById('triangulation-button');
+        const clearTriangulationButton = document.getElementById('clear-triangulation');
+        const polygonGroup = document.getElementById('polygon-group');
+        const polygonNameDisplay = document.getElementById('polygon-name');
+        const sidesCountDisplay = document.getElementById('sides-count');
+        const trianglesCountDisplay = document.getElementById('triangles-count');
+        const formulaInput = document.getElementById('formula-input');
+
+        let currentSides = 5;
+        let showTriangulation = false;
+
+        // Calculate polygon vertices
+        function calculateVertices(sides, radius = 150) {
+            const vertices = [];
+            const angleStep = (2 * Math.PI) / sides;
+            
+            for (let i = 0; i < sides; i++) {
+                const angle = i * angleStep - Math.PI / 2; // Start from top
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+                vertices.push({ x, y, angle });
+            }
+            
+            return vertices;
+        }
+
+        // Calculate angles
+        function calculateAngles(sides) {
+            const interiorAngle = ((sides - 2) * 180) / sides;
+            const exteriorAngle = 360 / sides;
+            const interiorSum = (sides - 2) * 180;
+            
+            return { interiorAngle, exteriorAngle, interiorSum };
+        }
+
+        // Draw triangulation lines from vertex A to all non-adjacent vertices
+        function drawTriangulation(vertices, primaryColor) {
+            if (!showTriangulation || vertices.length < 4) return;
+            
+            // Draw lines from vertex 0 (A) to all non-adjacent vertices
+            const startVertex = vertices[0];
+            
+            for (let i = 2; i < vertices.length - 1; i++) {
+                const endVertex = vertices[i];
+                
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', startVertex.x);
+                line.setAttribute('y1', startVertex.y);
+                line.setAttribute('x2', endVertex.x);
+                line.setAttribute('y2', endVertex.y);
+                line.setAttribute('stroke', primaryColor);
+                line.setAttribute('stroke-width', '2');
+                line.setAttribute('stroke-dasharray', '8,4');
+                line.setAttribute('opacity', '0.8');
+                line.classList.add('triangulation-line');
+                polygonGroup.appendChild(line);
+            }
+        }
+
+        // Draw polygon
+        function drawPolygon() {
+            const sides = currentSides;
+            const vertices = calculateVertices(sides);
+            const { interiorAngle, exteriorAngle, interiorSum } = calculateAngles(sides);
+            
+            // Get current colors from config or defaults
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            
+            // Clear previous content
+            polygonGroup.innerHTML = '';
+            
+            // Draw circumcircle if enabled
+            if (showCircleCheckbox.checked) {
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', '0');
+                circle.setAttribute('cy', '0');
+                circle.setAttribute('r', '150');
+                circle.setAttribute('fill', 'none');
+                circle.setAttribute('stroke', primaryColor);
+                circle.setAttribute('stroke-width', '2');
+                circle.setAttribute('stroke-dasharray', '5,5');
+                circle.setAttribute('opacity', '0.5');
+                circle.classList.add('circumcircle');
+                polygonGroup.appendChild(circle);
+            }
+            
+            // Create polygon path
+            const pathData = vertices.map((vertex, index) => 
+                `${index === 0 ? 'M' : 'L'} ${vertex.x} ${vertex.y}`
+            ).join(' ') + ' Z';
+            
+            const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            polygon.setAttribute('d', pathData);
+            polygon.setAttribute('fill', secondaryColor);
+            polygon.setAttribute('fill-opacity', '0.3');
+            polygon.setAttribute('stroke', primaryColor);
+            polygon.setAttribute('stroke-width', '3');
+            polygon.classList.add('polygon');
+            polygonGroup.appendChild(polygon);
+            
+            // Draw triangulation lines
+            drawTriangulation(vertices, accentColor);
+            
+            // Draw vertices and labels
+            vertices.forEach((vertex, index) => {
+                // Vertex point
+                const point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                point.setAttribute('cx', vertex.x);
+                point.setAttribute('cy', vertex.y);
+                point.setAttribute('r', '6');
+                point.setAttribute('fill', primaryColor);
+                point.setAttribute('stroke', 'white');
+                point.setAttribute('stroke-width', '2');
+                polygonGroup.appendChild(point);
+                
+                // Vertex label
+                if (showLabelsCheckbox.checked) {
+                    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    const labelOffset = 25;
+                    const labelX = vertex.x + Math.cos(vertex.angle) * labelOffset;
+                    const labelY = vertex.y + Math.sin(vertex.angle) * labelOffset;
+                    
+                    label.setAttribute('x', labelX);
+                    label.setAttribute('y', labelY);
+                    label.setAttribute('text-anchor', 'middle');
+                    label.setAttribute('dominant-baseline', 'middle');
+                    label.setAttribute('font-size', '16');
+                    label.setAttribute('font-weight', 'bold');
+                    label.setAttribute('fill', primaryColor);
+                    label.classList.add('vertex-label');
+                    label.textContent = String.fromCharCode(65 + index); // A, B, C, etc.
+                    polygonGroup.appendChild(label);
+                }
+            });
+            
+            // Update displays
+            const trianglesFormed = Math.max(0, sides - 2);
+            polygonNameDisplay.textContent = polygonNames[sides];
+            sidesCountDisplay.textContent = sides;
+            trianglesCountDisplay.textContent = trianglesFormed;
+            
+            // Update triangulation button state
+            triangulationButton.textContent = showTriangulation ? 'Hide Triangulation Lines' : 'Draw Triangulation Lines';
+            triangulationButton.classList.toggle('active', showTriangulation);
+        }
+
+        // Validate table inputs
+        function validateInput(input) {
+            const value = parseInt(input.value);
+            const correct = parseInt(input.dataset.correct);
+            
+            if (value === correct) {
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+            } else {
+                input.classList.remove('correct');
+                input.classList.add('incorrect');
+            }
+        }
+
+        // Validate formula input
+        function validateFormula() {
+            const input = formulaInput.value.toLowerCase().replace(/\s/g, '');
+            const validFormulas = [
+                '(n-2)*180',
+                '(n-2)×180',
+                '(n-2)x180',
+                '180*(n-2)',
+                '180×(n-2)',
+                '180x(n-2)',
+                '180(n-2)',
+                '(n-2)180'
+            ];
+            
+            if (validFormulas.includes(input)) {
+                formulaInput.classList.add('correct');
+                formulaInput.classList.remove('incorrect');
+                return true;
+            } else {
+                formulaInput.classList.remove('correct');
+                formulaInput.classList.add('incorrect');
+                return false;
+            }
+        }
+
+        // Check formula button functionality
+        function checkFormula() {
+            const resultDiv = document.getElementById('formula-result');
+            const isCorrect = validateFormula();
+            
+            if (formulaInput.value.trim() === '') {
+                resultDiv.style.display = 'block';
+                resultDiv.style.backgroundColor = '#fed7d7';
+                resultDiv.style.color = '#e53e3e';
+                resultDiv.textContent = 'Please enter a formula first!';
+                return;
+            }
+            
+            resultDiv.style.display = 'block';
+            
+            if (isCorrect) {
+                resultDiv.style.backgroundColor = '#c6f6d5';
+                resultDiv.style.color = '#38a169';
+                resultDiv.textContent = '🎉 Excellent! You discovered the formula: (n-2) × 180°';
+            } else {
+                resultDiv.style.backgroundColor = '#fed7d7';
+                resultDiv.style.color = '#e53e3e';
+                resultDiv.textContent = '❌ Not quite right. Look at the pattern in your table again!';
+            }
+            
+            // Hide result after 4 seconds
+            setTimeout(() => {
+                resultDiv.style.display = 'none';
+            }, 4000);
+        }
+
+        // Event listeners
+        sidesSlider.addEventListener('input', (e) => {
+            currentSides = parseInt(e.target.value);
+            sidesDisplay.textContent = `${currentSides} sides`;
+            drawPolygon();
+        });
+
+        showLabelsCheckbox.addEventListener('change', drawPolygon);
+        showCircleCheckbox.addEventListener('change', drawPolygon);
+
+        triangulationButton.addEventListener('click', () => {
+            showTriangulation = !showTriangulation;
+            drawPolygon();
+        });
+
+        clearTriangulationButton.addEventListener('click', () => {
+            showTriangulation = false;
+            drawPolygon();
+        });
+
+        // Add event listeners to table inputs
+        document.querySelectorAll('.triangles-input, .sum-input').forEach(input => {
+            input.addEventListener('input', () => validateInput(input));
+            input.addEventListener('blur', () => validateInput(input));
+        });
+
+        // Add event listener to formula input
+        formulaInput.addEventListener('input', validateFormula);
+        formulaInput.addEventListener('blur', validateFormula);
+
+        // Add event listener to check formula button
+        document.getElementById('check-formula-button').addEventListener('click', checkFormula);
+
+        // Initialize
+        drawPolygon();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d893600618068b8',t:'MTc3Mjg4MjQyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

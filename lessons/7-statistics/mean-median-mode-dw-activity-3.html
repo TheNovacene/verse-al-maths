@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Which Average? – Mean, Median or Mode</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .feedback-card {
+      animation: slideIn 0.3s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .option-button {
+      transition: all 0.2s ease;
+    }
+    
+    .option-button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .option-button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    .correct {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="w-full h-full" style="min-height: 600px;"></div>
+  <script>
+    const defaultConfig = {
+      app_title: "Which Average? – Mean, Median or Mode",
+      intro_text: "Choose the best average for each scenario",
+      background_color: "#f0f9ff",
+      card_color: "#ffffff",
+      text_color: "#1e293b",
+      primary_button_color: "#3b82f6",
+      secondary_button_color: "#10b981",
+      font_family: "system-ui",
+      font_size: 16
+    };
+
+    const scenarios = [
+      {
+        id: 1,
+        text: "A company wants to advertise its typical salary, but one director is paid a lot more than everyone else.",
+        correct: "median",
+        explanation: "Median is better here because the very large salary is an outlier. The median gives a more representative 'typical' salary that isn't skewed by extreme values."
+      },
+      {
+        id: 2,
+        text: "A shoe shop wants to know the most common shoe size they should keep in stock.",
+        correct: "mode",
+        explanation: "Mode is best here because it tells you which shoe size appears most frequently. This helps the shop stock the size that most customers will want to buy."
+      },
+      {
+        id: 3,
+        text: "A teacher wants to summarise her class's test scores, where most scores are similar but one student was absent and got 0.",
+        correct: "median",
+        explanation: "Median is most appropriate because the absent student's 0 is an outlier that would unfairly drag down the mean. The median better represents the typical performance of students who actually took the test."
+      },
+      {
+        id: 4,
+        text: "A scientist measures the height of 50 plants and all measurements are fairly evenly distributed with no outliers.",
+        correct: "mean",
+        explanation: "Mean is best when data is evenly distributed without outliers. It uses all the data points and gives the most mathematically precise average in this situation."
+      },
+      {
+        id: 5,
+        text: "A survey asks 100 people their favourite ice cream flavour.",
+        correct: "mode",
+        explanation: "Mode is the only appropriate measure here because ice cream flavours are categories, not numbers. The mode tells you which flavour was chosen most often."
+      },
+      {
+        id: 6,
+        text: "A family wants to know their average monthly electricity bill over the past year, and all bills were fairly similar.",
+        correct: "mean",
+        explanation: "Mean is best here because all the bills were similar (no outliers), and the mean gives you the true average cost, which helps with budgeting."
+      },
+      {
+        id: 7,
+        text: "A researcher records the number of siblings each student has. Most have 1-2, but three students have 8+ siblings.",
+        correct: "median",
+        explanation: "Median is best because the students with 8+ siblings are outliers that would skew the mean upward. The median gives a better sense of the typical number of siblings."
+      },
+      {
+        id: 8,
+        text: "A café wants to know the most popular type of coffee ordered (espresso, latte, cappuccino, etc.).",
+        correct: "mode",
+        explanation: "Mode is the only measure that works here because coffee types are categories. The mode identifies which drink type customers order most frequently."
+      }
+    ];
+
+    let currentScenarioIndex = 0;
+    let score = 0;
+    let answered = false;
+
+    async function onConfigChange(config) {
+      const app = document.getElementById('app');
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'system-ui, -apple-system, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      app.style.backgroundColor = config.background_color || defaultConfig.background_color;
+      app.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      app.style.color = config.text_color || defaultConfig.text_color;
+      
+      const title = document.getElementById('app-title');
+      const intro = document.getElementById('intro-text');
+      
+      if (title) {
+        title.textContent = config.app_title || defaultConfig.app_title;
+        title.style.fontSize = `${baseSize * 1.75}px`;
+        title.style.color = config.text_color || defaultConfig.text_color;
+      }
+      
+      if (intro) {
+        intro.textContent = config.intro_text || defaultConfig.intro_text;
+        intro.style.fontSize = `${baseSize * 1}px`;
+        intro.style.color = config.text_color || defaultConfig.text_color;
+      }
+      
+      const card = document.querySelector('.scenario-card');
+      if (card) {
+        card.style.backgroundColor = config.card_color || defaultConfig.card_color;
+      }
+      
+      const progressText = document.getElementById('progress-text');
+      if (progressText) {
+        progressText.style.fontSize = `${baseSize * 0.875}px`;
+        progressText.style.color = config.text_color || defaultConfig.text_color;
+      }
+      
+      const scenarioText = document.getElementById('scenario-text');
+      if (scenarioText) {
+        scenarioText.style.fontSize = `${baseSize * 1.125}px`;
+        scenarioText.style.color = config.text_color || defaultConfig.text_color;
+      }
+      
+      const buttons = document.querySelectorAll('.option-button');
+      buttons.forEach(button => {
+        if (!button.classList.contains('next-button')) {
+          button.style.backgroundColor = config.primary_button_color || defaultConfig.primary_button_color;
+          button.style.fontSize = `${baseSize * 1}px`;
+        }
+      });
+      
+      const nextButton = document.querySelector('.next-button');
+      if (nextButton) {
+        nextButton.style.backgroundColor = config.secondary_button_color || defaultConfig.secondary_button_color;
+        nextButton.style.fontSize = `${baseSize * 1}px`;
+      }
+      
+      const feedbackCard = document.querySelector('.feedback-card');
+      if (feedbackCard) {
+        feedbackCard.style.fontSize = `${baseSize * 0.9375}px`;
+        const feedbackTitle = feedbackCard.querySelector('p:first-child');
+        if (feedbackTitle) {
+          feedbackTitle.style.fontSize = `${baseSize * 1.125}px`;
+        }
+      }
+      
+      const restartButton = document.getElementById('restart-button');
+      if (restartButton) {
+        restartButton.style.backgroundColor = config.primary_button_color || defaultConfig.primary_button_color;
+        restartButton.style.fontSize = `${baseSize * 1}px`;
+      }
+      
+      const finalScore = document.getElementById('final-score');
+      if (finalScore) {
+        finalScore.style.fontSize = `${baseSize * 1.5}px`;
+        finalScore.style.color = config.text_color || defaultConfig.text_color;
+      }
+      
+      const completionMessage = document.getElementById('completion-message');
+      if (completionMessage) {
+        completionMessage.style.fontSize = `${baseSize * 1}px`;
+        completionMessage.style.color = config.text_color || defaultConfig.text_color;
+      }
+    }
+
+    function render() {
+      const app = document.getElementById('app');
+      const config = window.elementSdk?.config || defaultConfig;
+      
+      if (currentScenarioIndex >= scenarios.length) {
+        app.innerHTML = `
+          <div class="scenario-card max-w-3xl mx-auto p-8 rounded-xl shadow-lg text-center" style="background-color: ${config.card_color || defaultConfig.card_color};">
+            <h2 id="app-title" class="font-bold mb-4" style="font-size: ${(config.font_size || defaultConfig.font_size) * 1.75}px; color: ${config.text_color || defaultConfig.text_color};">
+              ${config.app_title || defaultConfig.app_title}
+            </h2>
+            <div class="mb-6">
+              <p id="final-score" class="font-bold mb-2" style="font-size: ${(config.font_size || defaultConfig.font_size) * 1.5}px; color: ${config.text_color || defaultConfig.text_color};">
+                Final Score: ${score}/${scenarios.length}
+              </p>
+              <p id="completion-message" style="font-size: ${(config.font_size || defaultConfig.font_size) * 1}px; color: ${config.text_color || defaultConfig.text_color};">
+                ${score === scenarios.length ? "Perfect! You've mastered choosing the right average! 🎉" :
+                  score >= scenarios.length * 0.75 ? "Great work! You understand most scenarios well! 👏" :
+                  score >= scenarios.length * 0.5 ? "Good effort! Keep practicing to improve! 💪" :
+                  "Keep learning! Try again to improve your understanding! 📚"}
+              </p>
+            </div>
+            <button id="restart-button" class="option-button px-8 py-3 rounded-lg text-white font-semibold" 
+                    style="background-color: ${config.primary_button_color || defaultConfig.primary_button_color}; font-size: ${(config.font_size || defaultConfig.font_size) * 1}px;">
+              Start Again
+            </button>
+          </div>
+        `;
+        
+        document.getElementById('restart-button').addEventListener('click', () => {
+          currentScenarioIndex = 0;
+          score = 0;
+          answered = false;
+          render();
+        });
+        return;
+      }
+
+      const scenario = scenarios[currentScenarioIndex];
+      const progress = `Question ${currentScenarioIndex + 1} of ${scenarios.length} • Score: ${score}/${currentScenarioIndex}`;
+      
+      app.innerHTML = `
+        <div class="max-w-3xl mx-auto p-6">
+          <div class="mb-6 text-center">
+            <h1 id="app-title" class="font-bold mb-2" style="font-size: ${(config.font_size || defaultConfig.font_size) * 1.75}px; color: ${config.text_color || defaultConfig.text_color};">
+              ${config.app_title || defaultConfig.app_title}
+            </h1>
+            <p id="intro-text" class="mb-4" style="font-size: ${(config.font_size || defaultConfig.font_size) * 1}px; color: ${config.text_color || defaultConfig.text_color};">
+              ${config.intro_text || defaultConfig.intro_text}
+            </p>
+            <p id="progress-text" class="font-semibold" style="font-size: ${(config.font_size || defaultConfig.font_size) * 0.875}px; color: ${config.text_color || defaultConfig.text_color};">
+              ${progress}
+            </p>
+          </div>
+
+          <div class="scenario-card p-8 rounded-xl shadow-lg mb-6" style="background-color: ${config.card_color || defaultConfig.card_color};">
+            <p id="scenario-text" class="mb-6 leading-relaxed" style="font-size: ${(config.font_size || defaultConfig.font_size) * 1.125}px; color: ${config.text_color || defaultConfig.text_color};">
+              ${scenario.text}
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <button class="option-button px-6 py-4 rounded-lg text-white font-semibold" 
+                      data-answer="mean"
+                      style="background-color: ${config.primary_button_color || defaultConfig.primary_button_color}; font-size: ${(config.font_size || defaultConfig.font_size) * 1}px;">
+                Mean
+              </button>
+              <button class="option-button px-6 py-4 rounded-lg text-white font-semibold" 
+                      data-answer="median"
+                      style="background-color: ${config.primary_button_color || defaultConfig.primary_button_color}; font-size: ${(config.font_size || defaultConfig.font_size) * 1}px;">
+                Median
+              </button>
+              <button class="option-button px-6 py-4 rounded-lg text-white font-semibold" 
+                      data-answer="mode"
+                      style="background-color: ${config.primary_button_color || defaultConfig.primary_button_color}; font-size: ${(config.font_size || defaultConfig.font_size) * 1}px;">
+                Mode
+              </button>
+            </div>
+
+            <div id="feedback-container"></div>
+          </div>
+        </div>
+      `;
+
+      document.querySelectorAll('.option-button').forEach(button => {
+        button.addEventListener('click', (e) => handleAnswer(e.target.dataset.answer));
+      });
+    }
+
+    function handleAnswer(selectedAnswer) {
+      if (answered) return;
+      
+      answered = true;
+      const scenario = scenarios[currentScenarioIndex];
+      const isCorrect = selectedAnswer === scenario.correct;
+      
+      if (isCorrect) {
+        score++;
+      }
+
+      const config = window.elementSdk?.config || defaultConfig;
+      const feedbackContainer = document.getElementById('feedback-container');
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      feedbackContainer.innerHTML = `
+        <div class="feedback-card p-6 rounded-lg ${isCorrect ? 'bg-green-50 border-2 border-green-500' : 'bg-red-50 border-2 border-red-500'}" 
+             style="font-size: ${baseSize * 0.9375}px;">
+          <p class="font-bold mb-3" style="font-size: ${baseSize * 1.125}px;">
+            ${isCorrect ? '✅ Correct!' : '❌ Not quite right'}
+          </p>
+          <p class="mb-4 leading-relaxed">
+            <strong>The best answer is ${scenario.correct.charAt(0).toUpperCase() + scenario.correct.slice(1)}.</strong><br>
+            ${scenario.explanation}
+          </p>
+          <button class="next-button option-button px-6 py-3 rounded-lg text-white font-semibold" 
+                  style="background-color: ${config.secondary_button_color || defaultConfig.secondary_button_color}; font-size: ${baseSize * 1}px;">
+            ${currentScenarioIndex < scenarios.length - 1 ? 'Next Scenario →' : 'See Results →'}
+          </button>
+        </div>
+      `;
+
+      document.querySelectorAll('.option-button:not(.next-button)').forEach(button => {
+        button.disabled = true;
+        button.style.opacity = '0.6';
+        button.style.cursor = 'not-allowed';
+      });
+
+      if (isCorrect) {
+        const correctButton = document.querySelector(`[data-answer="${selectedAnswer}"]`);
+        correctButton.classList.add('correct');
+      }
+
+      document.querySelector('.next-button').addEventListener('click', () => {
+        currentScenarioIndex++;
+        answered = false;
+        render();
+      });
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.card_color || defaultConfig.card_color,
+              set: (value) => {
+                config.card_color = value;
+                window.elementSdk.setConfig({ card_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_button_color || defaultConfig.primary_button_color,
+              set: (value) => {
+                config.primary_button_color = value;
+                window.elementSdk.setConfig({ primary_button_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_button_color || defaultConfig.secondary_button_color,
+              set: (value) => {
+                config.secondary_button_color = value;
+                window.elementSdk.setConfig({ secondary_button_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["app_title", config.app_title || defaultConfig.app_title],
+          ["intro_text", config.intro_text || defaultConfig.intro_text]
+        ])
+      });
+    }
+
+    render();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9af67c9da272d5ef',t:'MTc2NTk3NTIwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

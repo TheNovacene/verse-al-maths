@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparing Distributions – Two Box Plots</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    .box-plot-container {
+      position: relative;
+    }
+    .tooltip {
+      position: absolute;
+      background: #1e293b;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 100;
+      white-space: nowrap;
+    }
+    .tooltip.visible {
+      opacity: 1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-indigo-50 via-white to-purple-50 overflow-auto">
+  <div id="app-wrapper" class="w-full h-full p-4 md:p-6">
+   <div class="max-w-4xl mx-auto"><!-- Header -->
+    <header class="text-center mb-6">
+     <div class="inline-flex items-center gap-3 mb-2">
+      <svg class="w-10 h-10 text-indigo-600" viewbox="0 0 40 40" fill="none"><rect x="4" y="16" width="32" height="8" rx="2" fill="currentColor" opacity="0.3" /> <line x1="20" y1="8" x2="20" y2="32" stroke="currentColor" stroke-width="3" stroke-linecap="round" /> <line x1="8" y1="20" x2="4" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round" /> <line x1="36" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round" /> <line x1="4" y1="16" x2="4" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round" /> <line x1="36" y1="16" x2="36" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <h1 id="app-title" class="text-2xl md:text-3xl font-extrabold text-indigo-900">Comparing Distributions</h1>
+     </div>
+     <p class="text-indigo-600 font-semibold text-lg">Two Box Plots</p>
+    </header><!-- Scenario Selector -->
+    <div class="bg-white rounded-xl shadow-md p-4 mb-4 border border-indigo-100"><label class="block text-sm font-bold text-indigo-800 mb-2">📚 Choose an Example Scenario</label> <select id="scenario-select" class="w-full p-3 border-2 border-indigo-200 rounded-lg bg-indigo-50 text-indigo-900 font-semibold focus:border-indigo-500 focus:outline-none transition-colors"> <option value="">-- Select a scenario --</option> <option value="test-scores">Test Scores (Two Classes)</option> <option value="running-times">Running Times (Boys vs Girls)</option> <option value="messages">Daily Messages (Weekday vs Weekend)</option> <option value="heights">Heights (Year 10 vs Year 11)</option> <option value="custom">✏️ Create My Own Scenario</option> </select>
+    </div><!-- Custom Scenario Panel (Hidden initially) -->
+    <div id="custom-scenario-panel" class="hidden bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-md p-4 mb-4 border-2 border-purple-200">
+     <h3 class="text-sm font-bold text-purple-800 mb-3 flex items-center gap-2">✨ Create Your Own Scenario</h3>
+     <div class="grid md:grid-cols-2 gap-3">
+      <div><label class="block text-xs font-semibold text-purple-700 mb-1">Group A Name</label> <input type="text" id="custom-label-a" placeholder="e.g. Monday Sales" class="w-full p-2 border-2 border-purple-200 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:border-purple-400 focus:outline-none text-sm">
+      </div>
+      <div><label class="block text-xs font-semibold text-purple-700 mb-1">Group B Name</label> <input type="text" id="custom-label-b" placeholder="e.g. Friday Sales" class="w-full p-2 border-2 border-purple-200 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:border-purple-400 focus:outline-none text-sm">
+      </div>
+     </div><button id="apply-custom-btn" class="mt-3 w-full bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors text-sm"> Apply Custom Labels </button>
+    </div><!-- Data Input Section -->
+    <div class="grid md:grid-cols-2 gap-4 mb-4"><!-- Group A -->
+     <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl p-4 border-2 border-emerald-200 shadow-md"><label class="block text-sm font-bold text-emerald-800 mb-2"> <span class="inline-flex items-center gap-2"> <span class="w-4 h-4 bg-emerald-500 rounded-full"></span> <span id="group-a-title">Group A</span> </span> </label> <input type="text" id="group-a-input" placeholder="Enter numbers separated by commas (e.g. 12, 15, 18, 22, 25)" class="w-full p-3 border-2 border-emerald-300 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:border-emerald-500 focus:outline-none transition-colors">
+      <p class="text-xs text-emerald-700 mt-2">💡 Tip: Enter at least 5 numbers for meaningful results</p>
+     </div><!-- Group B -->
+     <div class="bg-gradient-to-br from-violet-50 to-violet-100 rounded-xl p-4 border-2 border-violet-200 shadow-md"><label class="block text-sm font-bold text-violet-800 mb-2"> <span class="inline-flex items-center gap-2"> <span class="w-4 h-4 bg-violet-500 rounded-full"></span> <span id="group-b-title">Group B</span> </span> </label> <input type="text" id="group-b-input" placeholder="Enter numbers separated by commas (e.g. 10, 14, 19, 23, 28)" class="w-full p-3 border-2 border-violet-300 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:border-violet-500 focus:outline-none transition-colors">
+      <p class="text-xs text-violet-700 mt-2">💡 Tip: Try different data sets to see how the plots change</p>
+     </div>
+    </div><!-- Draw Button --> <button id="draw-btn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:from-indigo-700 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-3 mb-6">
+     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+     </svg> Draw Box Plots </button> <!-- Error Message -->
+    <div id="error-message" class="hidden bg-red-100 border-2 border-red-300 text-red-800 px-4 py-3 rounded-xl mb-4 font-semibold">
+     ⚠️ <span id="error-text"></span>
+    </div><!-- Results Section (Hidden initially) -->
+    <div id="results-section" class="hidden"><!-- Box Plot Visualization -->
+     <div class="bg-white rounded-xl shadow-lg p-4 md:p-6 mb-6 border border-indigo-100">
+      <h2 class="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2">📊 Box Plot Comparison</h2>
+      <div id="box-plot-area" class="box-plot-container relative bg-gray-50 rounded-lg p-4 min-h-[200px]">
+       <div id="tooltip" class="tooltip"></div>
+       <svg id="box-plot-svg" class="w-full" height="180"></svg>
+      </div>
+      <div class="flex justify-center gap-8 mt-4 flex-wrap">
+       <div class="flex items-center gap-2"><span class="w-5 h-5 bg-emerald-500 rounded"></span> <span id="legend-a" class="text-sm font-semibold text-gray-700">Group A</span>
+       </div>
+       <div class="flex items-center gap-2"><span class="w-5 h-5 bg-violet-500 rounded"></span> <span id="legend-b" class="text-sm font-semibold text-gray-700">Group B</span>
+       </div>
+      </div>
+     </div><!-- Statistics Tables -->
+     <div class="grid md:grid-cols-2 gap-4 mb-6"><!-- Group A Stats -->
+      <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl p-4 border-2 border-emerald-200 shadow-md">
+       <h3 class="font-bold text-emerald-800 mb-3 flex items-center gap-2"><span class="w-3 h-3 bg-emerald-500 rounded-full"></span> <span id="stats-title-a">Group A Statistics</span></h3>
+       <table class="w-full text-sm">
+        <tbody id="stats-table-a" class="divide-y divide-emerald-200">
+        </tbody>
+       </table>
+      </div><!-- Group B Stats -->
+      <div class="bg-gradient-to-br from-violet-50 to-violet-100 rounded-xl p-4 border-2 border-violet-200 shadow-md">
+       <h3 class="font-bold text-violet-800 mb-3 flex items-center gap-2"><span class="w-3 h-3 bg-violet-500 rounded-full"></span> <span id="stats-title-b">Group B Statistics</span></h3>
+       <table class="w-full text-sm">
+        <tbody id="stats-table-b" class="divide-y divide-violet-200">
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Analysis Questions -->
+     <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 md:p-6 border-2 border-amber-200 shadow-md mb-6">
+      <h2 class="text-lg font-bold text-amber-900 mb-4 flex items-center gap-2">🤔 Analysis Questions</h2>
+      <div id="analysis-questions" class="space-y-4">
+      </div>
+     </div><!-- Conclusion Section -->
+     <div class="bg-white rounded-xl p-4 md:p-6 border-2 border-indigo-100 shadow-md">
+      <h2 class="text-lg font-bold text-indigo-900 mb-3 flex items-center gap-2">📝 Conclusion</h2>
+      <p class="text-sm text-indigo-700 font-semibold mb-3">Using all of the data and box plots above, what would you conclude about the performance of each group overall?</p><textarea id="notes-area" placeholder="Write your conclusion here... Consider the median, spread (IQR), range, and any overlap between the distributions..." class="w-full h-32 p-4 border-2 border-indigo-200 rounded-lg bg-indigo-50 text-gray-800 placeholder-gray-400 focus:border-indigo-400 focus:outline-none resize-none mb-3"></textarea> <button id="check-conclusion-btn" class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors"> Get Feedback </button>
+      <div id="conclusion-feedback" class="mt-3 hidden"></div>
+     </div>
+    </div><!-- Footer -->
+    <footer class="text-center mt-6 text-sm text-indigo-400 font-medium">
+     GCSE Maths Interactive Tool • Box Plots &amp; Data Comparison
+    </footer>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      app_title: 'Comparing Distributions',
+      group_a_label: 'Group A',
+      group_b_label: 'Group B',
+      primary_color: '#4f46e5',
+      secondary_color: '#10b981',
+      accent_color: '#8b5cf6',
+      text_color: '#1e1b4b',
+      background_color: '#f5f3ff',
+      font_family: 'Nunito'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Sample scenarios
+    const scenarios = {
+      'test-scores': {
+        labelA: 'Class 9A Scores',
+        labelB: 'Class 9B Scores',
+        dataA: '52, 58, 63, 67, 68, 72, 74, 75, 78, 80, 82, 84, 85, 88, 91',
+        dataB: '45, 55, 60, 62, 65, 68, 70, 72, 73, 75, 77, 79, 82, 95, 98'
+      },
+      'running-times': {
+        labelA: 'Boys (100m in seconds)',
+        labelB: 'Girls (100m in seconds)',
+        dataA: '12.1, 12.5, 12.8, 13.0, 13.2, 13.5, 13.8, 14.0, 14.3, 14.5',
+        dataB: '13.0, 13.4, 13.7, 14.0, 14.2, 14.5, 14.8, 15.0, 15.3, 15.8'
+      },
+      'messages': {
+        labelA: 'Weekday Messages',
+        labelB: 'Weekend Messages',
+        dataA: '15, 22, 28, 32, 35, 38, 42, 45, 48, 52, 55, 60',
+        dataB: '45, 52, 58, 65, 72, 78, 82, 88, 92, 98, 105, 120'
+      },
+      'heights': {
+        labelA: 'Year 10 Heights (cm)',
+        labelB: 'Year 11 Heights (cm)',
+        dataA: '152, 155, 158, 160, 162, 165, 167, 170, 172, 175',
+        dataB: '158, 162, 165, 168, 170, 173, 175, 178, 180, 183'
+      }
+    };
+
+    // DOM Elements
+    const scenarioSelect = document.getElementById('scenario-select');
+    const groupAInput = document.getElementById('group-a-input');
+    const groupBInput = document.getElementById('group-b-input');
+    const drawBtn = document.getElementById('draw-btn');
+    const errorMessage = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+    const resultsSection = document.getElementById('results-section');
+    const tooltip = document.getElementById('tooltip');
+    const customScenarioPanel = document.getElementById('custom-scenario-panel');
+    const customLabelA = document.getElementById('custom-label-a');
+    const customLabelB = document.getElementById('custom-label-b');
+    const applyCustomBtn = document.getElementById('apply-custom-btn');
+
+    // Statistical functions
+    function parseData(input) {
+      const numbers = input.split(',')
+        .map(s => parseFloat(s.trim()))
+        .filter(n => !isNaN(n));
+      return numbers.sort((a, b) => a - b);
+    }
+
+    function calculateQuartile(sortedData, quartile) {
+      const pos = (sortedData.length - 1) * quartile;
+      const base = Math.floor(pos);
+      const rest = pos - base;
+      
+      if (sortedData[base + 1] !== undefined) {
+        return sortedData[base] + rest * (sortedData[base + 1] - sortedData[base]);
+      } else {
+        return sortedData[base];
+      }
+    }
+
+    function calculateStats(data) {
+      if (data.length < 5) return null;
+      
+      const sorted = [...data].sort((a, b) => a - b);
+      const min = sorted[0];
+      const max = sorted[sorted.length - 1];
+      const q1 = calculateQuartile(sorted, 0.25);
+      const median = calculateQuartile(sorted, 0.5);
+      const q3 = calculateQuartile(sorted, 0.75);
+      const iqr = q3 - q1;
+      
+      return { min, q1, median, q3, max, iqr, count: sorted.length };
+    }
+
+    function formatNumber(num) {
+      return Number.isInteger(num) ? num : num.toFixed(1);
+    }
+
+    // Draw box plots
+    function drawBoxPlots(statsA, statsB, labelA, labelB) {
+      const svg = document.getElementById('box-plot-svg');
+      const container = document.getElementById('box-plot-area');
+      const width = container.clientWidth - 32;
+      const height = 180;
+      
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      
+      // Calculate scale
+      const allValues = [statsA.min, statsA.max, statsB.min, statsB.max];
+      const dataMin = Math.min(...allValues);
+      const dataMax = Math.max(...allValues);
+      const range = dataMax - dataMin;
+      const padding = range * 0.1;
+      const scaleMin = dataMin - padding;
+      const scaleMax = dataMax + padding;
+      
+      const leftPadding = 60;
+      const rightPadding = 20;
+      const plotWidth = width - leftPadding - rightPadding;
+      
+      const scale = (value) => leftPadding + ((value - scaleMin) / (scaleMax - scaleMin)) * plotWidth;
+      
+      // Generate tick marks
+      const tickCount = 6;
+      const tickStep = (scaleMax - scaleMin) / (tickCount - 1);
+      let ticksHTML = '';
+      for (let i = 0; i < tickCount; i++) {
+        const value = scaleMin + i * tickStep;
+        const x = scale(value);
+        ticksHTML += `
+          <line x1="${x}" y1="${height - 25}" x2="${x}" y2="${height - 20}" stroke="#94a3b8" stroke-width="1"/>
+          <text x="${x}" y="${height - 5}" text-anchor="middle" class="text-xs fill-gray-500" style="font-size: 11px">${formatNumber(value)}</text>
+        `;
+      }
+      
+      // Box plot A (emerald - top)
+      const boxAY = 35;
+      const boxHeight = 40;
+      const boxAHTML = createBoxPlotSVG(statsA, scale, boxAY, boxHeight, '#10b981', '#d1fae5', 'A');
+      
+      // Box plot B (violet - bottom)
+      const boxBY = 95;
+      const boxBHTML = createBoxPlotSVG(statsB, scale, boxBY, boxHeight, '#8b5cf6', '#ede9fe', 'B');
+      
+      // Labels
+      const labelsHTML = `
+        <text x="10" y="${boxAY + boxHeight/2 + 4}" class="text-xs font-semibold fill-emerald-700" style="font-size: 12px">${labelA.length > 8 ? labelA.substring(0, 8) + '...' : labelA}</text>
+        <text x="10" y="${boxBY + boxHeight/2 + 4}" class="text-xs font-semibold fill-violet-700" style="font-size: 12px">${labelB.length > 8 ? labelB.substring(0, 8) + '...' : labelB}</text>
+      `;
+      
+      // Axis line
+      const axisHTML = `
+        <line x1="${leftPadding}" y1="${height - 25}" x2="${width - rightPadding}" y2="${height - 25}" stroke="#cbd5e1" stroke-width="2"/>
+      `;
+      
+      svg.innerHTML = axisHTML + ticksHTML + boxAHTML + boxBHTML + labelsHTML;
+      
+      // Add interactivity
+      addBoxPlotInteractivity(statsA, statsB, scale, boxAY, boxBY, boxHeight, labelA, labelB);
+    }
+
+    function createBoxPlotSVG(stats, scale, y, height, strokeColor, fillColor, group) {
+      const minX = scale(stats.min);
+      const q1X = scale(stats.q1);
+      const medianX = scale(stats.median);
+      const q3X = scale(stats.q3);
+      const maxX = scale(stats.max);
+      const midY = y + height / 2;
+      
+      return `
+        <!-- Whisker lines -->
+        <line x1="${minX}" y1="${midY}" x2="${q1X}" y2="${midY}" stroke="${strokeColor}" stroke-width="2" stroke-dasharray="4,2"/>
+        <line x1="${q3X}" y1="${midY}" x2="${maxX}" y2="${midY}" stroke="${strokeColor}" stroke-width="2" stroke-dasharray="4,2"/>
+        
+        <!-- Whisker caps -->
+        <line x1="${minX}" y1="${y + 10}" x2="${minX}" y2="${y + height - 10}" stroke="${strokeColor}" stroke-width="2"/>
+        <line x1="${maxX}" y1="${y + 10}" x2="${maxX}" y2="${y + height - 10}" stroke="${strokeColor}" stroke-width="2"/>
+        
+        <!-- Box -->
+        <rect x="${q1X}" y="${y}" width="${q3X - q1X}" height="${height}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2" rx="4" class="box-rect" data-group="${group}"/>
+        
+        <!-- Median line -->
+        <line x1="${medianX}" y1="${y}" x2="${medianX}" y2="${y + height}" stroke="${strokeColor}" stroke-width="3"/>
+        
+        <!-- Interactive points -->
+        <circle cx="${minX}" cy="${midY}" r="6" fill="${strokeColor}" class="cursor-pointer hover:r-8 transition-all" data-type="min" data-group="${group}" data-value="${stats.min}"/>
+        <circle cx="${q1X}" cy="${midY}" r="6" fill="${strokeColor}" class="cursor-pointer" data-type="q1" data-group="${group}" data-value="${stats.q1}"/>
+        <circle cx="${medianX}" cy="${midY}" r="7" fill="${strokeColor}" class="cursor-pointer" data-type="median" data-group="${group}" data-value="${stats.median}"/>
+        <circle cx="${q3X}" cy="${midY}" r="6" fill="${strokeColor}" class="cursor-pointer" data-type="q3" data-group="${group}" data-value="${stats.q3}"/>
+        <circle cx="${maxX}" cy="${midY}" r="6" fill="${strokeColor}" class="cursor-pointer" data-type="max" data-group="${group}" data-value="${stats.max}"/>
+      `;
+    }
+
+    function addBoxPlotInteractivity(statsA, statsB, scale, boxAY, boxBY, boxHeight, labelA, labelB) {
+      const svg = document.getElementById('box-plot-svg');
+      const circles = svg.querySelectorAll('circle');
+      
+      const labels = {
+        min: 'Minimum',
+        q1: 'Lower Quartile (Q1)',
+        median: 'Median',
+        q3: 'Upper Quartile (Q3)',
+        max: 'Maximum'
+      };
+      
+      circles.forEach(circle => {
+        circle.addEventListener('mouseenter', (e) => {
+          const type = circle.dataset.type;
+          const group = circle.dataset.group;
+          const value = parseFloat(circle.dataset.value);
+          const groupLabel = group === 'A' ? labelA : labelB;
+          
+          tooltip.innerHTML = `<strong>${groupLabel}</strong><br>${labels[type]}: ${formatNumber(value)}`;
+          tooltip.classList.add('visible');
+          
+          const rect = svg.getBoundingClientRect();
+          const containerRect = document.getElementById('box-plot-area').getBoundingClientRect();
+          tooltip.style.left = (e.clientX - containerRect.left + 10) + 'px';
+          tooltip.style.top = (e.clientY - containerRect.top - 40) + 'px';
+        });
+        
+        circle.addEventListener('mouseleave', () => {
+          tooltip.classList.remove('visible');
+        });
+      });
+    }
+
+    // Render statistics table
+    function renderStatsTable(tableId, stats, color) {
+      const table = document.getElementById(tableId);
+      const rows = [
+        { label: 'Minimum', value: stats.min, icon: '⬇️' },
+        { label: 'Lower Quartile (Q1)', value: stats.q1, icon: '📊' },
+        { label: 'Median', value: stats.median, icon: '📍' },
+        { label: 'Upper Quartile (Q3)', value: stats.q3, icon: '📊' },
+        { label: 'Maximum', value: stats.max, icon: '⬆️' },
+        { label: 'IQR (Q3 - Q1)', value: stats.iqr, icon: '↔️' },
+        { label: 'Data Points', value: stats.count, icon: '🔢' }
+      ];
+      
+      table.innerHTML = rows.map(row => `
+        <tr>
+          <td class="py-2 text-gray-700">${row.icon} ${row.label}</td>
+          <td class="py-2 text-right font-bold" style="color: ${color}">${formatNumber(row.value)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Generate analysis questions
+    function generateAnalysisQuestions(statsA, statsB, labelA, labelB) {
+      const container = document.getElementById('analysis-questions');
+      
+      const medianDiff = statsA.median - statsB.median;
+      const higherMedian = medianDiff > 0 ? labelA : (medianDiff < 0 ? labelB : 'Both are equal');
+      const moreConsistent = statsA.iqr < statsB.iqr ? labelA : (statsA.iqr > statsB.iqr ? labelB : 'Both are equal');
+      
+      // Check overlap
+      const overlap = !(statsA.max < statsB.min || statsB.max < statsA.min);
+      const overlapText = overlap ? 'Yes, there is overlap between the distributions.' : 'No, the distributions do not overlap.';
+      
+      const rangeA = statsA.max - statsA.min;
+      const rangeB = statsB.max - statsB.min;
+      const largerRange = rangeA > rangeB ? labelA : (rangeA < rangeB ? labelB : 'Both are equal');
+      
+      const questions = [
+        {
+          question: `Which group has the higher median?`,
+          answer: higherMedian,
+          checkAnswer: (userAnswer) => {
+            const normalized = userAnswer.toLowerCase().trim();
+            if (medianDiff === 0) {
+              return normalized.includes('equal') || normalized.includes('same') || normalized.includes('neither');
+            }
+            // Extract key words from the correct answer (3+ characters)
+            const correctWords = higherMedian.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+            // Check if answer contains any significant words from the correct group name
+            return correctWords.some(word => normalized.includes(word));
+          }
+        },
+        {
+          question: `Which group is more consistent? How do you know?`,
+          answer: `${moreConsistent} is more consistent because it has a smaller IQR (${moreConsistent === labelA ? formatNumber(statsA.iqr) : formatNumber(statsB.iqr)} compared to ${moreConsistent === labelA ? formatNumber(statsB.iqr) : formatNumber(statsA.iqr)}).`,
+          checkAnswer: (userAnswer) => {
+            const normalized = userAnswer.toLowerCase().trim();
+            if (statsA.iqr === statsB.iqr) {
+              return normalized.includes('equal') || normalized.includes('same') || normalized.includes('neither');
+            }
+            // Extract key words from both labels to match variations
+            const labelAWords = labelA.toLowerCase().split(/\s+/);
+            const labelBWords = labelB.toLowerCase().split(/\s+/);
+            const correctLabel = moreConsistent.toLowerCase();
+            const correctLabelWords = correctLabel.split(/\s+/);
+            
+            // Check if answer contains any significant words from the correct group name
+            const hasCorrectGroup = correctLabelWords.some(word => 
+              word.length > 2 && normalized.includes(word)
+            );
+            
+            // Check for mentions of consistency/IQR concepts
+            const mentionsIQR = normalized.includes('iqr') || 
+                               normalized.includes('interquartile') || 
+                               normalized.includes('spread') ||
+                               normalized.includes('consistent') ||
+                               normalized.includes('smaller') ||
+                               normalized.includes('less variable') ||
+                               normalized.includes('less spread');
+            
+            return hasCorrectGroup && mentionsIQR;
+          }
+        },
+        {
+          question: `Is there much overlap between the two distributions?`,
+          answer: overlapText,
+          checkAnswer: (userAnswer) => {
+            const normalized = userAnswer.toLowerCase().trim();
+            if (overlap) {
+              return normalized.includes('yes') || normalized.includes('overlap');
+            } else {
+              return normalized.includes('no') || normalized.includes('not') || normalized.includes('don\'t');
+            }
+          }
+        },
+        {
+          question: `Which group has a larger range?`,
+          answer: largerRange,
+          checkAnswer: (userAnswer) => {
+            const normalized = userAnswer.toLowerCase().trim();
+            if (rangeA === rangeB) {
+              return normalized.includes('equal') || normalized.includes('same') || normalized.includes('neither');
+            }
+            // Extract key words from the correct answer (3+ characters)
+            const correctWords = largerRange.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+            // Check if answer contains any significant words from the correct group name
+            return correctWords.some(word => normalized.includes(word));
+          }
+        }
+      ];
+      
+      container.innerHTML = questions.map((q, i) => `
+        <div class="bg-white rounded-lg p-4 border border-amber-200">
+          <p class="font-bold text-amber-900 mb-3">${i + 1}. ${q.question}</p>
+          <input 
+            type="text" 
+            id="answer-input-${i}"
+            placeholder="Type your answer here..."
+            class="w-full p-3 border-2 border-amber-200 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:border-amber-400 focus:outline-none mb-2"
+          >
+          <button 
+            id="check-btn-${i}"
+            class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            Check Answer
+          </button>
+          <div id="feedback-${i}" class="mt-3 hidden"></div>
+        </div>
+      `).join('');
+      
+      // Add event listeners for check buttons
+      questions.forEach((q, i) => {
+        const checkBtn = document.getElementById(`check-btn-${i}`);
+        const answerInput = document.getElementById(`answer-input-${i}`);
+        const feedback = document.getElementById(`feedback-${i}`);
+        
+        checkBtn.addEventListener('click', () => {
+          const userAnswer = answerInput.value.trim();
+          
+          if (!userAnswer) {
+            feedback.innerHTML = `
+              <div class="bg-gray-100 border-2 border-gray-300 text-gray-700 p-3 rounded-lg">
+                ℹ️ Please enter an answer before checking.
+              </div>
+            `;
+            feedback.classList.remove('hidden');
+            return;
+          }
+          
+          const isCorrect = q.checkAnswer(userAnswer);
+          
+          if (isCorrect) {
+            feedback.innerHTML = `
+              <div class="bg-emerald-100 border-2 border-emerald-300 text-emerald-800 p-3 rounded-lg">
+                <strong>✅ Correct!</strong> Well done! ${q.answer}
+              </div>
+            `;
+          } else {
+            feedback.innerHTML = `
+              <div class="bg-red-100 border-2 border-red-300 text-red-800 p-3 rounded-lg">
+                <strong>❌ Not quite.</strong> Look at the statistics again and try once more. The correct answer is: <strong>${q.answer}</strong>
+              </div>
+            `;
+          }
+          
+          feedback.classList.remove('hidden');
+        });
+        
+        // Allow Enter key to check answer
+        answerInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            checkBtn.click();
+          }
+        });
+      });
+    }
+
+    // Show error
+    function showError(message) {
+      errorText.textContent = message;
+      errorMessage.classList.remove('hidden');
+      resultsSection.classList.add('hidden');
+    }
+
+    // Hide error
+    function hideError() {
+      errorMessage.classList.add('hidden');
+    }
+
+    // Main draw function
+    function drawPlots() {
+      hideError();
+      
+      const dataA = parseData(groupAInput.value);
+      const dataB = parseData(groupBInput.value);
+      
+      if (dataA.length < 5) {
+        showError(`${config.group_a_label || 'Group A'} needs at least 5 numbers. You entered ${dataA.length}.`);
+        return;
+      }
+      
+      if (dataB.length < 5) {
+        showError(`${config.group_b_label || 'Group B'} needs at least 5 numbers. You entered ${dataB.length}.`);
+        return;
+      }
+      
+      const statsA = calculateStats(dataA);
+      const statsB = calculateStats(dataB);
+      
+      const labelA = config.group_a_label || 'Group A';
+      const labelB = config.group_b_label || 'Group B';
+      
+      // Store for conclusion feedback
+      currentStatsA = statsA;
+      currentStatsB = statsB;
+      currentLabelA = labelA;
+      currentLabelB = labelB;
+      
+      resultsSection.classList.remove('hidden');
+      
+      // Update legends and titles
+      document.getElementById('legend-a').textContent = labelA;
+      document.getElementById('legend-b').textContent = labelB;
+      document.getElementById('stats-title-a').textContent = `${labelA} Statistics`;
+      document.getElementById('stats-title-b').textContent = `${labelB} Statistics`;
+      
+      drawBoxPlots(statsA, statsB, labelA, labelB);
+      renderStatsTable('stats-table-a', statsA, '#059669');
+      renderStatsTable('stats-table-b', statsB, '#7c3aed');
+      generateAnalysisQuestions(statsA, statsB, labelA, labelB);
+      
+      // Scroll to results
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Conclusion feedback handler
+    let currentStatsA = null;
+    let currentStatsB = null;
+    let currentLabelA = '';
+    let currentLabelB = '';
+
+    function provideConclusionFeedback() {
+      const notesArea = document.getElementById('notes-area');
+      const feedback = document.getElementById('conclusion-feedback');
+      const userText = notesArea.value.trim().toLowerCase();
+
+      if (!userText) {
+        feedback.innerHTML = `
+          <div class="bg-gray-100 border-2 border-gray-300 text-gray-700 p-3 rounded-lg">
+            ℹ️ Please write your conclusion before requesting feedback.
+          </div>
+        `;
+        feedback.classList.remove('hidden');
+        return;
+      }
+
+      // Check for key elements in the conclusion
+      const mentionsMedian = userText.includes('median');
+      const mentionsIQR = userText.includes('iqr') || userText.includes('interquartile') || userText.includes('consistent') || userText.includes('spread') || userText.includes('variability');
+      const mentionsRange = userText.includes('range');
+      const mentionsOverlap = userText.includes('overlap');
+      const mentionsBothGroups = userText.includes(currentLabelA.toLowerCase()) && userText.includes(currentLabelB.toLowerCase());
+
+      let feedbackHTML = '<div class="bg-blue-50 border-2 border-blue-200 text-blue-900 p-4 rounded-lg">';
+      feedbackHTML += '<p class="font-bold mb-2">📊 Feedback on Your Conclusion:</p>';
+      feedbackHTML += '<ul class="space-y-2 text-sm">';
+
+      // Positive feedback
+      if (mentionsMedian) {
+        feedbackHTML += '<li>✅ <strong>Good!</strong> You discussed the median/average values.</li>';
+      }
+      if (mentionsIQR) {
+        feedbackHTML += '<li>✅ <strong>Excellent!</strong> You considered the consistency/spread (IQR) of the data.</li>';
+      }
+      if (mentionsRange) {
+        feedbackHTML += '<li>✅ <strong>Well done!</strong> You mentioned the range of values.</li>';
+      }
+      if (mentionsOverlap) {
+        feedbackHTML += '<li>✅ <strong>Great observation!</strong> You discussed overlap between distributions.</li>';
+      }
+      if (mentionsBothGroups) {
+        feedbackHTML += '<li>✅ <strong>Perfect!</strong> You compared both groups in your conclusion.</li>';
+      }
+
+      // Suggestions
+      feedbackHTML += '</ul><p class="font-bold mt-3 mb-2">💡 Suggestions to strengthen your conclusion:</p><ul class="space-y-2 text-sm">';
+      
+      if (!mentionsMedian) {
+        feedbackHTML += '<li>💭 Consider discussing which group has a higher median value and what this tells us.</li>';
+      }
+      if (!mentionsIQR) {
+        feedbackHTML += '<li>💭 Try mentioning which group is more consistent by comparing their IQR values.</li>';
+      }
+      if (!mentionsRange) {
+        feedbackHTML += '<li>💭 You could comment on the range to discuss the spread of data.</li>';
+      }
+      if (!mentionsOverlap) {
+        feedbackHTML += '<li>💭 Consider whether the distributions overlap and what this means for comparing the groups.</li>';
+      }
+      if (!mentionsBothGroups) {
+        feedbackHTML += `<li>💭 Make sure to mention both ${currentLabelA} and ${currentLabelB} in your comparison.</li>`;
+      }
+
+      feedbackHTML += '</ul>';
+
+      // Model answer
+      const medianWinner = currentStatsA.median > currentStatsB.median ? currentLabelA : currentLabelB;
+      const consistentGroup = currentStatsA.iqr < currentStatsB.iqr ? currentLabelA : currentLabelB;
+      const overlap = !(currentStatsA.max < currentStatsB.min || currentStatsB.max < currentStatsA.min);
+
+      feedbackHTML += '<p class="font-bold mt-3 mb-2">📝 Example Conclusion:</p>';
+      feedbackHTML += `<p class="text-sm italic bg-white p-3 rounded border border-blue-200">`;
+      feedbackHTML += `"Overall, ${medianWinner} has a higher median, suggesting better typical performance. `;
+      feedbackHTML += `However, ${consistentGroup} is more consistent with a smaller IQR, meaning their results are more predictable. `;
+      if (overlap) {
+        feedbackHTML += `There is overlap between the distributions, indicating some individuals in both groups perform at similar levels."`;
+      } else {
+        feedbackHTML += `There is no overlap between the distributions, showing a clear difference in performance between the two groups."`;
+      }
+      feedbackHTML += '</p></div>';
+
+      feedback.innerHTML = feedbackHTML;
+      feedback.classList.remove('hidden');
+    }
+
+    // Event listeners
+    drawBtn.addEventListener('click', drawPlots);
+    
+    document.getElementById('check-conclusion-btn').addEventListener('click', provideConclusionFeedback);
+    
+    scenarioSelect.addEventListener('change', (e) => {
+      const scenarioKey = e.target.value;
+      
+      // Clear conclusion box and feedback when switching scenarios
+      const notesArea = document.getElementById('notes-area');
+      const conclusionFeedback = document.getElementById('conclusion-feedback');
+      if (notesArea) notesArea.value = '';
+      if (conclusionFeedback) conclusionFeedback.classList.add('hidden');
+      
+      if (scenarioKey === 'custom') {
+        // Show custom scenario panel
+        customScenarioPanel.classList.remove('hidden');
+        groupAInput.value = '';
+        groupBInput.value = '';
+      } else {
+        // Hide custom scenario panel
+        customScenarioPanel.classList.add('hidden');
+        
+        const scenario = scenarios[scenarioKey];
+        if (scenario) {
+          groupAInput.value = scenario.dataA;
+          groupBInput.value = scenario.dataB;
+          document.getElementById('group-a-title').textContent = scenario.labelA;
+          document.getElementById('group-b-title').textContent = scenario.labelB;
+          config.group_a_label = scenario.labelA;
+          config.group_b_label = scenario.labelB;
+          
+          if (window.elementSdk) {
+            window.elementSdk.setConfig({
+              group_a_label: scenario.labelA,
+              group_b_label: scenario.labelB
+            });
+          }
+        }
+      }
+    });
+
+    // Apply custom labels
+    applyCustomBtn.addEventListener('click', () => {
+      const labelA = customLabelA.value.trim() || 'Group A';
+      const labelB = customLabelB.value.trim() || 'Group B';
+      
+      document.getElementById('group-a-title').textContent = labelA;
+      document.getElementById('group-b-title').textContent = labelB;
+      config.group_a_label = labelA;
+      config.group_b_label = labelB;
+      
+      if (window.elementSdk) {
+        window.elementSdk.setConfig({
+          group_a_label: labelA,
+          group_b_label: labelB
+        });
+      }
+      
+      // Visual feedback
+      applyCustomBtn.textContent = '✓ Labels Applied!';
+      applyCustomBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+      applyCustomBtn.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+      
+      setTimeout(() => {
+        applyCustomBtn.textContent = 'Apply Custom Labels';
+        applyCustomBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+        applyCustomBtn.classList.add('bg-purple-600', 'hover:bg-purple-700');
+      }, 2000);
+    });
+
+    // Allow Enter key to draw
+    groupAInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') drawPlots();
+    });
+    groupBInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') drawPlots();
+    });
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+      if (!resultsSection.classList.contains('hidden')) {
+        const dataA = parseData(groupAInput.value);
+        const dataB = parseData(groupBInput.value);
+        if (dataA.length >= 5 && dataB.length >= 5) {
+          const statsA = calculateStats(dataA);
+          const statsB = calculateStats(dataB);
+          const labelA = config.group_a_label || 'Group A';
+          const labelB = config.group_b_label || 'Group B';
+          drawBoxPlots(statsA, statsB, labelA, labelB);
+        }
+      }
+    });
+
+    // Config change handler
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      // Update title
+      const titleEl = document.getElementById('app-title');
+      if (titleEl) titleEl.textContent = config.app_title || defaultConfig.app_title;
+      
+      // Update group labels
+      const groupATitleEl = document.getElementById('group-a-title');
+      const groupBTitleEl = document.getElementById('group-b-title');
+      if (groupATitleEl) groupATitleEl.textContent = config.group_a_label || defaultConfig.group_a_label;
+      if (groupBTitleEl) groupBTitleEl.textContent = config.group_b_label || defaultConfig.group_b_label;
+      
+      // Update font
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      document.body.style.fontFamily = `${fontFamily}, Nunito, sans-serif`;
+      
+      // Redraw if results visible
+      if (!resultsSection.classList.contains('hidden')) {
+        drawPlots();
+      }
+    }
+
+    // Map to capabilities
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: undefined
+      };
+    }
+
+    // Map to edit panel values
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['app_title', config.app_title || defaultConfig.app_title],
+        ['group_a_label', config.group_a_label || defaultConfig.group_a_label],
+        ['group_b_label', config.group_b_label || defaultConfig.group_b_label]
+      ]);
+    }
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bcd33fdb411b1f6',t:'MTc2ODIyNjY2Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

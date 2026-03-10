@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparing Frequency Tables – Two Groups</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    .app-container {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0fdf4 100%);
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    .group-a-bar {
+      transition: all 0.3s ease;
+    }
+    .group-b-bar {
+      transition: all 0.3s ease;
+    }
+    .group-a-bar:hover, .group-b-bar:hover {
+      filter: brightness(1.1);
+      transform: scaleY(1.02);
+      transform-origin: bottom;
+    }
+    .input-field {
+      transition: all 0.2s ease;
+    }
+    .input-field:focus {
+      transform: scale(1.01);
+    }
+    .btn-primary {
+      transition: all 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+    }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    .analysis-prompt {
+      animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full m-0 p-0">
+  <div class="app-container min-h-full w-full overflow-auto">
+   <div class="w-full max-w-6xl mx-auto p-4 md:p-6"><!-- Header -->
+    <header class="text-center mb-6">
+     <h1 id="main-title" class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2">Comparing Frequency Tables – Two Groups</h1>
+     <p class="text-slate-600 text-sm md:text-base">Enter data for two groups, build frequency tables, and compare them visually</p>
+    </header><!-- Preset Scenarios -->
+    <div class="card p-4 mb-6"><label for="preset-select" class="block text-sm font-semibold text-slate-700 mb-2">📚 Load Example Scenario</label> <select id="preset-select" class="w-full md:w-auto px-4 py-2 border-2 border-slate-200 rounded-lg text-slate-700 input-field focus:border-blue-500 focus:outline-none"> <option value="">-- Choose a scenario --</option> <option value="test-scores">Two Classes' Test Results</option> <option value="goals">Two Teams' Goals Per Match</option> <option value="dice">Two Dice Experiments</option> <option value="survey">Survey Responses (Rating 1-5)</option> </select>
+    </div><!-- Data Input Section -->
+    <div class="grid md:grid-cols-2 gap-4 mb-6"><!-- Group A -->
+     <div class="card p-4">
+      <h2 id="group-a-title" class="text-lg font-bold text-emerald-700 mb-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-emerald-500"></span> Group A</h2>
+      <div class="mb-4"><label class="block text-sm font-medium text-slate-600 mb-1">Enter raw data (comma-separated)</label> <textarea id="group-a-raw" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-emerald-500 focus:outline-none resize-none" rows="2" placeholder="e.g. 5, 7, 5, 8, 6, 7, 5"></textarea>
+      </div>
+      <div class="text-center text-slate-400 text-sm mb-3">
+       — OR —
+      </div>
+      <div><label class="block text-sm font-medium text-slate-600 mb-2">Enter value–frequency pairs</label>
+       <div id="group-a-pairs" class="space-y-2 mb-2">
+        <div class="flex gap-2 items-center"><input type="text" placeholder="Value" class="flex-1 px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-emerald-500 focus:outline-none group-a-value"> <input type="number" placeholder="Freq" min="0" class="w-20 px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-emerald-500 focus:outline-none group-a-freq"> <button onclick="removeRow(this)" class="text-red-400 hover:text-red-600 font-bold text-xl px-2">×</button>
+        </div>
+       </div><button onclick="addRow('group-a-pairs', 'a')" class="text-sm text-emerald-600 hover:text-emerald-800 font-semibold">+ Add Row</button>
+      </div>
+     </div><!-- Group B -->
+     <div class="card p-4">
+      <h2 id="group-b-title" class="text-lg font-bold text-blue-700 mb-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-blue-500"></span> Group B</h2>
+      <div class="mb-4"><label class="block text-sm font-medium text-slate-600 mb-1">Enter raw data (comma-separated)</label> <textarea id="group-b-raw" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-blue-500 focus:outline-none resize-none" rows="2" placeholder="e.g. 6, 8, 7, 9, 8, 7, 8"></textarea>
+      </div>
+      <div class="text-center text-slate-400 text-sm mb-3">
+       — OR —
+      </div>
+      <div><label class="block text-sm font-medium text-slate-600 mb-2">Enter value–frequency pairs</label>
+       <div id="group-b-pairs" class="space-y-2 mb-2">
+        <div class="flex gap-2 items-center"><input type="text" placeholder="Value" class="flex-1 px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-blue-500 focus:outline-none group-b-value"> <input type="number" placeholder="Freq" min="0" class="w-20 px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-blue-500 focus:outline-none group-b-freq"> <button onclick="removeRow(this)" class="text-red-400 hover:text-red-600 font-bold text-xl px-2">×</button>
+        </div>
+       </div><button onclick="addRow('group-b-pairs', 'b')" class="text-sm text-blue-600 hover:text-blue-800 font-semibold">+ Add Row</button>
+      </div>
+     </div>
+    </div><!-- Build Button -->
+    <div class="text-center mb-6 flex flex-wrap gap-3 justify-center"><button onclick="buildTablesAndCharts()" class="btn-primary px-8 py-3 bg-gradient-to-r from-blue-600 to-emerald-600 text-white font-bold rounded-xl text-lg shadow-lg"> 📊 Build Tables and Charts </button> <button onclick="clearData()" class="btn-primary px-8 py-3 bg-slate-500 hover:bg-slate-600 text-white font-bold rounded-xl text-lg shadow-lg"> 🗑️ Clear </button>
+    </div><!-- Results Section (hidden initially) -->
+    <div id="results-section" class="hidden"><!-- Frequency Tables -->
+     <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card p-4">
+       <h3 id="table-a-title" class="text-lg font-bold text-emerald-700 mb-3">Group A Frequency Table</h3>
+       <div id="table-a" class="overflow-x-auto"></div>
+      </div>
+      <div class="card p-4">
+       <h3 id="table-b-title" class="text-lg font-bold text-blue-700 mb-3">Group B Frequency Table</h3>
+       <div id="table-b" class="overflow-x-auto"></div>
+      </div>
+     </div><!-- Bar Chart -->
+     <div class="card p-4 mb-6">
+      <h3 class="text-lg font-bold text-slate-800 mb-4 text-center">Comparative Bar Chart</h3>
+      <div class="flex justify-center gap-4 mb-4">
+       <div class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-emerald-500"></span> <span id="legend-a" class="text-sm text-slate-600">Group A</span>
+       </div>
+       <div class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-blue-500"></span> <span id="legend-b" class="text-sm text-slate-600">Group B</span>
+       </div>
+      </div>
+      <div id="chart-container" class="overflow-x-auto">
+       <svg id="bar-chart" class="mx-auto"></svg>
+      </div>
+     </div><!-- Analysis Section -->
+     <div class="card p-4 mb-6">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">🔍 Guided Analysis</h3>
+      <div id="analysis-prompts" class="space-y-4"></div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Comparing Frequency Tables – Two Groups',
+      group_a_label: 'Group A',
+      group_b_label: 'Group B',
+      primary_color: '#059669',
+      secondary_color: '#2563eb',
+      text_color: '#1e293b',
+      background_color: '#f0f9ff',
+      surface_color: '#ffffff'
+    };
+
+    let config = { ...defaultConfig };
+    let groupAData = {};
+    let groupBData = {};
+
+    // Preset scenarios
+    const presets = {
+      'test-scores': {
+        groupA: '65, 72, 58, 72, 65, 80, 72, 65, 58, 80, 65, 72',
+        groupB: '70, 75, 70, 85, 75, 70, 85, 75, 70, 75, 85, 70',
+        labelA: 'Class 9A',
+        labelB: 'Class 9B'
+      },
+      'goals': {
+        groupA: '0, 1, 2, 1, 0, 3, 1, 2, 1, 0',
+        groupB: '2, 2, 1, 3, 2, 2, 4, 2, 3, 2',
+        labelA: 'United FC',
+        labelB: 'City FC'
+      },
+      'dice': {
+        groupA: '3, 5, 2, 6, 4, 1, 3, 5, 6, 2, 4, 3, 5, 1, 6, 2, 4, 3, 5, 4',
+        groupB: '6, 6, 5, 6, 4, 6, 5, 6, 6, 5, 4, 6, 5, 6, 6, 4, 5, 6, 5, 6',
+        labelA: 'Fair Die',
+        labelB: 'Suspicious Die'
+      },
+      'survey': {
+        groupA: '3, 4, 3, 2, 4, 3, 5, 3, 4, 3, 2, 4, 3, 4, 3',
+        groupB: '5, 4, 5, 5, 4, 5, 4, 5, 5, 4, 5, 4, 5, 5, 5',
+        labelA: 'Product A Rating',
+        labelB: 'Product B Rating'
+      }
+    };
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['group_a_label', cfg.group_a_label || defaultConfig.group_a_label],
+          ['group_b_label', cfg.group_b_label || defaultConfig.group_b_label]
+        ])
+      });
+    }
+
+    function updateUI() {
+      const mainTitle = document.getElementById('main-title');
+      const groupATitle = document.getElementById('group-a-title');
+      const groupBTitle = document.getElementById('group-b-title');
+      const tableATitle = document.getElementById('table-a-title');
+      const tableBTitle = document.getElementById('table-b-title');
+      const legendA = document.getElementById('legend-a');
+      const legendB = document.getElementById('legend-b');
+
+      mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      mainTitle.style.color = config.text_color || defaultConfig.text_color;
+
+      const groupALabel = config.group_a_label || defaultConfig.group_a_label;
+      const groupBLabel = config.group_b_label || defaultConfig.group_b_label;
+
+      groupATitle.innerHTML = `<span class="w-4 h-4 rounded-full inline-block mr-2" style="background: ${config.primary_color || defaultConfig.primary_color}"></span>${groupALabel}`;
+      groupBTitle.innerHTML = `<span class="w-4 h-4 rounded-full inline-block mr-2" style="background: ${config.secondary_color || defaultConfig.secondary_color}"></span>${groupBLabel}`;
+      
+      groupATitle.style.color = config.primary_color || defaultConfig.primary_color;
+      groupBTitle.style.color = config.secondary_color || defaultConfig.secondary_color;
+
+      tableATitle.textContent = `${groupALabel} Frequency Table`;
+      tableATitle.style.color = config.primary_color || defaultConfig.primary_color;
+      tableBTitle.textContent = `${groupBLabel} Frequency Table`;
+      tableBTitle.style.color = config.secondary_color || defaultConfig.secondary_color;
+
+      legendA.textContent = groupALabel;
+      legendB.textContent = groupBLabel;
+
+      // Update background colors
+      document.querySelector('.app-container').style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${adjustColor(config.background_color || defaultConfig.background_color, -10)} 100%)`;
+      
+      document.querySelectorAll('.card').forEach(card => {
+        card.style.background = config.surface_color || defaultConfig.surface_color;
+      });
+
+      // Rebuild chart if data exists
+      if (Object.keys(groupAData).length > 0 || Object.keys(groupBData).length > 0) {
+        drawChart();
+      }
+    }
+
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) + amt;
+      const G = (num >> 8 & 0x00FF) + amt;
+      const B = (num & 0x0000FF) + amt;
+      return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+    }
+
+    function addRow(containerId, group) {
+      const container = document.getElementById(containerId);
+      const borderColor = group === 'a' ? 'emerald' : 'blue';
+      const row = document.createElement('div');
+      row.className = 'flex gap-2 items-center';
+      row.innerHTML = `
+        <input type="text" placeholder="Value" class="flex-1 px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-${borderColor}-500 focus:outline-none group-${group}-value">
+        <input type="number" placeholder="Freq" min="0" class="w-20 px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-${borderColor}-500 focus:outline-none group-${group}-freq">
+        <button onclick="removeRow(this)" class="text-red-400 hover:text-red-600 font-bold text-xl px-2">×</button>
+      `;
+      container.appendChild(row);
+    }
+
+    function removeRow(button) {
+      const container = button.parentElement.parentElement;
+      if (container.children.length > 1) {
+        button.parentElement.remove();
+      }
+    }
+
+    function parseRawData(rawString) {
+      const freqMap = {};
+      if (!rawString.trim()) return freqMap;
+      
+      const values = rawString.split(',').map(v => v.trim()).filter(v => v !== '');
+      values.forEach(val => {
+        freqMap[val] = (freqMap[val] || 0) + 1;
+      });
+      return freqMap;
+    }
+
+    function parsePairData(containerId, group) {
+      const freqMap = {};
+      const values = document.querySelectorAll(`#${containerId} .group-${group}-value`);
+      const freqs = document.querySelectorAll(`#${containerId} .group-${group}-freq`);
+      
+      values.forEach((input, i) => {
+        const val = input.value.trim();
+        const freq = parseInt(freqs[i].value) || 0;
+        if (val && freq > 0) {
+          freqMap[val] = (freqMap[val] || 0) + freq;
+        }
+      });
+      return freqMap;
+    }
+
+    function loadPreset() {
+      const select = document.getElementById('preset-select');
+      const preset = presets[select.value];
+      
+      if (preset) {
+        document.getElementById('group-a-raw').value = preset.groupA;
+        document.getElementById('group-b-raw').value = preset.groupB;
+        
+        // Clear pair inputs
+        ['group-a-pairs', 'group-b-pairs'].forEach(id => {
+          const container = document.getElementById(id);
+          const rows = container.querySelectorAll('.flex');
+          rows.forEach((row, i) => {
+            if (i === 0) {
+              row.querySelector('input[type="text"]').value = '';
+              row.querySelector('input[type="number"]').value = '';
+            } else {
+              row.remove();
+            }
+          });
+        });
+      }
+    }
+
+    document.getElementById('preset-select').addEventListener('change', loadPreset);
+
+    function buildTablesAndCharts() {
+      // Get data from raw inputs or pairs
+      const rawA = document.getElementById('group-a-raw').value;
+      const rawB = document.getElementById('group-b-raw').value;
+      
+      groupAData = rawA.trim() ? parseRawData(rawA) : parsePairData('group-a-pairs', 'a');
+      groupBData = rawB.trim() ? parseRawData(rawB) : parsePairData('group-b-pairs', 'b');
+
+      if (Object.keys(groupAData).length === 0 && Object.keys(groupBData).length === 0) {
+        showMessage('Please enter some data for at least one group.');
+        return;
+      }
+
+      // Get all unique values and sort them
+      const allValues = [...new Set([...Object.keys(groupAData), ...Object.keys(groupBData)])];
+      allValues.sort((a, b) => {
+        const numA = parseFloat(a);
+        const numB = parseFloat(b);
+        if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+        return a.localeCompare(b);
+      });
+
+      // Build tables
+      buildTable('table-a', allValues, groupAData, config.primary_color || defaultConfig.primary_color);
+      buildTable('table-b', allValues, groupBData, config.secondary_color || defaultConfig.secondary_color);
+
+      // Draw chart
+      drawChart();
+
+      // Generate analysis prompts
+      generateAnalysis(allValues);
+
+      // Show results
+      document.getElementById('results-section').classList.remove('hidden');
+      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showMessage(text) {
+      const resultsSection = document.getElementById('results-section');
+      resultsSection.classList.remove('hidden');
+      resultsSection.innerHTML = `
+        <div class="card p-6 text-center">
+          <p class="text-slate-600">${text}</p>
+        </div>
+      `;
+    }
+
+    function buildTable(containerId, values, data, accentColor) {
+      const container = document.getElementById(containerId);
+      let html = `
+        <table class="w-full border-collapse">
+          <thead>
+            <tr style="background: ${accentColor}15">
+              <th class="border border-slate-200 px-4 py-2 text-left font-semibold" style="color: ${accentColor}">Value</th>
+              <th class="border border-slate-200 px-4 py-2 text-center font-semibold" style="color: ${accentColor}">Frequency</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+      
+      let total = 0;
+      values.forEach(val => {
+        const freq = data[val] || 0;
+        total += freq;
+        html += `
+          <tr class="hover:bg-slate-50">
+            <td class="border border-slate-200 px-4 py-2">${val}</td>
+            <td class="border border-slate-200 px-4 py-2 text-center font-medium">${freq}</td>
+          </tr>
+        `;
+      });
+      
+      html += `
+          <tr style="background: ${accentColor}10">
+            <td class="border border-slate-200 px-4 py-2 font-bold">Total</td>
+            <td class="border border-slate-200 px-4 py-2 text-center font-bold">${total}</td>
+          </tr>
+        </tbody>
+      </table>
+      `;
+      
+      container.innerHTML = html;
+    }
+
+    function drawChart() {
+      const allValues = [...new Set([...Object.keys(groupAData), ...Object.keys(groupBData)])];
+      allValues.sort((a, b) => {
+        const numA = parseFloat(a);
+        const numB = parseFloat(b);
+        if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+        return a.localeCompare(b);
+      });
+
+      const svg = document.getElementById('bar-chart');
+      const margin = { top: 20, right: 20, bottom: 60, left: 50 };
+      const width = Math.max(400, allValues.length * 80);
+      const height = 300;
+      const chartWidth = width - margin.left - margin.right;
+      const chartHeight = height - margin.top - margin.bottom;
+
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+
+      const maxFreq = Math.max(
+        ...allValues.map(v => Math.max(groupAData[v] || 0, groupBData[v] || 0)),
+        1
+      );
+
+      const barWidth = (chartWidth / allValues.length) * 0.35;
+      const groupWidth = chartWidth / allValues.length;
+
+      let svgContent = `
+        <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+          <!-- Y-axis -->
+          <line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${textColor}" stroke-opacity="0.3"/>
+          
+          <!-- X-axis -->
+          <line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${textColor}" stroke-opacity="0.3"/>
+          
+          <!-- Y-axis labels -->
+      `;
+
+      // Y-axis labels
+      for (let i = 0; i <= 5; i++) {
+        const y = margin.top + (chartHeight * (5 - i) / 5);
+        const val = Math.round(maxFreq * i / 5);
+        svgContent += `
+          <text x="${margin.left - 10}" y="${y + 4}" text-anchor="end" font-size="12" fill="${textColor}">${val}</text>
+          <line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${textColor}" stroke-opacity="0.1"/>
+        `;
+      }
+
+      // Bars
+      allValues.forEach((val, i) => {
+        const x = margin.left + i * groupWidth + groupWidth / 2;
+        const freqA = groupAData[val] || 0;
+        const freqB = groupBData[val] || 0;
+        
+        const heightA = (freqA / maxFreq) * chartHeight;
+        const heightB = (freqB / maxFreq) * chartHeight;
+        
+        // Group A bar
+        svgContent += `
+          <rect 
+            class="group-a-bar"
+            x="${x - barWidth - 2}" 
+            y="${height - margin.bottom - heightA}" 
+            width="${barWidth}" 
+            height="${heightA}" 
+            fill="${primaryColor}"
+            rx="4"
+          >
+            <title>${config.group_a_label || 'Group A'}: ${freqA}</title>
+          </rect>
+        `;
+        
+        // Group B bar
+        svgContent += `
+          <rect 
+            class="group-b-bar"
+            x="${x + 2}" 
+            y="${height - margin.bottom - heightB}" 
+            width="${barWidth}" 
+            height="${heightB}" 
+            fill="${secondaryColor}"
+            rx="4"
+          >
+            <title>${config.group_b_label || 'Group B'}: ${freqB}</title>
+          </rect>
+        `;
+        
+        // X-axis label
+        svgContent += `
+          <text 
+            x="${x}" 
+            y="${height - margin.bottom + 20}" 
+            text-anchor="middle" 
+            font-size="12" 
+            fill="${textColor}"
+            font-weight="600"
+          >${val}</text>
+        `;
+      });
+
+      // Y-axis title
+      svgContent += `
+        <text 
+          x="${margin.left - 35}" 
+          y="${height / 2}" 
+          text-anchor="middle" 
+          font-size="13" 
+          fill="${textColor}"
+          transform="rotate(-90, ${margin.left - 35}, ${height / 2})"
+          font-weight="600"
+        >Frequency</text>
+      `;
+
+      // X-axis title
+      svgContent += `
+        <text 
+          x="${width / 2}" 
+          y="${height - 10}" 
+          text-anchor="middle" 
+          font-size="13" 
+          fill="${textColor}"
+          font-weight="600"
+        >Value</text>
+      `;
+
+      svgContent += '</svg>';
+      svg.outerHTML = svgContent;
+    }
+
+    function generateAnalysis(allValues) {
+      const container = document.getElementById('analysis-prompts');
+      const groupALabel = config.group_a_label || defaultConfig.group_a_label;
+      const groupBLabel = config.group_b_label || defaultConfig.group_b_label;
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+
+      // Calculate some statistics
+      const higherA = allValues.filter(v => (groupAData[v] || 0) > (groupBData[v] || 0));
+      const higherB = allValues.filter(v => (groupBData[v] || 0) > (groupAData[v] || 0));
+      
+      const totalA = Object.values(groupAData).reduce((a, b) => a + b, 0);
+      const totalB = Object.values(groupBData).reduce((a, b) => a + b, 0);
+      
+      // Find most common value for each group
+      const modeA = Object.entries(groupAData).sort((a, b) => b[1] - a[1])[0];
+      const modeB = Object.entries(groupBData).sort((a, b) => b[1] - a[1])[0];
+
+      const prompts = [
+        {
+          question: `For which values does <span style="color: ${primaryColor}">${groupALabel}</span> have higher frequency than <span style="color: ${secondaryColor}">${groupBLabel}</span>?`,
+          hint: higherA.length > 0 ? `Look at values: ${higherA.join(', ')}` : 'Check if there are any values where Group A is taller.',
+          placeholder: 'Type the values where Group A is higher...'
+        },
+        {
+          question: `Which group has more data points in total?`,
+          hint: `${groupALabel} has ${totalA} total, ${groupBLabel} has ${totalB} total.`,
+          placeholder: 'Which group has more data overall?'
+        },
+        {
+          question: `What is the most common value (mode) for each group?`,
+          hint: modeA && modeB ? `Think about which bar is tallest for each colour.` : 'Look for the tallest bar in each colour.',
+          placeholder: `${groupALabel} mode: ___, ${groupBLabel} mode: ___`
+        },
+        {
+          question: `Which group looks more spread out (varied) and which is more consistent?`,
+          hint: 'A spread out group has data across many values. A consistent group clusters around fewer values.',
+          placeholder: 'Describe which group has more variation...'
+        },
+        {
+          question: 'What conclusions can you draw from comparing these two groups?',
+          hint: 'Think about differences in typical values, spread, and any patterns you notice.',
+          placeholder: 'Write your comparison here...'
+        }
+      ];
+
+      container.innerHTML = prompts.map((prompt, i) => `
+        <div class="analysis-prompt bg-slate-50 rounded-xl p-4" style="animation-delay: ${i * 0.1}s">
+          <p class="font-semibold text-slate-700 mb-3">${i + 1}. ${prompt.question}</p>
+          <textarea 
+            id="answer-${i}"
+            class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-blue-500 focus:outline-none resize-none mb-2" 
+            rows="2" 
+            placeholder="${prompt.placeholder}"
+          ></textarea>
+          <button 
+            onclick="checkAnswer(${i}, '${prompt.hint.replace(/'/g, "\\'")}')" 
+            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg text-sm transition-all"
+          >
+            ✓ Check Answer
+          </button>
+          <div id="feedback-${i}" class="mt-2 hidden"></div>
+        </div>
+      `).join('');
+    }
+
+    function checkAnswer(index, hint) {
+      const answer = document.getElementById(`answer-${index}`).value.trim();
+      const feedbackDiv = document.getElementById(`feedback-${index}`);
+      
+      if (!answer) {
+        feedbackDiv.className = 'mt-2 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded text-sm text-yellow-800';
+        feedbackDiv.innerHTML = '⚠️ Please write an answer first.';
+        feedbackDiv.classList.remove('hidden');
+        return;
+      }
+      
+      feedbackDiv.className = 'mt-2 p-3 bg-blue-50 border-l-4 border-blue-400 rounded text-sm text-blue-800';
+      feedbackDiv.innerHTML = `💡 <strong>Feedback:</strong> ${hint}`;
+      feedbackDiv.classList.remove('hidden');
+    }
+
+    function clearData() {
+      // Clear raw data inputs
+      document.getElementById('group-a-raw').value = '';
+      document.getElementById('group-b-raw').value = '';
+      
+      // Clear preset selection
+      document.getElementById('preset-select').value = '';
+      
+      // Reset pair inputs to one empty row each
+      ['group-a-pairs', 'group-b-pairs'].forEach((id, idx) => {
+        const container = document.getElementById(id);
+        const group = idx === 0 ? 'a' : 'b';
+        const borderColor = group === 'a' ? 'emerald' : 'blue';
+        container.innerHTML = `
+          <div class="flex gap-2 items-center">
+            <input type="text" placeholder="Value" class="flex-1 px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-${borderColor}-500 focus:outline-none group-${group}-value">
+            <input type="number" placeholder="Freq" min="0" class="w-20 px-3 py-2 border-2 border-slate-200 rounded-lg input-field focus:border-${borderColor}-500 focus:outline-none group-${group}-freq">
+            <button onclick="removeRow(this)" class="text-red-400 hover:text-red-600 font-bold text-xl px-2">×</button>
+          </div>
+        `;
+      });
+      
+      // Hide results section
+      document.getElementById('results-section').classList.add('hidden');
+      
+      // Clear data objects
+      groupAData = {};
+      groupBData = {};
+    }
+
+    // Initial UI update
+    updateUI();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c0e84d60543d60f',t:'MTc2ODkxMTU1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

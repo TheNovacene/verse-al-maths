@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Box Plot Builder – Quartiles Explorer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    .box-plot-container {
+      position: relative;
+    }
+    .tooltip {
+      position: absolute;
+      background: #1e3a5f;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+      z-index: 10;
+    }
+    .tooltip.visible {
+      opacity: 1;
+    }
+    .stat-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    .btn-primary {
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+    .btn-secondary {
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full m-0 overflow-auto">
+  <div id="app-wrapper" class="w-full h-full min-h-full p-4 md:p-6">
+   <div class="max-w-4xl mx-auto"><!-- Header -->
+    <header class="text-center mb-6">
+     <h1 id="app-title" class="text-2xl md:text-3xl font-extrabold mb-2">Box Plot Builder – Quartiles Explorer</h1>
+     <p id="instruction-text" class="text-base md:text-lg">Enter your data below to create a box-and-whisker plot and explore the five-number summary!</p>
+    </header><!-- Input Section -->
+    <section class="rounded-xl p-4 md:p-6 mb-6 shadow-lg" aria-labelledby="input-heading">
+     <h2 id="input-heading" class="text-lg font-bold mb-3 flex items-center gap-2"><span class="text-2xl">📊</span> Enter Your Data</h2>
+     <div class="mb-4"><label for="data-input" class="block text-sm font-semibold mb-2"> Type numbers separated by commas (e.g., 12, 15, 17, 20, 22, 25, 30) </label> <input type="text" id="data-input" class="w-full px-4 py-3 rounded-lg border-2 text-base" placeholder="Enter numbers here..." aria-describedby="input-help">
+      <p id="input-help" class="text-sm mt-1 opacity-70">Tip: You need at least 4 numbers to create a box plot</p>
+     </div>
+     <div class="flex flex-wrap gap-3"><button id="create-btn" class="btn-primary px-5 py-2.5 rounded-lg font-bold text-base flex items-center gap-2" aria-label="Create box plot from entered data"> <span>✨</span> Create Box Plot </button> <button id="random-btn" class="btn-secondary px-5 py-2.5 rounded-lg font-semibold text-base flex items-center gap-2" aria-label="Generate random data set"> <span>🎲</span> Random Data </button> <button id="clear-btn" class="btn-secondary px-5 py-2.5 rounded-lg font-semibold text-base flex items-center gap-2" aria-label="Clear all data"> <span>🗑️</span> Clear </button>
+     </div>
+    </section><!-- Error Message -->
+    <div id="error-message" class="hidden rounded-lg p-4 mb-6 font-semibold text-center" role="alert"><span id="error-text"></span>
+    </div><!-- Results Section -->
+    <section id="results-section" class="hidden" aria-labelledby="results-heading"><!-- Sorted Data -->
+     <div class="rounded-xl p-4 md:p-6 mb-6 shadow-lg">
+      <h2 id="results-heading" class="text-lg font-bold mb-3 flex items-center gap-2"><span class="text-2xl">📋</span> Sorted Data</h2>
+      <div id="sorted-data" class="text-base font-mono p-3 rounded-lg overflow-x-auto"></div>
+     </div><!-- Five Number Summary -->
+     <div class="rounded-xl p-4 md:p-6 mb-6 shadow-lg">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🔢</span> Five-Number Summary</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+       <div class="stat-card rounded-lg p-4 text-center">
+        <div class="text-xs font-semibold uppercase tracking-wide mb-1 opacity-80">
+         Minimum
+        </div>
+        <div id="stat-min" class="text-2xl font-extrabold">
+         -
+        </div>
+       </div>
+       <div class="stat-card rounded-lg p-4 text-center">
+        <div class="text-xs font-semibold uppercase tracking-wide mb-1 opacity-80">
+         Q1
+        </div>
+        <div id="stat-q1" class="text-2xl font-extrabold">
+         -
+        </div>
+       </div>
+       <div class="stat-card rounded-lg p-4 text-center">
+        <div class="text-xs font-semibold uppercase tracking-wide mb-1 opacity-80">
+         Median
+        </div>
+        <div id="stat-median" class="text-2xl font-extrabold">
+         -
+        </div>
+       </div>
+       <div class="stat-card rounded-lg p-4 text-center">
+        <div class="text-xs font-semibold uppercase tracking-wide mb-1 opacity-80">
+         Q3
+        </div>
+        <div id="stat-q3" class="text-2xl font-extrabold">
+         -
+        </div>
+       </div>
+       <div class="stat-card rounded-lg p-4 text-center">
+        <div class="text-xs font-semibold uppercase tracking-wide mb-1 opacity-80">
+         Maximum
+        </div>
+        <div id="stat-max" class="text-2xl font-extrabold">
+         -
+        </div>
+       </div>
+       <div class="stat-card rounded-lg p-4 text-center">
+        <div class="text-xs font-semibold uppercase tracking-wide mb-1 opacity-80">
+         IQR
+        </div>
+        <div id="stat-iqr" class="text-2xl font-extrabold">
+         -
+        </div>
+       </div>
+      </div>
+     </div><!-- Box Plot -->
+     <div class="rounded-xl p-4 md:p-6 shadow-lg">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📈</span> Box-and-Whisker Plot</h2>
+      <div class="box-plot-container">
+       <svg id="box-plot" width="100%" height="180" viewbox="0 0 600 180" preserveaspectratio="xMidYMid meet"><!-- Will be populated by JavaScript -->
+       </svg>
+       <div id="tooltip" class="tooltip"></div>
+      </div><!-- Legend -->
+      <div class="mt-4 p-4 rounded-lg">
+       <h3 class="font-bold text-sm mb-2">📖 What does this show?</h3>
+       <ul class="text-sm space-y-1">
+        <li><strong>Whiskers:</strong> Lines extending to the minimum and maximum values</li>
+        <li><strong>Box:</strong> Shows the middle 50% of data (from Q1 to Q3)</li>
+        <li><strong>Median line:</strong> The middle value of the dataset</li>
+        <li><strong>IQR:</strong> Interquartile Range = Q3 - Q1 (the spread of the middle 50%)</li>
+       </ul>
+      </div>
+     </div>
+    </section>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      app_title: "Box Plot Builder – Quartiles Explorer",
+      instruction_text: "Enter your data below to create a box-and-whisker plot and explore the five-number summary!",
+      background_color: "#f0f9ff",
+      surface_color: "#ffffff",
+      text_color: "#1e3a5f",
+      primary_action_color: "#3b82f6",
+      secondary_action_color: "#e2e8f0",
+      font_family: "Nunito",
+      font_size: 16
+    };
+
+    let currentData = [];
+
+    // Element references
+    const dataInput = document.getElementById('data-input');
+    const createBtn = document.getElementById('create-btn');
+    const randomBtn = document.getElementById('random-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const errorMessage = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+    const resultsSection = document.getElementById('results-section');
+    const sortedDataDisplay = document.getElementById('sorted-data');
+    const boxPlotSvg = document.getElementById('box-plot');
+    const tooltip = document.getElementById('tooltip');
+
+    // Calculate quartiles using GCSE method
+    function calculateQuartile(sortedData, quartile) {
+      const n = sortedData.length;
+      const position = (quartile / 4) * (n + 1);
+      
+      if (Number.isInteger(position)) {
+        return sortedData[position - 1];
+      } else {
+        const lower = Math.floor(position) - 1;
+        const upper = Math.ceil(position) - 1;
+        const fraction = position - Math.floor(position);
+        return sortedData[lower] + fraction * (sortedData[upper] - sortedData[lower]);
+      }
+    }
+
+    function calculateStatistics(data) {
+      const sorted = [...data].sort((a, b) => a - b);
+      const min = sorted[0];
+      const max = sorted[sorted.length - 1];
+      const q1 = calculateQuartile(sorted, 1);
+      const median = calculateQuartile(sorted, 2);
+      const q3 = calculateQuartile(sorted, 3);
+      const iqr = q3 - q1;
+
+      return { sorted, min, q1, median, q3, max, iqr };
+    }
+
+    function formatNumber(num) {
+      return Number.isInteger(num) ? num : num.toFixed(1);
+    }
+
+    function showError(message) {
+      errorText.textContent = message;
+      errorMessage.classList.remove('hidden');
+      resultsSection.classList.add('hidden');
+    }
+
+    function hideError() {
+      errorMessage.classList.add('hidden');
+    }
+
+    function parseInput(input) {
+      const numbers = input
+        .split(',')
+        .map(s => s.trim())
+        .filter(s => s !== '')
+        .map(s => parseFloat(s));
+
+      if (numbers.some(isNaN)) {
+        return { error: "Please enter valid numbers only. Make sure numbers are separated by commas." };
+      }
+
+      if (numbers.length < 4) {
+        return { error: "Please enter at least 4 numbers to create a meaningful box plot." };
+      }
+
+      return { data: numbers };
+    }
+
+    function generateRandomData() {
+      const count = Math.floor(Math.random() * 8) + 8;
+      const data = [];
+      for (let i = 0; i < count; i++) {
+        data.push(Math.floor(Math.random() * 81) + 10);
+      }
+      return data;
+    }
+
+    function drawBoxPlot(stats, config) {
+      const { min, q1, median, q3, max } = stats;
+      const padding = 60;
+      const width = 600;
+      const height = 180;
+      const plotWidth = width - padding * 2;
+      const centerY = 80;
+      const boxHeight = 60;
+
+      const range = max - min || 1;
+      const scale = (value) => padding + ((value - min) / range) * plotWidth;
+
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+
+      const minX = scale(min);
+      const q1X = scale(q1);
+      const medianX = scale(median);
+      const q3X = scale(q3);
+      const maxX = scale(max);
+
+      boxPlotSvg.innerHTML = `
+        <!-- Left whisker line -->
+        <line x1="${minX}" y1="${centerY}" x2="${q1X}" y2="${centerY}" 
+              stroke="${textColor}" stroke-width="3" stroke-linecap="round"/>
+        
+        <!-- Right whisker line -->
+        <line x1="${q3X}" y1="${centerY}" x2="${maxX}" y2="${centerY}" 
+              stroke="${textColor}" stroke-width="3" stroke-linecap="round"/>
+        
+        <!-- Min whisker cap -->
+        <line x1="${minX}" y1="${centerY - 20}" x2="${minX}" y2="${centerY + 20}" 
+              stroke="${textColor}" stroke-width="3" stroke-linecap="round"
+              class="whisker-cap" data-label="Minimum" data-value="${formatNumber(min)}"/>
+        
+        <!-- Max whisker cap -->
+        <line x1="${maxX}" y1="${centerY - 20}" x2="${maxX}" y2="${centerY + 20}" 
+              stroke="${textColor}" stroke-width="3" stroke-linecap="round"
+              class="whisker-cap" data-label="Maximum" data-value="${formatNumber(max)}"/>
+        
+        <!-- Box -->
+        <rect x="${q1X}" y="${centerY - boxHeight/2}" width="${q3X - q1X}" height="${boxHeight}" 
+              fill="${primaryColor}" fill-opacity="0.3" stroke="${primaryColor}" stroke-width="3" rx="4"
+              class="box-element" data-label="Box (Q1 to Q3)" data-value="IQR = ${formatNumber(stats.iqr)}"/>
+        
+        <!-- Median line -->
+        <line x1="${medianX}" y1="${centerY - boxHeight/2}" x2="${medianX}" y2="${centerY + boxHeight/2}" 
+              stroke="${primaryColor}" stroke-width="4" stroke-linecap="round"
+              class="median-line" data-label="Median" data-value="${formatNumber(median)}"/>
+        
+        <!-- Labels below -->
+        <text x="${minX}" y="${centerY + 55}" text-anchor="middle" fill="${textColor}" font-size="12" font-weight="600">Min</text>
+        <text x="${minX}" y="${centerY + 70}" text-anchor="middle" fill="${textColor}" font-size="14" font-weight="700">${formatNumber(min)}</text>
+        
+        <text x="${q1X}" y="${centerY + 55}" text-anchor="middle" fill="${textColor}" font-size="12" font-weight="600">Q1</text>
+        <text x="${q1X}" y="${centerY + 70}" text-anchor="middle" fill="${textColor}" font-size="14" font-weight="700">${formatNumber(q1)}</text>
+        
+        <text x="${medianX}" y="${centerY + 55}" text-anchor="middle" fill="${primaryColor}" font-size="12" font-weight="600">Median</text>
+        <text x="${medianX}" y="${centerY + 70}" text-anchor="middle" fill="${primaryColor}" font-size="14" font-weight="700">${formatNumber(median)}</text>
+        
+        <text x="${q3X}" y="${centerY + 55}" text-anchor="middle" fill="${textColor}" font-size="12" font-weight="600">Q3</text>
+        <text x="${q3X}" y="${centerY + 70}" text-anchor="middle" fill="${textColor}" font-size="14" font-weight="700">${formatNumber(q3)}</text>
+        
+        <text x="${maxX}" y="${centerY + 55}" text-anchor="middle" fill="${textColor}" font-size="12" font-weight="600">Max</text>
+        <text x="${maxX}" y="${centerY + 70}" text-anchor="middle" fill="${textColor}" font-size="14" font-weight="700">${formatNumber(max)}</text>
+        
+        <!-- Data points -->
+        ${stats.sorted.map((val, i) => `
+          <circle cx="${scale(val)}" cy="${centerY}" r="5" fill="${primaryColor}" fill-opacity="0.6" stroke="${primaryColor}" stroke-width="1"
+                  class="data-point" data-label="Data point" data-value="${formatNumber(val)}"/>
+        `).join('')}
+      `;
+
+      // Add hover interactions
+      const interactiveElements = boxPlotSvg.querySelectorAll('.whisker-cap, .box-element, .median-line, .data-point');
+      interactiveElements.forEach(el => {
+        el.style.cursor = 'pointer';
+        el.addEventListener('mouseenter', (e) => {
+          const label = el.dataset.label;
+          const value = el.dataset.value;
+          tooltip.textContent = `${label}: ${value}`;
+          tooltip.classList.add('visible');
+        });
+        el.addEventListener('mousemove', (e) => {
+          const rect = boxPlotSvg.getBoundingClientRect();
+          tooltip.style.left = `${e.clientX - rect.left + 10}px`;
+          tooltip.style.top = `${e.clientY - rect.top - 30}px`;
+        });
+        el.addEventListener('mouseleave', () => {
+          tooltip.classList.remove('visible');
+        });
+      });
+    }
+
+    function updateDisplay(stats, config) {
+      hideError();
+      
+      // Update sorted data display
+      sortedDataDisplay.textContent = stats.sorted.join(', ');
+      
+      // Update statistics
+      document.getElementById('stat-min').textContent = formatNumber(stats.min);
+      document.getElementById('stat-q1').textContent = formatNumber(stats.q1);
+      document.getElementById('stat-median').textContent = formatNumber(stats.median);
+      document.getElementById('stat-q3').textContent = formatNumber(stats.q3);
+      document.getElementById('stat-max').textContent = formatNumber(stats.max);
+      document.getElementById('stat-iqr').textContent = formatNumber(stats.iqr);
+      
+      // Draw box plot
+      drawBoxPlot(stats, config);
+      
+      // Show results
+      resultsSection.classList.remove('hidden');
+    }
+
+    function processData(config) {
+      const result = parseInput(dataInput.value);
+      if (result.error) {
+        showError(result.error);
+        return;
+      }
+      
+      currentData = result.data;
+      const stats = calculateStatistics(currentData);
+      updateDisplay(stats, config);
+    }
+
+    function applyStyles(config) {
+      const wrapper = document.getElementById('app-wrapper');
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+
+      wrapper.style.backgroundColor = bgColor;
+      wrapper.style.color = textColor;
+      wrapper.style.fontFamily = `${fontFamily}, Nunito, sans-serif`;
+      
+      // Apply font size scaling
+      document.getElementById('app-title').style.fontSize = `${fontSize * 1.75}px`;
+      document.getElementById('instruction-text').style.fontSize = `${fontSize}px`;
+
+      // Style sections
+      document.querySelectorAll('section > div, section').forEach(section => {
+        if (section.classList.contains('rounded-xl')) {
+          section.style.backgroundColor = surfaceColor;
+        }
+      });
+
+      // Style input
+      dataInput.style.borderColor = secondaryColor;
+      dataInput.style.backgroundColor = surfaceColor;
+      dataInput.style.color = textColor;
+
+      // Style buttons
+      createBtn.style.backgroundColor = primaryColor;
+      createBtn.style.color = '#ffffff';
+      
+      randomBtn.style.backgroundColor = secondaryColor;
+      randomBtn.style.color = textColor;
+      
+      clearBtn.style.backgroundColor = secondaryColor;
+      clearBtn.style.color = textColor;
+
+      // Style stat cards
+      document.querySelectorAll('.stat-card').forEach(card => {
+        card.style.backgroundColor = bgColor;
+        card.style.color = textColor;
+      });
+
+      // Style error message
+      errorMessage.style.backgroundColor = '#fef2f2';
+      errorMessage.style.color = '#dc2626';
+      errorMessage.style.border = '2px solid #fecaca';
+
+      // Style sorted data display
+      sortedDataDisplay.style.backgroundColor = bgColor;
+      sortedDataDisplay.style.color = textColor;
+
+      // Style legend
+      const legend = document.querySelector('.rounded-lg.mt-4');
+      if (legend) {
+        legend.style.backgroundColor = bgColor;
+      }
+
+      // Redraw box plot if data exists
+      if (currentData.length >= 4) {
+        const stats = calculateStatistics(currentData);
+        drawBoxPlot(stats, config);
+      }
+    }
+
+    // Event listeners
+    createBtn.addEventListener('click', () => {
+      const config = window.elementSdk?.config || defaultConfig;
+      processData(config);
+    });
+
+    randomBtn.addEventListener('click', () => {
+      const randomData = generateRandomData();
+      dataInput.value = randomData.join(', ');
+      const config = window.elementSdk?.config || defaultConfig;
+      processData(config);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      dataInput.value = '';
+      currentData = [];
+      hideError();
+      resultsSection.classList.add('hidden');
+    });
+
+    dataInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const config = window.elementSdk?.config || defaultConfig;
+        processData(config);
+      }
+    });
+
+    // SDK initialization
+    async function onConfigChange(config) {
+      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+      document.getElementById('instruction-text').textContent = config.instruction_text || defaultConfig.instruction_text;
+      applyStyles(config);
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => { config.primary_action_color = value; window.elementSdk.setConfig({ primary_action_color: value }); }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => { config.secondary_action_color = value; window.elementSdk.setConfig({ secondary_action_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["app_title", config.app_title || defaultConfig.app_title],
+        ["instruction_text", config.instruction_text || defaultConfig.instruction_text]
+      ]);
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    } else {
+      onConfigChange(defaultConfig);
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bcc751134a4b1f6',t:'MTc2ODIxODg0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

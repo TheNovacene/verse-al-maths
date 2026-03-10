@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dice Probability Explorer</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100%;
+      width: 100%;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      min-height: 100%;
+      padding: 2rem 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      color: #2d3748;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+
+    .instructions {
+      text-align: center;
+      color: #4a5568;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      background: #f7fafc;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      border: 2px solid #e2e8f0;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #718096;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .dice-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .die {
+      width: 120px;
+      height: 120px;
+      background: #ffffff;
+      border: 3px solid #667eea;
+      border-radius: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      padding: 12px;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      transition: transform 0.1s;
+    }
+
+    .die.rolling {
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+      background: #667eea;
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    .dot.active {
+      opacity: 1;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .roll-btn {
+      background: #667eea;
+      color: white;
+    }
+
+    .roll-btn:hover {
+      background: #5a67d8;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .roll-btn:disabled {
+      background: #cbd5e0;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .reset-btn {
+      background: #fc8181;
+      color: white;
+    }
+
+    .reset-btn:hover {
+      background: #f56565;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(252, 129, 129, 0.4);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #f7fafc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #667eea;
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    td {
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      color: #2d3748;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background: #edf2f7;
+    }
+
+    .face-cell {
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: #667eea;
+    }
+
+    .chart-container {
+      background: #f7fafc;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 2px solid #e2e8f0;
+    }
+
+    .chart-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      height: 250px;
+      gap: 0.5rem;
+      padding: 0 1rem 0 3rem;
+      margin-bottom: 2rem;
+      position: relative;
+      border-bottom: 2px solid #4a5568;
+    }
+
+    .chart-axis {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 2.5rem;
+      height: 100%;
+      border-right: 2px solid #4a5568;
+    }
+
+    .axis-label {
+      position: absolute;
+      right: 0.5rem;
+      font-size: 0.7rem;
+      color: #4a5568;
+      font-weight: 600;
+      transform: translateY(50%);
+    }
+
+    .gridline {
+      position: absolute;
+      left: 2.5rem;
+      right: 0;
+      height: 1px;
+      background: #cbd5e0;
+      pointer-events: none;
+    }
+
+    .bar-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: calc(100% - 2rem);
+      position: relative;
+    }
+
+    .bar-value {
+      font-size: 0.75rem;
+      color: #4a5568;
+      font-weight: 600;
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .bar-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .bar {
+      width: 100%;
+      background: linear-gradient(to top, #667eea, #764ba2);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.3s ease;
+      position: relative;
+      min-height: 2px;
+    }
+
+    .bar-label {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #667eea;
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .theoretical-line {
+      position: relative;
+      height: 1px;
+      background: #fc8181;
+      margin: 0 1rem;
+    }
+
+    .theoretical-label {
+      position: absolute;
+      left: -80px;
+      top: -10px;
+      font-size: 0.75rem;
+      color: #fc8181;
+      font-weight: 600;
+      background: #f7fafc;
+      padding: 0 0.5rem;
+      white-space: nowrap;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper">
+   <div class="container">
+    <h1 id="app-title">Dice Probability Explorer</h1>
+    <p class="instructions" id="instructions">Click "Roll Die" to perform experiments and watch how relative frequency approaches theoretical probability (1/6 ≈ 0.17)</p>
+    <div class="stats-bar">
+     <div class="stat-item">
+      <div class="stat-label">
+       Total Rolls
+      </div>
+      <div class="stat-value" id="total-rolls">
+       0
+      </div>
+     </div>
+     <div class="stat-item">
+      <div class="stat-label">
+       Last Roll
+      </div>
+      <div class="stat-value" id="last-roll">
+       —
+      </div>
+     </div>
+    </div>
+    <div class="dice-container">
+     <div class="die" id="die">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+     </div>
+    </div>
+    <div class="controls"><button class="roll-btn" id="roll-btn">🎲 Roll Die</button> <button class="reset-btn" id="reset-btn">🔄 Reset</button>
+    </div>
+    <div class="content-grid">
+     <div class="table-container">
+      <table>
+       <thead>
+        <tr>
+         <th>Die Face</th>
+         <th>Frequency</th>
+         <th>Relative Frequency</th>
+         <th>Est. Probability</th>
+        </tr>
+       </thead>
+       <tbody id="data-table">
+       </tbody>
+      </table>
+     </div>
+     <div class="chart-container">
+      <div class="chart-title">
+       Relative Frequency Distribution
+      </div>
+      <div class="bar-chart" id="bar-chart">
+       <div class="chart-axis" id="chart-axis"></div>
+      </div>
+      <div class="theoretical-line" id="theoretical-line" style="display: none;"><span class="theoretical-label">Theoretical (0.17)</span>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      app_title: "Dice Probability Explorer",
+      instructions_text: "Click \"Roll Die\" to perform experiments and watch how relative frequency approaches theoretical probability (1/6 ≈ 0.17)",
+      roll_button_text: "🎲 Roll Die",
+      reset_button_text: "🔄 Reset",
+      background_color: "#667eea",
+      surface_color: "#ffffff",
+      text_color: "#2d3748",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#fc8181",
+      font_family: "Segoe UI",
+      font_size: 16
+    };
+
+    const frequencies = [0, 0, 0, 0, 0, 0];
+    let totalRolls = 0;
+
+    const diePatterns = {
+      1: [4],
+      2: [0, 8],
+      3: [0, 4, 8],
+      4: [0, 2, 6, 8],
+      5: [0, 2, 4, 6, 8],
+      6: [0, 2, 3, 5, 6, 8]
+    };
+
+    function updateDie(value) {
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      if (value && diePatterns[value]) {
+        diePatterns[value].forEach(index => {
+          dots[index].classList.add('active');
+        });
+      }
+    }
+
+    function rollDie() {
+      return Math.floor(Math.random() * 6) + 1;
+    }
+
+    function updateTable() {
+      const tbody = document.getElementById('data-table');
+      tbody.innerHTML = '';
+
+      for (let i = 0; i < 6; i++) {
+        const face = i + 1;
+        const frequency = frequencies[i];
+        const relativeFreq = totalRolls > 0 ? (frequency / totalRolls).toFixed(4) : '0.0000';
+        const probability = totalRolls > 0 ? (frequency / totalRolls).toFixed(2) : '0.00';
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="face-cell">${face}</td>
+          <td>${frequency}</td>
+          <td>${relativeFreq}</td>
+          <td>${probability}</td>
+        `;
+        tbody.appendChild(row);
+      }
+    }
+
+    function updateChart() {
+      const chartContainer = document.getElementById('bar-chart');
+      const theoreticalLine = document.getElementById('theoretical-line');
+      const chartAxis = document.getElementById('chart-axis');
+      
+      // Clear previous content but keep the axis
+      const existingAxis = chartContainer.querySelector('.chart-axis');
+      chartContainer.innerHTML = '';
+      if (existingAxis) {
+        chartContainer.appendChild(existingAxis);
+      }
+
+      // Create axis labels and gridlines (0 to 1.0 scale with 0.1 increments)
+      chartAxis.innerHTML = '';
+      for (let i = 0; i <= 10; i++) {
+        const value = (i / 10).toFixed(1);
+        const position = (i / 10) * 100;
+        
+        const label = document.createElement('div');
+        label.className = 'axis-label';
+        label.textContent = value;
+        label.style.bottom = position + '%';
+        chartAxis.appendChild(label);
+        
+        // Add gridlines
+        if (i > 0) {
+          const gridline = document.createElement('div');
+          gridline.className = 'gridline';
+          gridline.style.bottom = position + '%';
+          chartContainer.appendChild(gridline);
+        }
+      }
+
+      // Scale: 0 to 1.0 (representing 0% to 100% relative frequency)
+      const maxScale = 1.0;
+      
+      for (let i = 0; i < 6; i++) {
+        const face = i + 1;
+        const relativeFreq = totalRolls > 0 ? frequencies[i] / totalRolls : 0;
+        // Convert relative frequency (0 to 1) to percentage of chart height
+        const heightPercent = (relativeFreq / maxScale) * 100;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'bar-wrapper';
+        
+        const barContainer = document.createElement('div');
+        barContainer.className = 'bar-container';
+        
+        const valueLabel = document.createElement('div');
+        valueLabel.className = 'bar-value';
+        valueLabel.textContent = relativeFreq.toFixed(3);
+        
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        // Ensure minimum visibility
+        bar.style.height = Math.max(heightPercent, 0.8) + '%';
+        
+        barContainer.appendChild(valueLabel);
+        barContainer.appendChild(bar);
+        
+        const label = document.createElement('div');
+        label.className = 'bar-label';
+        label.textContent = face;
+        
+        wrapper.appendChild(barContainer);
+        wrapper.appendChild(label);
+        chartContainer.appendChild(wrapper);
+      }
+
+      // Theoretical line at 1/6 ≈ 0.1667 position
+      theoreticalLine.style.display = 'block';
+      const theoreticalValue = 1/6;
+      const theoreticalPercent = (theoreticalValue / maxScale) * 100;
+      theoreticalLine.style.bottom = theoreticalPercent + '%';
+    }
+
+    function performRoll() {
+      const rollBtn = document.getElementById('roll-btn');
+      const die = document.getElementById('die');
+      
+      rollBtn.disabled = true;
+      die.classList.add('rolling');
+
+      setTimeout(() => {
+        const result = rollDie();
+        frequencies[result - 1]++;
+        totalRolls++;
+
+        updateDie(result);
+        document.getElementById('total-rolls').textContent = totalRolls;
+        document.getElementById('last-roll').textContent = result;
+        
+        updateTable();
+        updateChart();
+
+        die.classList.remove('rolling');
+        rollBtn.disabled = false;
+      }, 500);
+    }
+
+    function resetExperiment() {
+      frequencies.fill(0);
+      totalRolls = 0;
+      
+      updateDie(null);
+      document.getElementById('total-rolls').textContent = '0';
+      document.getElementById('last-roll').textContent = '—';
+      
+      updateTable();
+      updateChart();
+    }
+
+    async function onConfigChange(config) {
+      const baseSize = config.font_size || defaultConfig.font_size;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      document.body.style.fontSize = `${baseSize}px`;
+
+      document.querySelector('.app-wrapper').style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${backgroundColor} 100%)`;
+      document.querySelector('.container').style.background = surfaceColor;
+      
+      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+      document.getElementById('app-title').style.color = textColor;
+      document.getElementById('app-title').style.fontSize = `${baseSize * 2}px`;
+      
+      document.getElementById('instructions').textContent = config.instructions_text || defaultConfig.instructions_text;
+      document.getElementById('instructions').style.color = textColor;
+      document.getElementById('instructions').style.fontSize = `${baseSize}px`;
+
+      const statLabels = document.querySelectorAll('.stat-label');
+      statLabels.forEach(label => {
+        label.style.fontSize = `${baseSize * 0.875}px`;
+        label.style.color = textColor;
+      });
+
+      const statValues = document.querySelectorAll('.stat-value');
+      statValues.forEach(value => {
+        value.style.fontSize = `${baseSize * 1.75}px`;
+        value.style.color = primaryColor;
+      });
+
+      document.querySelector('.die').style.borderColor = primaryColor;
+      const dots = document.querySelectorAll('.dot.active');
+      dots.forEach(dot => {
+        dot.style.background = primaryColor;
+      });
+
+      const rollBtn = document.getElementById('roll-btn');
+      rollBtn.textContent = config.roll_button_text || defaultConfig.roll_button_text;
+      rollBtn.style.background = primaryColor;
+      rollBtn.style.fontSize = `${baseSize}px`;
+
+      const resetBtn = document.getElementById('reset-btn');
+      resetBtn.textContent = config.reset_button_text || defaultConfig.reset_button_text;
+      resetBtn.style.background = secondaryColor;
+      resetBtn.style.fontSize = `${baseSize}px`;
+
+      const tableHeaders = document.querySelectorAll('th');
+      tableHeaders.forEach(th => {
+        th.style.background = primaryColor;
+        th.style.fontSize = `${baseSize * 0.875}px`;
+      });
+
+      const tableCells = document.querySelectorAll('td');
+      tableCells.forEach(td => {
+        td.style.color = textColor;
+      });
+
+      const faceCells = document.querySelectorAll('.face-cell');
+      faceCells.forEach(cell => {
+        cell.style.color = primaryColor;
+        cell.style.fontSize = `${baseSize * 1.25}px`;
+      });
+
+      document.querySelector('.chart-title').style.color = textColor;
+      document.querySelector('.chart-title').style.fontSize = `${baseSize * 1.125}px`;
+
+      const bars = document.querySelectorAll('.bar');
+      bars.forEach(bar => {
+        bar.style.background = `linear-gradient(to top, ${primaryColor}, ${primaryColor})`;
+      });
+
+      const barLabels = document.querySelectorAll('.bar-label');
+      barLabels.forEach(label => {
+        label.style.color = primaryColor;
+        label.style.fontSize = `${baseSize}px`;
+      });
+
+      const barValues = document.querySelectorAll('.bar-value');
+      barValues.forEach(value => {
+        value.style.fontSize = `${baseSize * 0.75}px`;
+      });
+
+      const theoreticalLabel = document.querySelector('.theoretical-label');
+      theoreticalLabel.style.color = secondaryColor;
+      theoreticalLabel.style.fontSize = `${baseSize * 0.75}px`;
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["app_title", config.app_title || defaultConfig.app_title],
+          ["instructions_text", config.instructions_text || defaultConfig.instructions_text],
+          ["roll_button_text", config.roll_button_text || defaultConfig.roll_button_text],
+          ["reset_button_text", config.reset_button_text || defaultConfig.reset_button_text]
+        ])
+      });
+    }
+
+    document.getElementById('roll-btn').addEventListener('click', performRoll);
+    document.getElementById('reset-btn').addEventListener('click', resetExperiment);
+
+    updateTable();
+    updateChart();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d89bc24c65411bf',t:'MTc3Mjg4NzkyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

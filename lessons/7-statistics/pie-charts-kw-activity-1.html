@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pie Chart Builder – SDG Data &amp; Angles</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    .slice-label {
+      pointer-events: none;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .category-row:hover {
+      background-color: rgba(99, 102, 241, 0.1);
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: 1;
+      height: 24px;
+    }
+    .help-panel {
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pie-slice {
+      transition: transform 0.2s ease;
+      transform-origin: center;
+    }
+    .pie-slice:hover {
+      transform: scale(1.02);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-auto">
+  <div class="app-wrapper w-full h-full p-4 md:p-6">
+   <div class="max-w-6xl mx-auto"><!-- Header -->
+    <header class="text-center mb-6">
+     <h1 id="main-title" class="text-2xl md:text-3xl font-extrabold text-emerald-800 mb-2">🥧 Pie Chart Builder – SDG Data &amp; Angles</h1>
+     <p class="text-emerald-600 text-sm md:text-base">Turn data into fractions, percentages, angles and pie charts!</p>
+    </header><!-- Controls Row -->
+    <div class="flex flex-wrap gap-3 items-center justify-center mb-6">
+     <div class="flex items-center gap-2"><label for="dataset-select" class="text-sm font-semibold text-emerald-700">Choose Data:</label> <select id="dataset-select" class="px-3 py-2 rounded-lg border-2 border-emerald-300 bg-white text-emerald-800 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"> <option value="waste">SDG 12: Household Waste</option> <option value="energy">SDG 7: Electricity Sources</option> <option value="lunch">SDG 2: School Lunch</option> <option value="custom">My SDG Scenario</option> </select>
+     </div>
+     <div class="flex items-center gap-2"><label class="text-sm font-semibold text-emerald-700">Show:</label> <button id="toggle-display" class="px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition-colors"> Percentages </button>
+     </div><button id="quiz-mode-toggle" class="px-4 py-2 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors flex items-center gap-1"> <span>🎯</span> <span>Quiz Mode</span> </button> <button id="help-toggle" class="px-4 py-2 rounded-lg bg-amber-500 text-white font-semibold hover:bg-amber-600 transition-colors flex items-center gap-1"> <span>❓</span> <span id="help-button-label">How it works</span> </button>
+    </div><!-- Help Panel -->
+    <div id="help-panel" class="hidden help-panel mb-6 p-4 bg-amber-50 border-2 border-amber-300 rounded-xl shadow-md">
+     <h3 class="font-bold text-amber-800 text-lg mb-2">📐 Understanding Pie Chart Angles</h3>
+     <div class="grid md:grid-cols-2 gap-4 text-sm text-amber-900">
+      <div>
+       <p class="mb-2"><strong>Why angles?</strong> A full circle = 360°. Each slice's angle shows its share of the whole.</p>
+       <p class="mb-2"><strong>Formula:</strong></p>
+       <div class="bg-white p-3 rounded-lg border border-amber-200 font-mono text-center">
+        Angle = (Frequency ÷ Total) × 360°
+       </div>
+      </div>
+      <div>
+       <p class="mb-2"><strong>Percentages:</strong> Each slice also represents a percentage of 100%.</p>
+       <div class="bg-white p-3 rounded-lg border border-amber-200 font-mono text-center mb-2">
+        Percentage = (Frequency ÷ Total) × 100%
+       </div>
+       <p><strong>Key insight:</strong> Fraction → Percentage → Angle all represent the same proportion!</p>
+      </div>
+     </div>
+    </div><!-- Custom Scenario Title -->
+    <div id="custom-title-section" class="hidden mb-4"><label for="custom-title" class="block text-sm font-semibold text-emerald-700 mb-1">Your Scenario Title:</label> <input type="text" id="custom-title" placeholder="e.g. How my class travels to school" class="w-full max-w-md px-3 py-2 rounded-lg border-2 border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    </div><!-- Quiz Mode Panel -->
+    <div id="quiz-panel" class="hidden mb-6 p-5 bg-purple-50 border-2 border-purple-300 rounded-xl shadow-lg">
+     <div class="text-center mb-4">
+      <h2 class="text-xl font-bold text-purple-800 mb-2">🎯 Quiz Mode: Calculate the Missing Values!</h2>
+      <p class="text-sm text-purple-700">The table has been cleared. Use the data to calculate fractions, percentages, and angles.</p>
+     </div>
+     <div id="quiz-questions" class="space-y-3 mb-4"><!-- Quiz questions generated by JS -->
+     </div>
+     <div class="flex gap-3 justify-center"><button id="check-answers" class="px-6 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"> ✓ Check Answers </button> <button id="show-hints" class="px-6 py-2 bg-purple-400 text-white font-semibold rounded-lg hover:bg-purple-500 transition-colors"> 💡 Show Hints </button> <button id="reset-quiz" class="px-6 py-2 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors"> 🔄 New Quiz </button>
+     </div>
+     <div id="quiz-feedback" class="hidden mt-4 p-4 rounded-lg"><!-- Feedback shown after checking answers -->
+     </div>
+     <div id="quiz-hints" class="hidden mt-4 p-4 bg-purple-100 rounded-lg border border-purple-200">
+      <h4 class="font-bold text-purple-800 mb-2">💡 Hints:</h4>
+      <ul class="text-sm text-purple-700 space-y-1 list-disc list-inside">
+       <li><strong>Total frequency:</strong> Add up all the frequencies</li>
+       <li><strong>Fraction:</strong> Divide each frequency by the total (e.g., 35 ÷ 100)</li>
+       <li><strong>Percentage:</strong> Multiply the fraction by 100 (or fraction × 100)</li>
+       <li><strong>Angle:</strong> Multiply the fraction by 360° (or fraction × 360)</li>
+      </ul>
+     </div>
+    </div><!-- Main Content Grid -->
+    <div class="grid lg:grid-cols-2 gap-6"><!-- Data Table Section -->
+     <div class="bg-white rounded-2xl shadow-lg p-4 border-2 border-emerald-200">
+      <h2 id="table-title" class="text-lg font-bold text-emerald-800 mb-3 text-center">📊 SDG 12: Types of Household Waste</h2>
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="bg-emerald-100 text-emerald-800">
+          <th class="px-2 py-2 text-left rounded-tl-lg">Category</th>
+          <th class="px-2 py-2 text-center">Frequency</th>
+          <th class="px-2 py-2 text-center">Fraction</th>
+          <th class="px-2 py-2 text-center">%</th>
+          <th class="px-2 py-2 text-center rounded-tr-lg">Angle°</th>
+         </tr>
+        </thead>
+        <tbody id="data-table-body"><!-- Rows generated by JS -->
+        </tbody>
+        <tfoot id="table-footer">
+         <tr class="bg-emerald-50 font-bold text-emerald-800">
+          <td class="px-2 py-2 rounded-bl-lg">Total</td>
+          <td id="total-frequency" class="px-2 py-2 text-center">0</td>
+          <td class="px-2 py-2 text-center">1</td>
+          <td class="px-2 py-2 text-center">100%</td>
+          <td id="total-angle" class="px-2 py-2 text-center rounded-br-lg">360°</td>
+         </tr>
+        </tfoot>
+       </table>
+      </div><!-- Add/Remove Category for Custom -->
+      <div id="custom-controls" class="hidden mt-4 flex gap-2 justify-center"><button id="add-category" class="px-3 py-1 bg-emerald-500 text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors text-sm"> + Add Category </button> <button id="remove-category" class="px-3 py-1 bg-rose-500 text-white rounded-lg font-semibold hover:bg-rose-600 transition-colors text-sm"> − Remove Last </button>
+      </div>
+     </div><!-- Pie Chart Section -->
+     <div class="bg-white rounded-2xl shadow-lg p-4 border-2 border-emerald-200">
+      <h2 id="chart-title" class="text-lg font-bold text-emerald-800 mb-3 text-center">🥧 Pie Chart</h2>
+      <div class="flex justify-center">
+       <svg id="pie-chart" viewbox="-120 -120 240 240" class="w-full max-w-xs h-auto"><!-- Pie slices generated by JS -->
+       </svg>
+      </div><!-- Legend -->
+      <div id="legend" class="mt-4 flex flex-wrap justify-center gap-2"><!-- Legend items generated by JS -->
+      </div>
+     </div>
+    </div><!-- SDG Info Footer -->
+    <footer class="mt-6 text-center text-xs text-emerald-600">
+     <p>🌍 Data themes inspired by the UN Sustainable Development Goals</p>
+    </footer>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: '🥧 Pie Chart Builder – SDG Data & Angles',
+      help_button_text: 'How it works',
+      primary_color: '#059669',
+      secondary_color: '#ffffff',
+      text_color: '#065f46',
+      accent_color: '#f59e0b',
+      background_color: '#ecfdf5'
+    };
+
+    // Preset datasets
+    const presetDatasets = {
+      waste: {
+        title: 'SDG 12: Types of Household Waste',
+        categories: [
+          { name: 'Food Waste', frequency: 35, visible: true },
+          { name: 'Plastic', frequency: 25, visible: true },
+          { name: 'Paper/Card', frequency: 20, visible: true },
+          { name: 'Metal/Glass', frequency: 12, visible: true },
+          { name: 'Other', frequency: 8, visible: true }
+        ]
+      },
+      energy: {
+        title: 'SDG 7: Electricity Sources in UK',
+        categories: [
+          { name: 'Natural Gas', frequency: 38, visible: true },
+          { name: 'Wind', frequency: 26, visible: true },
+          { name: 'Nuclear', frequency: 15, visible: true },
+          { name: 'Solar', frequency: 12, visible: true },
+          { name: 'Other', frequency: 9, visible: true }
+        ]
+      },
+      lunch: {
+        title: 'SDG 2: School Lunch Composition',
+        categories: [
+          { name: 'Fruit & Veg', frequency: 28, visible: true },
+          { name: 'Grains/Bread', frequency: 24, visible: true },
+          { name: 'Protein', frequency: 22, visible: true },
+          { name: 'Dairy', frequency: 14, visible: true },
+          { name: 'Sugary Items', frequency: 12, visible: true }
+        ]
+      },
+      custom: {
+        title: 'My SDG Scenario',
+        categories: [
+          { name: 'Category 1', frequency: 30, visible: true },
+          { name: 'Category 2', frequency: 25, visible: true },
+          { name: 'Category 3', frequency: 20, visible: true },
+          { name: 'Category 4', frequency: 15, visible: true },
+          { name: 'Category 5', frequency: 10, visible: true }
+        ]
+      }
+    };
+
+    // Color palette for pie slices
+    const sliceColors = [
+      '#10b981', // emerald
+      '#3b82f6', // blue
+      '#f59e0b', // amber
+      '#ef4444', // red
+      '#8b5cf6', // violet
+      '#ec4899'  // pink
+    ];
+
+    // App state
+    let currentDataset = 'waste';
+    let showPercentages = true;
+    let customTitle = 'My SDG Scenario';
+    let categories = JSON.parse(JSON.stringify(presetDatasets.waste.categories));
+    let quizMode = false;
+    let quizAnswers = {};
+    let quizCorrectAnswers = {};
+
+    // DOM elements
+    const datasetSelect = document.getElementById('dataset-select');
+    const toggleDisplayBtn = document.getElementById('toggle-display');
+    const helpToggleBtn = document.getElementById('help-toggle');
+    const helpPanel = document.getElementById('help-panel');
+    const customTitleSection = document.getElementById('custom-title-section');
+    const customTitleInput = document.getElementById('custom-title');
+    const customControls = document.getElementById('custom-controls');
+    const addCategoryBtn = document.getElementById('add-category');
+    const removeCategoryBtn = document.getElementById('remove-category');
+    const tableBody = document.getElementById('data-table-body');
+    const totalFrequencyEl = document.getElementById('total-frequency');
+    const pieChart = document.getElementById('pie-chart');
+    const legend = document.getElementById('legend');
+    const tableTitle = document.getElementById('table-title');
+    const chartTitle = document.getElementById('chart-title');
+    const quizModeToggle = document.getElementById('quiz-mode-toggle');
+    const quizPanel = document.getElementById('quiz-panel');
+    const quizQuestions = document.getElementById('quiz-questions');
+    const checkAnswersBtn = document.getElementById('check-answers');
+    const showHintsBtn = document.getElementById('show-hints');
+    const resetQuizBtn = document.getElementById('reset-quiz');
+    const quizFeedback = document.getElementById('quiz-feedback');
+    const quizHints = document.getElementById('quiz-hints');
+    const tableFooter = document.getElementById('table-footer');
+
+    // Calculate totals and derived values
+    function calculateData() {
+      const visibleCategories = categories.filter(c => c.visible);
+      const total = visibleCategories.reduce((sum, c) => sum + c.frequency, 0);
+      
+      return categories.map(cat => {
+        const fraction = total > 0 ? cat.frequency / total : 0;
+        return {
+          ...cat,
+          total,
+          fraction,
+          percentage: fraction * 100,
+          angle: fraction * 360
+        };
+      });
+    }
+
+    // Render the data table
+    function renderTable() {
+      const data = calculateData();
+      const total = data[0]?.total || 0;
+      const isCustom = currentDataset === 'custom';
+      
+      if (quizMode) {
+        // In quiz mode, show simplified table with only categories and frequencies
+        tableBody.innerHTML = data.map((item, index) => `
+          <tr class="category-row border-b border-emerald-100">
+            <td class="px-2 py-2">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full flex-shrink-0" style="background-color: ${sliceColors[index % sliceColors.length]}"></span>
+                <span class="truncate font-semibold">${item.name}</span>
+              </div>
+            </td>
+            <td class="px-2 py-2 text-center font-semibold text-emerald-700">
+              ${item.frequency}
+            </td>
+            <td class="px-2 py-2 text-center text-gray-400">—</td>
+            <td class="px-2 py-2 text-center text-gray-400">—</td>
+            <td class="px-2 py-2 text-center text-gray-400">—</td>
+          </tr>
+        `).join('');
+        
+        tableFooter.innerHTML = `
+          <tr class="bg-emerald-50 font-bold text-emerald-800">
+            <td class="px-2 py-2 rounded-bl-lg">Total</td>
+            <td class="px-2 py-2 text-center text-gray-400">?</td>
+            <td class="px-2 py-2 text-center text-gray-400">—</td>
+            <td class="px-2 py-2 text-center text-gray-400">—</td>
+            <td class="px-2 py-2 text-center rounded-br-lg text-gray-400">—</td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tableBody.innerHTML = data.map((item, index) => `
+        <tr class="category-row border-b border-emerald-100 ${!item.visible ? 'opacity-40' : ''}">
+          <td class="px-2 py-2">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" 
+                     ${item.visible ? 'checked' : ''} 
+                     onchange="toggleCategory(${index})"
+                     class="w-4 h-4 rounded border-emerald-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <span class="w-3 h-3 rounded-full flex-shrink-0" style="background-color: ${sliceColors[index % sliceColors.length]}"></span>
+              ${isCustom ? `
+                <input type="text" value="${item.name}" 
+                       onchange="updateCategoryName(${index}, this.value)"
+                       class="w-full min-w-0 px-2 py-1 text-sm border border-emerald-200 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500">
+              ` : `<span class="truncate">${item.name}</span>`}
+            </div>
+          </td>
+          <td class="px-2 py-2 text-center">
+            <input type="number" value="${item.frequency}" min="0" max="999"
+                   onchange="updateFrequency(${index}, this.value)"
+                   class="w-16 px-2 py-1 text-center border-2 border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold">
+          </td>
+          <td class="px-2 py-2 text-center font-mono text-xs">
+            ${item.visible ? `${item.frequency}/${total}` : '—'}
+          </td>
+          <td class="px-2 py-2 text-center font-semibold ${item.visible ? 'text-emerald-700' : ''}">
+            ${item.visible ? item.percentage.toFixed(1) + '%' : '—'}
+          </td>
+          <td class="px-2 py-2 text-center font-semibold ${item.visible ? 'text-emerald-700' : ''}">
+            ${item.visible ? item.angle.toFixed(1) + '°' : '—'}
+          </td>
+        </tr>
+      `).join('');
+
+      tableFooter.innerHTML = `
+        <tr class="bg-emerald-50 font-bold text-emerald-800">
+          <td class="px-2 py-2 rounded-bl-lg">Total</td>
+          <td class="px-2 py-2 text-center">${total}</td>
+          <td class="px-2 py-2 text-center">1</td>
+          <td class="px-2 py-2 text-center">100%</td>
+          <td class="px-2 py-2 text-center rounded-br-lg">360°</td>
+        </tr>
+      `;
+    }
+
+    // Render the pie chart
+    function renderPieChart() {
+      const data = calculateData().filter(c => c.visible && c.frequency > 0);
+      
+      if (data.length === 0) {
+        pieChart.innerHTML = `
+          <text x="0" y="0" text-anchor="middle" fill="#9ca3af" font-size="14" font-weight="600">
+            No data to display
+          </text>
+        `;
+        return;
+      }
+
+      let currentAngle = -90; // Start from top
+      const radius = 90;
+      const labelRadius = 60;
+      
+      let svgContent = '';
+      
+      data.forEach((item, index) => {
+        if (item.angle === 0) return;
+        
+        const startAngle = currentAngle;
+        const endAngle = currentAngle + item.angle;
+        const color = sliceColors[categories.findIndex(c => c.name === item.name) % sliceColors.length];
+        
+        // Calculate arc path
+        const startRad = (startAngle * Math.PI) / 180;
+        const endRad = (endAngle * Math.PI) / 180;
+        
+        const x1 = radius * Math.cos(startRad);
+        const y1 = radius * Math.sin(startRad);
+        const x2 = radius * Math.cos(endRad);
+        const y2 = radius * Math.sin(endRad);
+        
+        const largeArc = item.angle > 180 ? 1 : 0;
+        
+        // Create slice path
+        const pathData = item.angle >= 360 
+          ? `M 0 -${radius} A ${radius} ${radius} 0 1 1 0 ${radius} A ${radius} ${radius} 0 1 1 0 -${radius}`
+          : `M 0 0 L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+        
+        svgContent += `
+          <path d="${pathData}" fill="${color}" class="pie-slice" stroke="white" stroke-width="2">
+            <title>${item.name}: ${showPercentages ? item.percentage.toFixed(1) + '%' : item.angle.toFixed(1) + '°'}</title>
+          </path>
+        `;
+        
+        // Add label if slice is big enough
+        if (item.angle > 20) {
+          const midAngle = (startAngle + endAngle) / 2;
+          const midRad = (midAngle * Math.PI) / 180;
+          const labelX = labelRadius * Math.cos(midRad);
+          const labelY = labelRadius * Math.sin(midRad);
+          
+          const displayValue = showPercentages 
+            ? item.percentage.toFixed(0) + '%'
+            : item.angle.toFixed(0) + '°';
+          
+          svgContent += `
+            <text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" 
+                  fill="white" font-size="11" font-weight="700" class="slice-label">
+              ${displayValue}
+            </text>
+          `;
+        }
+        
+        currentAngle = endAngle;
+      });
+      
+      pieChart.innerHTML = svgContent;
+    }
+
+    // Render legend
+    function renderLegend() {
+      const data = calculateData();
+      
+      legend.innerHTML = data.map((item, index) => `
+        <div class="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${item.visible ? 'bg-gray-100' : 'bg-gray-50 opacity-50'}">
+          <span class="w-3 h-3 rounded-full" style="background-color: ${sliceColors[index % sliceColors.length]}"></span>
+          <span class="text-gray-700">${item.name}</span>
+        </div>
+      `).join('');
+    }
+
+    // Update all displays
+    function updateDisplay() {
+      const title = currentDataset === 'custom' ? customTitle : presetDatasets[currentDataset].title;
+      tableTitle.textContent = '📊 ' + title;
+      chartTitle.textContent = '🥧 ' + title;
+      
+      renderTable();
+      renderPieChart();
+      renderLegend();
+    }
+
+    // Event handlers
+    function updateFrequency(index, value) {
+      const num = Math.max(0, Math.min(999, parseInt(value) || 0));
+      categories[index].frequency = num;
+      updateDisplay();
+    }
+
+    function updateCategoryName(index, value) {
+      categories[index].name = value || `Category ${index + 1}`;
+      updateDisplay();
+    }
+
+    function toggleCategory(index) {
+      categories[index].visible = !categories[index].visible;
+      updateDisplay();
+    }
+
+    // Dataset change handler
+    datasetSelect.addEventListener('change', (e) => {
+      currentDataset = e.target.value;
+      categories = JSON.parse(JSON.stringify(presetDatasets[currentDataset].categories));
+      
+      if (currentDataset === 'custom') {
+        customTitleSection.classList.remove('hidden');
+        customControls.classList.remove('hidden');
+        customTitleInput.value = customTitle;
+      } else {
+        customTitleSection.classList.add('hidden');
+        customControls.classList.add('hidden');
+      }
+      
+      updateDisplay();
+    });
+
+    // Custom title change
+    customTitleInput.addEventListener('input', (e) => {
+      customTitle = e.target.value || 'My SDG Scenario';
+      updateDisplay();
+    });
+
+    // Toggle display mode
+    toggleDisplayBtn.addEventListener('click', () => {
+      showPercentages = !showPercentages;
+      toggleDisplayBtn.textContent = showPercentages ? 'Percentages' : 'Angles';
+      renderPieChart();
+    });
+
+    // Help panel toggle
+    helpToggleBtn.addEventListener('click', () => {
+      helpPanel.classList.toggle('hidden');
+    });
+
+    // Quiz mode toggle
+    quizModeToggle.addEventListener('click', toggleQuizMode);
+
+    // Quiz control buttons
+    checkAnswersBtn.addEventListener('click', checkQuizAnswers);
+    
+    showHintsBtn.addEventListener('click', () => {
+      quizHints.classList.toggle('hidden');
+    });
+    
+    resetQuizBtn.addEventListener('click', () => {
+      quizFeedback.classList.add('hidden');
+      quizHints.classList.add('hidden');
+      generateQuiz();
+    });
+
+    // Add category
+    addCategoryBtn.addEventListener('click', () => {
+      if (categories.length < 6) {
+        categories.push({
+          name: `Category ${categories.length + 1}`,
+          frequency: 10,
+          visible: true
+        });
+        updateDisplay();
+      }
+    });
+
+    // Remove category
+    removeCategoryBtn.addEventListener('click', () => {
+      if (categories.length > 3) {
+        categories.pop();
+        updateDisplay();
+      }
+    });
+
+    // Make functions globally accessible
+    window.updateFrequency = updateFrequency;
+    window.updateCategoryName = updateCategoryName;
+    window.toggleCategory = toggleCategory;
+
+    // Quiz Mode Functions
+    function generateQuiz() {
+      const data = calculateData();
+      const total = data[0]?.total || 0;
+      
+      // Store correct answers
+      quizCorrectAnswers = {
+        total: total,
+        categories: data.map(item => ({
+          name: item.name,
+          frequency: item.frequency,
+          fraction: `${item.frequency}/${total}`,
+          percentage: item.percentage.toFixed(1),
+          angle: item.angle.toFixed(1)
+        }))
+      };
+      
+      // Reset answers
+      quizAnswers = {};
+      
+      // Generate quiz questions
+      let questionsHTML = '<div class="grid md:grid-cols-2 gap-4">';
+      
+      // Question 1: Calculate total
+      questionsHTML += `
+        <div class="bg-white p-3 rounded-lg border-2 border-purple-200">
+          <label class="block text-sm font-semibold text-purple-800 mb-2">
+            1. What is the total frequency?
+          </label>
+          <input type="number" id="quiz-total" min="0" 
+                 class="w-full px-3 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                 placeholder="Enter total">
+        </div>
+      `;
+      
+      // Question 2-4: Pick 3 random categories for detailed calculations
+      const shuffled = [...data].sort(() => 0.5 - Math.random()).slice(0, 3);
+      
+      shuffled.forEach((item, idx) => {
+        questionsHTML += `
+          <div class="bg-white p-3 rounded-lg border-2 border-purple-200">
+            <label class="block text-sm font-semibold text-purple-800 mb-2">
+              ${idx + 2}. Calculate for "${item.name}" (frequency: ${item.frequency})
+            </label>
+            <div class="space-y-2 text-sm">
+              <div>
+                <label class="text-purple-700">Percentage:</label>
+                <input type="number" step="0.1" id="quiz-pct-${idx}" 
+                       class="w-full px-2 py-1 border border-purple-300 rounded focus:outline-none focus:ring-1 focus:ring-purple-500"
+                       placeholder="e.g. 35.0">
+              </div>
+              <div>
+                <label class="text-purple-700">Angle (degrees):</label>
+                <input type="number" step="0.1" id="quiz-angle-${idx}" 
+                       class="w-full px-2 py-1 border border-purple-300 rounded focus:outline-none focus:ring-1 focus:ring-purple-500"
+                       placeholder="e.g. 126.0">
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      
+      questionsHTML += '</div>';
+      quizQuestions.innerHTML = questionsHTML;
+      
+      // Store which categories were selected for quiz
+      quizAnswers.selectedCategories = shuffled.map(item => item.name);
+    }
+
+    function checkQuizAnswers() {
+      const totalInput = document.getElementById('quiz-total');
+      const totalAnswer = parseFloat(totalInput.value);
+      
+      let correct = 0;
+      let total = 4; // 1 total + 3 categories with 2 calculations each = 7, but we count 4 main questions
+      
+      const results = [];
+      
+      // Check total
+      if (Math.abs(totalAnswer - quizCorrectAnswers.total) < 0.1) {
+        correct++;
+        results.push({ question: 'Total frequency', correct: true });
+        totalInput.classList.add('border-green-500', 'bg-green-50');
+        totalInput.classList.remove('border-red-500', 'bg-red-50');
+      } else {
+        results.push({ 
+          question: 'Total frequency', 
+          correct: false, 
+          expected: quizCorrectAnswers.total,
+          given: totalAnswer
+        });
+        totalInput.classList.add('border-red-500', 'bg-red-50');
+        totalInput.classList.remove('border-green-500', 'bg-green-50');
+      }
+      
+      // Check selected categories
+      quizAnswers.selectedCategories.forEach((catName, idx) => {
+        const correctCat = quizCorrectAnswers.categories.find(c => c.name === catName);
+        
+        const pctInput = document.getElementById(`quiz-pct-${idx}`);
+        const angleInput = document.getElementById(`quiz-angle-${idx}`);
+        
+        const pctAnswer = parseFloat(pctInput.value);
+        const angleAnswer = parseFloat(angleInput.value);
+        
+        let catCorrect = 0;
+        
+        // Check percentage
+        if (Math.abs(pctAnswer - parseFloat(correctCat.percentage)) < 0.5) {
+          catCorrect++;
+          pctInput.classList.add('border-green-500', 'bg-green-50');
+          pctInput.classList.remove('border-red-500', 'bg-red-50');
+        } else {
+          pctInput.classList.add('border-red-500', 'bg-red-50');
+          pctInput.classList.remove('border-green-500', 'bg-green-50');
+        }
+        
+        // Check angle
+        if (Math.abs(angleAnswer - parseFloat(correctCat.angle)) < 0.5) {
+          catCorrect++;
+          angleInput.classList.add('border-green-500', 'bg-green-50');
+          angleInput.classList.remove('border-red-500', 'bg-red-50');
+        } else {
+          angleInput.classList.add('border-red-500', 'bg-red-50');
+          angleInput.classList.remove('border-green-500', 'bg-green-50');
+        }
+        
+        if (catCorrect === 2) {
+          correct++;
+        }
+        
+        results.push({
+          question: `${catName}`,
+          correct: catCorrect === 2,
+          pctExpected: correctCat.percentage,
+          angleExpected: correctCat.angle,
+          pctGiven: pctAnswer,
+          angleGiven: angleAnswer
+        });
+      });
+      
+      // Show feedback
+      const percentage = Math.round((correct / total) * 100);
+      let feedbackClass = '';
+      let feedbackMessage = '';
+      
+      if (percentage === 100) {
+        feedbackClass = 'bg-green-100 border-green-400 text-green-800';
+        feedbackMessage = '🎉 Perfect! You got everything correct!';
+      } else if (percentage >= 75) {
+        feedbackClass = 'bg-blue-100 border-blue-400 text-blue-800';
+        feedbackMessage = `✨ Great work! You got ${correct} out of ${total} correct (${percentage}%)`;
+      } else if (percentage >= 50) {
+        feedbackClass = 'bg-amber-100 border-amber-400 text-amber-800';
+        feedbackMessage = `💪 Good effort! You got ${correct} out of ${total} correct (${percentage}%). Try again!`;
+      } else {
+        feedbackClass = 'bg-rose-100 border-rose-400 text-rose-800';
+        feedbackMessage = `📚 Keep practising! You got ${correct} out of ${total} correct. Check the hints!`;
+      }
+      
+      quizFeedback.className = `mt-4 p-4 rounded-lg border-2 ${feedbackClass}`;
+      quizFeedback.innerHTML = `
+        <p class="font-bold text-lg mb-2">${feedbackMessage}</p>
+        <details class="text-sm mt-2">
+          <summary class="cursor-pointer font-semibold">View correct answers</summary>
+          <ul class="mt-2 space-y-1 list-disc list-inside">
+            <li>Total: ${quizCorrectAnswers.total}</li>
+            ${quizCorrectAnswers.categories.filter(c => quizAnswers.selectedCategories.includes(c.name)).map(c => 
+              `<li>${c.name}: ${c.percentage}% and ${c.angle}°</li>`
+            ).join('')}
+          </ul>
+        </details>
+      `;
+      quizFeedback.classList.remove('hidden');
+    }
+
+    function toggleQuizMode() {
+      quizMode = !quizMode;
+      
+      if (quizMode) {
+        quizModeToggle.textContent = '📊 Exit Quiz';
+        quizModeToggle.classList.add('bg-rose-600', 'hover:bg-rose-700');
+        quizModeToggle.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+        quizPanel.classList.remove('hidden');
+        datasetSelect.disabled = true;
+        customTitleSection.classList.add('hidden');
+        customControls.classList.add('hidden');
+        generateQuiz();
+      } else {
+        quizModeToggle.innerHTML = '<span>🎯</span> <span>Quiz Mode</span>';
+        quizModeToggle.classList.remove('bg-rose-600', 'hover:bg-rose-700');
+        quizModeToggle.classList.add('bg-purple-600', 'hover:bg-purple-700');
+        quizPanel.classList.add('hidden');
+        quizFeedback.classList.add('hidden');
+        quizHints.classList.add('hidden');
+        datasetSelect.disabled = false;
+        if (currentDataset === 'custom') {
+          customTitleSection.classList.remove('hidden');
+          customControls.classList.remove('hidden');
+        }
+      }
+      
+      updateDisplay();
+    }
+
+    // Make functions globally accessible
+    window.updateFrequency = updateFrequency;
+    window.updateCategoryName = updateCategoryName;
+    window.toggleCategory = toggleCategory;
+
+    // Element SDK integration
+    function onConfigChange(config) {
+      const mainTitle = document.getElementById('main-title');
+      const helpBtnLabel = document.getElementById('help-button-label');
+      
+      mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      helpBtnLabel.textContent = config.help_button_text || defaultConfig.help_button_text;
+      
+      // Apply colors
+      document.body.style.background = `linear-gradient(to bottom right, ${config.background_color || defaultConfig.background_color}, #e0f2fe)`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['help_button_text', config.help_button_text || defaultConfig.help_button_text]
+      ]);
+    }
+
+    // Initialize
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange,
+      mapToCapabilities,
+      mapToEditPanelValues
+    });
+
+    // Initial render
+    updateDisplay();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c27c97c6185a895',t:'MTc2OTE3NjUwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

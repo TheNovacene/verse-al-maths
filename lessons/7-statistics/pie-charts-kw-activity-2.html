@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read the Circle – SDG Pie Chart Explorer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .pie-slice {
+      transition: transform 0.2s ease, filter 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .pie-slice:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+      transform-origin: center;
+    }
+    
+    .tab-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .tab-btn.active {
+      transform: translateY(-2px);
+    }
+    
+    .scenario-card {
+      animation: fadeIn 0.4s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .feedback-correct {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+      border-radius: 3px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.2);
+      border-radius: 3px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-auto custom-scrollbar">
+  <div id="app-container" class="w-full min-h-full p-4 md:p-6"><!-- Header -->
+   <header class="text-center mb-6">
+    <h1 id="app-title" class="text-2xl md:text-3xl font-extrabold text-teal-800 mb-2">🌍 Read the Circle – SDG Pie Chart Explorer</h1>
+    <p id="intro-text" class="text-teal-600 text-sm md:text-base max-w-2xl mx-auto">Explore pie charts linked to the UN Sustainable Development Goals. Practice reading data, estimating percentages, and understanding real-world impacts.</p>
+   </header><!-- Tab Navigation -->
+   <div class="flex justify-center gap-2 mb-6 flex-wrap"><button id="explore-tab" class="tab-btn active px-4 py-2 rounded-full font-bold text-sm bg-teal-600 text-white shadow-lg"> 📊 Explore Scenarios </button> <button id="challenge-tab" class="tab-btn px-4 py-2 rounded-full font-bold text-sm bg-white text-teal-700 border-2 border-teal-200 hover:border-teal-400"> 🔥 Challenge Mode </button> <button id="build-tab" class="tab-btn px-4 py-2 rounded-full font-bold text-sm bg-white text-teal-700 border-2 border-teal-200 hover:border-teal-400"> 🎨 Build My Own </button>
+   </div><!-- Explore Scenarios Section -->
+   <div id="explore-section" class="max-w-5xl mx-auto"><!-- Scenario Selector -->
+    <div class="flex flex-wrap justify-center items-center gap-3 mb-6"><label class="font-semibold text-teal-700">Choose Scenario:</label> <select id="scenario-select" class="px-4 py-2 rounded-lg border-2 border-teal-200 bg-white text-teal-800 font-medium focus:border-teal-500 focus:outline-none"> </select> <button id="next-scenario" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg shadow transition-all"> Next ➜ </button>
+    </div><!-- Main Content Grid -->
+    <div class="scenario-card grid md:grid-cols-2 gap-6"><!-- Pie Chart Area -->
+     <div class="bg-white rounded-2xl shadow-xl p-5 border border-teal-100">
+      <h2 id="chart-title" class="text-lg font-bold text-teal-800 mb-3 text-center"></h2>
+      <div class="flex justify-center">
+       <svg id="pie-chart" viewbox="0 0 300 300" class="w-full max-w-[280px]"></svg>
+      </div>
+      <p id="hover-info" class="text-center text-sm text-teal-600 mt-3 h-6">👆 Hover or tap a slice to see exact values</p><!-- Legend -->
+      <div id="legend" class="mt-4 flex flex-wrap justify-center gap-2"></div>
+     </div><!-- Questions Area -->
+     <div class="bg-white rounded-2xl shadow-xl p-5 border border-teal-100">
+      <h3 class="text-lg font-bold text-teal-800 mb-4 flex items-center gap-2"><span class="text-2xl">❓</span> Test Your Understanding</h3>
+      <div id="questions-container" class="space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar pr-2">
+      </div>
+      <div id="score-display" class="mt-4 p-3 bg-teal-50 rounded-lg text-center hidden"><span class="font-bold text-teal-700">Score: </span> <span id="score-value" class="font-extrabold text-teal-800">0/0</span>
+      </div>
+     </div>
+    </div><!-- SDG Context Box -->
+    <div id="sdg-context" class="mt-6 bg-gradient-to-r from-teal-600 to-emerald-600 rounded-2xl p-5 text-white shadow-xl">
+     <h4 class="font-bold text-lg mb-2 flex items-center gap-2"><span class="text-2xl">🎯</span> SDG Connection</h4>
+     <p id="sdg-description" class="text-teal-50"></p>
+    </div>
+   </div><!-- Challenge Mode Section -->
+   <div id="challenge-section" class="max-w-5xl mx-auto hidden"><!-- Challenge Scenario Selector -->
+    <div class="flex flex-wrap justify-center items-center gap-3 mb-6"><label class="font-semibold text-red-700">🎯 Choose Challenge:</label> <select id="challenge-select" class="px-4 py-2 rounded-lg border-2 border-red-300 bg-white text-red-800 font-medium focus:border-red-500 focus:outline-none"> </select> <button id="next-challenge" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow transition-all"> Next ➜ </button> <span id="challenge-score" class="ml-auto text-lg font-bold text-red-700 hidden">Score: <span id="challenge-score-value">0</span>/5 ⭐</span>
+    </div><!-- Challenge Content Grid -->
+    <div class="scenario-card grid md:grid-cols-2 gap-6"><!-- Challenge Chart Area -->
+     <div class="bg-white rounded-2xl shadow-xl p-5 border-4 border-red-200">
+      <div class="flex items-center gap-2 mb-3">
+       <h2 id="challenge-title" class="text-lg font-bold text-red-800 flex-1"></h2><span class="text-2xl">🔥</span>
+      </div>
+      <div class="flex justify-center">
+       <svg id="challenge-pie-chart" viewbox="0 0 300 300" class="w-full max-w-[280px]"></svg>
+      </div>
+      <p id="challenge-hover-info" class="text-center text-sm text-red-600 mt-3 h-6">👆 Hover or tap to see exact values</p>
+      <div id="challenge-legend" class="mt-4 flex flex-wrap justify-center gap-2"></div>
+     </div><!-- Challenge Questions Area -->
+     <div class="bg-white rounded-2xl shadow-xl p-5 border-4 border-red-200">
+      <h3 class="text-lg font-bold text-red-800 mb-4 flex items-center gap-2"><span class="text-2xl">🧠</span> Deep Dive Questions</h3>
+      <p class="text-xs text-red-600 font-semibold mb-4 bg-red-50 p-2 rounded">💡 These questions need calculation AND critical thinking about real-world impact!</p>
+      <div id="challenge-questions-container" class="space-y-4 max-h-[450px] overflow-y-auto custom-scrollbar pr-2">
+      </div>
+      <div id="challenge-feedback" class="mt-4 p-3 bg-red-50 rounded-lg text-center"><span class="font-bold text-red-700">Questions Answered: </span> <span id="challenge-answered-value" class="font-extrabold text-red-800">0/5</span>
+      </div>
+     </div>
+    </div><!-- Challenge Impact Box -->
+    <div id="challenge-impact" class="mt-6 bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl p-5 text-white shadow-xl">
+     <h4 class="font-bold text-lg mb-2 flex items-center gap-2"><span class="text-2xl">⚠️</span> Real-World Consequences</h4>
+     <p id="challenge-impact-description" class="text-red-50 leading-relaxed"></p>
+    </div>
+   </div><!-- Build My Own Section -->
+   <div id="build-section" class="max-w-5xl mx-auto hidden">
+    <div class="grid md:grid-cols-2 gap-6"><!-- Input Form -->
+     <div class="bg-white rounded-2xl shadow-xl p-5 border border-amber-100">
+      <h3 class="text-lg font-bold text-amber-700 mb-4 flex items-center gap-2"><span class="text-2xl">✏️</span> Create Your Pie Story</h3>
+      <div class="space-y-4">
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">What does your pie chart show?</label> <input type="text" id="custom-title" placeholder="e.g., How we travel to school" class="w-full px-3 py-2 border-2 border-amber-200 rounded-lg focus:border-amber-500 focus:outline-none">
+       </div>
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">Which SDG does this relate to?</label> <select id="custom-sdg" class="w-full px-3 py-2 border-2 border-amber-200 rounded-lg focus:border-amber-500 focus:outline-none"> <option value="3">SDG 3 – Good Health</option> <option value="4">SDG 4 – Quality Education</option> <option value="6">SDG 6 – Clean Water</option> <option value="7">SDG 7 – Clean Energy</option> <option value="11">SDG 11 – Sustainable Cities</option> <option value="12">SDG 12 – Responsible Consumption</option> <option value="13">SDG 13 – Climate Action</option> </select>
+       </div>
+       <div id="categories-container"><label class="block text-sm font-semibold text-gray-700 mb-2">Categories &amp; Percentages</label>
+        <div id="category-inputs" class="space-y-2"></div>
+        <div class="flex gap-2 mt-3"><button id="add-category" class="px-3 py-1 bg-amber-100 hover:bg-amber-200 text-amber-700 font-semibold rounded-lg text-sm transition-all"> + Add Category </button> <span id="total-percentage" class="ml-auto text-sm font-semibold text-gray-600">Total: 0%</span>
+        </div>
+       </div><button id="generate-chart" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold rounded-xl shadow-lg transition-all"> 🎨 Generate My Pie Chart </button>
+      </div>
+     </div><!-- Custom Chart Display -->
+     <div class="bg-white rounded-2xl shadow-xl p-5 border border-amber-100">
+      <h3 id="custom-chart-title" class="text-lg font-bold text-amber-700 mb-3 text-center">Your Pie Chart</h3>
+      <div class="flex justify-center">
+       <svg id="custom-pie-chart" viewbox="0 0 300 300" class="w-full max-w-[280px]"></svg>
+      </div>
+      <div id="custom-legend" class="mt-4 flex flex-wrap justify-center gap-2"></div><!-- Reflection Prompts -->
+      <div id="reflection-area" class="mt-5 space-y-3 hidden">
+       <h4 class="font-bold text-amber-700 flex items-center gap-2"><span>💭</span> Reflect on Your Data</h4>
+       <div><label class="block text-xs font-semibold text-gray-600 mb-1">What does your pie chart show?</label> <textarea id="reflection-1" rows="2" placeholder="Write one sentence explaining your chart..." class="w-full px-3 py-2 border-2 border-amber-200 rounded-lg text-sm focus:border-amber-500 focus:outline-none"></textarea>
+       </div>
+       <div><label class="block text-xs font-semibold text-gray-600 mb-1">Which slice concerns you most? Why?</label> <textarea id="reflection-2" rows="2" placeholder="Think about the SDG impact..." class="w-full px-3 py-2 border-2 border-amber-200 rounded-lg text-sm focus:border-amber-500 focus:outline-none"></textarea>
+       </div>
+       <div><label class="block text-xs font-semibold text-gray-600 mb-1">Which slice would you like to grow or shrink?</label> <textarea id="reflection-3" rows="2" placeholder="What change would help this SDG?" class="w-full px-3 py-2 border-2 border-amber-200 rounded-lg text-sm focus:border-amber-500 focus:outline-none"></textarea>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Footer -->
+   <footer class="text-center mt-8 pb-4">
+    <p class="text-teal-600 text-xs">🌱 Learning about the world through data – one pie at a time!</p>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      app_title: "🌍 Read the Circle – SDG Pie Chart Explorer",
+      intro_text: "Explore pie charts linked to the UN Sustainable Development Goals. Practice reading data, estimating percentages, and understanding real-world impacts.",
+      background_color: "#ecfdf5",
+      primary_color: "#0d9488",
+      secondary_color: "#f59e0b",
+      text_color: "#115e59",
+      surface_color: "#ffffff",
+      font_family: "Nunito",
+      font_size: 16
+    };
+
+    let config = { ...defaultConfig };
+
+    // Scenario Data
+    const scenarios = [
+      {
+        id: "climate",
+        title: "Global Greenhouse Gas Emissions by Sector",
+        sdg: 13,
+        sdgName: "Climate Action",
+        sdgDescription: "SDG 13 aims to take urgent action to combat climate change. Understanding which sectors produce the most emissions helps us focus efforts where they matter most. Energy production and industry are the biggest contributors – transitioning to renewable energy is crucial!",
+        data: [
+          { name: "Energy", percentage: 35, color: "#ef4444" },
+          { name: "Industry", percentage: 21, color: "#f97316" },
+          { name: "Transport", percentage: 16, color: "#eab308" },
+          { name: "Buildings", percentage: 12, color: "#22c55e" },
+          { name: "Agriculture", percentage: 10, color: "#06b6d4" },
+          { name: "Other", percentage: 6, color: "#8b5cf6" }
+        ],
+        questions: [
+          {
+            text: "Which sector produces the largest share of emissions? Estimate its percentage.",
+            type: "select",
+            options: ["Industry – about 20%", "Energy – about 35%", "Transport – about 25%", "Agriculture – about 15%"],
+            correct: 1,
+            explanation: "Energy is the largest at 35% – more than a third of all emissions. This is why switching to renewable energy is so important for climate action!"
+          },
+          {
+            text: "Which two sectors together make up about half of the total?",
+            type: "select",
+            options: ["Transport + Buildings", "Energy + Industry", "Agriculture + Other", "Industry + Transport"],
+            correct: 1,
+            explanation: "Energy (35%) + Industry (21%) = 56%, which is just over half. These two sectors are the main focus for emissions reduction."
+          },
+          {
+            text: "Transport makes up approximately what fraction of the pie?",
+            type: "select",
+            options: ["About a quarter (¼)", "About a sixth (⅙)", "About a third (⅓)", "About a tenth (1/10)"],
+            correct: 1,
+            explanation: "Transport at 16% is close to one-sixth (16.67%). Electric vehicles and public transport can help reduce this!"
+          },
+          {
+            text: "Which sector has the smallest share? Why might this still matter?",
+            type: "select",
+            options: ["Agriculture – it affects food", "Other – it includes waste", "Buildings – homes use lots of energy", "Transport – it's growing fast"],
+            correct: 1,
+            explanation: "'Other' (6%) includes waste and other sources. Even small shares matter because every reduction helps reach our climate targets!"
+          }
+        ],
+        challengeQuestions: [
+          {
+            text: "Global emissions are about 37 billion tonnes per year. Calculate the approximate tonnes from the Energy sector, then explain why reducing this would be more effective than reducing Agriculture.",
+            type: "text",
+            correctAnswer: "12.95|13",
+            explanation: "Energy: 35% of 37 billion = 12.95 billion tonnes. Focusing on Energy (35%) vs Agriculture (10%) has 3.5× the impact. Energy comes from coal/fossil fuels – one renewable energy policy can reduce it dramatically, whereas agriculture involves millions of individual farms.",
+            keywords: ["12.95", "13", "billion", "tonnes", "35%", "more impact", "policy", "renewable", "scalable"]
+          },
+          {
+            text: "If Transport emissions need to drop from 16% to 8% in 10 years, how many billion tonnes must be cut? What two strategies could achieve this?",
+            type: "text",
+            correctAnswer: "1.85|2|2.96",
+            explanation: "Current Transport (16% of 37B = 5.92B tonnes). Target (8% of 37B = 2.96B tonnes). Cut needed = ~3 billion tonnes. Strategies: (1) Electric vehicles + charging networks, (2) Public transport investment to reduce car usage. Working at scale is essential – individual changes won't be enough.",
+            keywords: ["2.96", "3", "billion", "tonnes", "electric", "public transport", "policy", "infrastructure"]
+          },
+          {
+            text: "The pie shows what we emit NOW. Imagine we've hit a 1.5°C climate target. What should the Energy sector percentage drop to, and what would need to replace it? (Hint: think about sectors we might add or how sectors could merge.)",
+            type: "text",
+            correctAnswer: "5|10|15",
+            explanation: "To limit warming, Energy must drop to ~5-10% (almost all renewable). Agriculture might stay at ~8% (harder to decarbonise). The pie would look very different – 'Renewable Energy Infrastructure' & 'Carbon Capture' might be new slices. This shows why SDG 13 is urgent: we need transformative change, not tweaks.",
+            keywords: ["5%", "10%", "15%", "renewable", "transform", "carbon capture", "restructure", "new sectors"]
+          },
+          {
+            text: "Why might wealthy countries need to take MORE responsibility for reducing their Energy & Industry emissions than developing countries, even if the global percentages are the same?",
+            type: "text",
+            correctAnswer: "wealthy|develop|equity|per capita|historical|responsibility",
+            explanation: "Wealthy nations have: (1) Historical emissions (they industrialised first), (2) Higher per capita emissions (people use more), (3) Better technology/resources to transition. Developing countries are industrialising now – asking them to cut first is unfair. SDG 13 requires equity: those with most responsibility and capability should act first.",
+            keywords: ["wealthy", "historical", "per capita", "equity", "responsibility", "technology", "resources", "fair"]
+          },
+          {
+            text: "If your school/community aimed to cut Transport emissions by 50%, calculate the new percentage, then propose 3 realistic actions. Why would these create both climate AND health benefits?",
+            type: "text",
+            correctAnswer: "8|reduce|bike|walk|bus|car share",
+            explanation: "Transport: 16% → 50% reduction = 8%. Actions: (1) Active travel schemes (bike/walk) → 6-10 fewer cars, (2) Bus/coach pass subsidies → 20-30% mode shift, (3) Car-sharing apps → reduce parked cars 30%. Health benefits: exercise (obesity↓, fitness↑), cleaner air (respiratory↓, asthma↓), mental health (outdoor time). Linking SDGs shows systemic thinking!",
+            keywords: ["8%", "bike", "walk", "bus", "car share", "health", "exercise", "air", "pollution"]
+          }
+        ]
+      },
+      {
+        id: "education",
+        title: "Time Spent on School Subjects in One Week",
+        sdg: 4,
+        sdgName: "Quality Education",
+        sdgDescription: "SDG 4 promotes inclusive and quality education for all. A balanced curriculum helps students develop different skills. Notice how core subjects like Maths and English take up the most time, but subjects like Art and PE are important for wellbeing too!",
+        data: [
+          { name: "Maths", percentage: 22, color: "#3b82f6" },
+          { name: "English", percentage: 22, color: "#8b5cf6" },
+          { name: "Science", percentage: 18, color: "#22c55e" },
+          { name: "Languages", percentage: 12, color: "#f97316" },
+          { name: "PE", percentage: 10, color: "#ef4444" },
+          { name: "Art/Music", percentage: 8, color: "#ec4899" },
+          { name: "Other", percentage: 8, color: "#6b7280" }
+        ],
+        questions: [
+          {
+            text: "Maths and English each take up about what fraction of the timetable?",
+            type: "select",
+            options: ["About a quarter each (¼)", "About a fifth each (⅕)", "About a third each (⅓)", "About a tenth each (1/10)"],
+            correct: 1,
+            explanation: "Both are 22%, which is close to one-fifth (20%) or just over. Together they make up nearly half of lesson time!"
+          },
+          {
+            text: "If you have 25 hours of lessons per week, approximately how many hours are spent on Science?",
+            type: "select",
+            options: ["About 3 hours", "About 4.5 hours", "About 6 hours", "About 2 hours"],
+            correct: 1,
+            explanation: "Science is 18% of 25 hours = 0.18 × 25 = 4.5 hours. That's nearly a fifth of your lesson time!"
+          },
+          {
+            text: "Which subjects together make up about a quarter of the timetable?",
+            type: "select",
+            options: ["Maths + English", "PE + Art/Music + Other", "Science + Languages", "Just Maths alone"],
+            correct: 1,
+            explanation: "PE (10%) + Art/Music (8%) + Other (8%) = 26%, which is about a quarter. These subjects help with creativity, fitness and other skills!"
+          },
+          {
+            text: "Why might having only 8% for Art and Music matter for quality education?",
+            type: "select",
+            options: ["It doesn't matter – they're not important", "Creative subjects help develop different skills and wellbeing", "8% is actually too much", "Only academic subjects count"],
+            correct: 1,
+            explanation: "Quality education means developing the whole person. Art and Music build creativity, expression, and emotional wellbeing – all vital life skills!"
+          }
+        ],
+        challengeQuestions: [
+          {
+            text: "In a school with 1,200 students and a 25-hour week, how many total student-hours are spent on Maths? If each Maths class has 25 students, how many Maths lessons must be timetabled?",
+            type: "text",
+            correctAnswer: "6600|264",
+            explanation: "Total student-hours: 1,200 × 25 × 22% = 6,600 hours. Maths lessons needed: 6,600 ÷ 25 = 264 lessons/week. A school must balance: enough Maths to build numeracy BUT not so much students lose other skills. This is a real timetabling puzzle!",
+            keywords: ["6600", "264", "22%", "numeracy", "balance", "timetable", "pupil hours"]
+          },
+          {
+            text: "Compare time for Languages (12%) vs PE (10%). Calculate the difference in hours over a year (37 school weeks). Why might this difference matter for UK students' future?",
+            type: "text",
+            correctAnswer: "18.5|19|37",
+            explanation: "Difference: (12% - 10%) × 25 × 37 = 2% × 925 = 18.5 hours/year. Why it matters: (1) UK workforce is multilingual but Schools underteach languages vs. European peers, (2) Obesity/fitness crisis means PE hours < needed, (3) Yet 2hrs extra languages might build global careers. SDG 4 asks: what skills do students NEED vs what we currently teach?",
+            keywords: ["18.5", "19", "languages", "PE", "obesity", "career", "multilingual", "global"]
+          },
+          {
+            text: "If a student struggles with Maths and Languages but excels in Art, should schools force equal time on all subjects? Argue for and against, then propose a fair solution aligned with SDG 4.",
+            type: "text",
+            correctAnswer: "specialise|personalise|equity|access|choice|pathway",
+            explanation: "For equal time: Maths/English are foundational, all students need basics. Against: One-size-fits-all fails learners; creative students disengage. SDG 4 solution: 'Quality & Inclusive' means: (1) Core Maths to a threshold, (2) Then choice/pathways (STEM vs Creative), (3) Flexible timetables for late developers. Equity ≠ identical; it means each student reaches their potential.",
+            keywords: ["personalise", "pathway", "choice", "inclusive", "equity", "foundational", "potential", "specialise"]
+          },
+          {
+            text: "A developing country has limited resources: 15 hours/week per student max. How would you distribute time differently than the UK timetable shown? Justify using SDG 4 goals (quality education, reduce inequality).",
+            type: "text",
+            correctAnswer: "Maths|English|critical|literacy|numeracy|foundation",
+            explanation: "Suggested focus: Maths 25%, English 25%, Science 20%, Life Skills/PE 15%, Arts/Social 15%. Why: (1) Literacy & numeracy are foundations for ALL future learning/employment, (2) Life skills (health, agriculture) may be more relevant than Languages in some contexts, (3) Less classroom time means more community/outdoor learning. SDG 4 recognises context – one global standard isn't inclusive.",
+            keywords: ["25%", "literacy", "numeracy", "life skills", "context", "inclusive", "foundation", "relevant"]
+          },
+          {
+            text: "Your school wants to improve GCSE Maths results (currently 40% grade 4+). Propose a timetable change with % for each subject. What trade-offs occur? Who benefits most/least?",
+            type: "text",
+            correctAnswer: "Maths|25|26|27|Maths support|intervention",
+            explanation: "Option: Increase Maths to 25-27% (+3-5%), reduce 'Other' or slightly reduce Languages/Art. Trade-offs: (1) Benefits: weaker students get catch-up time, (2) Costs: some students lose creative outlets/languages, (3) Equity issue: high-attainers may move faster; low-attainers need better teaching, not just time. A timetable alone won't fix results – quality of teaching matters more. SDG 4 is about quality, not just access.",
+            keywords: ["25%", "27%", "support", "quality teaching", "catch-up", "trade-offs", "equity", "GCSE"]
+          }
+        ]
+      },
+      {
+        id: "health",
+        title: "How Teenagers Spend After-School Time",
+        sdg: 3,
+        sdgName: "Good Health and Well-being",
+        sdgDescription: "SDG 3 focuses on ensuring healthy lives for all ages. How teenagers spend their free time affects physical and mental health. Notice the balance between screen time, physical activity, and rest – a healthy mix is important!",
+        data: [
+          { name: "Screens/Gaming", percentage: 28, color: "#6366f1" },
+          { name: "Homework", percentage: 22, color: "#f97316" },
+          { name: "Sports/Exercise", percentage: 15, color: "#22c55e" },
+          { name: "Socialising", percentage: 14, color: "#ec4899" },
+          { name: "Eating", percentage: 12, color: "#eab308" },
+          { name: "Other hobbies", percentage: 9, color: "#06b6d4" }
+        ],
+        questions: [
+          {
+            text: "What takes up the largest portion of after-school time?",
+            type: "select",
+            options: ["Homework – about a quarter", "Screens/Gaming – just over a quarter", "Sports – about a fifth", "Socialising – about a third"],
+            correct: 1,
+            explanation: "Screens/Gaming at 28% is the largest slice – that's more than a quarter of free time. Health experts recommend balancing this with physical activity!"
+          },
+          {
+            text: "Sports/Exercise and Socialising together make up about...",
+            type: "select",
+            options: ["Half the pie", "About 30%", "About 40%", "Less than a quarter"],
+            correct: 1,
+            explanation: "Sports (15%) + Socialising (14%) = 29%, which is about 30% or just under a third. Both are important for physical and mental health!"
+          },
+          {
+            text: "If a teenager has 4 hours of free time, roughly how long is spent on homework?",
+            type: "select",
+            options: ["About 30 minutes", "About 50 minutes", "About 1.5 hours", "About 2 hours"],
+            correct: 1,
+            explanation: "Homework is 22%, so 0.22 × 4 hours = 0.88 hours ≈ 53 minutes (about 50 minutes)."
+          },
+          {
+            text: "Looking at this pie, what change might improve teenager health?",
+            type: "select",
+            options: ["More homework time", "More screen time", "Swap some screen time for sports/exercise", "Less time eating"],
+            correct: 2,
+            explanation: "Reducing screen time (28%) and increasing sports (15%) would improve physical health. Health guidelines suggest at least 60 minutes of activity daily!"
+          }
+        ],
+        challengeQuestions: [
+          {
+            text: "A teenager has 4 hours free time daily. Calculate current screen time, then calculate time if reduced to 15%. Where could those 52 minutes go to meet the 60-min activity guideline?",
+            type: "text",
+            correctAnswer: "112|1.87|52",
+            explanation: "Current screens: 28% × 240 min = 67.2 min. At 15%: 36 min. Freed time: 31 min. But activity is only 15% × 240 = 36 min. To hit 60-min WHO guideline, needs 24-min increase. Solution: redirect 8 min from homework, 16 min from screens. Shows real changes needed & feasibility.",
+            keywords: ["112", "67", "36", "52", "31", "60 min", "WHO", "feasible", "trade-off"]
+          },
+          {
+            text: "Heavy screen use is linked to poor sleep, anxiety, and reduced fitness. If this pattern continues until age 25, estimate the cumulative health cost (hours of unexercised time = ×2-3 health risk). Why might this create inequality?",
+            type: "text",
+            correctAnswer: "unexercised|risk|poverty|access|inequality|mental health",
+            explanation: "From 14-25 (11 years): 28% screens = lost 15% exercise = net -8.5 hours/week = -4,420 hours unfit. Long-term: Obesity, cardiovascular disease, mental health ↑. Inequality: Wealthy teens can afford sports clubs, counselling; poor teens stuck indoors (safety, cost, transport). SDG 3 requires equitable access to health – not just individual choice.",
+            keywords: ["11 years", "4420 hours", "obesity", "mental health", "access", "wealthy", "poor", "inequality"]
+          },
+          {
+            text: "A school proposes: 'No phones in school → 30-min extra PE weekly.' Estimate the health gain if 500 students do this for a year. But what's the social cost? Is this ethical?",
+            type: "text",
+            correctAnswer: "500|30|52 weeks|78 hours|mental health|stress|social",
+            explanation: "Health gain: 500 × 30min × 52 weeks = 13,000 student-hours of extra activity. Outcomes: ~100 fewer cases of obesity, ~50 fewer mental health crises. Social cost: Teens separated from peers (anxiety?), stress about compliance. Ethics: Yes IF alternative socialising exists. SDG 3 isn't just physical – mental health matters equally. Better: 'Phone-free PE time WITH social options' balances both.",
+            keywords: ["13000 hours", "obesity", "mental health", "social", "anxiety", "compromise", "wellbeing"]
+          },
+          {
+            text: "Data shows 28% screens correlates with lower grades & higher anxiety. Does screen time CAUSE poor grades, or do stressed students use screens to cope? Design a study to test this. What would SDG 3 + 4 require?",
+            type: "text",
+            correctAnswer: "correlation|causation|confound|stress|anxiety|longitudinal|intervention",
+            explanation: "Cause vs. Correlation: Screens might CAUSE poor sleep→poor grades. OR stressed students retreat to screens→vicious cycle. Study: Longitudinal tracking (6-12 months) with matched control groups. SDG 3+4: Requires holistic support – reduce screens, but ALSO improve teaching quality, peer support, & family stress. Ignoring root causes (poverty, family problems) won't work. This is systems thinking.",
+            keywords: ["correlation", "causation", "stress", "confound", "longitudinal", "intervention", "holistic", "systems"]
+          },
+          {
+            text: "If you were health minister redesigning how UK teenagers spend after-school time, what would be your target pie chart? Justify using health science, equity & SDG 3.",
+            type: "text",
+            correctAnswer: "20|25|30|exercise|social|mental|equity|access",
+            explanation: "Target: Screens 15-20%, Sports/Exercise 30%, Socialising 25%, Homework 15%, Eating 10%, Hobbies 5%. Why: (1) WHO recommends 60+ min activity (roughly 30%), (2) Teens need peer time for mental health (social 25%), (3) Less screen time = better sleep/mood, (4) Homework 15% still allows learning. Equity: Provide FREE sports access, safe spaces to socialise (parks, youth clubs), mental health support. Not all teens have resources – SDG 3 = universal right to health.",
+            keywords: ["30%", "25%", "free access", "equity", "universal", "mental health", "wellbeing", "WHO"]
+          }
+        ]
+      },
+      {
+        id: "water",
+        title: "Household Water Usage by Activity",
+        sdg: 6,
+        sdgName: "Clean Water and Sanitation",
+        sdgDescription: "SDG 6 ensures availability of clean water for all. Understanding how we use water at home helps us find ways to conserve this precious resource. Toilets and showers use the most – small changes here can save lots of water!",
+        data: [
+          { name: "Toilets", percentage: 27, color: "#3b82f6" },
+          { name: "Showers/Baths", percentage: 25, color: "#06b6d4" },
+          { name: "Laundry", percentage: 18, color: "#8b5cf6" },
+          { name: "Taps/Sinks", percentage: 15, color: "#22c55e" },
+          { name: "Dishes", percentage: 10, color: "#f97316" },
+          { name: "Other", percentage: 5, color: "#6b7280" }
+        ],
+        questions: [
+          {
+            text: "Toilets and showers together use approximately what fraction of household water?",
+            type: "select",
+            options: ["About a quarter", "About a third", "Just over half", "About three-quarters"],
+            correct: 2,
+            explanation: "Toilets (27%) + Showers (25%) = 52%, which is just over half! Installing water-saving showerheads and dual-flush toilets can make a big difference."
+          },
+          {
+            text: "If a family uses 400 litres of water daily, about how much goes to laundry?",
+            type: "select",
+            options: ["About 72 litres", "About 100 litres", "About 50 litres", "About 120 litres"],
+            correct: 0,
+            explanation: "Laundry is 18%, so 0.18 × 400 = 72 litres. Using full loads and eco settings helps reduce this!"
+          },
+          {
+            text: "Which activity uses the smallest identified share of water?",
+            type: "select",
+            options: ["Dishes", "Taps/Sinks", "Other", "Laundry"],
+            correct: 2,
+            explanation: "'Other' at 5% is the smallest. This includes things like watering plants and cleaning. Every bit of water saved helps!"
+          },
+          {
+            text: "Dishes use about what fraction of total water?",
+            type: "select",
+            options: ["About a fifth", "About a tenth", "About a quarter", "About a twentieth"],
+            correct: 1,
+            explanation: "Dishes at 10% is exactly one-tenth (1/10). Using a dishwasher efficiently or washing up in a bowl rather than running water can reduce this."
+          }
+        ],
+        challengeQuestions: [
+          {
+            text: "A family uses 400L daily. Calculate current toilet water, then calculate savings if they installed dual-flush toilets (reduce by 20%). How much is saved annually in litres AND money (£2 per 1,000L)?",
+            type: "text",
+            correctAnswer: "108|29200|58",
+            explanation: "Current toilet: 27% × 400 = 108L/day. Saving 20% = 21.6L/day × 365 = 7,884L/year. But wait – dual-flush means EVERY flush saves, so multiply by household size. 4-person family = 8 flushes/day → 1.7L saved per flush × 8 × 365 = ~5,000L/year minimum. Money: 5,000L ÷ 1,000 × £2 = £10/year. Small individually but millions UK-wide → SDG 6 impact!",
+            keywords: ["108", "27%", "20%", "7884", "5000", "annual", "savings", "household", "UK-wide"]
+          },
+          {
+            text: "UK water use is 141L per person daily; global average is 100L. Calculate: (a) UK excess, (b) if 4 people reduce to global average, annual saving, (c) Why is this SDG 6 justice issue?",
+            type: "text",
+            correctAnswer: "41|14 million|55 million|equity|access|drought",
+            explanation: "Excess: 141 - 100 = 41L/person/day. 4 people: 164L/day excess × 365 = 59,860L/year (~£120). Global: 66 million people in UK × 41L × 365 = 987 billion litres/year WASTED. Meanwhile: 2 billion lack safe water; 4 billion face water scarcity ≥1 month/year. SDG 6 justice: Wealthy nations over-consume while poor face drought. Equity requires both cutting excess AND investing in poor nations' infrastructure.",
+            keywords: ["141", "100", "41", "59860", "equity", "scarcity", "drought", "justice", "infrastructure"]
+          },
+          {
+            text: "Showers (25%) dominate water use. Calculate: if a 5-min shower uses 50L (10L/min), how many days until your family uses annual household average? If dual-head showerhead cut it to 6L/min, what's the impact?",
+            type: "text",
+            correctAnswer: "8|400|48|2.88|2920",
+            explanation: "Current 5-min shower: 50L. Family (4 × daily average 400L = 1,600L) ÷ 50L = 32 days of showers only (other uses too). With 6L/min nozzle: 5 × 6 = 30L saved per shower (60% cut). 4 people × 30L × 365 = 43,800L/year saved = £88. Scaling: If 10% UK households (3 million) install → 1.3 billion litres/year saved. Small tech change, massive aggregate impact for SDG 6.",
+            keywords: ["50", "30", "5 min", "6L/min", "43800", "3 million", "1.3 billion", "scalable"]
+          },
+          {
+            text: "Poorer communities often pay MORE per litre for less clean water, while wealthy use 3× more. This violates SDG 6 equity. Propose a policy that charges based on use (incentivise saving) BUT protects poor families' basic needs.",
+            type: "text",
+            correctAnswer: "progressive|tiered|subsidy|basic|equity|essential",
+            explanation: "Policy: Progressive tiered pricing: (1) 0-50L/person/day = free/cheap (basic needs: drinking, hygiene, toilet), (2) 50-100L = standard rate, (3) >100L = premium (lawn watering, hot tubs). Subsidise low-income to reach 50L tier. Revenue from high users funds infrastructure in poor areas. Why: Protects equity (all get basic water), incentivises conservation (pay to waste), funds SDG 6 globally. Countries using this: Brazil, South Africa show it works.",
+            keywords: ["progressive", "tiered", "free basic", "subsidy", "50L", "equity", "afford", "infrastructure"]
+          },
+          {
+            text: "Design a 10-year plan to reduce UK household water use from 141L→100L/person/day. Calculate total savings for 66 million people. What behaviour & tech changes are needed? What's the equity risk?",
+            type: "text",
+            correctAnswer: "66 million|41|1.5 billion|behaviour|technology|affluent",
+            explanation: "Savings: 66M × 41L × 365 × 10 years = 99.4 billion litres (enough for 1 year supply for 270 million people). Tech: Water-efficient toilets, low-flow showerheads, smart meters, recycled wastewater for gardens. Behaviour: Shorter showers, full loads (laundry/dishes), fix leaks (25% UK water lost to leaks!). Equity risk: Wealthier households easily afford retrofit; poor renter communities excluded. SDG 6 requires government investment in ALL homes, not just private owners. Justice-centred approach = universal retrofit program funded by taxes on high usage.",
+            keywords: ["99.4 billion", "66 million", "technology", "behaviour", "equity", "retrofit", "poor renters", "universal"]
+          }
+        ]
+      }
+    ];
+
+    // State
+    let currentScenarioIndex = 0;
+    let answers = {};
+    let challengeAnswers = {};
+    let customCategories = [
+      { name: "", percentage: 0 },
+      { name: "", percentage: 0 },
+      { name: "", percentage: 0 }
+    ];
+    const chartColors = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#06b6d4", "#8b5cf6"];
+
+    // Initialize
+    function init() {
+      populateScenarioSelect();
+      populateChallengeSelect();
+      setupEventListeners();
+      renderScenario();
+      initCustomCategories();
+      renderCustomChart();
+    }
+
+    function populateScenarioSelect() {
+      const select = document.getElementById('scenario-select');
+      select.innerHTML = scenarios.map((s, i) => 
+        `<option value="${i}">SDG ${s.sdg}: ${s.sdgName}</option>`
+      ).join('');
+    }
+
+    function populateChallengeSelect() {
+      const select = document.getElementById('challenge-select');
+      select.innerHTML = scenarios.map((s, i) => 
+        `<option value="${i}">🔥 SDG ${s.sdg}: ${s.sdgName}</option>`
+      ).join('');
+    }
+
+    function setupEventListeners() {
+      document.getElementById('scenario-select').addEventListener('change', (e) => {
+        currentScenarioIndex = parseInt(e.target.value);
+        answers = {};
+        renderScenario();
+      });
+
+      document.getElementById('next-scenario').addEventListener('click', () => {
+        currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+        document.getElementById('scenario-select').value = currentScenarioIndex;
+        answers = {};
+        renderScenario();
+      });
+
+      document.getElementById('challenge-select').addEventListener('change', (e) => {
+        currentScenarioIndex = parseInt(e.target.value);
+        challengeAnswers = {};
+        renderChallenge();
+      });
+
+      document.getElementById('next-challenge').addEventListener('click', () => {
+        currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+        document.getElementById('challenge-select').value = currentScenarioIndex;
+        challengeAnswers = {};
+        renderChallenge();
+      });
+
+      document.getElementById('explore-tab').addEventListener('click', switchTab('explore'));
+      document.getElementById('challenge-tab').addEventListener('click', switchTab('challenge'));
+      document.getElementById('build-tab').addEventListener('click', switchTab('build'));
+
+      document.getElementById('add-category').addEventListener('click', () => {
+        if (customCategories.length < 6) {
+          customCategories.push({ name: "", percentage: 0 });
+          renderCategoryInputs();
+        }
+      });
+
+      document.getElementById('generate-chart').addEventListener('click', generateCustomChart);
+    }
+
+    function switchTab(tab) {
+      return function() {
+        document.getElementById('explore-section').classList.toggle('hidden', tab !== 'explore');
+        document.getElementById('challenge-section').classList.toggle('hidden', tab !== 'challenge');
+        document.getElementById('build-section').classList.toggle('hidden', tab !== 'build');
+        
+        // Update tab styles
+        ['explore', 'challenge', 'build'].forEach(t => {
+          const btn = document.getElementById(`${t}-tab`);
+          if (t === tab) {
+            btn.classList.add('active', 'bg-teal-600', 'text-white', 'shadow-lg');
+            btn.classList.remove('bg-white', 'text-teal-700', 'border-2', 'border-teal-200');
+            if (t === 'challenge') {
+              btn.classList.remove('bg-teal-600');
+              btn.classList.add('bg-red-500', 'text-white');
+            }
+          } else {
+            btn.classList.remove('active', 'bg-teal-600', 'bg-red-500', 'text-white', 'shadow-lg');
+            btn.classList.add('bg-white', 'text-teal-700', 'border-2', 'border-teal-200');
+          }
+        });
+      };
+    }
+
+    // Pie Chart Rendering
+    function drawPieChart(svgId, data, onSliceHover) {
+      const svg = document.getElementById(svgId);
+      svg.innerHTML = '';
+      
+      const cx = 150, cy = 150, r = 100;
+      let currentAngle = -90;
+      
+      data.forEach((item, index) => {
+        if (item.percentage <= 0) return;
+        
+        const angle = (item.percentage / 100) * 360;
+        const startAngle = currentAngle;
+        const endAngle = currentAngle + angle;
+        
+        const startRad = (startAngle * Math.PI) / 180;
+        const endRad = (endAngle * Math.PI) / 180;
+        
+        const x1 = cx + r * Math.cos(startRad);
+        const y1 = cy + r * Math.sin(startRad);
+        const x2 = cx + r * Math.cos(endRad);
+        const y2 = cy + r * Math.sin(endRad);
+        
+        const largeArc = angle > 180 ? 1 : 0;
+        
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`);
+        path.setAttribute("fill", item.color);
+        path.setAttribute("class", "pie-slice");
+        path.setAttribute("data-name", item.name);
+        path.setAttribute("data-percentage", item.percentage);
+        
+        if (onSliceHover) {
+          path.addEventListener('mouseenter', () => onSliceHover(item));
+          path.addEventListener('mouseleave', () => onSliceHover(null));
+          path.addEventListener('click', () => onSliceHover(item));
+        }
+        
+        svg.appendChild(path);
+        
+        // Add label for larger slices
+        if (item.percentage >= 8) {
+          const midAngle = startAngle + angle / 2;
+          const midRad = (midAngle * Math.PI) / 180;
+          const labelR = r * 0.65;
+          const labelX = cx + labelR * Math.cos(midRad);
+          const labelY = cy + labelR * Math.sin(midRad);
+          
+          const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          text.setAttribute("x", labelX);
+          text.setAttribute("y", labelY);
+          text.setAttribute("text-anchor", "middle");
+          text.setAttribute("dominant-baseline", "middle");
+          text.setAttribute("fill", "white");
+          text.setAttribute("font-size", "11");
+          text.setAttribute("font-weight", "bold");
+          text.setAttribute("pointer-events", "none");
+          text.textContent = `${item.percentage}%`;
+          svg.appendChild(text);
+        }
+        
+        currentAngle = endAngle;
+      });
+    }
+
+    function renderLegend(containerId, data) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = data.filter(d => d.percentage > 0).map(item => `
+        <div class="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-full text-xs">
+          <span class="w-3 h-3 rounded-full" style="background-color: ${item.color}"></span>
+          <span class="font-medium text-gray-700">${item.name}</span>
+          <span class="text-gray-500">${item.percentage}%</span>
+        </div>
+      `).join('');
+    }
+
+    // Scenario Rendering
+    function renderScenario() {
+      const scenario = scenarios[currentScenarioIndex];
+      
+      document.getElementById('chart-title').textContent = scenario.title;
+      document.getElementById('sdg-description').textContent = scenario.sdgDescription;
+      
+      const hoverInfo = document.getElementById('hover-info');
+      drawPieChart('pie-chart', scenario.data, (item) => {
+        if (item) {
+          hoverInfo.innerHTML = `<strong>${item.name}</strong>: ${item.percentage}% (${(item.percentage * 3.6).toFixed(0)}° angle)`;
+        } else {
+          hoverInfo.textContent = '👆 Hover or tap a slice to see exact values';
+        }
+      });
+      
+      renderLegend('legend', scenario.data);
+      renderQuestions(scenario);
+    }
+
+    function renderQuestions(scenario) {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = scenario.questions.map((q, i) => `
+        <div class="question-block p-3 bg-gray-50 rounded-xl" id="question-${i}">
+          <p class="font-semibold text-gray-800 text-sm mb-2">${i + 1}. ${q.text}</p>
+          <div class="space-y-1.5">
+            ${q.options.map((opt, j) => `
+              <button class="option-btn w-full text-left px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-sm hover:border-teal-400 transition-all ${answers[i] !== undefined ? 'pointer-events-none' : ''} ${answers[i] === j ? (j === q.correct ? 'border-green-500 bg-green-50' : 'border-red-400 bg-red-50') : ''} ${answers[i] !== undefined && j === q.correct ? 'border-green-500 bg-green-50' : ''}"
+                onclick="checkAnswer(${i}, ${j})"
+                ${answers[i] !== undefined ? 'disabled' : ''}>
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <div id="feedback-${i}" class="mt-2 text-sm ${answers[i] !== undefined ? '' : 'hidden'}">
+            ${answers[i] !== undefined ? `
+              <p class="${answers[i] === q.correct ? 'text-green-700' : 'text-red-600'} font-semibold">
+                ${answers[i] === q.correct ? '✅ Correct!' : '❌ Not quite.'}
+              </p>
+              <p class="text-gray-600 mt-1">${q.explanation}</p>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+      
+      updateScore();
+    }
+
+    function checkAnswer(questionIndex, optionIndex) {
+      const scenario = scenarios[currentScenarioIndex];
+      answers[questionIndex] = optionIndex;
+      renderQuestions(scenario);
+      
+      const block = document.getElementById(`question-${questionIndex}`);
+      block.classList.add('feedback-correct');
+      setTimeout(() => block.classList.remove('feedback-correct'), 500);
+    }
+
+    function updateScore() {
+      const scenario = scenarios[currentScenarioIndex];
+      const answered = Object.keys(answers).length;
+      const correct = Object.entries(answers).filter(([i, a]) => a === scenario.questions[i].correct).length;
+      
+      const scoreDisplay = document.getElementById('score-display');
+      const scoreValue = document.getElementById('score-value');
+      
+      if (answered > 0) {
+        scoreDisplay.classList.remove('hidden');
+        scoreValue.textContent = `${correct}/${answered}`;
+      } else {
+        scoreDisplay.classList.add('hidden');
+      }
+    }
+
+    function renderChallenge() {
+      const scenario = scenarios[currentScenarioIndex];
+      document.getElementById('challenge-title').textContent = scenario.title;
+      document.getElementById('challenge-impact-description').textContent = scenario.sdgDescription;
+      
+      const hoverInfo = document.getElementById('challenge-hover-info');
+      drawPieChart('challenge-pie-chart', scenario.data, (item) => {
+        if (item) {
+          hoverInfo.innerHTML = `<strong>${item.name}</strong>: ${item.percentage}% (${(item.percentage * 3.6).toFixed(0)}° angle)`;
+        } else {
+          hoverInfo.textContent = '👆 Hover or tap to see exact values';
+        }
+      });
+      
+      renderLegend('challenge-legend', scenario.data);
+      renderChallengeQuestions(scenario);
+    }
+
+    function renderChallengeQuestions(scenario) {
+      const container = document.getElementById('challenge-questions-container');
+      container.innerHTML = scenario.challengeQuestions.map((q, i) => `
+        <div class="challenge-block p-3 bg-red-50 rounded-xl border-l-4 border-red-500" id="challenge-q-${i}">
+          <p class="font-bold text-red-800 text-sm mb-3">${i + 1}. ${q.text}</p>
+          <textarea id="challenge-input-${i}" rows="3" placeholder="Type your answer here..." 
+            class="w-full px-3 py-2 border-2 border-red-200 rounded-lg text-sm focus:border-red-500 focus:outline-none ${challengeAnswers[i] !== undefined ? 'pointer-events-none bg-gray-100' : ''}"
+            ${challengeAnswers[i] !== undefined ? 'disabled' : ''}></textarea>
+          <button onclick="checkChallengeAnswer(${i})" 
+            class="mt-2 w-full px-3 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg transition-all ${challengeAnswers[i] !== undefined ? 'hidden' : ''}"
+            id="challenge-btn-${i}">
+            Submit Answer
+          </button>
+          <div id="challenge-feedback-${i}" class="mt-3 text-sm ${challengeAnswers[i] !== undefined ? '' : 'hidden'}">
+            <p id="challenge-result-${i}" class="font-bold mb-2"></p>
+            <p id="challenge-explanation-${i}" class="text-gray-700 leading-relaxed"></p>
+          </div>
+        </div>
+      `).join('');
+      
+      updateChallengeScore();
+    }
+
+    function checkChallengeAnswer(questionIndex) {
+      const scenario = scenarios[currentScenarioIndex];
+      const q = scenario.challengeQuestions[questionIndex];
+      const userAnswer = document.getElementById(`challenge-input-${questionIndex}`).value.toLowerCase().trim();
+      
+      if (!userAnswer) {
+        alert('Please type an answer first!');
+        return;
+      }
+      
+      const answerOptions = q.correctAnswer.split('|');
+      const keywords = q.keywords;
+      
+      let matchedKeywords = 0;
+      
+      for (let opt of answerOptions) {
+        if (userAnswer.includes(opt)) {
+          matchedKeywords++;
+        }
+      }
+      
+      for (let keyword of keywords) {
+        if (userAnswer.includes(keyword)) {
+          matchedKeywords++;
+        }
+      }
+      
+      const isCorrect = matchedKeywords >= Math.ceil(keywords.length * 0.6);
+      challengeAnswers[questionIndex] = isCorrect;
+      
+      const resultEl = document.getElementById(`challenge-result-${questionIndex}`);
+      const explanationEl = document.getElementById(`challenge-explanation-${questionIndex}`);
+      const feedbackDiv = document.getElementById(`challenge-feedback-${questionIndex}`);
+      const submitBtn = document.getElementById(`challenge-btn-${questionIndex}`);
+      
+      if (isCorrect) {
+        resultEl.innerHTML = '✅ Excellent thinking! You\'ve shown calculation and critical understanding.';
+        resultEl.className = 'font-bold mb-2 text-green-700';
+      } else {
+        resultEl.innerHTML = '🔍 Good attempt! Here\'s what we\'re looking for:';
+        resultEl.className = 'font-bold mb-2 text-orange-700';
+      }
+      
+      explanationEl.textContent = q.explanation;
+      feedbackDiv.classList.remove('hidden');
+      submitBtn.classList.add('hidden');
+      
+      document.getElementById(`challenge-input-${questionIndex}`).disabled = true;
+      document.getElementById(`challenge-input-${questionIndex}`).classList.add('bg-gray-100', 'pointer-events-none');
+      
+      updateChallengeScore();
+    }
+
+    function updateChallengeScore() {
+      const scenario = scenarios[currentScenarioIndex];
+      const answered = Object.keys(challengeAnswers).length;
+      const correct = Object.values(challengeAnswers).filter(v => v === true).length;
+      
+      const scoreDisplay = document.getElementById('challenge-score');
+      const scoreValue = document.getElementById('challenge-score-value');
+      const answeredValue = document.getElementById('challenge-answered-value');
+      
+      if (answered > 0) {
+        scoreDisplay.classList.remove('hidden');
+        scoreValue.textContent = correct;
+        answeredValue.textContent = `${answered}/${scenario.challengeQuestions.length}`;
+      }
+    }
+
+    // Custom Chart Functions
+    function initCustomCategories() {
+      customCategories = [
+        { name: "Category 1", percentage: 40 },
+        { name: "Category 2", percentage: 35 },
+        { name: "Category 3", percentage: 25 }
+      ];
+      renderCategoryInputs();
+    }
+
+    function renderCategoryInputs() {
+      const container = document.getElementById('category-inputs');
+      container.innerHTML = customCategories.map((cat, i) => `
+        <div class="flex gap-2 items-center">
+          <input type="text" value="${cat.name}" placeholder="Category name"
+            class="flex-1 px-2 py-1.5 border-2 border-amber-200 rounded-lg text-sm focus:border-amber-500 focus:outline-none"
+            onchange="updateCategory(${i}, 'name', this.value)">
+          <input type="number" value="${cat.percentage}" min="0" max="100" placeholder="%"
+            class="w-16 px-2 py-1.5 border-2 border-amber-200 rounded-lg text-sm text-center focus:border-amber-500 focus:outline-none"
+            onchange="updateCategory(${i}, 'percentage', this.value)">
+          <span class="text-gray-500 text-sm">%</span>
+          ${customCategories.length > 2 ? `
+            <button onclick="removeCategory(${i})" class="text-red-400 hover:text-red-600 font-bold">×</button>
+          ` : ''}
+        </div>
+      `).join('');
+      
+      updateTotalPercentage();
+    }
+
+    function updateCategory(index, field, value) {
+      if (field === 'percentage') {
+        customCategories[index][field] = parseFloat(value) || 0;
+      } else {
+        customCategories[index][field] = value;
+      }
+      updateTotalPercentage();
+    }
+
+    function removeCategory(index) {
+      customCategories.splice(index, 1);
+      renderCategoryInputs();
+    }
+
+    function updateTotalPercentage() {
+      const total = customCategories.reduce((sum, cat) => sum + cat.percentage, 0);
+      const display = document.getElementById('total-percentage');
+      display.textContent = `Total: ${total}%`;
+      display.className = `ml-auto text-sm font-semibold ${total === 100 ? 'text-green-600' : total > 100 ? 'text-red-600' : 'text-amber-600'}`;
+    }
+
+    function generateCustomChart() {
+      const title = document.getElementById('custom-title').value || "My Pie Chart";
+      const total = customCategories.reduce((sum, cat) => sum + cat.percentage, 0);
+      
+      // Normalise if not 100%
+      let data = customCategories
+        .filter(cat => cat.name && cat.percentage > 0)
+        .map((cat, i) => ({
+          name: cat.name,
+          percentage: total !== 100 && total > 0 ? Math.round((cat.percentage / total) * 100) : cat.percentage,
+          color: chartColors[i % chartColors.length]
+        }));
+      
+      if (data.length === 0) {
+        document.getElementById('custom-chart-title').textContent = "Please add categories with percentages";
+        return;
+      }
+      
+      document.getElementById('custom-chart-title').textContent = title;
+      
+      drawPieChart('custom-pie-chart', data, null);
+      renderLegend('custom-legend', data);
+      
+      // Show reflection area
+      document.getElementById('reflection-area').classList.remove('hidden');
+    }
+
+    function renderCustomChart() {
+      const data = customCategories
+        .filter(cat => cat.percentage > 0)
+        .map((cat, i) => ({
+          name: cat.name || `Category ${i + 1}`,
+          percentage: cat.percentage,
+          color: chartColors[i % chartColors.length]
+        }));
+      
+      if (data.length > 0) {
+        drawPieChart('custom-pie-chart', data, null);
+        renderLegend('custom-legend', data);
+      }
+    }
+
+    // Make functions globally accessible
+    window.updateCategory = updateCategory;
+    window.removeCategory = removeCategory;
+    window.checkAnswer = checkAnswer;
+    window.checkChallengeAnswer = checkChallengeAnswer;
+
+    // Element SDK Setup
+    async function onConfigChange(cfg) {
+      const customFont = cfg.font_family || defaultConfig.font_family;
+      const baseFontStack = 'system-ui, sans-serif';
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const baseSize = cfg.font_size || defaultConfig.font_size;
+      document.getElementById('app-title').style.fontSize = `${baseSize * 1.75}px`;
+      document.getElementById('intro-text').style.fontSize = `${baseSize * 0.9}px`;
+      
+      document.getElementById('app-title').textContent = cfg.app_title || defaultConfig.app_title;
+      document.getElementById('intro-text').textContent = cfg.intro_text || defaultConfig.intro_text;
+      
+      document.body.style.background = `linear-gradient(to bottom right, ${cfg.background_color || defaultConfig.background_color}, ${adjustColor(cfg.background_color || defaultConfig.background_color, -10)})`;
+    }
+
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) + amt;
+      const G = (num >> 8 & 0x00FF) + amt;
+      const B = (num & 0x0000FF) + amt;
+      return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+          },
+          {
+            get: () => cfg.surface_color || defaultConfig.surface_color,
+            set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+          },
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+          },
+          {
+            get: () => cfg.secondary_color || defaultConfig.secondary_color,
+            set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || defaultConfig.font_family,
+          set: (v) => { cfg.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+        },
+        fontSizeable: {
+          get: () => cfg.font_size || defaultConfig.font_size,
+          set: (v) => { cfg.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ["app_title", cfg.app_title || defaultConfig.app_title],
+        ["intro_text", cfg.intro_text || defaultConfig.intro_text]
+      ]);
+    }
+
+    // Initialize SDK and app
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+    
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c3f0011d15d23a1',t:'MTc2OTQxOTkxNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

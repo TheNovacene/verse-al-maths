@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BODMAS Order of Operations Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .drag-item {
+            cursor: grab;
+            transition: all 0.3s ease;
+        }
+        
+        .drag-item:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+        }
+        
+        .drop-zone {
+            min-height: 60px;
+            transition: all 0.3s ease;
+        }
+        
+        .drop-zone.drag-over {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+            transform: scale(1.02);
+        }
+        
+        .correct {
+            background-color: #dcfce7 !important;
+            border-color: #16a34a !important;
+        }
+        
+        .incorrect {
+            background-color: #fef2f2 !important;
+            border-color: #dc2626 !important;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-100 to-blue-100 min-h-full">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-purple-800 mb-4">🧮 BODMAS Challenge</h1>
+            <p class="text-lg text-gray-700 mb-6">Master the Order of Operations!</p>
+            
+            <!-- BODMAS Legend -->
+            <div class="bg-white rounded-lg shadow-md p-4 max-w-md mx-auto">
+                <h3 class="font-semibold text-gray-800 mb-2">Remember BODMAS:</h3>
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                    <div class="flex items-center"><span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center mr-2 text-xs font-bold">B</span>Brackets</div>
+                    <div class="flex items-center"><span class="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center mr-2 text-xs font-bold">O</span>Orders (Powers)</div>
+                    <div class="flex items-center"><span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center mr-2 text-xs font-bold">DM</span>Division & Multiplication</div>
+                    <div class="flex items-center"><span class="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center mr-2 text-xs font-bold">AS</span>Addition & Subtraction</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 1: No Brackets -->
+        <div class="level-container mb-12" id="level1">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-green-700">Level 1: Basic Operations</h2>
+                    <button onclick="resetLevel(1)" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        🔄 New Questions
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6" id="level1-questions">
+                    <!-- Questions will be generated here -->
+                </div>
+                
+                <div class="text-center mt-6">
+                    <button onclick="checkAnswers(1)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors">
+                        ✅ Check Answers
+                    </button>
+                </div>
+                
+                <div id="level1-feedback" class="mt-4 text-center font-semibold text-lg"></div>
+            </div>
+        </div>
+
+        <!-- Level 2: Brackets Introduced -->
+        <div class="level-container mb-12" id="level2">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-blue-700">Level 2: Brackets Added</h2>
+                    <button onclick="resetLevel(2)" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        🔄 New Questions
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6" id="level2-questions">
+                    <!-- Questions will be generated here -->
+                </div>
+                
+                <div class="text-center mt-6">
+                    <button onclick="checkAnswers(2)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors">
+                        ✅ Check Answers
+                    </button>
+                </div>
+                
+                <div id="level2-feedback" class="mt-4 text-center font-semibold text-lg"></div>
+            </div>
+        </div>
+
+        <!-- Level 3: Brackets + Exponents -->
+        <div class="level-container mb-12" id="level3">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-purple-700">Level 3: Powers & Brackets</h2>
+                    <button onclick="resetLevel(3)" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        🔄 New Questions
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6" id="level3-questions">
+                    <!-- Questions will be generated here -->
+                </div>
+                
+                <div class="text-center mt-6">
+                    <button onclick="checkAnswers(3)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors">
+                        ✅ Check Answers
+                    </button>
+                </div>
+                
+                <div id="level3-feedback" class="mt-4 text-center font-semibold text-lg"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Question pools for each level
+        const questionPools = {
+            1: [
+                { expression: "5 + 4 × 3", answer: 17 },
+                { expression: "18 ÷ 3 + 2", answer: 8 },
+                { expression: "12 - 4 × 2", answer: 4 },
+                { expression: "7 + 6 ÷ 2", answer: 10 },
+                { expression: "10 - 2 + 6", answer: 14 },
+                { expression: "15 ÷ 3 × 2", answer: 10 },
+                { expression: "8 + 4 ÷ 2", answer: 10 },
+                { expression: "20 - 3 × 4", answer: 8 }
+            ],
+            2: [
+                { expression: "(5 + 4) × 3", answer: 27 },
+                { expression: "18 ÷ (3 + 2)", answer: 3.6 },
+                { expression: "(12 - 4) × 2", answer: 16 },
+                { expression: "7 + (6 ÷ 2)", answer: 10 },
+                { expression: "(10 - 2) + 6", answer: 14 },
+                { expression: "(15 ÷ 3) × 2", answer: 10 },
+                { expression: "8 + (4 ÷ 2)", answer: 10 },
+                { expression: "(20 - 3) × 2", answer: 34 }
+            ],
+            3: [
+                { expression: "3² + (4 × 2)", answer: 17 },
+                { expression: "(16 ÷ 4)² + 2", answer: 18 },
+                { expression: "5 + 2 × (3² - 1)", answer: 21 },
+                { expression: "(2 + 3)² - 4", answer: 21 },
+                { expression: "(9 - 3) × 2²", answer: 24 },
+                { expression: "4² - (3 × 2)", answer: 10 },
+                { expression: "(5 + 1)² ÷ 2", answer: 18 },
+                { expression: "2³ + (4 - 1)", answer: 11 }
+            ]
+        };
+
+        let currentQuestions = { 1: [], 2: [], 3: [] };
+        let userAnswers = { 1: [], 2: [], 3: [] };
+
+        // Initialize all levels
+        function initializeGame() {
+            for (let level = 1; level <= 3; level++) {
+                resetLevel(level);
+            }
+        }
+
+        // Reset a specific level with new questions
+        function resetLevel(level) {
+            const pool = questionPools[level];
+            const shuffled = [...pool].sort(() => Math.random() - 0.5);
+            currentQuestions[level] = shuffled.slice(0, 3);
+            userAnswers[level] = [null, null, null];
+            
+            generateQuestions(level);
+            clearFeedback(level);
+        }
+
+        // Generate questions for a level
+        function generateQuestions(level) {
+            const container = document.getElementById(`level${level}-questions`);
+            container.innerHTML = '';
+            
+            currentQuestions[level].forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 rounded-lg p-4 border-2 border-gray-200';
+                
+                // Generate answer options (correct answer + 2 wrong answers)
+                const correctAnswer = question.answer;
+                const wrongAnswers = generateWrongAnswers(correctAnswer);
+                const allAnswers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
+                
+                questionDiv.innerHTML = `
+                    <div class="text-center mb-4">
+                        <div class="text-xl font-mono font-bold text-gray-800 mb-3 p-3 bg-white rounded border">
+                            ${question.expression}
+                        </div>
+                        <div class="text-sm text-gray-600 mb-3">Drag the correct answer:</div>
+                        
+                        <!-- Answer options -->
+                        <div class="flex flex-wrap justify-center gap-2 mb-4">
+                            ${allAnswers.map(answer => `
+                                <div class="drag-item bg-yellow-200 hover:bg-yellow-300 px-3 py-2 rounded-lg border-2 border-yellow-400 font-bold cursor-grab"
+                                     draggable="true" 
+                                     ondragstart="dragStart(event, ${answer})"
+                                     data-answer="${answer}">
+                                    ${answer}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <!-- Drop zone -->
+                        <div class="drop-zone border-2 border-dashed border-gray-400 rounded-lg p-4 bg-gray-100 text-gray-500 font-semibold"
+                             ondrop="drop(event, ${level}, ${index})" 
+                             ondragover="allowDrop(event)"
+                             ondragenter="dragEnter(event)"
+                             ondragleave="dragLeave(event)"
+                             id="drop-${level}-${index}">
+                            Drop answer here
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Generate wrong answers
+        function generateWrongAnswers(correct) {
+            const wrong1 = correct + Math.floor(Math.random() * 10) + 1;
+            const wrong2 = Math.max(1, correct - Math.floor(Math.random() * 10) - 1);
+            return [wrong1, wrong2];
+        }
+
+        // Drag and drop functions
+        let draggedAnswer = null;
+
+        function dragStart(event, answer) {
+            draggedAnswer = answer;
+            event.dataTransfer.effectAllowed = 'move';
+        }
+
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function dragEnter(event) {
+            event.preventDefault();
+            event.target.classList.add('drag-over');
+        }
+
+        function dragLeave(event) {
+            event.target.classList.remove('drag-over');
+        }
+
+        function drop(event, level, questionIndex) {
+            event.preventDefault();
+            event.target.classList.remove('drag-over');
+            
+            if (draggedAnswer !== null) {
+                userAnswers[level][questionIndex] = draggedAnswer;
+                event.target.innerHTML = `<span class="text-xl font-bold text-blue-600">${draggedAnswer}</span>`;
+                event.target.classList.add('bg-blue-100', 'border-blue-400');
+            }
+        }
+
+        // Check answers for a level
+        function checkAnswers(level) {
+            let correct = 0;
+            const total = currentQuestions[level].length;
+            
+            currentQuestions[level].forEach((question, index) => {
+                const dropZone = document.getElementById(`drop-${level}-${index}`);
+                const userAnswer = userAnswers[level][index];
+                const correctAnswer = question.answer;
+                
+                if (userAnswer === correctAnswer) {
+                    dropZone.classList.add('correct');
+                    dropZone.classList.remove('incorrect');
+                    correct++;
+                } else {
+                    dropZone.classList.add('incorrect');
+                    dropZone.classList.remove('correct');
+                }
+            });
+            
+            // Show feedback
+            const feedback = document.getElementById(`level${level}-feedback`);
+            if (correct === total) {
+                feedback.innerHTML = `🎉 Perfect! You got all ${total} correct!`;
+                feedback.className = 'mt-4 text-center font-semibold text-lg text-green-600 pulse-animation';
+            } else {
+                feedback.innerHTML = `You got ${correct} out of ${total} correct. Try again!`;
+                feedback.className = 'mt-4 text-center font-semibold text-lg text-orange-600';
+            }
+        }
+
+        // Clear feedback
+        function clearFeedback(level) {
+            const feedback = document.getElementById(`level${level}-feedback`);
+            feedback.innerHTML = '';
+            
+            // Clear all drop zone styling
+            const dropZones = document.querySelectorAll(`#level${level} .drop-zone`);
+            dropZones.forEach(zone => {
+                zone.classList.remove('correct', 'incorrect', 'bg-blue-100', 'border-blue-400');
+                zone.innerHTML = 'Drop answer here';
+            });
+        }
+
+        // Initialize the game when page loads
+        window.onload = initializeGame;
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992f4afe61a1deb0',t:'MTc2MTIwMjE1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

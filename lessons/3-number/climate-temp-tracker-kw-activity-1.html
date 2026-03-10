@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climate Temperature Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+    .thermometer-bg {
+      background: linear-gradient(to top, #3b82f6 0%, #60a5fa 25%, #fbbf24 50%, #f97316 75%, #ef4444 100%);
+    }
+    .indicator-glow {
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(59, 130, 246, 0.5);
+    }
+    @keyframes pulse-soft {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .pulse-animation {
+      animation: pulse-soft 2s ease-in-out infinite;
+    }
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .slide-in {
+      animation: slide-in 0.3s ease-out;
+    }
+    .number-line-marker {
+      transition: left 0.5s ease-out;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full bg-gradient-to-br from-sky-100 via-emerald-50 to-teal-100 overflow-auto">
+  <div id="app-container" class="min-h-full w-full p-4 md:p-6"><!-- Header -->
+   <header class="text-center mb-6">
+    <h1 id="main-title" class="text-2xl md:text-3xl font-extrabold text-teal-800 mb-2">🌡️ Climate Temperature Tracker</h1>
+    <p id="subheader" class="text-sm md:text-base text-teal-600 max-w-2xl mx-auto">SDG 13: Climate Action — Accurate temperature tracking helps communities plan for a changing climate.</p>
+    <p class="text-xs text-teal-500 mt-2 italic">"We're learning how scientists track changes accurately to support good decisions."</p>
+   </header><!-- Mode Tabs -->
+   <div class="max-w-6xl mx-auto mb-4 flex gap-2 justify-center"><button id="tab-play" onclick="switchMode('play')" class="px-6 py-2 bg-teal-500 text-white font-bold rounded-lg shadow hover:shadow-md transition-all">▶️ Play</button> <button id="tab-create" onclick="switchMode('create')" class="px-6 py-2 bg-teal-100 text-teal-700 hover:bg-teal-200 font-bold rounded-lg shadow transition-all">✏️ Create Challenge</button> <button id="tab-friend" onclick="switchMode('friend')" class="px-6 py-2 bg-teal-100 text-teal-700 hover:bg-teal-200 font-bold rounded-lg shadow transition-all">👥 Friend Challenges</button>
+   </div><!-- PLAY MODE -->
+   <div id="play-mode" class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4"><!-- Left Column: Controls & Score -->
+    <div class="space-y-4"><!-- Controls Panel -->
+     <div class="bg-white/80 backdrop-blur rounded-2xl p-4 shadow-lg border border-teal-200">
+      <h2 class="font-bold text-teal-700 mb-3 flex items-center gap-2"><span>⚙️</span> Controls</h2><!-- Difficulty -->
+      <div class="mb-4"><label class="text-sm font-semibold text-teal-600 block mb-2">Difficulty</label>
+       <div class="flex gap-2"><button id="btn-easy" class="flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all bg-teal-500 text-white" onclick="setDifficulty('easy')">Easy</button> <button id="btn-medium" class="flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all bg-teal-100 text-teal-700 hover:bg-teal-200" onclick="setDifficulty('medium')">Medium</button> <button id="btn-hard" class="flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all bg-teal-100 text-teal-700 hover:bg-teal-200" onclick="setDifficulty('hard')">Hard</button>
+       </div>
+      </div><!-- Toggles -->
+      <div class="space-y-3 mb-4"><label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" id="toggle-numberline" class="w-5 h-5 rounded accent-teal-500" onchange="toggleNumberLine()"> <span class="text-sm text-teal-700">Number line view</span> </label> <label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" id="toggle-correction" class="w-5 h-5 rounded accent-teal-500" onchange="toggleCorrection()"> <span class="text-sm text-teal-700">🧑‍🏫 Enable correction steps</span> </label>
+      </div><!-- New Round Button --> <button id="btn-new-round" onclick="startNewRound()" class="w-full py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all hover:scale-[1.02]"> 🔄 New Round </button>
+     </div><!-- Score Panel -->
+     <div class="bg-white/80 backdrop-blur rounded-2xl p-4 shadow-lg border border-amber-200">
+      <h2 class="font-bold text-amber-700 mb-3 flex items-center gap-2"><span>🏆</span> Score</h2>
+      <div class="grid grid-cols-3 gap-2 text-center">
+       <div class="bg-amber-50 rounded-xl p-3">
+        <div id="rounds-display" class="text-2xl font-bold text-amber-600">
+         0/5
+        </div>
+        <div class="text-xs text-amber-500">
+         Rounds
+        </div>
+       </div>
+       <div class="bg-green-50 rounded-xl p-3">
+        <div id="accuracy-display" class="text-2xl font-bold text-green-600">
+         0%
+        </div>
+        <div class="text-xs text-green-500">
+         Accuracy
+        </div>
+       </div>
+       <div class="bg-purple-50 rounded-xl p-3">
+        <div id="streak-display" class="text-2xl font-bold text-purple-600">
+         0
+        </div>
+        <div class="text-xs text-purple-500">
+         Streak
+        </div>
+       </div>
+      </div>
+      <div class="mt-3 text-center">
+       <div class="text-sm text-teal-600">
+        Total Points: <span id="total-points" class="font-bold">0</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- Middle Column: Visualizations -->
+    <div class="space-y-4"><!-- Thermometer -->
+     <div class="bg-white/80 backdrop-blur rounded-2xl p-4 shadow-lg border border-blue-200">
+      <h2 class="font-bold text-blue-700 mb-3 text-center">🌡️ Thermometer</h2>
+      <div class="flex justify-center">
+       <div class="relative w-20 h-80"><!-- Thermometer Scale -->
+        <div class="absolute inset-0 rounded-full thermometer-bg opacity-30"></div>
+        <div class="absolute inset-2 bg-gradient-to-t from-blue-200 via-white to-red-200 rounded-full"></div><!-- Scale Markers -->
+        <div class="absolute left-24 top-0 bottom-0 flex flex-col justify-between text-xs font-semibold text-gray-600 py-2"><span>20°C</span> <span>10°C</span> <span>0°C</span> <span>-10°C</span> <span>-20°C</span>
+        </div><!-- Temperature Indicator -->
+        <div id="temp-indicator" class="absolute left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full indicator-glow flex items-center justify-center text-white font-bold text-sm transition-all duration-500 z-10" style="bottom: 50%;"><span id="temp-value">0°C</span>
+        </div><!-- Thermometer Bulb -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-full -mb-4"></div>
+       </div>
+      </div>
+     </div><!-- Number Line (toggleable) -->
+     <div id="numberline-container" class="hidden bg-white/80 backdrop-blur rounded-2xl p-4 shadow-lg border border-indigo-200">
+      <h2 class="font-bold text-indigo-700 mb-3 text-center">📏 Number Line</h2>
+      <div class="relative h-16 mx-4"><!-- Number line -->
+       <div class="absolute top-1/2 left-0 right-0 h-1 bg-indigo-300 rounded"></div><!-- Markers -->
+       <div class="absolute top-1/2 left-0 right-0 flex justify-between -mt-3"><span class="text-xs text-indigo-600 -ml-2">-20</span> <span class="text-xs text-indigo-600">-10</span> <span class="text-xs text-indigo-600">0</span> <span class="text-xs text-indigo-600">10</span> <span class="text-xs text-indigo-600 -mr-2">20</span>
+       </div><!-- Moving marker -->
+       <div id="numberline-marker" class="number-line-marker absolute top-0 w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg" style="left: 50%; transform: translateX(-50%);"><span id="nl-value">0</span>
+       </div>
+      </div>
+      <p class="text-center text-xs text-indigo-500 mt-2">← Subtract | Add →</p>
+     </div>
+    </div><!-- Right Column: Scenario & Steps -->
+    <div class="space-y-4"><!-- Scenario Panel -->
+     <div class="bg-white/80 backdrop-blur rounded-2xl p-4 shadow-lg border border-emerald-200">
+      <h2 class="font-bold text-emerald-700 mb-3 flex items-center gap-2"><span>📋</span> Scenario</h2>
+      <div id="scenario-content">
+       <div id="start-temp-display" class="bg-emerald-50 rounded-xl p-3 mb-4 text-center"><span class="text-sm text-emerald-600">Starting Temperature:</span>
+        <div id="start-temp" class="text-3xl font-bold text-emerald-700">
+         --°C
+        </div>
+       </div><!-- Steps -->
+       <div id="steps-container" class="space-y-3">
+        <p class="text-center text-gray-500 italic">Click "New Round" to begin!</p>
+       </div>
+      </div>
+     </div><!-- Action Buttons -->
+     <div id="action-buttons" class="hidden bg-white/80 backdrop-blur rounded-2xl p-4 shadow-lg border border-rose-200">
+      <div class="flex flex-wrap gap-2"><button id="btn-check" onclick="checkCurrentStep()" class="flex-1 py-2 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow hover:shadow-md transition-all"> ✓ Check Step </button> <button id="btn-hint" onclick="showHint()" class="flex-1 py-2 px-4 bg-gradient-to-r from-amber-400 to-amber-500 text-white font-semibold rounded-lg shadow hover:shadow-md transition-all"> 💡 Hint </button>
+      </div><button id="btn-reveal" onclick="revealExplanation()" class="hidden w-full mt-2 py-2 px-4 bg-gradient-to-r from-purple-400 to-purple-500 text-white font-semibold rounded-lg shadow hover:shadow-md transition-all"> 📖 Reveal Explanation </button> <button id="btn-finish" onclick="finishRound()" class="hidden w-full mt-2 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all"> 🎉 Finish Round </button>
+     </div><!-- Hint Display -->
+     <div id="hint-display" class="hidden bg-amber-50 rounded-2xl p-4 shadow-lg border border-amber-300 slide-in">
+      <h3 class="font-bold text-amber-700 mb-2">💡 Hint</h3>
+      <p id="hint-text" class="text-sm text-amber-800"></p>
+     </div><!-- Feedback Display -->
+     <div id="feedback-display" class="hidden rounded-2xl p-4 shadow-lg slide-in">
+      <p id="feedback-text" class="text-sm font-semibold"></p>
+     </div>
+    </div>
+   </div><!-- CREATE MODE -->
+   <div id="create-mode" class="hidden max-w-2xl mx-auto">
+    <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-purple-200">
+     <h2 class="text-2xl font-bold text-purple-700 mb-4 flex items-center gap-2"><span>✏️</span> Create Your Temperature Challenge</h2>
+     <div class="space-y-4"><!-- Creator Name -->
+      <div><label class="block text-sm font-semibold text-purple-600 mb-2">Your Name</label> <input type="text" id="creator-name" class="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:outline-none focus:border-purple-500" placeholder="Enter your name">
+      </div><!-- Difficulty -->
+      <div><label class="block text-sm font-semibold text-purple-600 mb-2">Challenge Difficulty</label>
+       <div class="flex gap-2"><button id="create-easy" onclick="setCreateDifficulty('easy')" class="flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all bg-purple-500 text-white">Easy (2 steps)</button> <button id="create-medium" onclick="setCreateDifficulty('medium')" class="flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all bg-purple-100 text-purple-700 hover:bg-purple-200">Medium (3 steps)</button> <button id="create-hard" onclick="setCreateDifficulty('hard')" class="flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all bg-purple-100 text-purple-700 hover:bg-purple-200">Hard (4 steps)</button>
+       </div>
+      </div><!-- Start Temperature -->
+      <div><label class="block text-sm font-semibold text-purple-600 mb-2">Starting Temperature (°C)</label> <input type="number" id="create-start-temp" class="w-full px-4 py-2 border-2 border-purple-200 rounded-lg focus:outline-none focus:border-purple-500" placeholder="-20 to 20" min="-20" max="20" value="0">
+      </div><!-- Steps -->
+      <div id="steps-builder" class="space-y-3"><label class="block text-sm font-semibold text-purple-600">Temperature Changes</label>
+      </div><!-- Preview -->
+      <div class="bg-purple-50 rounded-xl p-4 border border-purple-200">
+       <h3 class="font-bold text-purple-700 mb-2">📋 Preview</h3>
+       <div id="create-preview" class="text-sm text-purple-600 space-y-1">
+        <p>Starting at <span id="preview-start">0</span>°C</p>
+       </div>
+      </div><!-- Save Button --> <button id="btn-save-challenge" onclick="saveChallenge()" class="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all"> 💾 Save Challenge </button>
+     </div>
+    </div>
+   </div><!-- FRIEND CHALLENGES MODE -->
+   <div id="friend-mode" class="hidden max-w-4xl mx-auto">
+    <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-cyan-200">
+     <h2 class="text-2xl font-bold text-cyan-700 mb-4 flex items-center gap-2"><span>👥</span> Challenges from Friends</h2>
+     <div id="friend-challenges-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <p class="col-span-full text-center text-gray-500 italic">Loading friend challenges...</p>
+     </div>
+    </div>
+   </div><!-- Summary Modal -->
+   <div id="summary-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[90%] overflow-auto shadow-2xl">
+     <h2 class="text-2xl font-bold text-teal-700 mb-4 text-center">🎉 Round Complete!</h2>
+     <div id="summary-table" class="mb-4"></div>
+     <div class="bg-teal-50 rounded-xl p-4 mb-4">
+      <h3 class="font-bold text-teal-700 mb-2">🤔 Reflection</h3>
+      <p class="text-sm text-teal-600 mb-3">Which step was trickiest and what method helped: number line, running total, or rewriting?</p><textarea id="reflection-input" class="w-full p-3 border border-teal-200 rounded-lg text-sm resize-none" rows="3" placeholder="Share your thoughts..."></textarea>
+     </div>
+     <div id="session-complete" class="hidden bg-gradient-to-r from-amber-100 to-yellow-100 rounded-xl p-4 mb-4 text-center">
+      <h3 class="text-xl font-bold text-amber-700">🏆 Session Complete!</h3>
+      <p id="final-score" class="text-lg text-amber-600 mt-2"></p>
+      <p id="encouragement" class="text-sm text-amber-500 mt-1"></p>
+     </div><button onclick="closeSummary()" class="w-full py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all"> Continue </button>
+    </div>
+   </div><!-- Save Success Modal -->
+   <div id="save-success-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl text-center">
+     <h2 class="text-3xl mb-2">🎉</h2>
+     <h3 class="text-xl font-bold text-purple-700 mb-2">Challenge Saved!</h3>
+     <p class="text-sm text-gray-600 mb-4">Your temperature challenge has been saved and is ready for friends to try.</p><button onclick="closeSaveModal()" class="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all"> Great! </button>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: '🌡️ Climate Temperature Tracker',
+      subheader_text: 'SDG 13: Climate Action — Accurate temperature tracking helps communities plan for a changing climate.',
+      background_color: '#f0fdfa',
+      primary_color: '#0d9488',
+      text_color: '#134e4a',
+      accent_color: '#f59e0b',
+      surface_color: '#ffffff'
+    };
+
+    // Scenario Banks
+    const scenarios = {
+      easy: [
+        { start: -3, steps: [{ text: 'drops 5°C', change: -5 }, { text: 'rises 2°C', change: 2 }] },
+        { start: 4, steps: [{ text: 'drops 6°C', change: -6 }, { text: 'rises 3°C', change: 3 }] },
+        { start: -8, steps: [{ text: 'rises 7°C', change: 7 }, { text: 'drops 1°C', change: -1 }] },
+        { start: 0, steps: [{ text: 'drops 9°C', change: -9 }, { text: 'rises 4°C', change: 4 }] },
+        { start: 6, steps: [{ text: 'drops 8°C', change: -8 }, { text: 'rises 1°C', change: 1 }] },
+        { start: -5, steps: [{ text: 'rises 3°C', change: 3 }, { text: 'drops 6°C', change: -6 }] },
+        { start: 2, steps: [{ text: 'rises 5°C', change: 5 }, { text: 'drops 10°C', change: -10 }] },
+        { start: -10, steps: [{ text: 'rises 6°C', change: 6 }, { text: 'rises 3°C', change: 3 }] }
+      ],
+      medium: [
+        { start: -6, steps: [{ text: 'rises 4°C', change: 4 }, { text: 'drops 7°C', change: -7 }, { text: 'rises 2°C', change: 2 }] },
+        { start: 3, steps: [{ text: 'drops 9°C', change: -9 }, { text: 'rises 1°C', change: 1 }, { text: 'rises 5°C', change: 5 }] },
+        { start: -1, steps: [{ text: 'drops 6°C', change: -6 }, { text: 'drops 3°C', change: -3 }, { text: 'rises 8°C', change: 8 }] },
+        { start: -12, steps: [{ text: 'rises 9°C', change: 9 }, { text: 'drops 4°C', change: -4 }, { text: 'rises 1°C', change: 1 }] },
+        { start: 7, steps: [{ text: 'drops 10°C', change: -10 }, { text: 'rises 6°C', change: 6 }, { text: 'drops 2°C', change: -2 }] },
+        { start: -4, steps: [{ text: 'rises 2°C', change: 2 }, { text: 'rises 5°C', change: 5 }, { text: 'drops 11°C', change: -11 }] },
+        { start: 1, steps: [{ text: 'drops 4°C', change: -4 }, { text: 'drops 8°C', change: -8 }, { text: 'rises 7°C', change: 7 }] },
+        { start: -9, steps: [{ text: 'rises 3°C', change: 3 }, { text: 'drops 2°C', change: -2 }, { text: 'rises 10°C', change: 10 }] }
+      ],
+      hard: [
+        { start: -7, steps: [{ text: 'rises 5°C', change: 5 }, { text: 'drops 9°C', change: -9 }, { text: 'rises 4°C', change: 4 }, { text: 'drops 2°C', change: -2 }] },
+        { start: 5, steps: [{ text: 'drops 8°C', change: -8 }, { text: 'drops 6°C', change: -6 }, { text: 'rises 3°C', change: 3 }, { text: 'rises 4°C', change: 4 }] },
+        { start: -2, steps: [{ text: 'drops 7°C', change: -7 }, { text: 'rises 6°C', change: 6 }, { text: 'drops 5°C', change: -5 }, { text: 'rises 1°C', change: 1 }] },
+        { start: -11, steps: [{ text: 'rises 10°C', change: 10 }, { text: 'drops 4°C', change: -4 }, { text: 'drops 3°C', change: -3 }, { text: 'rises 2°C', change: 2 }] },
+        { start: 0, steps: [{ text: 'drops 12°C', change: -12 }, { text: 'rises 7°C', change: 7 }, { text: 'drops 6°C', change: -6 }, { text: 'rises 5°C', change: 5 }] }
+      ]
+    };
+
+    // Game State
+    let gameState = {
+      difficulty: 'easy',
+      showNumberLine: false,
+      enableCorrection: false,
+      currentRound: 0,
+      totalRounds: 5,
+      currentScenario: null,
+      currentStep: 0,
+      currentTemp: 0,
+      stepAttempts: 0,
+      usedScenarios: { easy: [], medium: [], hard: [] },
+      score: 0,
+      totalSteps: 0,
+      correctFirstAttempt: 0,
+      streak: 0,
+      maxStreak: 0,
+      stepResults: [],
+      currentMode: 'play',
+      createDifficulty: 'easy',
+      friendChallenges: [],
+      currentFriendScenario: null
+    };
+
+    // Data SDK Handler
+    const dataHandler = {
+      onDataChanged(data) {
+        gameState.friendChallenges = data;
+        renderFriendChallenges();
+      }
+    };
+
+    // Initialize SDKs
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => {
+        document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+        document.getElementById('subheader').textContent = config.subheader_text || defaultConfig.subheader_text;
+      },
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (v) => window.elementSdk.setConfig({ background_color: v })
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (v) => window.elementSdk.setConfig({ surface_color: v })
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (v) => window.elementSdk.setConfig({ text_color: v })
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (v) => window.elementSdk.setConfig({ primary_color: v })
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (v) => window.elementSdk.setConfig({ accent_color: v })
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['subheader_text', config.subheader_text || defaultConfig.subheader_text]
+      ])
+    });
+
+    // Initialize Data SDK
+    (async () => {
+      const initResult = await window.dataSdk.init(dataHandler);
+      if (!initResult.isOk) {
+        console.error('Failed to initialize data SDK');
+      }
+    })();
+
+    // Mode switching
+    function switchMode(mode) {
+      gameState.currentMode = mode;
+      
+      document.getElementById('play-mode').classList.toggle('hidden', mode !== 'play');
+      document.getElementById('create-mode').classList.toggle('hidden', mode !== 'create');
+      document.getElementById('friend-mode').classList.toggle('hidden', mode !== 'friend');
+      
+      document.getElementById('tab-play').className = `px-6 py-2 font-bold rounded-lg shadow transition-all ${mode === 'play' ? 'bg-teal-500 text-white' : 'bg-teal-100 text-teal-700 hover:bg-teal-200'}`;
+      document.getElementById('tab-create').className = `px-6 py-2 font-bold rounded-lg shadow transition-all ${mode === 'create' ? 'bg-purple-500 text-white' : 'bg-teal-100 text-teal-700 hover:bg-teal-200'}`;
+      document.getElementById('tab-friend').className = `px-6 py-2 font-bold rounded-lg shadow transition-all ${mode === 'friend' ? 'bg-cyan-500 text-white' : 'bg-teal-100 text-teal-700 hover:bg-teal-200'}`;
+
+      if (mode === 'create') {
+        initializeStepsBuilder();
+      }
+    }
+
+    // Create Mode Functions
+    function setCreateDifficulty(diff) {
+      gameState.createDifficulty = diff;
+      document.getElementById('create-easy').className = `flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${diff === 'easy' ? 'bg-purple-500 text-white' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}`;
+      document.getElementById('create-medium').className = `flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${diff === 'medium' ? 'bg-purple-500 text-white' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}`;
+      document.getElementById('create-hard').className = `flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${diff === 'hard' ? 'bg-purple-500 text-white' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}`;
+      initializeStepsBuilder();
+    }
+
+    function initializeStepsBuilder() {
+      const stepCount = gameState.createDifficulty === 'easy' ? 2 : gameState.createDifficulty === 'medium' ? 3 : 4;
+      const container = document.getElementById('steps-builder');
+      
+      let html = '<label class="block text-sm font-semibold text-purple-600 mb-3">Temperature Changes</label>';
+      
+      for (let i = 0; i < stepCount; i++) {
+        html += `
+          <div class="flex gap-2 items-end bg-purple-50 p-3 rounded-lg">
+            <div class="flex-1">
+              <label class="text-xs text-purple-600">Step ${i + 1}</label>
+              <select id="change-type-${i}" class="w-full px-3 py-2 border border-purple-200 rounded text-sm" onchange="updatePreview()">
+                <option value="drops">drops (subtract)</option>
+                <option value="rises">rises (add)</option>
+              </select>
+            </div>
+            <div class="w-20">
+              <label class="text-xs text-purple-600">Amount</label>
+              <input type="number" id="change-amount-${i}" class="w-full px-3 py-2 border border-purple-200 rounded text-sm text-center" placeholder="°C" min="1" max="20" value="1" onchange="updatePreview()" oninput="updatePreview()">
+            </div>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = html;
+      updatePreview();
+    }
+
+    function updatePreview() {
+      const startTemp = parseInt(document.getElementById('create-start-temp').value) || 0;
+      const stepCount = gameState.createDifficulty === 'easy' ? 2 : gameState.createDifficulty === 'medium' ? 3 : 4;
+      
+      let preview = `<p>Starting at <span id="preview-start">${startTemp}</span>°C</p>`;
+      let running = startTemp;
+      
+      for (let i = 0; i < stepCount; i++) {
+        const type = document.getElementById(`change-type-${i}`)?.value || 'drops';
+        const amount = parseInt(document.getElementById(`change-amount-${i}`)?.value) || 1;
+        const change = type === 'drops' ? -amount : amount;
+        running += change;
+        
+        preview += `<p>Step ${i + 1}: ${type} ${amount}°C → ${running}°C</p>`;
+      }
+      
+      document.getElementById('create-preview').innerHTML = preview;
+    }
+
+    async function saveChallenge() {
+      const creatorName = document.getElementById('creator-name').value.trim();
+      if (!creatorName) {
+        alert('Please enter your name!');
+        return;
+      }
+
+      const startTemp = parseInt(document.getElementById('create-start-temp').value);
+      const stepCount = gameState.createDifficulty === 'easy' ? 2 : gameState.createDifficulty === 'medium' ? 3 : 4;
+      
+      const steps = [];
+      for (let i = 0; i < stepCount; i++) {
+        const type = document.getElementById(`change-type-${i}`)?.value || 'drops';
+        const amount = parseInt(document.getElementById(`change-amount-${i}`)?.value) || 1;
+        steps.push({ text: `${type} ${amount}°C`, change: type === 'drops' ? -amount : amount });
+      }
+
+      const challenge = {
+        id: Date.now().toString(),
+        start_temp: startTemp,
+        steps_json: JSON.stringify(steps),
+        difficulty: gameState.createDifficulty,
+        creator_name: creatorName,
+        created_at: new Date().toISOString()
+      };
+
+      const result = await window.dataSdk.create(challenge);
+      
+      if (result.isOk) {
+        document.getElementById('save-success-modal').classList.remove('hidden');
+        document.getElementById('creator-name').value = '';
+      }
+    }
+
+    function closeSaveModal() {
+      document.getElementById('save-success-modal').classList.add('hidden');
+      switchMode('friend');
+    }
+
+    function renderFriendChallenges() {
+      const container = document.getElementById('friend-challenges-list');
+      
+      if (gameState.friendChallenges.length === 0) {
+        container.innerHTML = '<p class="col-span-full text-center text-gray-500 italic">No friend challenges yet! Create one in the "Create Challenge" tab.</p>';
+        return;
+      }
+
+      container.innerHTML = gameState.friendChallenges.map(challenge => {
+        const steps = JSON.parse(challenge.steps_json);
+        return `
+          <div class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl p-4 border-2 border-cyan-200 hover:shadow-lg transition-all">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="font-bold text-cyan-700">From: ${challenge.creator_name}</h3>
+                <span class="text-xs bg-cyan-100 text-cyan-700 px-2 py-1 rounded">${challenge.difficulty.toUpperCase()}</span>
+              </div>
+              <span class="text-xs text-cyan-500">${new Date(challenge.created_at).toLocaleDateString()}</span>
+            </div>
+            <div class="text-sm text-cyan-600 mb-3">
+              <p>Start: <strong>${challenge.start_temp}°C</strong></p>
+              <p>Steps: ${steps.map(s => s.text).join(' → ')}</p>
+            </div>
+            <button onclick="playFriendChallenge('${challenge.__backendId}')" class="w-full py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-lg hover:shadow-md transition-all">
+              ▶️ Try Challenge
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function playFriendChallenge(challengeId) {
+      const challenge = gameState.friendChallenges.find(c => c.__backendId === challengeId);
+      if (!challenge) return;
+
+      gameState.currentFriendScenario = {
+        start: challenge.start_temp,
+        steps: JSON.parse(challenge.steps_json),
+        creator: challenge.creator_name
+      };
+
+      gameState.difficulty = challenge.difficulty;
+      setDifficulty(challenge.difficulty);
+      
+      gameState.currentRound = 0;
+      gameState.currentStep = 0;
+      gameState.currentTemp = challenge.start_temp;
+      gameState.stepAttempts = 0;
+      gameState.score = 0;
+      gameState.totalSteps = 0;
+      gameState.correctFirstAttempt = 0;
+      gameState.streak = 0;
+      gameState.stepResults = [];
+
+      gameState.currentScenario = gameState.currentFriendScenario;
+      gameState.currentRound = 1;
+
+      updateThermometer(gameState.currentTemp);
+      updateNumberLine(gameState.currentTemp);
+      renderSteps();
+      updateScoreDisplay();
+
+      document.getElementById('start-temp').textContent = `${gameState.currentScenario.start}°C`;
+      document.getElementById('action-buttons').classList.remove('hidden');
+      document.getElementById('btn-finish').classList.add('hidden');
+      document.getElementById('btn-reveal').classList.add('hidden');
+      document.getElementById('hint-display').classList.add('hidden');
+      document.getElementById('feedback-display').classList.add('hidden');
+
+      switchMode('play');
+    }
+
+    // Play Mode Functions
+    function setDifficulty(diff) {
+      gameState.difficulty = diff;
+      document.getElementById('btn-easy').className = `flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${diff === 'easy' ? 'bg-teal-500 text-white' : 'bg-teal-100 text-teal-700 hover:bg-teal-200'}`;
+      document.getElementById('btn-medium').className = `flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${diff === 'medium' ? 'bg-teal-500 text-white' : 'bg-teal-100 text-teal-700 hover:bg-teal-200'}`;
+      document.getElementById('btn-hard').className = `flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${diff === 'hard' ? 'bg-teal-500 text-white' : 'bg-teal-100 text-teal-700 hover:bg-teal-200'}`;
+    }
+
+    function toggleNumberLine() {
+      gameState.showNumberLine = document.getElementById('toggle-numberline').checked;
+      document.getElementById('numberline-container').classList.toggle('hidden', !gameState.showNumberLine);
+    }
+
+    function toggleCorrection() {
+      gameState.enableCorrection = document.getElementById('toggle-correction').checked;
+    }
+
+    function updateThermometer(temp) {
+      const indicator = document.getElementById('temp-indicator');
+      const value = document.getElementById('temp-value');
+      const clampedTemp = Math.max(-20, Math.min(20, temp));
+      const percentage = ((clampedTemp + 20) / 40) * 100;
+      indicator.style.bottom = `${percentage}%`;
+      value.textContent = `${temp}°C`;
+    }
+
+    function updateNumberLine(temp) {
+      if (!gameState.showNumberLine) return;
+      const marker = document.getElementById('numberline-marker');
+      const nlValue = document.getElementById('nl-value');
+      const clampedTemp = Math.max(-20, Math.min(20, temp));
+      const percentage = ((clampedTemp + 20) / 40) * 100;
+      marker.style.left = `${percentage}%`;
+      nlValue.textContent = temp;
+    }
+
+    function getRandomScenario() {
+      let pool;
+      if (gameState.difficulty === 'hard' && gameState.enableCorrection) {
+        pool = scenarios.hard;
+      } else {
+        pool = scenarios[gameState.difficulty];
+      }
+
+      const usedKey = gameState.difficulty;
+      const available = pool.filter((_, i) => !gameState.usedScenarios[usedKey].includes(i));
+      
+      if (available.length === 0) {
+        gameState.usedScenarios[usedKey] = [];
+        return getRandomScenario();
+      }
+
+      const randomIndex = Math.floor(Math.random() * available.length);
+      const originalIndex = pool.indexOf(available[randomIndex]);
+      gameState.usedScenarios[usedKey].push(originalIndex);
+      
+      return JSON.parse(JSON.stringify(available[randomIndex]));
+    }
+
+    function startNewRound() {
+      if (gameState.currentFriendScenario) {
+        return;
+      }
+
+      if (gameState.currentRound >= gameState.totalRounds) {
+        gameState.currentRound = 0;
+        gameState.score = 0;
+        gameState.totalSteps = 0;
+        gameState.correctFirstAttempt = 0;
+        gameState.usedScenarios = { easy: [], medium: [], hard: [] };
+      }
+
+      gameState.currentRound++;
+      gameState.currentScenario = getRandomScenario();
+      gameState.currentStep = 0;
+      gameState.currentTemp = gameState.currentScenario.start;
+      gameState.stepAttempts = 0;
+      gameState.stepResults = [];
+
+      updateThermometer(gameState.currentTemp);
+      updateNumberLine(gameState.currentTemp);
+      renderSteps();
+      updateScoreDisplay();
+
+      document.getElementById('start-temp').textContent = `${gameState.currentScenario.start}°C`;
+      document.getElementById('action-buttons').classList.remove('hidden');
+      document.getElementById('btn-finish').classList.add('hidden');
+      document.getElementById('btn-reveal').classList.add('hidden');
+      document.getElementById('hint-display').classList.add('hidden');
+      document.getElementById('feedback-display').classList.add('hidden');
+    }
+
+    function renderSteps() {
+      const container = document.getElementById('steps-container');
+      const scenario = gameState.currentScenario;
+      
+      let html = '';
+      let runningTemp = scenario.start;
+
+      scenario.steps.forEach((step, i) => {
+        const isActive = i === gameState.currentStep;
+        const isComplete = i < gameState.currentStep;
+        const expectedTemp = runningTemp + step.change;
+        
+        html += `
+          <div class="p-3 rounded-xl border-2 transition-all ${isActive ? 'border-teal-400 bg-teal-50' : isComplete ? 'border-green-300 bg-green-50' : 'border-gray-200 bg-gray-50'}">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isComplete ? 'bg-green-500 text-white' : isActive ? 'bg-teal-500 text-white' : 'bg-gray-300 text-gray-600'}">${i + 1}</span>
+              <span class="text-sm font-medium ${step.isCorrection ? 'text-purple-700' : 'text-gray-700'}">${step.isCorrection ? '⚠️ ' : ''}Temperature ${step.text}</span>
+            </div>
+            ${isActive ? `
+              <div class="flex items-center gap-2">
+                <input type="number" id="step-input-${i}" class="flex-1 px-3 py-2 border-2 border-teal-300 rounded-lg text-center font-bold focus:outline-none focus:border-teal-500" placeholder="?" />
+                <span class="text-lg font-bold text-gray-600">°C</span>
+              </div>
+            ` : isComplete ? `
+              <div class="text-center text-lg font-bold ${gameState.stepResults[i]?.correct ? 'text-green-600' : 'text-amber-600'}">
+                ${gameState.stepResults[i]?.answer}°C ${gameState.stepResults[i]?.correct ? '✓' : ''}
+              </div>
+            ` : `
+              <div class="text-center text-gray-400">—</div>
+            `}
+          </div>
+        `;
+        runningTemp = expectedTemp;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function checkCurrentStep() {
+      const input = document.getElementById(`step-input-${gameState.currentStep}`);
+      if (!input) return;
+
+      const userAnswer = parseInt(input.value);
+      if (isNaN(userAnswer)) {
+        showFeedback('Please enter a number!', 'warning');
+        return;
+      }
+
+      const step = gameState.currentScenario.steps[gameState.currentStep];
+      const expectedTemp = gameState.currentTemp + step.change;
+
+      gameState.stepAttempts++;
+      gameState.totalSteps++;
+
+      if (userAnswer === expectedTemp) {
+        const points = gameState.stepAttempts === 1 ? 1 : 0.5;
+        gameState.score += points;
+        
+        if (gameState.stepAttempts === 1) {
+          gameState.correctFirstAttempt++;
+          gameState.streak++;
+          if (gameState.streak > gameState.maxStreak) gameState.maxStreak = gameState.streak;
+        }
+
+        gameState.stepResults.push({ answer: userAnswer, correct: true });
+        gameState.currentTemp = expectedTemp;
+        gameState.currentStep++;
+        gameState.stepAttempts = 0;
+
+        updateThermometer(gameState.currentTemp);
+        updateNumberLine(gameState.currentTemp);
+        showFeedback('Correct! Great work! 🎉', 'success');
+        document.getElementById('hint-display').classList.add('hidden');
+        document.getElementById('btn-reveal').classList.add('hidden');
+
+        if (gameState.currentStep >= gameState.currentScenario.steps.length) {
+          document.getElementById('btn-finish').classList.remove('hidden');
+          document.getElementById('btn-check').disabled = true;
+        }
+
+        renderSteps();
+        updateScoreDisplay();
+      } else {
+        gameState.streak = 0;
+        showFeedback(`Not quite. ${expectedTemp > userAnswer ? 'Try a higher number.' : 'Try a lower number.'}`, 'error');
+        
+        if (gameState.stepAttempts >= 2) {
+          document.getElementById('btn-reveal').classList.remove('hidden');
+        }
+        
+        updateScoreDisplay();
+      }
+    }
+
+    function showHint() {
+      const step = gameState.currentScenario.steps[gameState.currentStep];
+      let hintText = '';
+
+      if (gameState.stepAttempts < 1) {
+        if (step.text.includes('drops')) {
+          hintText = '💡 "Drops" means subtract. So you need to take away from the current temperature.';
+        } else if (step.text.includes('rises')) {
+          hintText = '💡 "Rises" means add. So you need to add to the current temperature.';
+        } else if (step.isCorrection) {
+          hintText = '💡 A correction removes an error. Subtracting a negative is the same as adding!';
+        }
+      } else {
+        if (step.change < 0) {
+          hintText = '↔️ Subtracting moves LEFT on the number line (toward smaller numbers).';
+        } else {
+          hintText = '↔️ Adding moves RIGHT on the number line (toward larger numbers).';
+        }
+        if (step.isCorrection) {
+          hintText += ' Remember: subtracting a negative (-(-3)) is the same as adding the positive (+3)!';
+        }
+      }
+
+      document.getElementById('hint-text').textContent = hintText;
+      document.getElementById('hint-display').classList.remove('hidden');
+    }
+
+    function revealExplanation() {
+      const step = gameState.currentScenario.steps[gameState.currentStep];
+      const expectedTemp = gameState.currentTemp + step.change;
+      
+      let explanation = `📖 Step explanation:\n`;
+      explanation += `Starting at ${gameState.currentTemp}°C\n`;
+      
+      if (step.isCorrection) {
+        explanation += `Correction removes error of ${step.text.match(/-?\d+/)[0]}°C\n`;
+        explanation += `Subtracting a negative = adding: ${gameState.currentTemp} - (${step.text.match(/-?\d+/)[0]}) = ${gameState.currentTemp} + ${Math.abs(step.change)} = ${expectedTemp}°C`;
+      } else if (step.change > 0) {
+        explanation += `Rising ${step.change}°C means: ${gameState.currentTemp} + ${step.change} = ${expectedTemp}°C`;
+      } else {
+        explanation += `Dropping ${Math.abs(step.change)}°C means: ${gameState.currentTemp} - ${Math.abs(step.change)} = ${expectedTemp}°C`;
+      }
+
+      document.getElementById('hint-text').textContent = explanation;
+      document.getElementById('hint-display').classList.remove('hidden');
+
+      gameState.stepResults.push({ answer: expectedTemp, correct: false, revealed: true });
+      gameState.currentTemp = expectedTemp;
+      gameState.currentStep++;
+      gameState.stepAttempts = 0;
+
+      updateThermometer(gameState.currentTemp);
+      updateNumberLine(gameState.currentTemp);
+
+      if (gameState.currentStep >= gameState.currentScenario.steps.length) {
+        document.getElementById('btn-finish').classList.remove('hidden');
+      }
+
+      renderSteps();
+      document.getElementById('btn-reveal').classList.add('hidden');
+    }
+
+    function showFeedback(message, type) {
+      const display = document.getElementById('feedback-display');
+      const text = document.getElementById('feedback-text');
+      
+      display.className = `rounded-2xl p-4 shadow-lg slide-in ${
+        type === 'success' ? 'bg-green-100 border border-green-300' :
+        type === 'error' ? 'bg-red-100 border border-red-300' :
+        'bg-amber-100 border border-amber-300'
+      }`;
+      
+      text.className = `text-sm font-semibold ${
+        type === 'success' ? 'text-green-700' :
+        type === 'error' ? 'text-red-700' :
+        'text-amber-700'
+      }`;
+      
+      text.textContent = message;
+      display.classList.remove('hidden');
+      
+      setTimeout(() => {
+        display.classList.add('hidden');
+      }, 3000);
+    }
+
+    function updateScoreDisplay() {
+      document.getElementById('rounds-display').textContent = `${gameState.currentRound}/${gameState.totalRounds}`;
+      const accuracy = gameState.totalSteps > 0 ? Math.round((gameState.correctFirstAttempt / gameState.totalSteps) * 100) : 0;
+      document.getElementById('accuracy-display').textContent = `${accuracy}%`;
+      document.getElementById('streak-display').textContent = gameState.streak;
+      document.getElementById('total-points').textContent = gameState.score.toFixed(1);
+    }
+
+    function finishRound() {
+      const modal = document.getElementById('summary-modal');
+      const tableContainer = document.getElementById('summary-table');
+      
+      let tableHtml = `
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-teal-100">
+              <th class="p-2 border border-teal-200 text-left">Step</th>
+              <th class="p-2 border border-teal-200">Change</th>
+              <th class="p-2 border border-teal-200">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2 border border-teal-200 font-semibold">Start</td>
+              <td class="p-2 border border-teal-200 text-center">—</td>
+              <td class="p-2 border border-teal-200 text-center font-bold">${gameState.currentScenario.start}°C</td>
+            </tr>
+      `;
+
+      let runningTemp = gameState.currentScenario.start;
+      gameState.currentScenario.steps.forEach((step, i) => {
+        runningTemp += step.change;
+        const result = gameState.stepResults[i];
+        tableHtml += `
+          <tr class="${result?.correct ? 'bg-green-50' : 'bg-amber-50'}">
+            <td class="p-2 border border-teal-200">${step.isCorrection ? '⚠️ ' : ''}${step.text}</td>
+            <td class="p-2 border border-teal-200 text-center">${step.change > 0 ? '+' : ''}${step.change}</td>
+            <td class="p-2 border border-teal-200 text-center font-bold">${runningTemp}°C ${result?.correct ? '✓' : ''}</td>
+          </tr>
+        `;
+      });
+
+      tableHtml += `
+          <tr class="bg-teal-200">
+            <td class="p-2 border border-teal-300 font-bold">Final</td>
+            <td class="p-2 border border-teal-300"></td>
+            <td class="p-2 border border-teal-300 text-center font-bold text-lg">${runningTemp}°C</td>
+          </tr>
+        </tbody>
+        </table>
+      `;
+
+      tableContainer.innerHTML = tableHtml;
+
+      const sessionComplete = document.getElementById('session-complete');
+      if (gameState.currentRound >= gameState.totalRounds && !gameState.currentFriendScenario) {
+        sessionComplete.classList.remove('hidden');
+        document.getElementById('final-score').textContent = `Final Score: ${gameState.score.toFixed(1)} points`;
+        
+        let encouragement = '';
+        const accuracy = gameState.totalSteps > 0 ? (gameState.correctFirstAttempt / gameState.totalSteps) * 100 : 0;
+        if (accuracy >= 90) {
+          encouragement = '🌟 Outstanding! You\'re a temperature tracking expert!';
+        } else if (accuracy >= 70) {
+          encouragement = '👏 Great job! You\'re getting really good at this!';
+        } else if (accuracy >= 50) {
+          encouragement = '💪 Good effort! Keep practicing and you\'ll master it!';
+        } else {
+          encouragement = '🌱 Every scientist starts somewhere. Keep learning!';
+        }
+        document.getElementById('encouragement').textContent = encouragement;
+      } else {
+        sessionComplete.classList.add('hidden');
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeSummary() {
+      document.getElementById('summary-modal').classList.add('hidden');
+      document.getElementById('reflection-input').value = '';
+      
+      if (gameState.currentFriendScenario) {
+        gameState.currentFriendScenario = null;
+        gameState.currentRound = 0;
+        switchMode('friend');
+      } else if (gameState.currentRound < gameState.totalRounds) {
+        startNewRound();
+      } else {
+        document.getElementById('steps-container').innerHTML = '<p class="text-center text-gray-500 italic">Session complete! Click "New Round" to start again.</p>';
+        document.getElementById('action-buttons').classList.add('hidden');
+        document.getElementById('start-temp').textContent = '--°C';
+      }
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c611ad5f0125075',t:'MTc2OTc3NzUyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

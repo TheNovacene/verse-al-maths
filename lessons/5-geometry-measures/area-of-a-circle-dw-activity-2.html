@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle to Parallelogram Visualizer</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1400px;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #2d3748;
+      margin: 0 0 10px 0;
+      font-size: 2.5em;
+    }
+
+    .instruction {
+      text-align: center;
+      color: #4a5568;
+      margin-bottom: 30px;
+      font-size: 1.1em;
+    }
+
+    .controls {
+      background: #f7fafc;
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border: 2px solid #e2e8f0;
+    }
+
+    .slider-container {
+      margin-bottom: 20px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 1.1em;
+    }
+
+    .sector-count {
+      background: #667eea;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-size: 1.2em;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #e2e8f0;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background: #5568d3;
+      transform: scale(1.2);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .visualization {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .canvas-container {
+      background: #f7fafc;
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2px solid #e2e8f0;
+    }
+
+    .canvas-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 15px;
+    }
+
+    canvas {
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .learning-section {
+      background: #fff5f5;
+      padding: 30px;
+      border-radius: 15px;
+      border: 2px solid #feb2b2;
+      margin-bottom: 20px;
+    }
+
+    .learning-section h2 {
+      color: #c53030;
+      margin: 0 0 20px 0;
+      font-size: 1.5em;
+    }
+
+    .fill-blank-question {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border-left: 4px solid #667eea;
+    }
+
+    .question-text {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: #2d3748;
+      margin-bottom: 15px;
+    }
+
+    .blank {
+      display: inline-block;
+      min-width: 150px;
+      padding: 5px 10px;
+      border-bottom: 2px solid #667eea;
+      margin: 0 5px;
+      font-weight: 600;
+      color: #667eea;
+    }
+
+    select {
+      padding: 8px 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1em;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 150px;
+      margin: 0 5px;
+    }
+
+    select:hover {
+      border-color: #667eea;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .options-label {
+      font-size: 0.9em;
+      color: #718096;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .formula-section {
+      background: #f0fff4;
+      padding: 30px;
+      border-radius: 15px;
+      border: 2px solid #9ae6b4;
+    }
+
+    .formula-section h2 {
+      color: #22543d;
+      margin: 0 0 20px 0;
+      font-size: 1.5em;
+    }
+
+    .feedback {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+
+    .feedback.correct {
+      background: #c6f6d5;
+      color: #22543d;
+      display: block;
+    }
+
+    .feedback.incorrect {
+      background: #fed7d7;
+      color: #c53030;
+      display: block;
+    }
+
+    .check-button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      display: block;
+      width: 100%;
+    }
+
+    .check-button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .check-button:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1024px) {
+      .visualization {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+
+      canvas {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <h1 id="main-title">Circle to Parallelogram Transformation</h1>
+   <p class="instruction" id="instruction-text">Discover how the area formula of a circle emerges from rearranging its sectors!</p>
+   <div class="controls">
+    <div class="slider-container">
+     <div class="slider-label"><span>Number of Sectors:</span> <span class="sector-count" id="sectorCount">8</span>
+     </div><input type="range" id="sectorSlider" min="2" max="40" value="8" step="2">
+    </div>
+   </div>
+   <div class="visualization">
+    <div class="canvas-container">
+     <div class="canvas-title">
+      Original Circle with Sectors
+     </div>
+     <canvas id="circleCanvas" width="500" height="500"></canvas>
+    </div>
+    <div class="canvas-container">
+     <div class="canvas-title">
+      Rearranged Sectors (Parallelogram)
+     </div>
+     <canvas id="parallelogramCanvas" width="500" height="500"></canvas>
+    </div>
+   </div>
+   <div class="learning-section">
+    <h2>🎯 Complete the Statement</h2>
+    <div class="fill-blank-question">
+     <div class="question-text">
+      As the number of sectors increases, the shape approaches a <select id="blank1" aria-label="Shape type"> <option value="">Select...</option> <option value="parallelogram">parallelogram</option> <option value="rectangle">rectangle</option> <option value="triangle">triangle</option> <option value="trapezoid">trapezoid</option> </select> with height = <select id="blank2" aria-label="Height value"> <option value="">Select...</option> <option value="radius">radius</option> <option value="diameter">diameter</option> <option value="circumference">circumference</option> <option value="area">area</option> </select> and base ≈ half the <select id="blank3" aria-label="Base value"> <option value="">Select...</option> <option value="circumference">circumference</option> <option value="radius">radius</option> <option value="diameter">diameter</option> <option value="area">area</option> </select>
+     </div><button id="checkBtn1" class="check-button">Check My Answer</button>
+     <div id="feedback1" class="feedback"></div>
+    </div>
+   </div>
+   <div class="formula-section">
+    <h2>📐 Derive the Area Formula</h2>
+    <div class="fill-blank-question">
+     <div class="question-text"><strong>Area ≈ base × height = </strong> <select id="blank4" aria-label="Base formula"> <option value="">Select...</option> <option value="π × r">π × r</option> <option value="2 × π × r">2 × π × r</option> <option value="π × r²">π × r²</option> <option value="r">r</option> </select> <strong> × </strong> <select id="blank5" aria-label="Height formula"> <option value="">Select...</option> <option value="r">r</option> <option value="2r">2r</option> <option value="π">π</option> <option value="πr">πr</option> </select> <strong> = </strong> <select id="blank6" aria-label="Final formula"> <option value="">Select...</option> <option value="πr²">πr²</option> <option value="2πr">2πr</option> <option value="πr">πr</option> <option value="r²">r²</option> </select>
+     </div><button id="checkBtn2" class="check-button">Check My Answer</button>
+     <div id="feedback2" class="feedback"></div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "Circle to Parallelogram Transformation",
+      instruction_text: "Discover how the area formula of a circle emerges from rearranging its sectors!",
+      primary_color: "#667eea",
+      secondary_color: "#f7fafc",
+      text_color: "#2d3748",
+      accent_color: "#c53030",
+      success_color: "#22543d",
+      font_family: "Segoe UI",
+      font_size: 16
+    };
+
+    const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
+    let currentSectors = 8;
+
+    const circleCanvas = document.getElementById('circleCanvas');
+    const parallelogramCanvas = document.getElementById('parallelogramCanvas');
+    const circleCtx = circleCanvas.getContext('2d');
+    const parallelogramCtx = parallelogramCanvas.getContext('2d');
+
+    const slider = document.getElementById('sectorSlider');
+    const sectorCountDisplay = document.getElementById('sectorCount');
+
+    function drawCircleWithSectors(sectors) {
+      const canvas = circleCanvas;
+      const ctx = circleCtx;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = 180;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const anglePerSector = (2 * Math.PI) / sectors;
+
+      for (let i = 0; i < sectors; i++) {
+        const startAngle = i * anglePerSector - Math.PI / 2;
+        const endAngle = (i + 1) * anglePerSector - Math.PI / 2;
+
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.fill();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#2d3748';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    function drawParallelogram(sectors) {
+      const canvas = parallelogramCanvas;
+      const ctx = parallelogramCtx;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = 180;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const anglePerSector = (2 * Math.PI) / sectors;
+      
+      // Each sector takes up this much horizontal space
+      // We need to fit ALL sectors, so divide the available width by number of sectors
+      const sectorWidth = (Math.PI * radius) / sectors;
+      
+      const totalWidth = Math.PI * radius;
+      const height = radius;
+      
+      const startX = centerX - totalWidth / 2;
+      const topY = centerY - height / 2;
+      const bottomY = centerY + height / 2;
+
+      let currentX = startX;
+
+      // Draw ALL sectors alternating up and down
+      for (let i = 0; i < sectors; i++) {
+        const isUpward = i % 2 === 0;
+        
+        ctx.save();
+        ctx.beginPath();
+        
+        if (isUpward) {
+          // Upward sector: apex at BOTTOM edge, arc curves upward to TOP edge
+          const apexX = currentX + sectorWidth / 2;
+          const apexY = bottomY;
+          
+          ctx.moveTo(apexX, apexY);
+          // Arc from bottom to top
+          ctx.arc(apexX, apexY, radius, -Math.PI / 2 - anglePerSector / 2, -Math.PI / 2 + anglePerSector / 2, false);
+          ctx.closePath();
+        } else {
+          // Downward sector: apex at TOP edge, arc curves downward to BOTTOM edge
+          const apexX = currentX + sectorWidth / 2;
+          const apexY = topY;
+          
+          ctx.moveTo(apexX, apexY);
+          // Arc from top to bottom
+          ctx.arc(apexX, apexY, radius, Math.PI / 2 - anglePerSector / 2, Math.PI / 2 + anglePerSector / 2, false);
+          ctx.closePath();
+        }
+        
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.restore();
+
+        currentX += sectorWidth;
+      }
+
+      // Draw parallelogram outline
+      ctx.strokeStyle = '#2d3748';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      
+      ctx.beginPath();
+      ctx.moveTo(startX, topY);
+      ctx.lineTo(startX + totalWidth, topY);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(startX, bottomY);
+      ctx.lineTo(startX + totalWidth, bottomY);
+      ctx.stroke();
+      
+      ctx.setLineDash([]);
+
+      // Labels
+      ctx.font = '16px Arial';
+      ctx.fillStyle = '#2d3748';
+      ctx.textAlign = 'center';
+      ctx.fillText('base ≈ πr', centerX, bottomY + 35);
+      ctx.save();
+      ctx.translate(startX - 40, centerY);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText('height = r', 0, 0);
+      ctx.restore();
+    }
+
+    function updateVisualization() {
+      drawCircleWithSectors(currentSectors);
+      drawParallelogram(currentSectors);
+    }
+
+    slider.addEventListener('input', (e) => {
+      currentSectors = parseInt(e.target.value);
+      sectorCountDisplay.textContent = currentSectors;
+      updateVisualization();
+    });
+
+    const answers = {
+      blank1: 'parallelogram',
+      blank2: 'radius',
+      blank3: 'circumference',
+      blank4: 'π × r',
+      blank5: 'r',
+      blank6: 'πr²'
+    };
+
+    function checkAnswers(group) {
+      let allCorrect = true;
+      const blanks = group === 1 ? ['blank1', 'blank2', 'blank3'] : ['blank4', 'blank5', 'blank6'];
+      
+      blanks.forEach(blankId => {
+        const select = document.getElementById(blankId);
+        if (select.value !== answers[blankId]) {
+          allCorrect = false;
+        }
+      });
+
+      const feedback = document.getElementById(`feedback${group}`);
+      if (blanks.every(id => document.getElementById(id).value !== '')) {
+        if (allCorrect) {
+          feedback.className = 'feedback correct';
+          feedback.textContent = '✓ Excellent! All answers are correct!';
+        } else {
+          feedback.className = 'feedback incorrect';
+          feedback.textContent = '✗ Some answers need correction. Try again!';
+        }
+      } else {
+        feedback.style.display = 'none';
+      }
+    }
+
+    document.getElementById('checkBtn1').addEventListener('click', () => checkAnswers(1));
+    document.getElementById('checkBtn2').addEventListener('click', () => checkAnswers(2));
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const title = document.getElementById('main-title');
+      title.textContent = config.main_title || defaultConfig.main_title;
+      title.style.fontSize = `${baseSize * 2.5}px`;
+      title.style.color = textColor;
+      title.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+      const instruction = document.getElementById('instruction-text');
+      instruction.textContent = config.instruction_text || defaultConfig.instruction_text;
+      instruction.style.fontSize = `${baseSize * 1.1}px`;
+      instruction.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+      document.querySelectorAll('.sector-count').forEach(el => {
+        el.style.background = primaryColor;
+        el.style.fontSize = `${baseSize * 1.2}px`;
+      });
+
+      document.querySelectorAll('h2').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.5}px`;
+        el.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      });
+
+      document.querySelectorAll('.question-text').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.1}px`;
+        el.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      });
+
+      document.querySelectorAll('select').forEach(el => {
+        el.style.fontSize = `${baseSize}px`;
+        el.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      });
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["instruction_text", config.instruction_text || defaultConfig.instruction_text]
+        ])
+      });
+    }
+
+    updateVisualization();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d89379e64cfc546',t:'MTc3Mjg4MjQ5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

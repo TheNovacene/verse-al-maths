@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1193,
+    "height" : 883,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "Circle Theorems",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif",
+      "\"Comic Sans MS\", "
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : -12,
+          "left" : 94,
+          "bottom" : 871,
+          "right" : 1287
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Curves" : {
+            "color" : "red"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            },
+          "AngleMarker" : {
+            "color" : "purple"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 36
+              },
+            "Caption" : {
+              "font-family" : "\"Comic Sans MS\", ",
+              "font-size" : 12,
+              "font-weight" : "bold"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 24,
+              "font-weight" : "bold"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 24
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 656,
+              "y" : 194
+              }
+            },
+          "label" : "O",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -38,
+              "labelOffsetY" : -44
+              }
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 713,
+              "y" : 343
+              }
+            },
+          "label" : "D",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 3,
+              "labelOffsetY" : -4
+              }
+            }
+          },
+        "3" : {
+          "kind" : "Circle",
+          "genus" : "Circle",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "2"
+            },
+          "constraint" : "CircleFromTwoPoints",
+          "style" : {
+            "color" : "green"
+            }
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "3"
+            },
+          "value" : 0.70304868489784045,
+          "constraint" : "PointOnPath",
+          "label" : "A",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -29,
+              "labelOffsetY" : 0
+              }
+            }
+          },
+        "5" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "3"
+            },
+          "value" : 0.34579325779723574,
+          "constraint" : "PointOnPath",
+          "label" : "B",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -30,
+              "labelOffsetY" : -37
+              }
+            }
+          },
+        "6" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "3"
+            },
+          "value" : 0.95301378794998415,
+          "constraint" : "PointOnPath",
+          "label" : "C",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : -23
+              }
+            }
+          },
+        "7" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "2"
+            },
+          "constraint" : "Segment"
+          },
+        "8" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "2",
+            "p1" : "6"
+            },
+          "constraint" : "Segment"
+          },
+        "9" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "5"
+            },
+          "constraint" : "Segment"
+          },
+        "10" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "5",
+            "p1" : "6"
+            },
+          "constraint" : "Segment"
+          },
+        "11" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "1"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "line-style" : "dashed"
+            }
+          },
+        "12" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "6",
+            "p1" : "1"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "line-style" : "dashed"
+            }
+          },
+        "13" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "1",
+            "p2" : "6"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "color" : "blue",
+            "show-angle-direction" : true
+            }
+          },
+        "14" : {
+          "kind" : "Arc",
+          "genus" : "SimpleArc",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "5",
+            "p2" : "6"
+            },
+          "constraint" : "Arc3Points",
+          "style" : {
+            "color" : "green",
+            "line-style" : "dotted"
+            }
+          },
+        "15" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "5",
+            "p2" : "6"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "color" : "red",
+            "show-angle-direction" : true
+            }
+          },
+        "16" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "2",
+            "p2" : "6"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "color" : "green",
+            "show-angle-direction" : true
+            }
+          },
+        "17" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "1",
+            "p2" : "6"
+            },
+          "constraint" : "AngleMarker_Reflex",
+          "style" : {
+            "show-angle-direction" : true
+            }
+          },
+        "18" : {
+          "kind" : "Arc",
+          "genus" : "SimpleArc",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "2",
+            "p2" : "6"
+            },
+          "constraint" : "Arc3Points",
+          "style" : {
+            "width" : 5
+            }
+          },
+        "19" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "marker" : "15"
+            },
+          "constraint" : "MeasurementAngleMarker",
+          "geom" : {
+            "loc" : {
+              "x" : 250,
+              "y" : -1
+              }
+            },
+          "latentVisibility" : true,
+          "style" : {
+            "precision" : 0,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "20" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "marker" : "16"
+            },
+          "constraint" : "MeasurementAngleMarker",
+          "geom" : {
+            "loc" : {
+              "x" : 261,
+              "y" : 272
+              }
+            },
+          "latentVisibility" : true,
+          "style" : {
+            "precision" : 0,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "21" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "19"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 101,
+              "y" : -5
+              }
+            },
+          "label" : "Angle ABC",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Angle ABC",
+            "Angle ABC"
+            ],
+          "fade" : true
+          },
+        "22" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "20"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 115,
+              "y" : 273
+              }
+            },
+          "label" : " Angle ADC",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            " Angle ADC",
+            " Angle ADC"
+            ],
+          "fade" : true
+          },
+        "23" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "1",
+            "p2" : "6"
+            },
+          "constraint" : "MeasurementAngle",
+          "geom" : {
+            "loc" : {
+              "x" : 246,
+              "y" : 46
+              }
+            },
+          "latentVisibility" : true,
+          "style" : {
+            "precision" : 0,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "24" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "marker" : "17"
+            },
+          "constraint" : "MeasurementAngleMarker",
+          "geom" : {
+            "loc" : {
+              "x" : 127,
+              "y" : 358
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "Reflex Angle AOC",
+          "style" : {
+            "precision" : 0,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "25" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "23"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 102,
+              "y" : 45
+              }
+            },
+          "label" : "Angle AOC",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Angle AOC",
+            "Angle AOC"
+            ],
+          "fade" : true
+          },
+        "26" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "24"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 117,
+              "y" : 317
+              }
+            },
+          "label" : "Reflex Angle AOC",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Reflex Angle AOC",
+            "Reflex Angle AOC"
+            ],
+          "fade" : true
+          },
+        "27" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 119,
+              "y" : 497
+              }
+            },
+          "textMFS" : "<VL<T'Things to Explore...'><0><T'1. Click on the button to measure the size of Angle ABC.'><0><T'2. Click on the button to measure the size of Angle AOC.'><0><T'3.  What do you see?'><0><T'4.  Click and drag point A or point C and stop somewhere before'><H<T'Angle AOC = 180'><!B0><T'.'>><0><T'5.  Observe the sizes of the two angles again. What do you see'><T'now?'><0><T'6. Repeat step 4 several times and aobserve the size of each of'><T'the angles each time.  What do you see?'><F1Dxx18Ex20x0092x>>"
+          },
+        "28" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 649,
+              "y" : 504
+              }
+            },
+          "textMFS" : "<VL<T'7.  Click on the buttons to hide the measures of angles ABC and AOC.'><0><T'8.  Now click on the buttons to measure the angles ADC and Reflex'><T'angle AOC.'><0><T'9. What do you see?'><0><H<T'10. Click and drag point A or C stopping before Angle ADC = 90'><!B0><T'.'>><0><T'11. Observe the angles again.  What do you see now?'><0><T'12. Repeat step 10 several times and observe the the angles each'><T'time.  What do you see.'><0><T'12.  Write down a relationship between the angle at the circumference'><T'of a circle and the angle at the centre when they both stand on the'><T'same arc.'><0><T'13.  Do you think that this is always true?  If so, can you explain'><T'why?'><F1Exx1A6x20x20132x>>"
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    
