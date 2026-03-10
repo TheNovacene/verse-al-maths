@@ -992,7 +992,7 @@
 
           acts.forEach(act => {
             html += `<a href="/verse-al-maths/lessons/${act.folder}/${act.file}.html" target="_blank" rel="noopener" class="activity-card">
-              <div class="activity-card-title">${titleCase(act.file)}</div>
+              <div class="activity-card-title">${titleCase(act.base)} Activity ${act.num}</div>
               <div class="activity-card-wok">${createWokBadge(act.wok)}</div>
             </a>`;
           });
