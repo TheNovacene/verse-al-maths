@@ -477,10 +477,121 @@
             <style type="text/css">
                 .sketch_canvas {border: medium solid lightgray; display: inline-block;}
             </style>
-        </head>
+        <style>
+  /* Verse-al Maths Navigation & Footer Styles */
+
+  .versal-nav {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background-color: #f5f1e8;
+    border-bottom: 2px solid #1a4a4a;
+    padding: 1rem 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .versal-nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .versal-nav-left a,
+  .versal-nav-right a {
+    color: #1a4a4a;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .versal-nav-left a:hover,
+  .versal-nav-right a:hover {
+    color: #2a6a6a;
+    text-decoration: underline;
+  }
+
+  .versal-nav-left {
+    font-size: 1.1rem;
+  }
+
+  .versal-nav-right {
+    font-size: 0.95rem;
+  }
+
+  .versal-footer {
+    background-color: #f5f1e8;
+    border-top: 2px solid #1a4a4a;
+    padding: 2rem;
+    margin-top: 3rem;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .versal-footer a {
+    color: #1a4a4a;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .versal-footer a:hover {
+    color: #2a6a6a;
+    text-decoration: underline;
+  }
+
+  .versal-lesson-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .versal-lesson-content details {
+    margin-bottom: 1.5rem;
+  }
+
+  .versal-lesson-content details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #1a4a4a;
+    padding: 0.5rem 0;
+  }
+
+  .versal-lesson-content details summary:hover {
+    color: #2a6a6a;
+  }
+</style>
+
+</head>
         <body role="main">
+<!-- versal-nav -->
+<nav class="versal-nav">
+  <div class="versal-nav-content">
+    <div class="versal-nav-left">
+      <a href="/verse-al-maths/">The Novacene · Verse-al Maths</a>
+    </div>
+    <div class="versal-nav-right">
+      <a href="/verse-al-maths/">← Back to Verse-al Maths</a>
+    </div>
+  </div>
+</nav>
+
             <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
             
-        </body>
+        
+<!-- versal-footer -->
+<footer class="versal-footer">
+  <p>made with verse-al ❤️ by <a href="https://thenovacene.com">The Novacene</a></p>
+  <p>If you'd like to customise this for your school or learning community, please contact <a href="mailto:info@thenovacene.com">info@thenovacene.com</a></p>
+</footer>
+
+</body>
     </html>
     
