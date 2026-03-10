@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide · Verse-al Maths</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal-deep:    #1a4a4a;
+      --teal-mid:     #2d7a7a;
+      --teal-light:   #4db8b8;
+      --amber:        #e8923a;
+      --cream:        #faf6ef;
+      --ink:          #1a2a2a;
+      --muted:        #6a8a8a;
+      --card-bg:      rgba(255,255,255,0.72);
+      --radius:       16px;
+      --transition:   0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --wok-kw:       #4db8b8;
+      --wok-dw:       #8b6bc4;
+      --wok-hs:       #e8923a;
+      --wok-es:       #5a9fd4;
+      --wok-lb:       #5a7a5a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(45,122,122,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 90% 80%, rgba(232,146,58,0.10) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Navigation ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(26,74,74,0.08);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+    .site-nav .brand {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--teal-deep);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .site-nav .back-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      color: var(--teal-mid);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .site-nav .back-link:hover { color: var(--amber); }
+
+    /* ── Container ── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Section Spacing ── */
+    section {
+      padding: 4rem 0;
+    }
+    section + section {
+      border-top: 1px solid rgba(26,74,74,0.06);
+    }
+
+    /* ── Section Labels ── */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Section Headings ── */
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--teal-deep);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 680px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal-light), var(--amber));
+      border: none;
+      margin: 1.5rem 0;
+    }
+    .divider-centre {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 0 3rem;
+    }
+    .hero .wordmark {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      animation: fadeUp 0.6s ease both;
+      animation-delay: 0.1s;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      color: var(--teal-deep);
+      line-height: 1.15;
+      margin: 1rem 0 0.5rem;
+      animation: fadeUp 0.6s ease both;
+      animation-delay: 0.2s;
+    }
+    .hero h1 em {
+      color: var(--amber);
+      font-style: italic;
+    }
+    .hero .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+      animation-delay: 0.35s;
+    }
+    .hero .hero-text {
+      max-width: 640px;
+      margin: 0 auto;
+      font-size: 1rem;
+      color: var(--ink);
+      line-height: 1.75;
+      animation: fadeUp 0.6s ease both;
+      animation-delay: 0.5s;
+    }
+    .hero .hero-text .highlight {
+      color: var(--teal-mid);
+      font-weight: 500;
+    }
+
+    /* ── Card Grid ── */
+    .card-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+    .card-grid.cols-5 {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    .card-grid.cols-4 {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+    .card-grid.cols-3 {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 2px 16px rgba(26,74,74,0.06);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(26,74,74,0.12);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--card-accent, var(--teal-light));
+      border-radius: 4px 0 0 4px;
+      transition: width var(--transition);
+    }
+    .card:hover::before {
+      width: 6px;
+    }
+
+    .card .card-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .card .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.3rem;
+      color: var(--teal-deep);
+      margin-bottom: 0.5rem;
+    }
+    .card .card-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* WoK-specific accent colours */
+    .card[data-accent="kw"] { --card-accent: var(--wok-kw); }
+    .card[data-accent="dw"] { --card-accent: var(--wok-dw); }
+    .card[data-accent="hs"] { --card-accent: var(--wok-hs); }
+    .card[data-accent="es"] { --card-accent: var(--wok-es); }
+    .card[data-accent="lb"] { --card-accent: var(--wok-lb); }
+
+    /* Skill accent colours */
+    .card[data-accent="skill-1"] { --card-accent: #4db8b8; }
+    .card[data-accent="skill-2"] { --card-accent: #e8923a; }
+    .card[data-accent="skill-3"] { --card-accent: #8b6bc4; }
+    .card[data-accent="skill-4"] { --card-accent: #5a9fd4; }
+    .card[data-accent="skill-5"] { --card-accent: #d4725a; }
+    .card[data-accent="skill-6"] { --card-accent: #5a7a5a; }
+    .card[data-accent="skill-7"] { --card-accent: #7a5a8a; }
+    .card[data-accent="skill-8"] { --card-accent: #8a7a5a; }
+
+    /* Ethics accent */
+    .card[data-accent="ethics-1"] { --card-accent: var(--teal-light); }
+    .card[data-accent="ethics-2"] { --card-accent: var(--amber); }
+    .card[data-accent="ethics-3"] { --card-accent: var(--wok-lb); }
+
+    /* ── AI Section ── */
+    .ai-section {
+      background: rgba(77,184,184,0.04);
+      border-radius: var(--radius);
+      padding: 3rem;
+      margin-top: 1rem;
+    }
+    .ai-section .ai-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .ai-section .ai-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+    .ai-section .ai-text p + p {
+      margin-top: 1rem;
+    }
+    .ai-section .ai-pullquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      line-height: 1.4;
+      color: var(--teal-deep);
+      border-left: 3px solid var(--amber);
+      padding-left: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .ai-section .ai-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .ai-section {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    /* ── Audience Tabs ── */
+    .tab-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      padding: 0.6rem 1.5rem;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--teal-deep);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: 0 2px 8px rgba(26,74,74,0.06);
+      transition: all var(--transition);
+    }
+    .tab-btn:hover {
+      box-shadow: 0 4px 16px rgba(26,74,74,0.10);
+    }
+    .tab-btn.active {
+      background: var(--teal-light);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(77,184,184,0.3);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeUp 0.4s ease both;
+    }
+    .tab-content.visible {
+      display: block;
+    }
+    .tab-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.6rem;
+      color: var(--teal-deep);
+      margin-bottom: 1rem;
+    }
+    .tab-content p {
+      font-size: 0.95rem;
+      color: var(--ink);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      max-width: 720px;
+    }
+    .tab-content .em-teal {
+      color: var(--teal-mid);
+      font-weight: 500;
+    }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      text-align: center;
+      padding: 3rem 0;
+    }
+    .cta-btn {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.85rem 2.5rem;
+      border-radius: 100px;
+      background: var(--teal-light);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(77,184,184,0.3);
+      transition: all var(--transition);
+    }
+    .cta-btn:hover {
+      background: var(--teal-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(77,184,184,0.4);
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(26,74,74,0.06);
+    }
+    .site-footer a {
+      color: var(--teal-mid);
+      text-decoration: none;
+    }
+    .site-footer a:hover {
+      color: var(--amber);
+    }
+    .site-footer .footer-contact {
+      font-family: 'DM Sans', sans-serif;
+      font-style: normal;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .container { padding: 0 1.25rem; }
+      section { padding: 3rem 0; }
+      .hero { padding: 3rem 0 2rem; }
+      .card { padding: 1.25rem; }
+      .card-grid.cols-5 { grid-template-columns: 1fr 1fr; }
+      .ai-section { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <a href="/verse-al-maths/" class="brand">The Novacene · Verse-al Maths</a>
+    <a href="/verse-al-maths/" class="back-link">← Back to Verse-al Maths</a>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero">
+    <div class="container">
+      <div class="wordmark">A Guide to</div>
+      <h1>Mathematics for<br><em>curious minds</em></h1>
+      <p class="tagline">A curriculum that begins with who you are, not what you don't know yet.</p>
+      <hr class="divider divider-centre" />
+      <p class="hero-text">
+        This isn't a textbook. It's an invitation to discover mathematics at any age — through building,
+        drawing, storytelling, moving, and reasoning. Verse-al Maths covers <span class="highlight">seven
+        core topics</span> across <span class="highlight">111 interactive activities</span>, and it's designed
+        so that every learner can find their way in. It will equip you to pass GCSE Maths on any exam board,
+        but we hope it does something more: helps you find joy in the magic of maths all around you.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FIVE WAYS OF KNOWING ═══════════════ -->
+  <section id="ways-of-knowing">
+    <div class="container">
+      <div class="section-label animate-on-scroll">The Pedagogy</div>
+      <h2 class="section-heading animate-on-scroll">Five Ways of Knowing</h2>
+      <p class="section-intro animate-on-scroll">
+        Everyone approaches mathematics differently. Some people need to see it; others need to build it,
+        feel it, tell its story, or express it in their own language. These five Ways of Knowing aren't
+        labels — they're lenses. Every activity in this curriculum is designed through one or more of them.
+      </p>
+
+      <div class="card-grid cols-5">
+        <div class="card animate-on-scroll" data-accent="kw">
+          <span class="card-emoji">🧠</span>
+          <div class="card-title">The Knowing World</div>
+          <div class="card-desc">See mathematics visually. Turn abstract concepts into something you can picture, map, and reason about.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="dw">
+          <span class="card-emoji">🏗</span>
+          <div class="card-title">The Designed World</div>
+          <div class="card-desc">Build and construct. Understand the logic behind each step by designing mathematical structures piece by piece.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="hs">
+          <span class="card-emoji">🧬</span>
+          <div class="card-title">The Human Story</div>
+          <div class="card-desc">Mathematics isn't abstract — it's how humans have made sense of the world for thousands of years. Connect to the story.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="es">
+          <span class="card-emoji">🗣</span>
+          <div class="card-title">The Expressive Self</div>
+          <div class="card-desc">Express yourself through multiple languages — words, symbols, diagrams — and find your own way to communicate ideas.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="lb">
+          <span class="card-emoji">🌀</span>
+          <div class="card-title">The Living Body</div>
+          <div class="card-desc">Feel it in motion. Mathematical patterns live in rhythm, movement, the natural world, and the geometry of your own hands.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ EIGHT SKILLS ═══════════════ -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label animate-on-scroll">What You'll Develop</div>
+      <h2 class="section-heading animate-on-scroll">Eight Skills for Life</h2>
+      <p class="section-intro animate-on-scroll">
+        Facts fade. Skills endure. Every activity in this curriculum is mapped to at least two of these
+        eight transferable skills — the kind of thinking that stays with you long after the exam is over.
+      </p>
+
+      <div class="card-grid cols-4">
+        <div class="card animate-on-scroll" data-accent="skill-1">
+          <span class="card-emoji">👁️</span>
+          <div class="card-title">See It</div>
+          <div class="card-desc">Turning abstract ideas into something visual you can reason about.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="skill-2">
+          <span class="card-emoji">🧪</span>
+          <div class="card-title">Experiment</div>
+          <div class="card-desc">Changing variables to discover how things connect.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="skill-3">
+          <span class="card-emoji">🪜</span>
+          <div class="card-title">Step Through</div>
+          <div class="card-desc">Breaking complexity into ordered, logical steps.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="skill-4">
+          <span class="card-emoji">🔄</span>
+          <div class="card-title">Translate</div>
+          <div class="card-desc">Moving between words, symbols, and the real world.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="skill-5">
+          <span class="card-emoji">🎯</span>
+          <div class="card-title">Sense-Check</div>
+          <div class="card-desc">Building intuition and checking whether answers feel right.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="skill-6">
+          <span class="card-emoji">🔍</span>
+          <div class="card-title">Spot What Stays</div>
+          <div class="card-desc">Finding the rules that hold true beneath the surface.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="skill-7">
+          <span class="card-emoji">🔗</span>
+          <div class="card-title">Connect</div>
+          <div class="card-desc">Seeing how graphs, equations, tables, and words describe the same idea.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="skill-8">
+          <span class="card-emoji">🔬</span>
+          <div class="card-title">Investigate</div>
+          <div class="card-desc">Spotting patterns, forming conjectures, and testing them.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ WHY THIS MATTERS ═══════════════ -->
+  <section id="why-now">
+    <div class="container">
+      <div class="section-label animate-on-scroll">Why This Matters</div>
+      <h2 class="section-heading animate-on-scroll">Mathematics in the Age of AI</h2>
+
+      <div class="ai-section animate-on-scroll">
+        <div class="ai-grid">
+          <div class="ai-text">
+            <p>Machines can calculate faster than any human ever will. But mathematical thinking — the ability
+            to ask the right question, spot a hidden pattern, build intuition about whether something makes
+            sense — is irreplaceably human.</p>
+            <p>When you learn to <em>translate</em> between words and symbols, to <em>sense-check</em> whether
+            an answer is reasonable, to <em>investigate</em> why something works and not just that it works —
+            you're developing precisely the capabilities that no algorithm can replicate.</p>
+            <p>This curriculum doesn't teach you to compete with a calculator. It teaches you to think in ways
+            a calculator never could. Those are the skills that will define your thinking, your career, and
+            your creativity for decades to come — in fields that may not even exist yet.</p>
+          </div>
+          <div class="ai-pullquote">
+            "The goal isn't to compute faster. It's to think deeper — to ask better questions,
+            to see what the numbers mean, and to find the human story in the data."
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ETHICAL DESIGN ═══════════════ -->
+  <section id="ethics">
+    <div class="container">
+      <div class="section-label animate-on-scroll">How We Work</div>
+      <h2 class="section-heading animate-on-scroll">Designed with Care</h2>
+      <p class="section-intro animate-on-scroll">
+        Education technology often tracks, nudges, and gamifies. We chose a different path.
+        This curriculum is built on trust, not surveillance.
+      </p>
+
+      <div class="card-grid cols-3">
+        <div class="card animate-on-scroll" data-accent="ethics-1">
+          <span class="card-emoji">🔒</span>
+          <div class="card-title">No Tracking, No Nudging</div>
+          <div class="card-desc">We don't collect your data. We don't track your progress to drive engagement. We don't prompt you for test scores. Learning isn't a game to be optimised — it's a journey to be savoured.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="ethics-2">
+          <span class="card-emoji">✏️</span>
+          <div class="card-title">Designed for Pen &amp; Paper</div>
+          <div class="card-desc">This curriculum works offline. It's designed for a pencil, paper, ruler, and a curious mind. The activities make you think, reason, and discover for yourself. Technology supports the learning — it doesn't replace it.</div>
+        </div>
+        <div class="card animate-on-scroll" data-accent="ethics-3">
+          <span class="card-emoji">🌱</span>
+          <div class="card-title">Your Pace, Your Way</div>
+          <div class="card-desc">There's no timer. No "you're falling behind." Every learner approaches mathematics differently, and this curriculum honours that. Work at your own pace — with a friend, a teacher, or entirely on your own.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOR LEARNERS / TEACHERS / PARENTS ═══════════════ -->
+  <section id="for-you">
+    <div class="container">
+      <div class="section-label animate-on-scroll">Who This Is For</div>
+      <h2 class="section-heading animate-on-scroll">Wherever You're Starting From</h2>
+
+      <div class="tab-bar animate-on-scroll">
+        <button class="tab-btn active" data-tab="learners">For Learners</button>
+        <button class="tab-btn" data-tab="teachers">For Teachers</button>
+        <button class="tab-btn" data-tab="parents">For Parents</button>
+      </div>
+
+      <!-- Learners -->
+      <div class="tab-content visible" id="tab-learners">
+        <h3>Start with who you are</h3>
+        <p>This curriculum doesn't assume everyone learns the same way. You might be someone who needs to
+        <em>see</em> an idea drawn out, or someone who understands by <em>building</em> something, or someone
+        who grasps a concept best when you hear <em>the story behind it</em>. We meet you there.</p>
+        <p>There are <span class="em-teal">111 activities across 7 topics</span>, each designed so you can see
+        how mathematics connects to the real world — to architecture, art, nature, history, and the patterns
+        hiding in everyday life.</p>
+        <p>Nobody is watching to see if you're "fast enough." You work at your pace, and the curriculum adapts
+        to how you learn best. By the end, you'll have the knowledge and skills to pass GCSE Maths on any exam
+        board — but more importantly, you'll have developed a mathematical mind that's genuinely curious.</p>
+      </div>
+
+      <!-- Teachers -->
+      <div class="tab-content" id="tab-teachers">
+        <h3>Teach the whole learner, not the formula</h3>
+        <p><span class="em-teal">Five Ways of Knowing</span> give you a framework for genuine differentiation.
+        Instead of teaching to one modality, you can help every student find <em>their</em> entry point into
+        a topic — whether that's visual, structural, narrative, expressive, or embodied.</p>
+        <p><span class="em-teal">Eight transferable skills</span> are mapped to every activity. Your role isn't
+        just to deliver content; it's to develop capabilities. This curriculum makes that visible — you can see
+        exactly which skills each activity builds, and plan your teaching around the skills your students most
+        need to develop.</p>
+        <p><span class="em-teal">Three navigation views</span> — by Topic, by Way of Knowing, and by Skill —
+        give you genuine flexibility. Teach thematically, linearly, or in spirals. The 111 activities are fully
+        mapped to GCSE outcomes, and the sequencing is yours to choose.</p>
+        <p>Everything works offline. There's no tracking or data collection. Your classroom's learning
+        stays in your classroom.</p>
+      </div>
+
+      <!-- Parents -->
+      <div class="tab-content" id="tab-parents">
+        <h3>Mathematics isn't "get it or don't"</h3>
+        <p>You might remember maths as a subject where you either understood it or you didn't. This curriculum
+        is built on a different idea — that mathematical thinking is something <em>everyone</em> does
+        naturally, just in different ways.</p>
+        <p>Your child might come at quadratic equations through architecture, or understand probability through
+        the history of games of chance. This curriculum celebrates that diversity instead of penalising it.
+        Your child's approach to maths isn't a limitation — <span class="em-teal">it's their strength</span>.</p>
+        <p>The <span class="em-teal">111 activities across 7 topics</span> span the full GCSE curriculum,
+        each connected to real-world applications. The goal isn't just a test score (though that will come).
+        It's genuine mathematical thinking: the ability to ask questions, spot patterns, build intuition,
+        and enjoy the process.</p>
+        <p>You don't need to be "good at maths" to support your child with this. Just show them that
+        <em>you're curious</em>. Ask questions. Explore together. That's the whole point.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CTA ═══════════════ -->
+  <section class="cta-section">
+    <div class="container">
+      <p class="tagline" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.15rem; color:var(--muted); margin-bottom:1.5rem;">
+        Ready to explore?
+      </p>
+      <a href="/verse-al-maths/" class="cta-btn">Explore the Curriculum</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="site-footer">
+    <div>made with verse-al ❤️ by <a href="https://thenovacene.com">The Novacene</a></div>
+    <div class="footer-contact">If you'd like to customise this for your school or learning community, please contact <a href="mailto:info@thenovacene.com">info@thenovacene.com</a></div>
+  </footer>
+
+  <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('visible'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('visible');
+      });
+    });
+
+    // Scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
