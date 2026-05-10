@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build-A-Tree: Probability Diagram Generator</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100%;
+      width: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .app-container {
+      width: 100%;
+      min-height: 700px;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .main-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      color: #ffffff;
+      margin: 0 0 8px 0;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .panel-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .panel h2 {
+      margin: 0 0 20px 0;
+      font-size: 20px;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333333;
+      font-size: 14px;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+      background: #ffffff;
+    }
+
+    select:focus, input[type="number"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .counter-inputs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .counter-input {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .counter-input label {
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .counter-input input {
+      padding: 8px;
+    }
+
+    .color-indicator {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 6px;
+      vertical-align: middle;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333333;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .tree-container {
+      min-height: 500px;
+      position: relative;
+      padding: 20px;
+      overflow: auto;
+    }
+
+    .tree-svg {
+      width: 100%;
+      min-height: 500px;
+    }
+
+    .branch-line {
+      stroke: #667eea;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .branch-line.highlighted {
+      stroke: #ff6b6b;
+      stroke-width: 4;
+    }
+
+    .node {
+      cursor: pointer;
+    }
+
+    .node-circle {
+      fill: #ffffff;
+      stroke: #667eea;
+      stroke-width: 2;
+      transition: all 0.2s;
+    }
+
+    .node:hover .node-circle {
+      fill: #667eea;
+      r: 10;
+    }
+
+    .node-text {
+      font-size: 14px;
+      font-weight: 600;
+      fill: #1a1a1a;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+
+    .probability-text {
+      font-size: 12px;
+      fill: #667eea;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .probability-input {
+      position: absolute;
+      width: 60px;
+      padding: 4px 6px;
+      border: 2px solid #667eea;
+      border-radius: 6px;
+      font-size: 13px;
+      text-align: center;
+      background: #ffffff;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .probability-input:focus {
+      outline: none;
+      border-color: #5568d3;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .calculation-section {
+      margin-top: 24px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+
+    .calculation-section h3 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      color: #1a1a1a;
+    }
+
+    .btn-calculate {
+      background: #764ba2;
+      color: #ffffff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .btn-calculate:hover {
+      background: #6a4290;
+      box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
+    }
+
+    .outcomes-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .outcome-item {
+      background: #ffffff;
+      padding: 14px;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+
+    .outcome-path {
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .outcome-probability {
+      color: #667eea;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .question-section {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 2px solid #e0e0e0;
+    }
+
+    .question-item {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .question-text {
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .answer-input-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .answer-input-group input {
+      flex: 1;
+      max-width: 200px;
+    }
+
+    .btn-check {
+      background: #51cf66;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-check:hover {
+      background: #40c057;
+    }
+
+    .feedback {
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .feedback.correct {
+      background: #d3f9d8;
+      color: #2b8a3e;
+    }
+
+    .feedback.incorrect {
+      background: #ffe3e3;
+      color: #c92a2a;
+    }
+
+    .feedback-message {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .feedback-message.success {
+      background: #d3f9d8;
+      color: #2b8a3e;
+    }
+
+    .feedback-message.error {
+      background: #ffe3e3;
+      color: #c92a2a;
+    }
+
+    .feedback-message.partial {
+      background: #fff3bf;
+      color: #e67700;
+    }
+
+    .probability-input.correct {
+      border-color: #51cf66;
+      background: #d3f9d8;
+    }
+
+    .probability-input.incorrect {
+      border-color: #ff6b6b;
+      background: #ffe3e3;
+    }
+
+    .outcome-input {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    .outcome-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .outcome-input.correct {
+      border-color: #51cf66;
+      background: #d3f9d8;
+    }
+
+    .outcome-input.incorrect {
+      border-color: #ff6b6b;
+      background: #ffe3e3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666666;
+    }
+
+    .empty-state-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .empty-state-text {
+      font-size: 18px;
+      font-weight: 500;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-container">
+   <div class="main-content">
+    <header role="banner">
+     <h1 id="app-title">Build-A-Tree: Probability Diagram Generator</h1>
+     <p class="subtitle" id="instructions-text">Choose your scenario and build a probability tree diagram</p>
+    </header>
+    <div class="panel-grid">
+     <aside class="panel" role="complementary" aria-label="Scenario Configuration">
+      <h2>��� Scenario Customiser</h2>
+      <form id="scenario-form" onsubmit="event.preventDefault();">
+       <div class="form-group"><label for="context">Context:</label> <select id="context" aria-label="Probability context"> <option value="coin">Tossing a fair coin</option> <option value="counters" selected>Drawing coloured counters</option> <option value="students">Picking students by attribute</option> </select>
+       </div>
+       <div id="counter-options" class="form-group"><label>Counters in Bag:</label>
+        <div class="counter-inputs">
+         <div class="counter-input"><label for="red-count"> <span class="color-indicator" style="background: #ff6b6b;"></span>Red </label> <input type="number" id="red-count" min="0" max="20" value="3" aria-label="Number of red counters">
+         </div>
+         <div class="counter-input"><label for="green-count"> <span class="color-indicator" style="background: #51cf66;"></span>Green </label> <input type="number" id="green-count" min="0" max="20" value="2" aria-label="Number of green counters">
+         </div>
+        </div>
+       </div>
+       <div id="student-options" class="form-group hidden"><label>Students in Class:</label>
+        <div class="counter-inputs">
+         <div class="counter-input"><label for="male-count"> <span class="color-indicator" style="background: #4dabf7;"></span>Male </label> <input type="number" id="male-count" min="0" max="30" value="12" aria-label="Number of male students">
+         </div>
+         <div class="counter-input"><label for="female-count"> <span class="color-indicator" style="background: #ff6b9d;"></span>Female </label> <input type="number" id="female-count" min="0" max="30" value="13" aria-label="Number of female students">
+         </div>
+        </div>
+       </div>
+       <div id="replacement-options" class="form-group"><label for="replacement">Replacement:</label> <select id="replacement" aria-label="With or without replacement"> <option value="with">With replacement</option> <option value="without">Without replacement</option> </select>
+       </div><button type="button" class="btn btn-primary" onclick="generateTree()" aria-label="Generate probability tree"> 🌳 Generate Tree </button> <button type="button" class="btn btn-secondary" onclick="resetTree()" aria-label="Reset and start over"> �� Reset Tree </button>
+      </form>
+     </aside>
+     <main class="panel" role="main" aria-label="Probability Tree Diagram">
+      <h2>🌳 Probability Tree Diagram</h2>
+      <div id="tree-container" class="tree-container">
+       <div class="empty-state">
+        <div class="empty-state-icon">
+         🌳
+        </div>
+        <div class="empty-state-text">
+         Click "Generate Tree" to build your probability diagram
+        </div>
+       </div>
+      </div>
+      <div id="calculation-section" class="calculation-section hidden"><button class="btn-calculate" onclick="checkProbabilities()"> ✓ Check My Probabilities </button>
+       <div id="probability-feedback" class="feedback-message hidden"></div><button class="btn-calculate" onclick="calculateAllOutcomes()" style="margin-top: 16px;"> 📊 Calculate All Outcomes </button>
+       <div id="outcomes-display" class="hidden">
+        <h3>Final Outcomes &amp; Probabilities</h3>
+        <p style="color: #666; margin-bottom: 16px;">Calculate the probability for each outcome:</p>
+        <div id="outcomes-list" class="outcomes-list"></div><button class="btn-calculate" onclick="checkOutcomes()" style="margin-top: 20px;"> ✓ Check My Outcome Probabilities </button>
+        <div id="outcome-feedback" class="feedback-message hidden"></div>
+        <div class="question-section">
+         <h3>🧠 Practice Questions</h3>
+         <div id="questions-container"></div>
+        </div>
+       </div>
+      </div>
+     </main>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      app_title: "Build-A-Tree: Probability Diagram Generator",
+      instructions_text: "Choose your scenario and build a probability tree diagram",
+      primary_color: "#667eea",
+      secondary_color: "#ffffff",
+      text_color: "#1a1a1a",
+      accent_color: "#51cf66",
+      highlight_color: "#ff6b6b",
+      font_family: "Inter",
+      font_size: 16
+    };
+
+    let currentTree = null;
+    let outcomes = [];
+
+    // Helper function to convert decimal to fraction string
+    function fractionFromDecimal(decimal) {
+      if (decimal === 0.5) return '1/2';
+      if (decimal === 1/3) return '1/3';
+      if (decimal === 2/3) return '2/3';
+      if (decimal === 0.25) return '1/4';
+      if (decimal === 0.75) return '3/4';
+      if (decimal === 1/6) return '1/6';
+      if (decimal === 5/6) return '5/6';
+      if (decimal === 0.2) return '1/5';
+      if (decimal === 0.4) return '2/5';
+      if (decimal === 0.6) return '3/5';
+      if (decimal === 0.8) return '4/5';
+      
+      // Try to find simple fraction
+      for (let denom = 2; denom <= 20; denom++) {
+        const numer = Math.round(decimal * denom);
+        if (Math.abs(numer / denom - decimal) < 0.0001) {
+          return `${numer}/${denom}`;
+        }
+      }
+      
+      return decimal.toFixed(3);
+    }
+
+    // Helper function to convert fraction string to decimal
+    function decimalFromFraction(fractionStr) {
+      fractionStr = fractionStr.trim();
+      
+      // Check if it's already a decimal
+      if (!fractionStr.includes('/')) {
+        return parseFloat(fractionStr);
+      }
+      
+      const parts = fractionStr.split('/');
+      if (parts.length !== 2) return null;
+      
+      const numerator = parseFloat(parts[0]);
+      const denominator = parseFloat(parts[1]);
+      
+      if (isNaN(numerator) || isNaN(denominator) || denominator === 0) {
+        return null;
+      }
+      
+      return numerator / denominator;
+    }
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const highlightColor = config.highlight_color || defaultConfig.highlight_color;
+
+      document.body.style.fontFamily = `${customFont}, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`;
+      document.body.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+      const titleElement = document.getElementById('app-title');
+      titleElement.textContent = config.app_title || defaultConfig.app_title;
+      titleElement.style.fontSize = `${baseSize * 2}px`;
+      titleElement.style.color = secondaryColor;
+
+      const subtitleElement = document.getElementById('instructions-text');
+      subtitleElement.textContent = config.instructions_text || defaultConfig.instructions_text;
+      subtitleElement.style.fontSize = `${baseSize}px`;
+      subtitleElement.style.color = secondaryColor;
+
+      const panels = document.querySelectorAll('.panel');
+      panels.forEach(panel => {
+        panel.style.background = secondaryColor;
+      });
+
+      const headings = document.querySelectorAll('h2, h3');
+      headings.forEach(h => {
+        h.style.color = textColor;
+        if (h.tagName === 'H2') h.style.fontSize = `${baseSize * 1.25}px`;
+        if (h.tagName === 'H3') h.style.fontSize = `${baseSize * 1.125}px`;
+      });
+
+      const labels = document.querySelectorAll('label');
+      labels.forEach(l => {
+        l.style.color = textColor;
+        l.style.fontSize = `${baseSize * 0.875}px`;
+      });
+
+      const primaryBtns = document.querySelectorAll('.btn-primary');
+      primaryBtns.forEach(btn => {
+        btn.style.background = primaryColor;
+        btn.style.fontSize = `${baseSize * 0.9375}px`;
+      });
+
+      const checkBtns = document.querySelectorAll('.btn-check');
+      checkBtns.forEach(btn => {
+        btn.style.background = accentColor;
+        btn.style.fontSize = `${baseSize * 0.875}px`;
+      });
+
+      if (currentTree) {
+        const branchLines = document.querySelectorAll('.branch-line');
+        branchLines.forEach(line => {
+          if (!line.classList.contains('highlighted')) {
+            line.style.stroke = primaryColor;
+          } else {
+            line.style.stroke = highlightColor;
+          }
+        });
+
+        const nodeCircles = document.querySelectorAll('.node-circle');
+        nodeCircles.forEach(circle => {
+          circle.style.stroke = primaryColor;
+        });
+
+        const probTexts = document.querySelectorAll('.probability-text');
+        probTexts.forEach(text => {
+          text.style.fill = primaryColor;
+        });
+      }
+    }
+
+    function toggleContextOptions() {
+      const context = document.getElementById('context').value;
+      const counterOptions = document.getElementById('counter-options');
+      const studentOptions = document.getElementById('student-options');
+      const replacementOptions = document.getElementById('replacement-options');
+
+      if (context === 'counters') {
+        counterOptions.classList.remove('hidden');
+        studentOptions.classList.add('hidden');
+        replacementOptions.classList.remove('hidden');
+      } else if (context === 'students') {
+        counterOptions.classList.add('hidden');
+        studentOptions.classList.remove('hidden');
+        replacementOptions.classList.remove('hidden');
+      } else {
+        counterOptions.classList.add('hidden');
+        studentOptions.classList.add('hidden');
+        replacementOptions.classList.add('hidden');
+      }
+    }
+
+    document.getElementById('context').addEventListener('change', toggleContextOptions);
+
+    function generateTree() {
+      const stages = 2; // Fixed to 2 stages for manageable diagrams
+      const context = document.getElementById('context').value;
+      const replacement = document.getElementById('replacement').value;
+
+      let events = [];
+      let probabilities = [];
+      let counts = {}; // Store counts for without replacement scenarios
+
+      if (context === 'coin') {
+        events = ['Heads', 'Tails'];
+        probabilities = [0.5, 0.5];
+      } else if (context === 'counters') {
+        const red = parseInt(document.getElementById('red-count').value);
+        const green = parseInt(document.getElementById('green-count').value);
+        const total = red + green;
+
+        if (total === 0) {
+          showToast('Please add at least one counter', 'error');
+          return;
+        }
+
+        if (red === 0 || green === 0) {
+          showToast('Please use at least one of each colour', 'error');
+          return;
+        }
+
+        events = [];
+        probabilities = [];
+        if (red > 0) { 
+          events.push('Red'); 
+          probabilities.push(red / total);
+          counts['Red'] = red;
+        }
+        if (green > 0) { 
+          events.push('Green'); 
+          probabilities.push(green / total);
+          counts['Green'] = green;
+        }
+        counts['Total'] = total;
+      } else if (context === 'students') {
+        const male = parseInt(document.getElementById('male-count').value);
+        const female = parseInt(document.getElementById('female-count').value);
+        const total = male + female;
+
+        if (total === 0) {
+          showToast('Please add at least one student', 'error');
+          return;
+        }
+
+        if (male === 0 || female === 0) {
+          showToast('Please have at least one male and one female student', 'error');
+          return;
+        }
+
+        events = [];
+        probabilities = [];
+        if (male > 0) { 
+          events.push('Male'); 
+          probabilities.push(male / total);
+          counts['Male'] = male;
+        }
+        if (female > 0) { 
+          events.push('Female'); 
+          probabilities.push(female / total);
+          counts['Female'] = female;
+        }
+        counts['Total'] = total;
+      }
+
+      currentTree = {
+        stages,
+        context,
+        events,
+        probabilities,
+        replacement,
+        counts
+      };
+
+      drawTree(currentTree);
+      calculateOutcomes(currentTree);
+      showCalculationPanel();
+    }
+
+    function drawTree(tree) {
+      const container = document.getElementById('tree-container');
+      container.innerHTML = '';
+
+      // Better spacing calculation
+      const branchesAtFinalStage = Math.pow(tree.events.length, tree.stages);
+      const minVerticalSpacing = 80; // Minimum pixels between final branches
+      const horizontalStageSpacing = 250; // More space between stages
+
+      const width = Math.max(900, horizontalStageSpacing * (tree.stages + 1));
+      const height = Math.max(500, branchesAtFinalStage * minVerticalSpacing);
+
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'tree-svg');
+      svg.setAttribute('width', width);
+      svg.setAttribute('height', height);
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+      const startX = 80;
+      const startY = height / 2;
+
+      // Create container for input fields - absolute positioned to overlay the SVG
+      const inputContainer = document.createElement('div');
+      inputContainer.style.position = 'absolute';
+      inputContainer.style.top = '0';
+      inputContainer.style.left = '0';
+      inputContainer.style.width = width + 'px';
+      inputContainer.style.height = height + 'px';
+      inputContainer.style.pointerEvents = 'none'; // Let clicks pass through to SVG
+
+      // Make inputs clickable
+      inputContainer.style.pointerEvents = 'none';
+
+      drawNode(svg, inputContainer, tree, [], startX, startY, 0, width - 160, height);
+      
+      container.appendChild(svg);
+      container.appendChild(inputContainer);
+      
+      // Show calculation section
+      document.getElementById('calculation-section').classList.remove('hidden');
+      document.getElementById('outcomes-display').classList.add('hidden');
+    }
+
+    function drawNode(svg, inputContainer, tree, path, x, y, stage, availableWidth, totalHeight) {
+      if (stage >= tree.stages) return;
+
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', x);
+      circle.setAttribute('cy', y);
+      circle.setAttribute('r', 8);
+      circle.setAttribute('class', 'node-circle');
+
+      const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      nodeGroup.setAttribute('class', 'node');
+      nodeGroup.appendChild(circle);
+
+      svg.appendChild(nodeGroup);
+
+      const nextStage = stage + 1;
+      const numBranchesAtThisLevel = Math.pow(tree.events.length, nextStage);
+      const spacing = totalHeight / (numBranchesAtThisLevel + 1);
+      const stepX = availableWidth / tree.stages;
+
+      tree.events.forEach((event, index) => {
+        const newPath = [...path, event];
+        const branchIndex = path.length > 0 
+          ? (path.reduce((acc, p) => acc * tree.events.length + tree.events.indexOf(p), 0) * tree.events.length + index)
+          : index;
+        
+        const offsetMultiplier = Math.pow(tree.events.length, tree.stages - nextStage);
+        const baseOffset = (index - (tree.events.length - 1) / 2) * spacing * offsetMultiplier;
+        
+        const nextX = x + stepX;
+        const nextY = y + baseOffset;
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x);
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', nextX);
+        line.setAttribute('y2', nextY);
+        line.setAttribute('class', 'branch-line');
+        line.setAttribute('data-path', newPath.join('-'));
+        svg.insertBefore(line, svg.firstChild);
+
+        // Add event label on the branch
+        const labelX = x + (nextX - x) * 0.35;
+        const labelY = y + (nextY - y) * 0.35;
+        
+        const eventLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        eventLabel.setAttribute('x', labelX);
+        eventLabel.setAttribute('y', labelY - 8);
+        eventLabel.setAttribute('class', 'node-text');
+        eventLabel.setAttribute('text-anchor', 'middle');
+        eventLabel.textContent = event;
+        svg.appendChild(eventLabel);
+
+        // Calculate the correct probability for this branch
+        let prob;
+        if (stage === 0) {
+          // First stage - use the original probabilities
+          prob = tree.probabilities[index];
+        } else {
+          // Second stage - calculate based on replacement setting
+          if (tree.replacement === 'without' && tree.counts) {
+            // Without replacement - adjust counts based on previous selection
+            const previousEvent = path[path.length - 1];
+            let adjustedTotal = tree.counts['Total'] - 1;
+            let adjustedCount = tree.counts[event];
+            
+            // If we're selecting the same event again, reduce its count by 1
+            if (previousEvent === event) {
+              adjustedCount = adjustedCount - 1;
+            }
+            
+            prob = adjustedCount / adjustedTotal;
+          } else {
+            // With replacement - probabilities stay the same
+            prob = tree.probabilities[index];
+          }
+        }
+        
+        // Position input at 75% along the branch (well past the label at 35%)
+        const inputPosX = x + (nextX - x) * 0.75;
+        const inputPosY = y + (nextY - y) * 0.75;
+        
+        // Calculate angle of the branch
+        const angle = Math.atan2(nextY - y, nextX - x);
+        
+        // Offset perpendicular to the branch line - much larger distance for steeper branches
+        const offsetDistance = 35;
+        const inputX = inputPosX + Math.cos(angle + Math.PI / 2) * offsetDistance - 30;
+        const inputY = inputPosY + Math.sin(angle + Math.PI / 2) * offsetDistance - 12;
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'probability-input';
+        input.placeholder = '?';
+        input.value = ''; // Start empty for students to fill in
+        input.setAttribute('data-path', newPath.join('-'));
+        input.setAttribute('data-correct-value', fractionFromDecimal(prob));
+        input.setAttribute('aria-label', `Probability for ${newPath.join(' then ')}`);
+        input.style.left = inputX + 'px';
+        input.style.top = inputY + 'px';
+        input.style.pointerEvents = 'auto'; // Make input clickable
+
+        inputContainer.appendChild(input);
+
+        drawNode(svg, inputContainer, tree, newPath, nextX, nextY, nextStage, availableWidth - stepX, totalHeight);
+      });
+    }
+
+    function checkProbabilities() {
+      const inputs = document.querySelectorAll('.probability-input');
+      const feedback = document.getElementById('probability-feedback');
+      
+      let allCorrect = true;
+      let allFilled = true;
+      
+      inputs.forEach(input => {
+        const userValue = input.value.trim();
+        const pathKey = input.getAttribute('data-path');
+        
+        if (userValue === '') {
+          allFilled = false;
+          input.classList.remove('correct', 'incorrect');
+          return;
+        }
+        
+        // Recalculate the correct probability based on the path
+        const pathParts = pathKey.split('-');
+        const stage = pathParts.length - 1; // 0 for first stage, 1 for second stage
+        const event = pathParts[pathParts.length - 1];
+        const eventIndex = currentTree.events.indexOf(event);
+        
+        let correctProb;
+        if (stage === 0) {
+          // First stage - use original probabilities
+          correctProb = currentTree.probabilities[eventIndex];
+        } else {
+          // Second stage - calculate based on replacement setting
+          if (currentTree.replacement === 'without' && currentTree.counts) {
+            const previousEvent = pathParts[0];
+            let adjustedTotal = currentTree.counts['Total'] - 1;
+            let adjustedCount = currentTree.counts[event];
+            
+            // If selecting same event again, reduce its count
+            if (previousEvent === event) {
+              adjustedCount = adjustedCount - 1;
+            }
+            
+            correctProb = adjustedCount / adjustedTotal;
+          } else {
+            // With replacement - probabilities stay the same
+            correctProb = currentTree.probabilities[eventIndex];
+          }
+        }
+        
+        const userDecimal = decimalFromFraction(userValue);
+        
+        if (userDecimal !== null && Math.abs(userDecimal - correctProb) < 0.0001) {
+          input.classList.add('correct');
+          input.classList.remove('incorrect');
+        } else {
+          input.classList.add('incorrect');
+          input.classList.remove('correct');
+          allCorrect = false;
+        }
+      });
+      
+      feedback.classList.remove('hidden');
+      
+      if (!allFilled) {
+        feedback.textContent = 'Please fill in all probability boxes before checking.';
+        feedback.className = 'feedback-message error';
+      } else if (allCorrect) {
+        feedback.textContent = '🎉 Perfect! All probabilities are correct!';
+        feedback.className = 'feedback-message success';
+      } else {
+        feedback.textContent = '⚠️ Some probabilities are incorrect. Check the ones highlighted in red.';
+        feedback.className = 'feedback-message partial';
+      }
+    }
+
+    function calculateAllOutcomes() {
+      // Get all probability inputs from the tree
+      const inputs = document.querySelectorAll('.probability-input');
+      const probMap = new Map();
+      
+      let hasError = false;
+      inputs.forEach(input => {
+        const path = input.getAttribute('data-path');
+        const value = decimalFromFraction(input.value);
+        
+        if (value === null || value < 0 || value > 1) {
+          input.style.borderColor = '#ff6b6b';
+          hasError = true;
+        } else {
+          input.style.borderColor = '#667eea';
+          probMap.set(path, value);
+        }
+      });
+      
+      if (hasError) {
+        showToast('Please enter valid probabilities (fractions or decimals between 0 and 1)', 'error');
+        return;
+      }
+      
+      // Calculate all outcomes using user-entered probabilities
+      outcomes = [];
+      
+      // Generate outcome paths with "and" separator
+      
+      function generatePaths(stage, path, probability) {
+        if (stage >= currentTree.stages) {
+          outcomes.push({ 
+            path: path.join(' and '), 
+            probability,
+            fractionPath: path.map(p => {
+              const fullPath = path.slice(0, path.indexOf(p) + 1).join('-');
+              const prob = probMap.get(fullPath);
+              return fractionFromDecimal(prob);
+            })
+          });
+          return;
+        }
+
+        currentTree.events.forEach((event) => {
+          const newPath = [...path, event];
+          const pathKey = newPath.join('-');
+          const branchProb = probMap.get(pathKey);
+          
+          if (branchProb !== undefined) {
+            generatePaths(stage + 1, newPath, probability * branchProb);
+          }
+        });
+      }
+
+      generatePaths(0, [], 1);
+      
+      displayOutcomes();
+      generateQuestions();
+      
+      document.getElementById('outcomes-display').classList.remove('hidden');
+    }
+
+    function displayOutcomes() {
+      const outcomesList = document.getElementById('outcomes-list');
+      outcomesList.innerHTML = '';
+
+      outcomes.forEach((outcome, index) => {
+        const item = document.createElement('div');
+        item.className = 'outcome-item';
+        
+        // Format the path to show "Event1 and Event2"
+        const formattedPath = outcome.path;
+        
+        const pathDiv = document.createElement('div');
+        pathDiv.className = 'outcome-path';
+        pathDiv.textContent = formattedPath;
+        
+        const inputDiv = document.createElement('div');
+        inputDiv.style.marginTop = '8px';
+        
+        const label = document.createElement('label');
+        label.textContent = 'P = ';
+        label.style.fontSize = '14px';
+        label.style.fontWeight = '500';
+        label.style.color = '#667eea';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'outcome-input';
+        input.placeholder = 'Enter probability';
+        input.id = `outcome-${index}`;
+        input.setAttribute('data-correct-value', outcome.probability.toFixed(4));
+        input.setAttribute('aria-label', `Probability for ${formattedPath}`);
+        
+        inputDiv.appendChild(label);
+        inputDiv.appendChild(input);
+        
+        item.appendChild(pathDiv);
+        item.appendChild(inputDiv);
+        outcomesList.appendChild(item);
+      });
+    }
+
+    function checkOutcomes() {
+      const feedback = document.getElementById('outcome-feedback');
+      let allCorrect = true;
+      let allFilled = true;
+      
+      outcomes.forEach((outcome, index) => {
+        const input = document.getElementById(`outcome-${index}`);
+        const userValue = input.value.trim();
+        const correctValue = parseFloat(input.getAttribute('data-correct-value'));
+        
+        if (userValue === '') {
+          allFilled = false;
+          input.classList.remove('correct', 'incorrect');
+          return;
+        }
+        
+        const userDecimal = decimalFromFraction(userValue);
+        
+        if (userDecimal !== null && Math.abs(userDecimal - correctValue) < 0.0001) {
+          input.classList.add('correct');
+          input.classList.remove('incorrect');
+        } else {
+          input.classList.add('incorrect');
+          input.classList.remove('correct');
+          allCorrect = false;
+        }
+      });
+      
+      feedback.classList.remove('hidden');
+      
+      if (!allFilled) {
+        feedback.textContent = 'Please fill in all outcome probabilities before checking.';
+        feedback.className = 'feedback-message error';
+      } else if (allCorrect) {
+        feedback.textContent = '🎉 Excellent! All outcome probabilities are correct!';
+        feedback.className = 'feedback-message success';
+      } else {
+        feedback.textContent = '⚠️ Some probabilities are incorrect. Check the ones highlighted in red.';
+        feedback.className = 'feedback-message partial';
+      }
+    }
+
+    function generateQuestions() {
+      const questionsContainer = document.getElementById('questions-container');
+      questionsContainer.innerHTML = '';
+
+      const context = document.getElementById('context').value;
+      const questions = [];
+
+      if ((context === 'counters' || context === 'students') && currentTree.stages >= 2) {
+        const firstEvent = currentTree.events[0];
+        const atLeastOne = outcomes
+          .filter(o => o.path.includes(firstEvent))
+          .reduce((sum, o) => sum + o.probability, 0);
+        
+        questions.push({
+          text: `What is the probability of getting at least one ${firstEvent}?`,
+          answer: atLeastOne.toFixed(4)
+        });
+
+        if (currentTree.events.length >= 2) {
+          const secondEvent = currentTree.events[1];
+          const both = outcomes
+            .filter(o => {
+              const parts = o.path.split(' and ');
+              return parts.every(p => p === secondEvent);
+            })
+            .reduce((sum, o) => sum + o.probability, 0);
+          
+          questions.push({
+            text: `What is the probability of getting all ${secondEvent}?`,
+            answer: both.toFixed(4)
+          });
+        }
+      } else if (context === 'coin') {
+        const allHeads = outcomes.find(o => o.path.split(' and ').every(p => p === 'Heads'));
+        if (allHeads) {
+          questions.push({
+            text: 'What is the probability of getting all Heads?',
+            answer: allHeads.probability.toFixed(4)
+          });
+        }
+      }
+
+      questions.forEach((q, index) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'question-item';
+        
+        const qText = document.createElement('div');
+        qText.className = 'question-text';
+        qText.textContent = q.text;
+        
+        const inputGroup = document.createElement('div');
+        inputGroup.className = 'answer-input-group';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'e.g., 1/2 or 0.5';
+        input.id = `answer-${index}`;
+        input.setAttribute('aria-label', `Answer for question ${index + 1}`);
+        
+        const checkBtn = document.createElement('button');
+        checkBtn.textContent = '✓ Check Answer';
+        checkBtn.className = 'btn-check';
+        checkBtn.onclick = () => checkAnswer(index, q.answer);
+        
+        inputGroup.appendChild(input);
+        inputGroup.appendChild(checkBtn);
+        
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.id = `feedback-${index}`;
+        feedbackDiv.className = 'feedback hidden';
+        
+        qDiv.appendChild(qText);
+        qDiv.appendChild(inputGroup);
+        qDiv.appendChild(feedbackDiv);
+        
+        questionsContainer.appendChild(qDiv);
+      });
+    }
+
+    function checkAnswer(index, correctAnswer) {
+      const input = document.getElementById(`answer-${index}`);
+      const feedback = document.getElementById(`feedback-${index}`);
+      const userValue = input.value.trim();
+      
+      feedback.classList.remove('hidden');
+
+      if (userValue === '') {
+        feedback.textContent = '⚠️ Please enter an answer';
+        feedback.className = 'feedback incorrect';
+        return;
+      }
+
+      const userAnswer = decimalFromFraction(userValue);
+      
+      if (userAnswer === null) {
+        feedback.textContent = '����� Please enter a valid fraction or decimal';
+        feedback.className = 'feedback incorrect';
+        return;
+      }
+
+      if (Math.abs(userAnswer - parseFloat(correctAnswer)) < 0.0001) {
+        feedback.textContent = '✔ Correct! Well done!';
+        feedback.className = 'feedback correct';
+      } else {
+        feedback.textContent = `✗ Incorrect. The correct answer is ${fractionFromDecimal(parseFloat(correctAnswer))}`;
+        feedback.className = 'feedback incorrect';
+      }
+    }
+
+    function showCalculationPanel() {
+      document.getElementById('calculation-panel').classList.remove('hidden');
+    }
+
+    function resetTree() {
+      currentTree = null;
+      outcomes = [];
+      document.getElementById('tree-container').innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">🌳</div>
+          <div class="empty-state-text">Click "Generate Tree" to build your probability diagram</div>
+        </div>
+      `;
+      document.getElementById('calculation-section').classList.add('hidden');
+      document.getElementById('outcomes-display').classList.add('hidden');
+      
+      // Clear all feedback messages
+      const probabilityFeedback = document.getElementById('probability-feedback');
+      const outcomeFeedback = document.getElementById('outcome-feedback');
+      
+      probabilityFeedback.classList.add('hidden');
+      probabilityFeedback.textContent = '';
+      outcomeFeedback.classList.add('hidden');
+      outcomeFeedback.textContent = '';
+    }
+
+    function showToast(message, type) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        background: ${type === 'error' ? '#ff6b6b' : '#51cf66'};
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            },
+            {
+              get: () => config.highlight_color || defaultConfig.highlight_color,
+              set: (value) => {
+                config.highlight_color = value;
+                window.elementSdk.setConfig({ highlight_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["app_title", config.app_title || defaultConfig.app_title],
+          ["instructions_text", config.instructions_text || defaultConfig.instructions_text]
+        ])
+      });
+    }
+
+    toggleContextOptions();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d89c31817945840',t:'MTc3Mjg4ODIwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
