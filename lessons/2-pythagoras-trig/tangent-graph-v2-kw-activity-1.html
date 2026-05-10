@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1756,
+    "height" : 708,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "Unit Circle_Tangent",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : 44,
+          "left" : -88,
+          "bottom" : 752,
+          "right" : 1668
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "rad"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Points" : {
+            "color" : "rgb(255,128,0)"
+            },
+          "PointLocus" : {
+            "color" : "rgb(44,63,229)"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 36
+              },
+            "Caption" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 14,
+              "font-weight" : "bold",
+              "font-style" : "italic",
+              "color" : "blue"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 24,
+              "font-weight" : "bold",
+              "color" : "blue"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 18
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "OriginPoint",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 407,
+              "y" : 265
+              }
+            },
+          "label" : "O",
+          "style" : {
+            "color" : "red",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 1,
+              "labelOffsetY" : -2
+              }
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "origin" : "1"
+            },
+          "value" : 139.18816707150518,
+          "constraint" : "HorizontalUnitPoint",
+          "label" : "A",
+          "style" : {
+            "traced" : true,
+            "color" : "red"
+            }
+          },
+        "3" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "2"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "horizontal",
+          "label" : "x",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 0,
+              "labelOffsetY" : -16,
+              "labelParam" : 1.2213681922592305
+              },
+            "width" : 1,
+            "tickNumbering" : "trigonometric"
+            }
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "unitPoint" : "2"
+            },
+          "constraint" : "UnitPointInternalSquare",
+          "style" : {
+            "hidden" : true,
+            "color" : "red"
+            }
+          },
+        "5" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "4"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "vertical",
+          "label" : "y",
+          "style" : {
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "6" : {
+          "kind" : "CoordSys",
+          "genus" : "CoordSys",
+          "parents" : {
+            "axisX" : "3",
+            "axisY" : "5"
+            },
+          "constraint" : "CoordSys",
+          "shape" : "square",
+          "style" : {
+            "grid" : "gridlines"
+            }
+          },
+        "7" : {
+          "kind" : "Circle",
+          "genus" : "Circle",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "2"
+            },
+          "constraint" : "CircleFromTwoPoints",
+          "style" : {
+            "width" : 5
+            }
+          },
+        "8" : {
+          "kind" : "Expression",
+          "genus" : "AngleParameter",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 53,
+              "y" : 58
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "0 radians",
+          "label" : "t[1]",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel",
+            "contenteditable" : true
+            }
+          },
+        "9" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "2",
+            "center" : "1",
+            "angle" : "8"
+            },
+          "constraint" : "RotateMeasureAngle",
+          "label" : "P",
+          "style" : {
+            "color" : "red",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "10" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "8"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 56,
+              "y" : 112
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "sin(@0)",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "11" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordX" : "8",
+            "coordY" : "10",
+            "coordSys" : "6"
+            },
+          "constraint" : "PlotMarkedXMarkedY",
+          "latentVisibility" : true,
+          "label" : "Q",
+          "style" : {
+            "hidden" : true,
+            "traced" : true,
+            "color" : "red",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 3,
+              "labelOffsetY" : -44
+              }
+            }
+          },
+        "12" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "8"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -64,
+              "y" : 599
+              }
+            },
+          "label" : "Change P",
+          "constraint" : "ActionButtonAnimate",
+          "messages" : [
+            "Change P"
+            ],
+          "animationStates" : [
+            {
+              "rate" : 0.78539818525314331,
+              "timeInterval" : 2,
+              "repeat" : true,
+              "motionType" : "forward",
+              "lowerParamBound" : 0,
+              "upperParamBound" : 6.2831854820251465,
+              "discrete" : false
+              }
+            ]
+          },
+        "13" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "9"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "width" : 5
+            }
+          },
+        "14" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "9",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementCoordinateDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 54,
+              "y" : 298
+              }
+            },
+          "label" : "Radius",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "15" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -82,
+              "y" : 431
+              }
+            },
+          "textMFS" : "<VL<T'The point P lies on the circumference of the circle whose radius is'><T'1 unit.'><0><T'OP is the radius of the circle.'><0><T't[1] is the angle, in radians,  that the radius OP,  makes with the'><T'positive direction of the x-axis as it moves around the circle.'><0><H<T'S is a movable point whose coordinates are '><SR100G1L1<T'(t[1], tan(t[1])'>>><0><T'Click on the button below to let P move around the circle.'><0><0><0><T'What happens to the point S as P moves around the circle?'><0><T'What is the equation of the graph that the point S traces out?'><0><T'Try to explain why this happens when we allow P to move around'><T'the circle.'><F1Exx1B8x20x84002x>>"
+          },
+        "16" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "8"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 49,
+              "y" : 167
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "cos(@0)",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "17" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordX" : "16",
+            "coordY" : "10",
+            "coordSys" : "6"
+            },
+          "constraint" : "PlotMarkedXMarkedY",
+          "style" : {
+            "color" : "red"
+            }
+          },
+        "18" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordX" : "8",
+            "coordY" : "16",
+            "coordSys" : "6"
+            },
+          "constraint" : "PlotMarkedXMarkedY",
+          "latentVisibility" : true,
+          "label" : "R",
+          "style" : {
+            "hidden" : true,
+            "traced" : true,
+            "color" : "blue",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "19" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "11"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 858,
+              "y" : 489
+              }
+            },
+          "label" : "Show Point Q",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Hide Point Q",
+            "Show Point Q"
+            ],
+          "fade" : true
+          },
+        "20" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 845,
+              "y" : 433
+              }
+            },
+          "textMFS" : "<VL<T'Now click on the buttons'><T'below to show points Q and R'><0><0><0><0><0><0><0><0><0><T'Compare the graphs that the '><T'points R and Q and S trace'><T'out.'><0><T'What are the similarities and'><T'what are the differences.'><0><T'Try to explain why these'><T'occur.'><0><0><F1ExxC8x20xC01920x>>"
+          },
+        "21" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 1.5707963267949001,
+          "coordY" : 0,
+          "constraint" : "PlotFixedXFixedY",
+          "style" : {
+            "hidden" : true,
+            "color" : "blue"
+            }
+          },
+        "22" : {
+          "kind" : "Straight",
+          "genus" : "Perpendicular",
+          "parents" : {
+            "p0" : "21",
+            "line" : "3"
+            },
+          "constraint" : "Perpendicular",
+          "style" : {
+            "width" : 5
+            }
+          },
+        "23" : {
+          "kind" : "Straight",
+          "genus" : "Ray",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "9"
+            },
+          "constraint" : "Ray",
+          "style" : {
+            "hidden" : true,
+            "width" : 5
+            }
+          },
+        "24" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "22",
+            "line1" : "23"
+            },
+          "constraint" : "Intersection",
+          "label" : "T",
+          "style" : {
+            "color" : "blue",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : -40
+              }
+            }
+          },
+        "25" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "24"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "width" : 5
+            }
+          },
+        "26" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "8"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 48,
+              "y" : 210
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "tan(@0)",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "27" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordX" : "8",
+            "coordY" : "26",
+            "coordSys" : "6"
+            },
+          "constraint" : "PlotMarkedXMarkedY",
+          "label" : "S",
+          "style" : {
+            "traced" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : -39
+              }
+            }
+          },
+        "28" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "18"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 861,
+              "y" : 534
+              }
+            },
+          "label" : "Show Point R",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Hide Point R",
+            "Show Point R"
+            ],
+          "fade" : true
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    

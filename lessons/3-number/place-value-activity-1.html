@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place Value Drag &amp; Drop</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      overflow-auto;
+      padding: 32px 24px;
+    }
+
+    .main-content {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      color: #4a5568;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 24px;
+      font-size: 32px;
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      color: #2d3748;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .target-display {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 48px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #5568d3;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .decimal-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      color: #4a5568;
+    }
+
+    .decimal-toggle input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .tiles-container {
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 160px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-start;
+      align-content: flex-start;
+    }
+
+    .tile {
+      background: white;
+      border: 2px solid #667eea;
+      color: #667eea;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: 600;
+      cursor: move;
+      user-select: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      touch-action: none;
+    }
+
+    .tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .tile.dragging {
+      opacity: 0.5;
+      transform: rotate(5deg);
+    }
+
+    .tray {
+      background: #edf2f7;
+      border: 3px dashed #a0aec0;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 140px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      align-content: flex-start;
+    }
+
+    .plus-sign {
+      color: #667eea;
+      font-size: 28px;
+      font-weight: bold;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .tray.drag-over {
+      background: #e6fffa;
+      border-color: #38b2ac;
+    }
+
+    .tray-tile {
+      background: #667eea;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: 600;
+      cursor: move;
+      user-select: none;
+      position: relative;
+      touch-action: none;
+    }
+
+    .tray-tile .remove-btn {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #e53e3e;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .total-display {
+      margin-top: 16px;
+      padding: 16px;
+      background: white;
+      border-radius: 8px;
+      font-size: 18px;
+      color: #2d3748;
+      text-align: center;
+    }
+
+    .total-display strong {
+      color: #667eea;
+      font-size: 24px;
+    }
+
+    .feedback {
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+
+    .feedback.success {
+      background: #c6f6d5;
+      color: #22543d;
+      border: 2px solid #38a169;
+    }
+
+    .feedback.error {
+      background: #fed7d7;
+      color: #742a2a;
+      border: 2px solid #e53e3e;
+    }
+
+    .hint-box {
+      background: #fff5e6;
+      border-left: 4px solid #f6ad55;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 24px;
+    }
+
+    .hint-box h3 {
+      color: #744210;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    .hint-box p {
+      color: #744210;
+      line-height: 1.6;
+      margin: 8px 0;
+    }
+
+    .empty-tray-message {
+      color: #a0aec0;
+      font-style: italic;
+      text-align: center;
+      width: 100%;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <div class="main-content">
+    <h1 id="app-title">Place Value Drag &amp; Drop</h1>
+    <div class="section">
+     <div class="section-title" id="target-label">
+      Target Number
+     </div>
+     <div class="target-display" id="target-number">
+      0
+     </div>
+     <div class="controls"><button id="new-number-btn">New Number</button>
+      <div class="decimal-toggle"><input type="checkbox" id="decimal-mode"> <label for="decimal-mode">Include decimals (tenths and hundredths)</label>
+      </div>
+     </div>
+    </div>
+    <div class="section">
+     <div class="section-title">
+      Value Tiles
+     </div>
+     <div class="tiles-container" id="tiles-container"></div>
+    </div>
+    <div class="section">
+     <div class="section-title">
+      Expanded Form Tray
+     </div>
+     <div class="tray" id="tray">
+      <div class="empty-tray-message">
+       Drag tiles here to build the expanded form
+      </div>
+     </div>
+     <div class="total-display">
+      Your total: <strong id="total-value">0</strong>
+     </div><button id="check-btn" style="margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">Check My Expanded Form</button>
+     <div class="feedback" id="feedback"></div>
+    </div>
+    <div class="hint-box">
+     <h3 id="hint-title">Understanding Place Value</h3>
+     <p id="hint-text">Each tile shows the <strong>value</strong> of a digit in a particular place. Thousands, hundreds, tens and ones are <strong>positions</strong> in a number. Example: 5,208 = 5000 + 200 + 8.</p>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      app_title: "Place Value Drag & Drop",
+      target_label: "Target Number",
+      success_message: "Great! Your expanded form matches the number.",
+      error_message_prefix: "Not yet. Your tiles add up to",
+      hint_title: "Understanding Place Value"
+    };
+
+    let targetNumber = 0;
+    let trayTiles = [];
+    let draggedElement = null;
+    let draggedFromTray = false;
+
+    function onConfigChange(config) {
+      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+      document.getElementById('target-label').textContent = config.target_label || defaultConfig.target_label;
+      document.getElementById('hint-title').textContent = config.hint_title || defaultConfig.hint_title;
+    }
+
+    const capabilities = {
+      recolorables: [],
+      borderables: [],
+      fontEditable: undefined,
+      fontSizeable: undefined
+    };
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["app_title", config.app_title || defaultConfig.app_title],
+        ["target_label", config.target_label || defaultConfig.target_label],
+        ["success_message", config.success_message || defaultConfig.success_message],
+        ["error_message_prefix", config.error_message_prefix || defaultConfig.error_message_prefix],
+        ["hint_title", config.hint_title || defaultConfig.hint_title]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: onConfigChange,
+        mapToCapabilities: () => capabilities,
+        mapToEditPanelValues: mapToEditPanelValues
+      });
+    }
+
+    function generateNumber(includeDecimals) {
+      if (includeDecimals) {
+        const wholeDigits = Math.floor(Math.random() * 3) + 2;
+        const decimalPlaces = Math.floor(Math.random() * 2) + 1;
+        const whole = Math.floor(Math.random() * Math.pow(10, wholeDigits));
+        const decimal = Math.random();
+        return parseFloat((whole + decimal).toFixed(decimalPlaces));
+      } else {
+        const digits = Math.floor(Math.random() * 3) + 3;
+        return Math.floor(Math.random() * (Math.pow(10, digits) - Math.pow(10, digits - 1))) + Math.pow(10, digits - 1);
+      }
+    }
+
+    function formatNumber(num) {
+      return num.toLocaleString('en-US');
+    }
+
+    function createTiles(includeDecimals) {
+      const tilesContainer = document.getElementById('tiles-container');
+      tilesContainer.innerHTML = '';
+
+      const values = [
+        10000, 9000, 8000, 7000, 6000, 5000, 4000, 3000, 2000, 1000,
+        900, 800, 700, 600, 500, 400, 300, 200, 100,
+        90, 80, 70, 60, 50, 40, 30, 20, 10,
+        9, 8, 7, 6, 5, 4, 3, 2, 1
+      ];
+
+      if (includeDecimals) {
+        values.push(0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1);
+        values.push(0.09, 0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02, 0.01);
+      }
+
+      values.forEach(value => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.textContent = value;
+        tile.draggable = true;
+        tile.dataset.value = value;
+
+        tile.addEventListener('dragstart', handleDragStart);
+        tile.addEventListener('dragend', handleDragEnd);
+
+        tilesContainer.appendChild(tile);
+      });
+    }
+
+    function handleDragStart(e) {
+      draggedElement = e.target;
+      draggedFromTray = e.target.classList.contains('tray-tile');
+      e.target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+    }
+
+    function setupTray() {
+      const tray = document.getElementById('tray');
+
+      tray.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        tray.classList.add('drag-over');
+      });
+
+      tray.addEventListener('dragleave', () => {
+        tray.classList.remove('drag-over');
+      });
+
+      tray.addEventListener('drop', (e) => {
+        e.preventDefault();
+        tray.classList.remove('drag-over');
+
+        if (draggedElement) {
+          const value = parseFloat(draggedElement.dataset.value);
+          
+          if (draggedFromTray) {
+            const index = trayTiles.findIndex(t => t.element === draggedElement);
+            if (index !== -1) {
+              trayTiles.splice(index, 1);
+            }
+          }
+
+          addToTray(value);
+          draggedElement = null;
+        }
+      });
+    }
+
+    function addToTray(value) {
+      const tray = document.getElementById('tray');
+      const emptyMessage = tray.querySelector('.empty-tray-message');
+      if (emptyMessage) {
+        emptyMessage.remove();
+      }
+
+      // Add plus sign if there are already tiles in the tray
+      if (trayTiles.length > 0) {
+        const plusSign = document.createElement('div');
+        plusSign.className = 'plus-sign';
+        plusSign.textContent = '+';
+        tray.appendChild(plusSign);
+      }
+
+      const trayTile = document.createElement('div');
+      trayTile.className = 'tray-tile';
+      trayTile.textContent = value;
+      trayTile.draggable = true;
+      trayTile.dataset.value = value;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove-btn';
+      removeBtn.textContent = '×';
+      removeBtn.addEventListener('click', () => {
+        const index = trayTiles.findIndex(t => t.element === trayTile);
+        if (index !== -1) {
+          trayTiles.splice(index, 1);
+          trayTile.remove();
+          
+          // Remove plus signs and rebuild the tray display
+          rebuildTrayDisplay();
+          updateTotal();
+          if (trayTiles.length === 0) {
+            showEmptyMessage();
+          }
+        }
+      });
+
+      trayTile.appendChild(removeBtn);
+
+      trayTile.addEventListener('dragstart', handleDragStart);
+      trayTile.addEventListener('dragend', handleDragEnd);
+
+      tray.appendChild(trayTile);
+      trayTiles.push({ value, element: trayTile });
+      updateTotal();
+    }
+
+    function rebuildTrayDisplay() {
+      const tray = document.getElementById('tray');
+      tray.innerHTML = '';
+      
+      if (trayTiles.length === 0) {
+        showEmptyMessage();
+        return;
+      }
+
+      trayTiles.forEach((tile, index) => {
+        if (index > 0) {
+          const plusSign = document.createElement('div');
+          plusSign.className = 'plus-sign';
+          plusSign.textContent = '+';
+          tray.appendChild(plusSign);
+        }
+        tray.appendChild(tile.element);
+      });
+    }
+
+    function showEmptyMessage() {
+      const tray = document.getElementById('tray');
+      if (tray.children.length === 0) {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'empty-tray-message';
+        emptyMessage.textContent = 'Drag tiles here to build the expanded form';
+        tray.appendChild(emptyMessage);
+      }
+    }
+
+    function updateTotal() {
+      const total = trayTiles.reduce((sum, tile) => sum + tile.value, 0);
+      document.getElementById('total-value').textContent = formatNumber(total);
+    }
+
+    function checkAnswer() {
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const total = trayTiles.reduce((sum, tile) => sum + tile.value, 0);
+      const feedback = document.getElementById('feedback');
+      const hintText = document.getElementById('hint-text');
+
+      feedback.style.display = 'block';
+
+      if (Math.abs(total - targetNumber) < 0.001) {
+        feedback.className = 'feedback success';
+        feedback.textContent = `✅ ${config.success_message || defaultConfig.success_message}`;
+        
+        hintText.innerHTML = `<strong>Brilliant work!</strong> You correctly broke down ${formatNumber(targetNumber)} into its place values. Which digit in the target number did you find easiest to represent?`;
+      } else {
+        feedback.className = 'feedback error';
+        feedback.textContent = `❌ ${config.error_message_prefix || defaultConfig.error_message_prefix} ${formatNumber(total)}, but the target number is ${formatNumber(targetNumber)}. Try adjusting your tiles.`;
+        
+        hintText.innerHTML = `Think about each digit's position: How does changing where a digit sits change its value? For example, the "5" in 5,000 is different from the "5" in 50.`;
+      }
+    }
+
+    function newNumber() {
+      const includeDecimals = document.getElementById('decimal-mode').checked;
+      targetNumber = generateNumber(includeDecimals);
+      document.getElementById('target-number').textContent = formatNumber(targetNumber);
+      
+      trayTiles = [];
+      const tray = document.getElementById('tray');
+      tray.innerHTML = '';
+      showEmptyMessage();
+      updateTotal();
+
+      const feedback = document.getElementById('feedback');
+      feedback.style.display = 'none';
+
+      const hintText = document.getElementById('hint-text');
+      hintText.innerHTML = 'Each tile shows the <strong>value</strong> of a digit in a particular place. Thousands, hundreds, tens and ones are <strong>positions</strong> in a number. Example: 5,208 = 5000 + 200 + 8.';
+
+      createTiles(includeDecimals);
+    }
+
+    document.getElementById('new-number-btn').addEventListener('click', newNumber);
+    document.getElementById('check-btn').addEventListener('click', checkAnswer);
+    document.getElementById('decimal-mode').addEventListener('change', () => {
+      newNumber();
+    });
+
+    setupTray();
+    newNumber();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ac36490050126ad',t:'MTc2NTQzOTQ0NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

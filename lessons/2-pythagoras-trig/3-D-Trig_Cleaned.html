@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1481,
+    "height" : 851,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "3-D Trig",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : -155,
+          "left" : 348,
+          "bottom" : 696,
+          "right" : 1829
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Interior" : {
+            "color" : "rgb(160,160,160)"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 36
+              },
+            "Caption" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24,
+              "font-weight" : "bold",
+              "font-style" : "italic"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 24,
+              "font-weight" : "bold",
+              "color" : "red"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 24
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "OriginPoint",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 394,
+              "y" : 338
+              }
+            },
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "origin" : "1"
+            },
+          "value" : 53.346456692913364,
+          "constraint" : "HorizontalUnitPoint",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "3" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "2"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "horizontal",
+          "label" : "x",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "unitPoint" : "2"
+            },
+          "constraint" : "UnitPointInternalSquare",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "5" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "4"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "vertical",
+          "label" : "y",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "6" : {
+          "kind" : "CoordSys",
+          "genus" : "CoordSys",
+          "parents" : {
+            "axisX" : "3",
+            "axisY" : "5"
+            },
+          "constraint" : "CoordSys",
+          "shape" : "square",
+          "style" : {
+            "hidden" : true,
+            "grid" : "gridlines"
+            }
+          },
+        "7" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 2,
+          "coordY" : 1,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "A",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "8" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 6,
+          "coordY" : 1,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "D",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "9" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 9,
+          "coordY" : 3,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "C",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "10" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 5,
+          "coordY" : 3,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "B",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "11" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "10",
+            "p1" : "9"
+            },
+          "constraint" : "Segment"
+          },
+        "12" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "9",
+            "p1" : "8"
+            },
+          "constraint" : "Segment"
+          },
+        "13" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "8",
+            "p1" : "7"
+            },
+          "constraint" : "Segment"
+          },
+        "14" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "7",
+            "p1" : "10"
+            },
+          "constraint" : "Segment"
+          },
+        "15" : {
+          "kind" : "Straight",
+          "genus" : "Perpendicular",
+          "parents" : {
+            "p0" : "9",
+            "line" : "11"
+            },
+          "constraint" : "Perpendicular",
+          "style" : {
+            "hidden" : true,
+            "line-style" : "dashed"
+            }
+          },
+        "16" : {
+          "kind" : "Straight",
+          "genus" : "Perpendicular",
+          "parents" : {
+            "p0" : "10",
+            "line" : "11"
+            },
+          "constraint" : "Perpendicular",
+          "style" : {
+            "hidden" : true,
+            "line-style" : "dashed"
+            }
+          },
+        "17" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "15"
+            },
+          "value" : -0.67992365079753114,
+          "constraint" : "PointOnPath",
+          "label" : "E",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 2,
+              "labelOffsetY" : -37
+              }
+            }
+          },
+        "18" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "17",
+            "p1" : "9"
+            },
+          "constraint" : "Segment"
+          },
+        "19" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "16"
+            },
+          "value" : -0.69170366257024318,
+          "constraint" : "PointOnPath",
+          "label" : "F",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -27,
+              "labelOffsetY" : -40
+              }
+            }
+          },
+        "20" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "10",
+            "p1" : "19"
+            },
+          "constraint" : "Segment"
+          },
+        "21" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "19",
+            "p1" : "17"
+            },
+          "constraint" : "Segment"
+          },
+        "22" : {
+          "kind" : "Straight",
+          "genus" : "Parallel",
+          "parents" : {
+            "p0" : "19",
+            "line" : "11"
+            },
+          "constraint" : "Parallel",
+          "style" : {
+            "hidden" : true,
+            "line-style" : "dashed"
+            }
+          },
+        "23" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "7",
+            "p1" : "19"
+            },
+          "constraint" : "Segment"
+          },
+        "24" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "8",
+            "p1" : "17"
+            },
+          "constraint" : "Segment"
+          },
+        "25" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "p0" : "17",
+            "p1" : "8",
+            "p2" : "9"
+            },
+          "constraint" : "MeasurementAngle",
+          "geom" : {
+            "loc" : {
+              "x" : 744,
+              "y" : 264
+              }
+            },
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true,
+            "precision" : 1,
+            "nameOrigin" : "noVisibleName"
+            }
+          },
+        "26" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "17",
+            "p1" : "8",
+            "p2" : "9"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "opacity" : 0.25,
+            "show-angle-direction" : true
+            }
+          },
+        "27" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "p0" : "8",
+            "p1" : "9",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementCoordinateDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 815,
+              "y" : 227
+              }
+            },
+          "style" : {
+            "font-size" : 18,
+            "color" : "black",
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "28" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "p0" : "9",
+            "p1" : "17",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementCoordinateDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 883,
+              "y" : 26
+              }
+            },
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true,
+            "font-size" : 18,
+            "color" : "black",
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "29" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "28"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 894,
+              "y" : -15
+              }
+            },
+          "label" : "CE",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "CE",
+            "CE"
+            ],
+          "fade" : true
+          },
+        "30" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "25"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 1196,
+              "y" : -18
+              }
+            },
+          "label" : " Angle EDC",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            " Angle EDC",
+            " Angle EDC"
+            ],
+          "fade" : true
+          },
+        "31" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "p0" : "8",
+            "p1" : "17",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementCoordinateDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 722,
+              "y" : 47
+              }
+            },
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true,
+            "font-size" : 18,
+            "color" : "black",
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "32" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "31"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 809,
+              "y" : 87
+              }
+            },
+          "label" : "DE",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "DE",
+            "DE"
+            ],
+          "fade" : true
+          },
+        "33" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "0" : "7",
+            "1" : "8",
+            "2" : "17",
+            "3" : "19"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "layerOrder" : 0
+            }
+          },
+        "34" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1113,
+              "y" : 58
+              }
+            },
+          "textMFS" : "<VL<T'To adjust the height of'><T'the ramp:'><0><T'1. Click on points E'><T'and F to select them'><T'both.'><0><T'2. Now drag point E or'><T'F up and down to'><T'change the vertical'><T'height of the ramp.'><0><F1Cxx101x20x99Cx>>"
+          },
+        "35" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "p0" : "7",
+            "p1" : "8",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementCoordinateDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 582,
+              "y" : 303
+              }
+            },
+          "style" : {
+            "font-size" : 18,
+            "color" : "black",
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "36" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "17",
+            "p1" : "7",
+            "p2" : "9"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "opacity" : 0.25,
+            "show-angle-direction" : true
+            }
+          },
+        "37" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1056,
+              "y" : -75
+              }
+            },
+          "textMFS" : "<VL<T'Calculate the angle of incline of the'><T'ramp and check your answer by'><T'clicking on '><F1Axx193x20xCx>>"
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+            </footer>
+        </body>
+    </html>
+    

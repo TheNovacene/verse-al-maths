@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal or No Deal? Challenge</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .app-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      max-width: 800px;
+      width: 100%;
+      padding: 32px;
+      margin: 20px 0;
+    }
+
+    .app-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .app-header h1 {
+      margin: 0 0 8px 0;
+      font-size: 28px;
+      color: #2d3748;
+    }
+
+    .app-header p {
+      margin: 0;
+      font-size: 16px;
+      color: #718096;
+    }
+
+    .section {
+      background: #f7fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      margin: 0 0 20px 0;
+      font-size: 22px;
+      color: #2d3748;
+    }
+
+    .deals-display {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .deal-box {
+      background: white;
+      border: 2px solid #cbd5e0;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .deal-box h3 {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+      color: #667eea;
+    }
+
+    .deal-info {
+      font-size: 16px;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+
+    .deal-info strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .price-large {
+      font-size: 24px;
+      font-weight: 700;
+      color: #48bb78;
+      margin: 8px 0;
+    }
+
+    .generate-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .button {
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .button-primary {
+      background: #667eea;
+    }
+
+    .button-primary:hover {
+      background: #5568d3;
+    }
+
+    .button-success {
+      background: #48bb78;
+    }
+
+    .button-success:hover {
+      background: #38a169;
+    }
+
+    .button-full {
+      width: 100%;
+    }
+
+    .button:active {
+      transform: scale(0.98);
+    }
+
+    .button:disabled {
+      background: #cbd5e0;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border: 2px solid #cbd5e0;
+      border-radius: 8px;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+      background: white;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .answer-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .feedback {
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 15px;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback-correct {
+      background: #c6f6d5;
+      border: 2px solid #48bb78;
+      color: #22543d;
+    }
+
+    .feedback-partial {
+      background: #fef5e7;
+      border: 2px solid #f59e0b;
+      color: #92400e;
+    }
+
+    .feedback-incorrect {
+      background: #fed7d7;
+      border: 2px solid #fc8181;
+      color: #742a2a;
+    }
+
+    .feedback-detail {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .feedback-detail p {
+      margin: 6px 0;
+    }
+
+    .hint-box {
+      background: #fef5e7;
+      border-left: 4px solid #f59e0b;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+
+    .hint-box h4 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      color: #92400e;
+    }
+
+    .hint-box ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #78350f;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .budget-display {
+      background: white;
+      border: 2px solid #cbd5e0;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .budget-amount {
+      font-size: 32px;
+      font-weight: 700;
+      color: #48bb78;
+      margin: 8px 0;
+    }
+
+    .instruction-text {
+      font-size: 14px;
+      color: #718096;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    @media (max-width: 640px) {
+      .deals-display,
+      .generate-buttons,
+      .answer-inputs {
+        grid-template-columns: 1fr;
+      }
+
+      .app-container {
+        padding: 24px 16px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper">
+   <div class="app-container">
+    <header class="app-header">
+     <h1 id="main-title">Deal or No Deal? Challenge</h1>
+     <p id="subtitle">Work out the unit prices and test your maths skills!</p>
+    </header>
+    <main>
+     <section class="section">
+      <h2>🛒 Step 1: Generate Deals</h2>
+      <p class="instruction-text">Click the buttons below to generate random shopping deals, then calculate the unit price for each one!</p>
+      <div class="generate-buttons"><button class="button button-primary" onclick="generateDeal('A')">Generate Deal A</button> <button class="button button-primary" onclick="generateDeal('B')">Generate Deal B</button>
+      </div>
+      <div class="deals-display" style="margin-top: 20px;">
+       <div class="deal-box">
+        <h3>Deal A</h3>
+        <div id="dealA-display" style="color: #a0aec0;">
+         Click button to generate
+        </div>
+       </div>
+       <div class="deal-box">
+        <h3>Deal B</h3>
+        <div id="dealB-display" style="color: #a0aec0;">
+         Click button to generate
+        </div>
+       </div>
+      </div>
+     </section>
+     <section class="section">
+      <h2>✏️ Step 2: Calculate and Compare</h2>
+      <p class="instruction-text">Work out the price per item for each deal. What calculation will you need to do?</p>
+      <div class="answer-inputs">
+       <div class="input-group"><label for="answerA">Deal A unit price (£)</label> <input type="number" id="answerA" step="0.01" min="0" placeholder="e.g. 0.60" disabled>
+       </div>
+       <div class="input-group"><label for="answerB">Deal B unit price (£)</label> <input type="number" id="answerB" step="0.01" min="0" placeholder="e.g. 0.50" disabled>
+       </div>
+      </div>
+      <div class="answer-inputs">
+       <div class="input-group"><label for="betterDeal">Which deal is better value?</label> <select id="betterDeal" disabled> <option value="">-- Choose --</option> <option value="A">Deal A</option> <option value="B">Deal B</option> <option value="equal">Equal value</option> </select>
+       </div>
+       <div class="input-group"><label for="savings">How much do you save per item? (£)</label> <input type="number" id="savings" step="0.01" min="0" placeholder="e.g. 0.10" disabled>
+       </div>
+      </div><button class="button button-success button-full" id="check-deals" onclick="checkDealAnswers()" disabled> <span id="check-button-text">Check my answers</span> </button>
+      <div class="feedback" id="deals-feedback"></div>
+     </section>
+     <section class="section">
+      <h2>💰 Step 3: Budget Challenge</h2>
+      <p class="instruction-text">Generate a budget, then work out how many packs of each deal you can afford!</p><button class="button button-primary button-full" id="generate-budget" onclick="generateBudget()" disabled> <span id="budget-generate-text">Generate my budget</span> </button>
+      <div id="budget-section" style="display: none; margin-top: 20px;">
+       <div class="budget-display">
+        <div style="font-size: 16px; color: #718096; margin-bottom: 4px;">
+         Your Budget
+        </div>
+        <div class="budget-amount" id="budget-display">
+         £0.00
+        </div>
+       </div>
+       <p class="instruction-text">How many packs of each deal can you buy? Think carefully about what calculation you need!</p>
+       <div class="answer-inputs">
+        <div class="input-group"><label for="budgetAnswerA">Deal A: Number of packs</label> <input type="number" id="budgetAnswerA" step="1" min="0" placeholder="e.g. 2">
+        </div>
+        <div class="input-group"><label for="budgetAnswerB">Deal B: Number of packs</label> <input type="number" id="budgetAnswerB" step="1" min="0" placeholder="e.g. 3">
+        </div>
+       </div><button class="button button-success button-full" onclick="checkBudgetAnswers()"> <span id="budget-check-text">Check budget answers</span> </button>
+       <div class="feedback" id="budget-feedback"></div>
+      </div>
+     </section>
+     <div class="hint-box">
+      <h4>🤔 Think about it...</h4>
+      <ul>
+       <li>What operation helps you find the price of <strong>one item</strong> when you know the total?</li>
+       <li>How can you check your unit price answer? What should unit price × quantity equal?</li>
+       <li>To compare deals, look at which unit price is <strong>lower</strong> (cheaper per item)</li>
+       <li>Try estimating first! Does £3.60 for 6 items give roughly 60p each?</li>
+       <li>For the budget challenge, think about how many times the pack price fits into your budget</li>
+      </ul>
+     </div>
+    </main>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "Deal or No Deal? Challenge",
+      subtitle: "Work out the unit prices and test your maths skills!",
+      generate_button_text: "Generate Deal",
+      check_button_text: "Check my answers",
+      budget_generate_text: "Generate my budget",
+      budget_check_text: "Check budget answers"
+    };
+
+    let currentDeals = {
+      A: null,
+      B: null
+    };
+
+    let currentBudget = null;
+
+    async function onConfigChange(config) {
+      const title = config.main_title || defaultConfig.main_title;
+      const subtitle = config.subtitle || defaultConfig.subtitle;
+      const checkButtonText = config.check_button_text || defaultConfig.check_button_text;
+      const budgetGenerateText = config.budget_generate_text || defaultConfig.budget_generate_text;
+      const budgetCheckText = config.budget_check_text || defaultConfig.budget_check_text;
+
+      document.getElementById('main-title').textContent = title;
+      document.getElementById('subtitle').textContent = subtitle;
+      document.getElementById('check-button-text').textContent = checkButtonText;
+      document.getElementById('budget-generate-text').textContent = budgetGenerateText;
+      document.getElementById('budget-check-text').textContent = budgetCheckText;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["main_title", config.main_title || defaultConfig.main_title],
+        ["subtitle", config.subtitle || defaultConfig.subtitle],
+        ["check_button_text", config.check_button_text || defaultConfig.check_button_text],
+        ["budget_generate_text", config.budget_generate_text || defaultConfig.budget_generate_text],
+        ["budget_check_text", config.budget_check_text || defaultConfig.budget_check_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    function generateDeal(deal) {
+      // Generate random price between £2 and £10 (in 10p increments)
+      const price = (Math.floor(Math.random() * 81) + 20) / 10;
+      
+      // Generate random quantity between 3 and 20
+      const quantity = Math.floor(Math.random() * 18) + 3;
+
+      currentDeals[deal] = { price, quantity };
+
+      const displayEl = document.getElementById(`deal${deal}-display`);
+      displayEl.innerHTML = `
+        <div class="deal-info">
+          <strong>Total Price</strong>
+          <div class="price-large">£${price.toFixed(2)}</div>
+        </div>
+        <div class="deal-info">
+          <strong>Number of Items</strong>
+          <div style="font-size: 20px; font-weight: 600; color: #2d3748;">${quantity}</div>
+        </div>
+      `;
+
+      // Enable answer inputs if both deals generated
+      if (currentDeals.A && currentDeals.B) {
+        document.getElementById('answerA').disabled = false;
+        document.getElementById('answerB').disabled = false;
+        document.getElementById('betterDeal').disabled = false;
+        document.getElementById('savings').disabled = false;
+        document.getElementById('check-deals').disabled = false;
+        document.getElementById('generate-budget').disabled = false;
+      }
+
+      // Clear previous answers and feedback
+      document.getElementById(`answer${deal}`).value = '';
+      document.getElementById('betterDeal').value = '';
+      document.getElementById('savings').value = '';
+      document.getElementById('deals-feedback').classList.remove('show');
+    }
+
+    function checkDealAnswers() {
+      const answerA = parseFloat(document.getElementById('answerA').value);
+      const answerB = parseFloat(document.getElementById('answerB').value);
+      const betterDeal = document.getElementById('betterDeal').value;
+      const savings = parseFloat(document.getElementById('savings').value);
+
+      if (isNaN(answerA) || isNaN(answerB) || !betterDeal || isNaN(savings)) {
+        showDealsFeedback('incorrect', '❌ Please answer all four questions before checking!');
+        return;
+      }
+
+      const correctA = currentDeals.A.price / currentDeals.A.quantity;
+      const correctB = currentDeals.B.price / currentDeals.B.quantity;
+
+      const toleranceA = Math.abs(answerA - correctA) < 0.01;
+      const toleranceB = Math.abs(answerB - correctB) < 0.01;
+
+      // Determine correct better deal
+      let correctBetterDeal;
+      let correctSavings;
+      if (Math.abs(correctA - correctB) < 0.01) {
+        correctBetterDeal = 'equal';
+        correctSavings = 0;
+      } else if (correctA < correctB) {
+        correctBetterDeal = 'A';
+        correctSavings = correctB - correctA;
+      } else {
+        correctBetterDeal = 'B';
+        correctSavings = correctA - correctB;
+      }
+
+      const betterDealCorrect = betterDeal === correctBetterDeal;
+      const savingsCorrect = Math.abs(savings - correctSavings) < 0.01;
+
+      let correctCount = 0;
+      if (toleranceA) correctCount++;
+      if (toleranceB) correctCount++;
+      if (betterDealCorrect) correctCount++;
+      if (savingsCorrect) correctCount++;
+
+      let feedbackHTML = '';
+      let feedbackType = '';
+
+      if (correctCount === 4) {
+        feedbackType = 'correct';
+        feedbackHTML = `
+          <strong>🎉 Outstanding! All four answers are correct!</strong>
+          <div class="feedback-detail">
+            <p>✅ Deal A unit price: £${correctA.toFixed(2)} per item</p>
+            <p>✅ Deal B unit price: £${correctB.toFixed(2)} per item</p>
+            <p>✅ Better deal: ${correctBetterDeal === 'equal' ? 'Equal value' : 'Deal ' + correctBetterDeal}</p>
+            <p>✅ Savings: £${correctSavings.toFixed(2)} per item</p>
+          </div>
+        `;
+      } else if (correctCount >= 2) {
+        feedbackType = 'partial';
+        feedbackHTML = `
+          <strong>⚠️ Good effort! You got ${correctCount} out of 4 correct.</strong>
+          <div class="feedback-detail">
+            <p>${toleranceA ? '✅' : '❌'} Deal A: ${toleranceA ? '£' + correctA.toFixed(2) : `Should be £${correctA.toFixed(2)}, not £${answerA.toFixed(2)}`}</p>
+            <p>${toleranceB ? '✅' : '❌'} Deal B: ${toleranceB ? '£' + correctB.toFixed(2) : `Should be £${correctB.toFixed(2)}, not £${answerB.toFixed(2)}`}</p>
+            <p>${betterDealCorrect ? '✅' : '❌'} Better deal: ${betterDealCorrect ? 'Correct!' : `Should be ${correctBetterDeal === 'equal' ? 'Equal value' : 'Deal ' + correctBetterDeal}`}</p>
+            <p>${savingsCorrect ? '✅' : '❌'} Savings: ${savingsCorrect ? 'Correct!' : `Should be £${correctSavings.toFixed(2)}`}</p>
+            <p><em>Hint: The better deal has the LOWER unit price. The saving is the difference between the two unit prices.</em></p>
+          </div>
+        `;
+      } else {
+        feedbackType = 'incorrect';
+        feedbackHTML = `
+          <strong>❌ Let's work through this together!</strong>
+          <div class="feedback-detail">
+            <p>Deal A: £${currentDeals.A.price.toFixed(2)} ÷ ${currentDeals.A.quantity} = £${correctA.toFixed(2)} per item</p>
+            <p>Deal B: £${currentDeals.B.price.toFixed(2)} ÷ ${currentDeals.B.quantity} = £${correctB.toFixed(2)} per item</p>
+            <p>Better deal: ${correctBetterDeal === 'equal' ? 'Both are equal value' : 'Deal ' + correctBetterDeal + ' (lower price per item)'}</p>
+            <p>Savings: £${correctSavings.toFixed(2)} per item (the difference between the two unit prices)</p>
+            <p><em>Try again! Think about what operation finds "per item" from a total.</em></p>
+          </div>
+        `;
+      }
+
+      showDealsFeedback(feedbackType, feedbackHTML);
+    }
+
+    function showDealsFeedback(type, html) {
+      const feedback = document.getElementById('deals-feedback');
+      feedback.className = `feedback feedback-${type} show`;
+      feedback.innerHTML = html;
+    }
+
+    function generateBudget() {
+      // Generate budget between £5 and £20 (in 50p increments)
+      currentBudget = (Math.floor(Math.random() * 31) + 10) / 2;
+
+      document.getElementById('budget-display').textContent = `£${currentBudget.toFixed(2)}`;
+      document.getElementById('budget-section').style.display = 'block';
+
+      // Clear previous answers
+      document.getElementById('budgetAnswerA').value = '';
+      document.getElementById('budgetAnswerB').value = '';
+      document.getElementById('budget-feedback').classList.remove('show');
+    }
+
+    function checkBudgetAnswers() {
+      const answerA = parseInt(document.getElementById('budgetAnswerA').value);
+      const answerB = parseInt(document.getElementById('budgetAnswerB').value);
+
+      if (isNaN(answerA) || isNaN(answerB)) {
+        showBudgetFeedback('incorrect', '❌ Please enter how many packs you can buy for both deals!');
+        return;
+      }
+
+      const correctA = Math.floor(currentBudget / currentDeals.A.price);
+      const correctB = Math.floor(currentBudget / currentDeals.B.price);
+
+      const isCorrectA = answerA === correctA;
+      const isCorrectB = answerB === correctB;
+
+      let feedbackHTML = '';
+      let feedbackType = '';
+
+      if (isCorrectA && isCorrectB) {
+        feedbackType = 'correct';
+        const spendA = correctA * currentDeals.A.price;
+        const spendB = correctB * currentDeals.B.price;
+        const itemsA = correctA * currentDeals.A.quantity;
+        const itemsB = correctB * currentDeals.B.quantity;
+        
+        feedbackHTML = `
+          <strong>🎉 Excellent! Both answers are correct!</strong>
+          <div class="feedback-detail">
+            <p>✅ Deal A: ${correctA} packs = ${itemsA} items for £${spendA.toFixed(2)} (£${(currentBudget - spendA).toFixed(2)} left over)</p>
+            <p>✅ Deal B: ${correctB} packs = ${itemsB} items for £${spendB.toFixed(2)} (£${(currentBudget - spendB).toFixed(2)} left over)</p>
+            <p><strong>Best value:</strong> ${itemsA > itemsB ? 'Deal A gets you ' + (itemsA - itemsB) + ' more items!' : itemsB > itemsA ? 'Deal B gets you ' + (itemsB - itemsA) + ' more items!' : 'Both deals get you the same number of items!'}</p>
+          </div>
+        `;
+      } else if (isCorrectA || isCorrectB) {
+        feedbackType = 'partial';
+        feedbackHTML = `
+          <strong>⚠️ Good effort! You got ${isCorrectA ? 'Deal A' : 'Deal B'} correct.</strong>
+          <div class="feedback-detail">
+            <p>${isCorrectA ? '✅' : '❌'} Deal A: ${isCorrectA ? 'Correct!' : `You said ${answerA} packs, but you can buy ${correctA} packs`}</p>
+            <p>${isCorrectB ? '✅' : '❌'} Deal B: ${isCorrectB ? 'Correct!' : `You said ${answerB} packs, but you can buy ${correctB} packs`}</p>
+            <p><em>Hint: Think about how many times the pack price fits into your budget. Remember to round DOWN to whole packs!</em></p>
+          </div>
+        `;
+      } else {
+        feedbackType = 'incorrect';
+        feedbackHTML = `
+          <strong>❌ Not quite! Let's work through it together.</strong>
+          <div class="feedback-detail">
+            <p>Deal A: £${currentBudget.toFixed(2)} ÷ £${currentDeals.A.price.toFixed(2)} = ${(currentBudget / currentDeals.A.price).toFixed(2)} → ${correctA} whole packs</p>
+            <p>Deal B: £${currentBudget.toFixed(2)} ÷ £${currentDeals.B.price.toFixed(2)} = ${(currentBudget / currentDeals.B.price).toFixed(2)} → ${correctB} whole packs</p>
+            <p><em>Remember: You can only buy whole packs, so always round DOWN!</em></p>
+          </div>
+        `;
+      }
+
+      showBudgetFeedback(feedbackType, feedbackHTML);
+    }
+
+    function showBudgetFeedback(type, html) {
+      const feedback = document.getElementById('budget-feedback');
+      feedback.className = `feedback feedback-${type} show`;
+      feedback.innerHTML = html;
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d89a3935192e33f',t:'MTc3Mjg4NjkxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

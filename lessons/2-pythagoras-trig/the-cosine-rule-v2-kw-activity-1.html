@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1714,
+    "height" : 1063,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "Cosine Rule - 2",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : 30,
+          "left" : 144,
+          "bottom" : 1093,
+          "right" : 1858
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Interior" : {
+            "color" : "fuchsia"
+            },
+          "TextGObject_BackgroundContrast" : {
+            "color" : "blue"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 18
+              },
+            "Caption" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 18,
+              "font-weight" : "bold",
+              "font-style" : "italic"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-weight" : "bold"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 24
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 814,
+              "y" : 520
+              }
+            },
+          "label" : "A",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -37,
+              "labelOffsetY" : -14,
+              "font-size" : 36
+              }
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1101,
+              "y" : 522
+              }
+            },
+          "label" : "B",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -33,
+              "labelOffsetY" : -2,
+              "font-size" : 36
+              }
+            }
+          },
+        "3" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "2"
+            },
+          "constraint" : "Segment",
+          "label" : "AD = x"
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1176,
+              "y" : 321
+              }
+            },
+          "label" : "C",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 1,
+              "labelOffsetY" : -37,
+              "font-size" : 36
+              }
+            }
+          },
+        "5" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "4"
+            },
+          "constraint" : "Segment"
+          },
+        "6" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "2"
+            },
+          "constraint" : "Segment"
+          },
+        "7" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "2",
+            "obj0" : "4"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 1035,
+              "y" : 401
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "a",
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "8" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "1",
+            "obj0" : "4"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 822,
+              "y" : 417
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "b",
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "9" : {
+          "kind" : "Measure",
+          "genus" : "DistanceMeasure",
+          "parents" : {
+            "p0" : "1",
+            "obj0" : "2"
+            },
+          "constraint" : "MeasurementDistance",
+          "geom" : {
+            "loc" : {
+              "x" : 827,
+              "y" : 547
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "c",
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel"
+            }
+          },
+        "10" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "1",
+            "p2" : "2"
+            },
+          "constraint" : "MeasurementAngle",
+          "geom" : {
+            "loc" : {
+              "x" : 608,
+              "y" : 483
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "Angle A",
+          "style" : {
+            "hidden" : true,
+            "precision" : 1,
+            "nameOrigin" : "noVisibleName"
+            }
+          },
+        "11" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "1",
+            "p2" : "2"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "show-angle-direction" : true
+            }
+          },
+        "12" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "2",
+            "p2" : "4"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "show-angle-direction" : true
+            }
+          },
+        "13" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "marker" : "12"
+            },
+          "constraint" : "MeasurementAngleMarker",
+          "geom" : {
+            "loc" : {
+              "x" : 861,
+              "y" : 484
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "Angle B",
+          "style" : {
+            "hidden" : true,
+            "precision" : 1,
+            "nameOrigin" : "noVisibleName"
+            }
+          },
+        "14" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "4",
+            "p2" : "2"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "show-angle-direction" : true
+            }
+          },
+        "15" : {
+          "kind" : "Measure",
+          "genus" : "AngleMeasure",
+          "parents" : {
+            "marker" : "14"
+            },
+          "constraint" : "MeasurementAngleMarker",
+          "geom" : {
+            "loc" : {
+              "x" : 949,
+              "y" : 363
+              }
+            },
+          "latentVisibility" : true,
+          "label" : "Angle C",
+          "style" : {
+            "hidden" : true,
+            "precision" : 1,
+            "nameOrigin" : "noVisibleName"
+            }
+          },
+        "16" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "7"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 254,
+              "y" : 93
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "@0^2",
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "noVisibleName"
+            }
+          },
+        "17" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "8"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 886,
+              "y" : 88
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "@0^2",
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "noVisibleName"
+            }
+          },
+        "18" : {
+          "kind" : "Expression",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "0" : "9"
+            },
+          "constraint" : "Calculation",
+          "geom" : {
+            "loc" : {
+              "x" : 1441,
+              "y" : 98
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "@0^2",
+          "style" : {
+            "hidden" : true,
+            "precision" : 2,
+            "nameOrigin" : "noVisibleName"
+            }
+          },
+        "19" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "1",
+            "1" : "2",
+            "2" : "4"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "layerOrder" : 0
+            }
+          },
+        "20" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "7"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 1153,
+              "y" : 412
+              }
+            },
+          "label" : "a",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "a",
+            "a"
+            ],
+          "fade" : true
+          },
+        "21" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "8"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 948,
+              "y" : 368
+              }
+            },
+          "label" : "b",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "b",
+            "b"
+            ],
+          "fade" : true
+          },
+        "22" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "9"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 942,
+              "y" : 535
+              }
+            },
+          "label" : "c",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "c",
+            "c"
+            ],
+          "fade" : true
+          },
+        "23" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "10"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 182,
+              "y" : 408
+              }
+            },
+          "label" : "Angle A",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Angle A",
+            "Angle A"
+            ],
+          "fade" : true
+          },
+        "24" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "13"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 181,
+              "y" : 467
+              }
+            },
+          "label" : "Angle B",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Angle B",
+            "Angle B"
+            ],
+          "fade" : true
+          },
+        "25" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "15"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 178,
+              "y" : 528
+              }
+            },
+          "label" : "Angle C",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "Angle C",
+            "Angle C"
+            ],
+          "fade" : true
+          },
+        "26" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 648,
+              "y" : 62
+              }
+            },
+          "textMFS" : "<VL<T'The Cosine Rule - Finding a Missing Angle'>>",
+          "style" : {
+            "font-size" : 36
+            }
+          },
+        "27" : {
+          "kind" : "Straight",
+          "genus" : "Ray",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "2"
+            },
+          "constraint" : "Ray",
+          "style" : {
+            "hidden" : true,
+            "line-style" : "dashed"
+            }
+          },
+        "28" : {
+          "kind" : "Straight",
+          "genus" : "Perpendicular",
+          "parents" : {
+            "p0" : "4",
+            "line" : "27"
+            },
+          "constraint" : "Perpendicular",
+          "style" : {
+            "hidden" : true,
+            "line-style" : "dashed"
+            }
+          },
+        "29" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "28",
+            "line1" : "27"
+            },
+          "constraint" : "Intersection",
+          "label" : "D",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 1,
+              "labelOffsetY" : 4,
+              "font-size" : 36
+              }
+            }
+          },
+        "30" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "2",
+            "p1" : "29"
+            },
+          "constraint" : "Segment",
+          "label" : "BD = (x - c)",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -2,
+              "labelOffsetY" : 5,
+              "labelParam" : 0
+              },
+            "line-style" : "dashed"
+            }
+          },
+        "31" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "29"
+            },
+          "constraint" : "Segment",
+          "label" : "AD = x",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 0,
+              "labelOffsetY" : 5,
+              "labelParam" : 0.22604122245913291
+              },
+            "line-style" : "dashed"
+            }
+          },
+        "32" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "29"
+            },
+          "constraint" : "Segment",
+          "label" : "CD = h",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 0,
+              "labelParam" : 0.53131081646386924
+              },
+            "line-style" : "dashed"
+            }
+          },
+        "33" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "4",
+            "p1" : "29",
+            "p2" : "1"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "hidden" : true,
+            "opacity" : 0.25,
+            "show-angle-direction" : true
+            }
+          },
+        "34" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1160,
+              "y" : 133
+              }
+            },
+          "textMFS" : "<VL<T'x = bCos A'>>",
+          "style" : {
+            "hidden" : true,
+            "color" : "red"
+            }
+          },
+        "35" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1142,
+              "y" : 242
+              }
+            },
+          "textMFS" : "<VL<H<+<T'a '><S+1<T'2'>>><T'= '><+<T'h'><S+1<T'2'>>><T' + '><+<T'(x - c)'><S+1<T'2'>>>>>",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "36" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1156,
+              "y" : 169
+              }
+            },
+          "textMFS" : "<VL<H<+<T'b '><S+1<T'2'>>><T'= '><+<T'h'><S+1<T'2'>>><T' + '><+<T'x'><S+1<T'2'>>>><0><H<!DE><+<T'h'><S+1<T'2'>>><T' = '><+<T'b '><S+1<T'2'>>><T'- '><+<T'x'><S+1<T'2'>>>>>",
+          "style" : {
+            "hidden" : true,
+            "color" : "blue"
+            }
+          },
+        "37" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1126,
+              "y" : 301
+              }
+            },
+          "textMFS" : "<VL<H<+<T'a '><S+1<T'2'>>><T'= '><+<T'h'><S+1<T'2'>>><T' + '><+<T'(x - c)'><S+1<T'2'>>>><0><H<!DE><T' '><+<T'a '><S+1<T'2'>>><T'= ('><SR1G1L100<H<+<SR1G1L1<T'b '>><SR1G1L1+1<T'2'>>><SR1G1L1<T'- '>><+<SR1G1L1<T'x'>><SR1G1L1+1<T'2'>>>>><T') + '><+<T'(x - c)'><S+1<T'2'>>><T' '>><0><H<!DE><T' '><+<T'a '><S+1<T'2'>>><T'= '><SR1G1L100<H<+<SR1G1L1<T'b '>><SR1G1L1+1<T'2'>>><SR1G1L1<T'- '>><+<SR1G1L1<T'x'>><SR1G1L1+1<T'2'>>>>><T' + '><+<T'x'><S+1<T'2'>>><T' -2xc + '><+<T'c'><S+1<T'2'>>>><0><H<!DE><T' '><+<T'a '><S+1<T'2'>>><T'= '><SR1G1L100<H<+<SR1G1L1<T'b '>><SR1G1L1+1<T'2'>>><T' '><SR1G1L1<H<T'+ '><+<T'c'><S+1<T'2'>>><T' -2xc'>>>>>>>",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "38" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1437,
+              "y" : 461
+              }
+            },
+          "textMFS" : "<VL<T'x = bCos A'>>",
+          "style" : {
+            "hidden" : true,
+            "color" : "red"
+            }
+          },
+        "39" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1136,
+              "y" : 479
+              }
+            },
+          "textMFS" : "<VL<H<!DE><T' '><+<T'a '><S+1<T'2'>>><T'= '><SR1G1L100<H<+<SR1G1L1<T'b '>><SR1G1L1+1<T'2'>>><T' '><SR1G1L1<H<T'+ '><+<T'c'><S+1<T'2'>>><T' -2xc'>>>>>><0><H<!DE><T' '><+<T'a '><S+1<T'2'>>><T'= '><SR1G1L100<H<+<SR1G1L1<T'b '>><SR1G1L1+1<T'2'>>><T' '><SR1G1L1<H<T'+ '><+<T'c'><S+1<T'2'>>><T' -2bcCosA'>>>>>>>",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "40" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 196,
+              "y" : 704
+              }
+            },
+          "textMFS" : "<VL<H<+<T'a'><S+1<T'2'>>><T' = '><+<T'b'><S+1<T'2'>>><T'+ '><+<T'c'><S+1<T'2'>>><T' -2bcCosA'>><0><H<!DE><T' '><+<T'a'><S+1<T'2'>>><T'  + 2bcCosA = '><+<T'b'><S+1<T'2'>>><T'+ '><+<T'c'><S+1<T'2'>>>><0><H<!DE><T' 2bcCosA = '><+<T'b'><S+1<T'2'>>><T'+ '><+<T'c'><S+1<T'2'>>><T' - '><+<T'a'><S+1<T'2'>>>><0><H<!DE><T' CosA = '><\/<H<T'('><+<T'b'><S+1<T'2'>>><T'+ '><+<T'c'><S+1<T'2'>>><T' - '><+<T'a'><S+1<T'2'>>><T')'>><T'2bc'>>>>",
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "41" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "40"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 191,
+              "y" : 639
+              }
+            },
+          "label" : "a^2 = b^2 + c^2 - 2bcCosA",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "a^2 = b^2 + c^2 - 2bcCosA",
+            "a^2 = b^2 + c^2 - 2bcCosA"
+            ],
+          "fade" : true
+          },
+        "42" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 846,
+              "y" : 697
+              }
+            },
+          "textMFS" : "<VL<H<+<T'b'><S+1<T'2'>>><T' = '><+<T'a'><S+1<T'2'>>><T'+ '><+<T'c'><S+1<T'2'>>><T' - 2acCosB'>><0><H<!DE><T' '><+<T'b'><S+1<T'2'>>><T'  + 2acCosB = '><+<T'a'><S+1<T'2'>>><T'+ '><+<T'c'><S+1<T'2'>>>><0><H<!DE><T' 2acCosB = '><+<T'a'><S+1<T'2'>>><T'+ '><+<T'c'><S+1<T'2'>>><T' - '><+<T'b'><S+1<T'2'>>>><0><H<!DE><T' CosB = '><\/<H<T'('><+<T'a'><S+1<T'2'>>><T'+ '><+<T'c'><S+1<T'2'>>><T' - '><+<T'b'><S+1<T'2'>>><T')'>><T'2ac'>>>>",
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "43" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "42"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 806,
+              "y" : 630
+              }
+            },
+          "label" : "b^2 = a^2 + c^2 -2acCosB",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "b^2 = a^2 + c^2 -2acCosB",
+            "b^2 = a^2 + c^2 -2acCosB"
+            ],
+          "fade" : true
+          },
+        "44" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 1405,
+              "y" : 690
+              }
+            },
+          "textMFS" : "<VL<H<+<T'c'><S+1<T'2'>>><T' = '><+<T'a'><S+1<T'2'>>><T'+ '><+<T'b'><S+1<T'2'>>><T' - 2abCosC'>><0><H<!DE><T' '><+<T'c'><S+1<T'2'>>><T'  + 2abCosC = '><+<T'a'><S+1<T'2'>>><T'+ '><+<T'b'><S+1<T'2'>>>><0><H<!DE><T' 2abCosC = '><+<T'a'><S+1<T'2'>>><T'+ '><+<T'b'><S+1<T'2'>>><T' - '><+<T'c'><S+1<T'2'>>>><0><H<!DE><T' CosC = '><\/<H<T'('><+<T'a'><S+1<T'2'>>><T'+ '><+<T'b'><S+1<T'2'>>><T' - '><+<T'c'><S+1<T'2'>>><T')'>><T'2ab'>>>>",
+          "latentVisibility" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "45" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "44"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 1362,
+              "y" : 633
+              }
+            },
+          "label" : "c^2 = a^2 + b^2 - 2abCosC",
+          "constraint" : "ActionButtonToggleHideShow",
+          "messages" : [
+            "c^2 = a^2 + b^2 - 2abCosC",
+            "c^2 = a^2 + b^2 - 2abCosC"
+            ],
+          "fade" : true
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+           
+        </body>
+    </html>
+    

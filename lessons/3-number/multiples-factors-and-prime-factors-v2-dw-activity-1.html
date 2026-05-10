@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Your Own Prime Factor Tree</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f9ff;
+        }
+        .tree-node {
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .tree-connector {
+            stroke: #64748b;
+            stroke-width: 2;
+            z-index: 1;
+        }
+        .prime-factor {
+            background-color: #10b981;
+        }
+        .composite-factor {
+            background-color: #3b82f6;
+        }
+        .correct-answer {
+            border: 2px solid #10b981;
+        }
+        .incorrect-answer {
+            border: 2px solid #ef4444;
+        }
+        .tree-container {
+            min-height: 500px;
+        }
+        .tree-wrapper {
+            position: relative;
+        }
+        .factor-tree {
+            position: relative;
+        }
+        .node-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50%;
+            border: 2px solid #3b82f6;
+            outline: none;
+        }
+        .node-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        .node-input.prime {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .node-input.composite {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+        }
+        .node-input.correct {
+            border-color: #10b981;
+        }
+        .node-input.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+        .feedback-icon {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+        .feedback-icon.correct {
+            background-color: #10b981;
+        }
+        .feedback-icon.incorrect {
+            background-color: #ef4444;
+        }
+        .node-container {
+            position: relative;
+            display: inline-block;
+        }
+        .hint-text {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8 max-w-5xl">
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h1 class="text-3xl font-bold text-center mb-2 text-blue-700">Build Your Own Prime Factor Tree</h1>
+            <p class="text-center text-gray-600 mb-6">Fill in the blank circles with factors that multiply to give the number above</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-center mb-6">
+                <div class="w-full sm:w-1/2">
+                    <label for="numberInput" class="block text-sm font-medium text-gray-700 mb-1">Choose a number to factorize:</label>
+                    <input type="number" id="numberInput" min="4" max="999" value="60" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button id="startBtn" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors mt-4 sm:mt-0">
+                    Start New Tree
+                </button>
+            </div>
+            
+            <div class="flex flex-wrap gap-2 justify-center mb-6">
+                <p class="text-sm text-gray-600 mr-2">Quick select:</p>
+                <button class="px-3 py-1 bg-blue-100 rounded-md hover:bg-blue-200 text-sm" onclick="setNumber(12)">12</button>
+                <button class="px-3 py-1 bg-blue-100 rounded-md hover:bg-blue-200 text-sm" onclick="setNumber(36)">36</button>
+                <button class="px-3 py-1 bg-blue-100 rounded-md hover:bg-blue-200 text-sm" onclick="setNumber(60)">60</button>
+                <button class="px-3 py-1 bg-blue-100 rounded-md hover:bg-blue-200 text-sm" onclick="setNumber(84)">84</button>
+                <button class="px-3 py-1 bg-blue-100 rounded-md hover:bg-blue-200 text-sm" onclick="setNumber(120)">120</button>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                <h3 class="font-medium text-blue-800 mb-2">How to build your factor tree:</h3>
+                <ol class="list-decimal pl-5 text-gray-700 space-y-1">
+                    <li>Start with the number at the top</li>
+                    <li>Fill in each pair of blank circles with two numbers that multiply to give the number above them</li>
+                    <li>Continue until you reach prime numbers (which can't be factored further)</li>
+                    <li>Click "Check My Tree" when you're done to see if your factorization is correct</li>
+                </ol>
+            </div>
+            
+            <div class="flex flex-wrap justify-center mb-6">
+                <button id="checkBtn" class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors m-2">
+                    Check My Tree
+                </button>
+                <button id="showAnswerBtn" class="px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors m-2">
+                    Show Answer
+                </button>
+                <button id="resetBtn" class="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors m-2">
+                    Reset
+                </button>
+            </div>
+            
+            <div id="feedbackArea" class="hidden p-4 rounded-lg mb-6 text-center font-medium">
+            </div>
+            
+            <!-- Legend -->
+            <div class="flex flex-wrap gap-4 justify-center mb-4">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full bg-blue-500 mr-2"></div>
+                    <span class="text-sm">Composite Factor</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                    <span class="text-sm">Prime Factor</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tree Visualization Area -->
+        <div class="bg-white rounded-xl shadow-lg p-6 overflow-x-auto">
+            <div id="treeContainer" class="tree-container flex justify-center items-start">
+                <div class="text-center text-gray-500">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    <p>Click "Start New Tree" to begin</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let treeData = {};
+        let currentNumber = 60;
+        let nodeCounter = 0;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('startBtn').addEventListener('click', startNewTree);
+            document.getElementById('checkBtn').addEventListener('click', checkTree);
+            document.getElementById('showAnswerBtn').addEventListener('click', showAnswer);
+            document.getElementById('resetBtn').addEventListener('click', resetTree);
+            document.getElementById('numberInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') startNewTree();
+            });
+            
+            // Start with initial tree
+            setTimeout(() => startNewTree(), 500);
+        });
+        
+        function setNumber(num) {
+            document.getElementById('numberInput').value = num;
+            startNewTree();
+        }
+        
+        function startNewTree() {
+            const number = parseInt(document.getElementById('numberInput').value);
+            if (isNaN(number) || number < 4) {
+                alert('Please enter a valid number greater than 3');
+                return;
+            }
+            
+            currentNumber = number;
+            nodeCounter = 0;
+            treeData = {};
+            
+            const treeContainer = document.getElementById('treeContainer');
+            treeContainer.innerHTML = '';
+            
+            // Hide feedback
+            const feedbackArea = document.getElementById('feedbackArea');
+            feedbackArea.classList.add('hidden');
+            
+            // Create tree wrapper
+            const treeWrapper = document.createElement('div');
+            treeWrapper.className = 'tree-wrapper w-full';
+            treeContainer.appendChild(treeWrapper);
+            
+            // Create SVG for lines
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '100%');
+            svg.setAttribute('height', '500');
+            svg.style.position = 'absolute';
+            svg.style.top = '0';
+            svg.style.left = '0';
+            svg.style.zIndex = '1';
+            svg.id = 'treeSvg';
+            treeWrapper.appendChild(svg);
+            
+            // Create tree root
+            const treeRoot = document.createElement('div');
+            treeRoot.className = 'factor-tree';
+            treeRoot.style.position = 'relative';
+            treeRoot.style.zIndex = '2';
+            treeWrapper.appendChild(treeRoot);
+            
+            // Build initial tree
+            buildInitialTree(number, treeRoot);
+            
+            // Adjust SVG size based on tree height
+            setTimeout(() => {
+                const treeHeight = treeRoot.getBoundingClientRect().height;
+                svg.setAttribute('height', treeHeight + 50);
+                
+                // Draw all connections
+                drawConnections();
+            }, 50);
+        }
+        
+        function buildInitialTree(number, parentElement) {
+            // Create node container for centering
+            const nodeContainer = document.createElement('div');
+            nodeContainer.className = 'flex justify-center';
+            parentElement.appendChild(nodeContainer);
+            
+            // Create root node (not editable)
+            const rootNodeContainer = document.createElement('div');
+            rootNodeContainer.className = 'node-container';
+            nodeContainer.appendChild(rootNodeContainer);
+            
+            // Determine if the root number is prime
+            const isRootPrime = isPrime(number);
+            
+            const rootNode = document.createElement('div');
+            rootNode.className = `tree-node flex items-center justify-center rounded-full w-12 h-12 text-white font-bold ${isRootPrime ? 'prime-factor' : 'composite-factor'}`;
+            rootNode.textContent = number;
+            rootNode.dataset.value = number;
+            rootNode.dataset.nodeId = 'root';
+            rootNodeContainer.appendChild(rootNode);
+            
+            // Store node data
+            treeData['root'] = {
+                value: number,
+                isEditable: false,
+                isPrime: isRootPrime,
+                children: []
+            };
+            
+            // If number is not prime, create child inputs
+            if (!isRootPrime) {
+                createChildInputs('root', parentElement);
+            }
+        }
+        
+        function createChildInputs(parentNodeId, parentElement) {
+            const parentNodeData = treeData[parentNodeId];
+            
+            // Create container for child nodes
+            const childrenContainer = document.createElement('div');
+            childrenContainer.className = 'flex justify-center mt-12';
+            childrenContainer.dataset.parent = parentNodeId;
+            childrenContainer.id = `children-${parentNodeId}`;
+            parentElement.appendChild(childrenContainer);
+            
+            // Create left child container
+            const leftChildContainer = document.createElement('div');
+            leftChildContainer.className = 'mr-12';
+            childrenContainer.appendChild(leftChildContainer);
+            
+            // Create left child input
+            const leftNodeId = `node-${++nodeCounter}`;
+            createInputNode(leftNodeId, leftChildContainer, parentNodeData.value);
+            
+            // Create right child container
+            const rightChildContainer = document.createElement('div');
+            rightChildContainer.className = 'ml-12';
+            childrenContainer.appendChild(rightChildContainer);
+            
+            // Create right child input
+            const rightNodeId = `node-${++nodeCounter}`;
+            createInputNode(rightNodeId, rightChildContainer, parentNodeData.value);
+            
+            // Store child node IDs in parent
+            parentNodeData.children = [leftNodeId, rightNodeId];
+            
+            // Store relationship for validation
+            treeData[leftNodeId].siblingId = rightNodeId;
+            treeData[rightNodeId].siblingId = leftNodeId;
+            treeData[leftNodeId].parentId = parentNodeId;
+            treeData[rightNodeId].parentId = parentNodeId;
+        }
+        
+        function createInputNode(nodeId, container, parentValue) {
+            const nodeContainer = document.createElement('div');
+            nodeContainer.className = 'node-container';
+            container.appendChild(nodeContainer);
+            
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.className = 'node-input';
+            input.dataset.nodeId = nodeId;
+            input.min = 2;
+            input.max = parentValue - 1;
+            input.placeholder = '?';
+            nodeContainer.appendChild(input);
+            
+            // Store node data
+            treeData[nodeId] = {
+                isEditable: true,
+                value: null,
+                isPrime: false,
+                children: []
+            };
+            
+            // Add event listener for input changes
+            input.addEventListener('change', function() {
+                handleInputChange(this);
+            });
+            
+            input.addEventListener('focus', function() {
+                this.select();
+            });
+            
+            return input;
+        }
+        
+        function handleInputChange(inputElement) {
+            const value = parseInt(inputElement.value);
+            const nodeId = inputElement.dataset.nodeId;
+            const nodeData = treeData[nodeId];
+            
+            // Clear any previous feedback
+            inputElement.classList.remove('correct', 'incorrect', 'prime', 'composite');
+            const existingFeedback = inputElement.parentNode.querySelector('.feedback-icon');
+            if (existingFeedback) {
+                existingFeedback.remove();
+            }
+            
+            // Clear any hint text
+            const existingHint = inputElement.parentNode.querySelector('.hint-text');
+            if (existingHint) {
+                existingHint.remove();
+            }
+            
+            // Validate input
+            if (isNaN(value) || value < 2) {
+                inputElement.value = '';
+                nodeData.value = null;
+                nodeData.isPrime = false;
+                
+                // Remove any child nodes
+                if (nodeData.children.length > 0) {
+                    removeChildNodes(nodeId);
+                }
+                return;
+            }
+            
+            // Store the value
+            nodeData.value = value;
+            nodeData.isPrime = isPrime(value);
+            
+            // Apply appropriate styling based on whether it's prime or composite
+            if (nodeData.isPrime) {
+                inputElement.classList.add('prime');
+                
+                // Remove any child nodes if they exist
+                if (nodeData.children.length > 0) {
+                    removeChildNodes(nodeId);
+                }
+            } else {
+                inputElement.classList.add('composite');
+                
+                // If not prime and no children yet, create child inputs
+                if (nodeData.children.length === 0) {
+                    const parentElement = inputElement.closest('.factor-tree');
+                    const childrenContainer = document.getElementById(`children-${nodeId}`);
+                    
+                    if (!childrenContainer) {
+                        // Find the container for this node
+                        const nodeContainer = inputElement.closest('.node-container').parentNode;
+                        
+                        // Create a new container for this node's children
+                        createChildInputs(nodeId, nodeContainer);
+                        
+                        // Redraw connections
+                        setTimeout(() => {
+                            const svg = document.getElementById('treeSvg');
+                            const treeHeight = document.querySelector('.factor-tree').getBoundingClientRect().height;
+                            svg.setAttribute('height', treeHeight + 50);
+                            drawConnections();
+                        }, 50);
+                    }
+                }
+            }
+            
+            // Check if this input and its sibling form a valid factorization
+            validateFactorPair(nodeId);
+        }
+        
+        function validateFactorPair(nodeId) {
+            const nodeData = treeData[nodeId];
+            const siblingId = nodeData.siblingId;
+            const parentId = nodeData.parentId;
+            
+            if (!siblingId || !parentId) return;
+            
+            const siblingData = treeData[siblingId];
+            const parentData = treeData[parentId];
+            
+            const nodeInput = document.querySelector(`[data-node-id="${nodeId}"]`);
+            const siblingInput = document.querySelector(`[data-node-id="${siblingId}"]`);
+            
+            // Only validate if both inputs have values
+            if (nodeData.value && siblingData.value) {
+                const product = nodeData.value * siblingData.value;
+                const isValid = product === parentData.value;
+                
+                // Update UI to show validation result
+                if (isValid) {
+                    // Both inputs are correct
+                    nodeInput.classList.add('correct');
+                    siblingInput.classList.add('correct');
+                } else {
+                    // Product doesn't match parent value
+                    nodeInput.classList.add('incorrect');
+                    siblingInput.classList.add('incorrect');
+                    
+                    // Add hint text
+                    const hintText = document.createElement('div');
+                    hintText.className = 'hint-text';
+                    hintText.textContent = `${nodeData.value} × ${siblingData.value} = ${product}, not ${parentData.value}`;
+                    nodeInput.parentNode.appendChild(hintText);
+                }
+            }
+        }
+        
+        function removeChildNodes(nodeId) {
+            const nodeData = treeData[nodeId];
+            
+            // Remove children from DOM
+            const childrenContainer = document.getElementById(`children-${nodeId}`);
+            if (childrenContainer) {
+                childrenContainer.remove();
+            }
+            
+            // Remove children from data structure
+            for (const childId of nodeData.children) {
+                // Recursively remove grandchildren
+                if (treeData[childId].children.length > 0) {
+                    removeChildNodes(childId);
+                }
+                
+                // Delete child data
+                delete treeData[childId];
+            }
+            
+            // Clear children array
+            nodeData.children = [];
+            
+            // Redraw connections
+            setTimeout(() => {
+                drawConnections();
+            }, 50);
+        }
+        
+        function drawConnections() {
+            const svg = document.getElementById('treeSvg');
+            svg.innerHTML = '';
+            
+            // Draw connections for each parent node
+            for (const nodeId in treeData) {
+                const nodeData = treeData[nodeId];
+                
+                if (nodeData.children.length > 0) {
+                    const parentElement = document.querySelector(`[data-node-id="${nodeId}"]`);
+                    if (!parentElement) continue;
+                    
+                    const parentRect = parentElement.getBoundingClientRect();
+                    const svgRect = svg.getBoundingClientRect();
+                    
+                    for (const childId of nodeData.children) {
+                        const childElement = document.querySelector(`[data-node-id="${childId}"]`);
+                        if (!childElement) continue;
+                        
+                        const childRect = childElement.getBoundingClientRect();
+                        
+                        // Draw line from parent to child
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', parentRect.left + parentRect.width/2 - svgRect.left);
+                        line.setAttribute('y1', parentRect.bottom - svgRect.top);
+                        line.setAttribute('x2', childRect.left + childRect.width/2 - svgRect.left);
+                        line.setAttribute('y2', childRect.top - svgRect.top);
+                        line.classList.add('tree-connector');
+                        svg.appendChild(line);
+                    }
+                }
+            }
+        }
+        
+        function checkTree() {
+            let allCorrect = true;
+            let allFilled = true;
+            let incorrectNodes = [];
+            let emptyNodes = [];
+            
+            // Check all editable nodes
+            for (const nodeId in treeData) {
+                const nodeData = treeData[nodeId];
+                
+                if (nodeData.isEditable) {
+                    const nodeElement = document.querySelector(`[data-node-id="${nodeId}"]`);
+                    
+                    // Remove any previous feedback
+                    const existingFeedback = nodeElement.parentNode.querySelector('.feedback-icon');
+                    if (existingFeedback) {
+                        existingFeedback.remove();
+                    }
+                    
+                    // Check if input is empty
+                    if (nodeData.value === null) {
+                        allFilled = false;
+                        emptyNodes.push(nodeId);
+                        continue;
+                    }
+                    
+                    // Check if this node and its sibling form a valid factorization
+                    if (nodeData.siblingId && nodeData.parentId) {
+                        const siblingData = treeData[nodeData.siblingId];
+                        const parentData = treeData[nodeData.parentId];
+                        
+                        if (siblingData.value !== null) {
+                            const product = nodeData.value * siblingData.value;
+                            const isValid = product === parentData.value;
+                            
+                            if (!isValid) {
+                                allCorrect = false;
+                                incorrectNodes.push(nodeId);
+                            }
+                            
+                            // Add feedback icon
+                            const feedbackIcon = document.createElement('div');
+                            feedbackIcon.className = `feedback-icon ${isValid ? 'correct' : 'incorrect'}`;
+                            feedbackIcon.innerHTML = isValid ? '✓' : '✗';
+                            nodeElement.parentNode.appendChild(feedbackIcon);
+                        }
+                    }
+                    
+                    // Check if this is a leaf node and should be prime
+                    if (nodeData.children.length === 0 && !nodeData.isPrime) {
+                        allCorrect = false;
+                        incorrectNodes.push(nodeId);
+                        
+                        // Add feedback icon
+                        const feedbackIcon = document.createElement('div');
+                        feedbackIcon.className = 'feedback-icon incorrect';
+                        feedbackIcon.innerHTML = '✗';
+                        nodeElement.parentNode.appendChild(feedbackIcon);
+                        
+                        // Add hint text
+                        const hintText = document.createElement('div');
+                        hintText.className = 'hint-text';
+                        hintText.textContent = `${nodeData.value} is not prime`;
+                        nodeElement.parentNode.appendChild(hintText);
+                    }
+                }
+            }
+            
+            // Show overall feedback
+            const feedbackArea = document.getElementById('feedbackArea');
+            feedbackArea.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'bg-yellow-100', 'text-green-800', 'text-red-800', 'text-yellow-800');
+            
+            if (!allFilled) {
+                feedbackArea.classList.add('bg-yellow-100', 'text-yellow-800');
+                feedbackArea.textContent = 'Please fill in all the blank circles before checking your tree.';
+            } else if (allCorrect) {
+                feedbackArea.classList.add('bg-green-100', 'text-green-800');
+                feedbackArea.textContent = 'Great job! Your prime factorization is correct! 🎉';
+            } else {
+                feedbackArea.classList.add('bg-red-100', 'text-red-800');
+                feedbackArea.textContent = 'Some factors are incorrect. Check the red circles and try again.';
+            }
+        }
+        
+        function showAnswer() {
+            // Reset the tree first
+            resetTree();
+            
+            // Get the current number
+            const number = currentNumber;
+            
+            // Build the solution tree
+            const solution = buildSolutionTree(number);
+            
+            // Fill in all the inputs with correct values
+            fillTreeWithSolution(solution);
+            
+            // Check the tree to show feedback
+            checkTree();
+        }
+        
+        function buildSolutionTree(number) {
+            // Start with the root
+            const solution = {
+                root: {
+                    value: number,
+                    children: []
+                }
+            };
+            
+            // Build the solution recursively
+            buildSolutionSubtree('root', solution);
+            
+            return solution;
+        }
+        
+        function buildSolutionSubtree(nodeId, solution) {
+            const nodeValue = solution[nodeId].value;
+            
+            // If prime, no children
+            if (isPrime(nodeValue)) {
+                return;
+            }
+            
+            // Find factors
+            const factors = findBestFactors(nodeValue);
+            
+            // Create left child
+            const leftChildId = `${nodeId}-left`;
+            solution[leftChildId] = {
+                value: factors[0],
+                children: []
+            };
+            
+            // Create right child
+            const rightChildId = `${nodeId}-right`;
+            solution[rightChildId] = {
+                value: factors[1],
+                children: []
+            };
+            
+            // Add children to parent
+            solution[nodeId].children = [leftChildId, rightChildId];
+            
+            // Recursively build subtrees
+            buildSolutionSubtree(leftChildId, solution);
+            buildSolutionSubtree(rightChildId, solution);
+        }
+        
+        function fillTreeWithSolution(solution) {
+            // Start with the root node's children
+            if (solution.root.children.length > 0) {
+                const rootNodeData = treeData.root;
+                
+                // Get the first level of input nodes
+                const leftInputId = rootNodeData.children[0];
+                const rightInputId = rootNodeData.children[1];
+                
+                // Fill in the first level
+                const leftInput = document.querySelector(`[data-node-id="${leftInputId}"]`);
+                leftInput.value = solution[solution.root.children[0]].value;
+                handleInputChange(leftInput);
+                
+                const rightInput = document.querySelector(`[data-node-id="${rightInputId}"]`);
+                rightInput.value = solution[solution.root.children[1]].value;
+                handleInputChange(rightInput);
+                
+                // Continue filling in the rest of the tree
+                fillSubtree(leftInputId, solution.root.children[0], solution);
+                fillSubtree(rightInputId, solution.root.children[1], solution);
+            }
+        }
+        
+        function fillSubtree(treeNodeId, solutionNodeId, solution) {
+            const solutionNode = solution[solutionNodeId];
+            
+            // If this node has children in the solution
+            if (solutionNode.children.length > 0) {
+                // Get the corresponding tree node
+                const treeNodeData = treeData[treeNodeId];
+                
+                // If the tree node has children
+                if (treeNodeData.children.length > 0) {
+                    const leftInputId = treeNodeData.children[0];
+                    const rightInputId = treeNodeData.children[1];
+                    
+                    // Fill in the values
+                    const leftInput = document.querySelector(`[data-node-id="${leftInputId}"]`);
+                    leftInput.value = solution[solutionNode.children[0]].value;
+                    handleInputChange(leftInput);
+                    
+                    const rightInput = document.querySelector(`[data-node-id="${rightInputId}"]`);
+                    rightInput.value = solution[solutionNode.children[1]].value;
+                    handleInputChange(rightInput);
+                    
+                    // Continue recursively
+                    fillSubtree(leftInputId, solutionNode.children[0], solution);
+                    fillSubtree(rightInputId, solutionNode.children[1], solution);
+                }
+            }
+        }
+        
+        function resetTree() {
+            // Clear all inputs but keep the structure
+            for (const nodeId in treeData) {
+                const nodeData = treeData[nodeId];
+                
+                if (nodeData.isEditable) {
+                    const nodeElement = document.querySelector(`[data-node-id="${nodeId}"]`);
+                    if (nodeElement) {
+                        // Clear the input
+                        nodeElement.value = '';
+                        nodeElement.classList.remove('correct', 'incorrect', 'prime', 'composite');
+                        
+                        // Remove any feedback
+                        const existingFeedback = nodeElement.parentNode.querySelector('.feedback-icon');
+                        if (existingFeedback) {
+                            existingFeedback.remove();
+                        }
+                        
+                        // Remove any hint text
+                        const existingHint = nodeElement.parentNode.querySelector('.hint-text');
+                        if (existingHint) {
+                            existingHint.remove();
+                        }
+                        
+                        // Update data
+                        nodeData.value = null;
+                        nodeData.isPrime = false;
+                    }
+                }
+            }
+            
+            // Hide feedback
+            const feedbackArea = document.getElementById('feedbackArea');
+            feedbackArea.classList.add('hidden');
+        }
+        
+        function isPrime(num) {
+            if (num <= 1) return false;
+            if (num <= 3) return true;
+            if (num % 2 === 0 || num % 3 === 0) return false;
+            
+            let i = 5;
+            while (i * i <= num) {
+                if (num % i === 0 || num % (i + 2) === 0) return false;
+                i += 6;
+            }
+            return true;
+        }
+        
+        function findBestFactors(num) {
+            // For educational purposes, we want to find factors that are
+            // as close to each other as possible
+            let bestFactor1 = 1;
+            let bestFactor2 = num;
+            
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) {
+                    bestFactor1 = i;
+                    bestFactor2 = num / i;
+                }
+            }
+            
+            return [bestFactor1, bestFactor2];
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d8983c9a7386117',t:'MTc3Mjg4NTYxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

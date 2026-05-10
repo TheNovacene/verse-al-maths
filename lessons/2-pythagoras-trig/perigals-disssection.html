@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1042,
+    "height" : 729,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "Perigal's Disection",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Geneva\", ",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : -62,
+          "left" : -337,
+          "bottom" : 667,
+          "right" : 705
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 2,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Interior" : {
+            "color" : "rgb(102,255,102)"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Geneva\", "
+              },
+            "Caption" : {
+              "font-family" : "\"Geneva\", "
+              },
+            "Measurement" : {
+              "font-family" : "\"Geneva\", "
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif"
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif"
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Geneva\", "
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 178,
+              "y" : 290
+              }
+            },
+          "label" : "C"
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 374,
+              "y" : 292
+              }
+            },
+          "label" : "A"
+          },
+        "3" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "2"
+            },
+          "constraint" : "Segment"
+          },
+        "4" : {
+          "kind" : "Straight",
+          "genus" : "Perpendicular",
+          "parents" : {
+            "p0" : "1",
+            "line" : "3"
+            },
+          "constraint" : "Perpendicular",
+          "style" : {
+            "hidden" : true,
+            "line-style" : "dashed"
+            }
+          },
+        "5" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "4"
+            },
+          "value" : 0.080124886678594673,
+          "constraint" : "PointOnPath",
+          "label" : "B"
+          },
+        "6" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "5"
+            },
+          "constraint" : "Segment"
+          },
+        "7" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "5",
+            "p1" : "2"
+            },
+          "constraint" : "Segment"
+          },
+        "8" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "6",
+            "center" : "1"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "9" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "5",
+            "center" : "1"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "10" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "8",
+            "center" : "9"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "11" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "1",
+            "center" : "9"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "12" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "10",
+            "center" : "11"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "13" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "9",
+            "center" : "11"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "label" : "B",
+          "style" : {
+            "hidden" : true,
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -27,
+              "labelOffsetY" : -33
+              }
+            }
+          },
+        "14" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "13",
+            "p1" : "2"
+            },
+          "constraint" : "Segment"
+          },
+        "15" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "14",
+            "center" : "13"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "16" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "2",
+            "center" : "13"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "17" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "15",
+            "center" : "16"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "18" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "13",
+            "center" : "16"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "19" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "17",
+            "center" : "18"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "20" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "16",
+            "center" : "18"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "21" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "3",
+            "center" : "2"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "22" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "1",
+            "center" : "2"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true,
+          "label" : "C'",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "23" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "21",
+            "center" : "22"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "24" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "2",
+            "center" : "22"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true,
+          "label" : "A'",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "25" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "source" : "23",
+            "center" : "24"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true
+          },
+        "26" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "22",
+            "center" : "24"
+            },
+          "angle" : -1.5707963267949001,
+          "constraint" : "Rotate",
+          "shouldAutogenerateLabel" : true,
+          "label" : "C''",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "27" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "0" : "11",
+            "1" : "13",
+            "2" : "26",
+            "3" : "9"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "red",
+            "layerOrder" : 0
+            }
+          },
+        "28" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "0" : "5",
+            "1" : "16",
+            "2" : "18",
+            "3" : "20"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "purple",
+            "layerOrder" : 1
+            }
+          },
+        "29" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "0" : "2",
+            "1" : "22",
+            "2" : "24",
+            "3" : "26"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "blue",
+            "layerOrder" : 2
+            }
+          },
+        "30" : {
+          "kind" : "Polygon",
+          "genus" : "Triangle",
+          "parents" : {
+            "0" : "5",
+            "1" : "1",
+            "2" : "20"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "rgb(50,204,36)",
+            "layerOrder" : 3
+            }
+          },
+        "31" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "22"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "32" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "24",
+            "p1" : "2"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true,
+            "line-style" : "dashed"
+            }
+          },
+        "33" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "32",
+            "line1" : "31"
+            },
+          "constraint" : "Intersection",
+          "label" : "F"
+          },
+        "34" : {
+          "kind" : "Straight",
+          "genus" : "Parallel",
+          "parents" : {
+            "p0" : "33",
+            "line" : "14"
+            },
+          "constraint" : "Parallel",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "35" : {
+          "kind" : "Straight",
+          "genus" : "Perpendicular",
+          "parents" : {
+            "p0" : "33",
+            "line" : "14"
+            },
+          "constraint" : "Perpendicular",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "36" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "25",
+            "line1" : "34"
+            },
+          "constraint" : "Intersection",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "37" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "3",
+            "line1" : "35"
+            },
+          "constraint" : "Intersection",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "38" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "34",
+            "line1" : "21"
+            },
+          "constraint" : "Intersection",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "39" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "0" : "26",
+            "1" : "36",
+            "2" : "33",
+            "3" : "37"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "yellow",
+            "layerOrder" : 4
+            }
+          },
+        "40" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "0" : "37",
+            "1" : "2",
+            "2" : "38",
+            "3" : "33"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "red",
+            "layerOrder" : 5
+            }
+          },
+        "41" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "35",
+            "line1" : "23"
+            },
+          "constraint" : "Intersection",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "42" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "0" : "33",
+            "1" : "41",
+            "2" : "22",
+            "3" : "38"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "purple",
+            "layerOrder" : 6
+            }
+          },
+        "43" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "0" : "41",
+            "1" : "24",
+            "2" : "36",
+            "3" : "33"
+            },
+          "constraint" : "PolygonFromPoints",
+          "style" : {
+            "color" : "rgb(255,128,0)",
+            "layerOrder" : 7
+            }
+          },
+        "44" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 514,
+              "y" : -45
+              }
+            },
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "45" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "27",
+            "p0" : "11",
+            "p1" : "44"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true,
+            "color" : "rgb(255,255,11)",
+            "layerOrder" : 1
+            }
+          },
+        "46" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 638,
+              "y" : 144
+              }
+            },
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "47" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "39",
+            "p0" : "1",
+            "p1" : "46"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true,
+            "color" : "rgb(128,137,38)",
+            "layerOrder" : 1
+            }
+          },
+        "48" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 688,
+              "y" : 324
+              }
+            },
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "49" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "40",
+            "p0" : "2",
+            "p1" : "48"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true,
+            "color" : "rgb(184,10,148)",
+            "layerOrder" : 1
+            }
+          },
+        "50" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 769,
+              "y" : -117
+              }
+            },
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "51" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "42",
+            "p0" : "38",
+            "p1" : "50"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true,
+            "color" : "rgb(64,0,128)",
+            "layerOrder" : 1
+            }
+          },
+        "52" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 390,
+              "y" : 701
+              }
+            },
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "53" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "43",
+            "p0" : "36",
+            "p1" : "52"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "hidden" : true,
+            "color" : "rgb(176,105,112)",
+            "layerOrder" : 1
+            }
+          },
+        "54" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "33",
+            "p1" : "5"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "55" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "33",
+            "p1" : "18"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "56" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "33",
+            "p1" : "16"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "57" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "33",
+            "p1" : "2"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "58" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "56"
+            },
+          "value" : -0,
+          "constraint" : "PointOnPath",
+          "label" : "I",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "59" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "16",
+            "1" : "58"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -332,
+              "y" : -87
+              }
+            },
+          "label" : "Move Point",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move Point"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "60" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "33",
+            "1" : "58"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -142,
+              "y" : -87
+              }
+            },
+          "label" : "Move I → F",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move I → F"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "61" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "42",
+            "p0" : "33",
+            "p1" : "58"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "color" : "purple",
+            "layerOrder" : 9
+            }
+          },
+        "62" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "32"
+            },
+          "value" : 0.5,
+          "constraint" : "PointOnPath",
+          "label" : "J",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "63" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "2",
+            "1" : "62"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -332,
+              "y" : -39
+              }
+            },
+          "label" : "Move J → A",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move J → A"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "64" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "33",
+            "1" : "62"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -143,
+              "y" : -39
+              }
+            },
+          "label" : "Move J → F",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move J → F"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "65" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "39",
+            "p0" : "33",
+            "p1" : "62"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "color" : "yellow",
+            "layerOrder" : 10
+            }
+          },
+        "66" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "55"
+            },
+          "value" : 0,
+          "constraint" : "PointOnPath",
+          "label" : "K",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "67" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "18",
+            "1" : "66"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -329,
+              "y" : 19
+              }
+            },
+          "label" : "Move Point",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move Point"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "68" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "33",
+            "1" : "66"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -141,
+              "y" : 17
+              }
+            },
+          "label" : "Move K → F",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move K → F"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "69" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "43",
+            "p0" : "33",
+            "p1" : "66"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "color" : "rgb(255,128,0)",
+            "layerOrder" : 11
+            }
+          },
+        "70" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "58",
+            "p1" : "2"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "71" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "11",
+            "p1" : "26"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "72" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "9",
+            "p1" : "13"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "73" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "71",
+            "line1" : "72"
+            },
+          "constraint" : "Intersection",
+          "label" : "L",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "74" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "54"
+            },
+          "value" : 1,
+          "constraint" : "PointOnPath",
+          "label" : "G",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "75" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "74",
+            "p1" : "18"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "76" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "75",
+            "line1" : "70"
+            },
+          "constraint" : "Intersection",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "77" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "73",
+            "p1" : "76"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "78" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "77"
+            },
+          "value" : 1,
+          "constraint" : "PointOnPath",
+          "label" : "M",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "79" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "54"
+            },
+          "value" : -0,
+          "constraint" : "PointOnPath",
+          "label" : "N",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "80" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "74",
+            "1" : "79"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -331,
+              "y" : 73
+              }
+            },
+          "label" : "Move N → G",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move N → G"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "81" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "33",
+            "1" : "79"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -137,
+              "y" : 72
+              }
+            },
+          "label" : "Move N → F",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move N → F"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "82" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "40",
+            "p0" : "33",
+            "p1" : "79"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "color" : "red",
+            "layerOrder" : 13
+            }
+          },
+        "83" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "77"
+            },
+          "value" : 0,
+          "constraint" : "PointOnPath",
+          "label" : "O",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "84" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "27",
+            "p0" : "73",
+            "p1" : "83"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "color" : "red",
+            "layerOrder" : 14
+            }
+          },
+        "85" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "16",
+            "p1" : "20"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "86" : {
+          "kind" : "Point",
+          "genus" : "Intersection",
+          "parents" : {
+            "line0" : "75",
+            "line1" : "85"
+            },
+          "constraint" : "Intersection",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "87" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "73",
+            "p1" : "86"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "88" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "87"
+            },
+          "value" : 0,
+          "constraint" : "PointOnPath",
+          "label" : "P",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "89" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "86",
+            "1" : "88"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -326,
+              "y" : 122
+              }
+            },
+          "label" : "Move Point",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move Point"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "90" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "73",
+            "1" : "88"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -131,
+              "y" : 119
+              }
+            },
+          "label" : "Move P → L",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonMove",
+          "messages" : [
+            "Move P → L"
+            ],
+          "shouldAutogenerateLabel" : true,
+          "rate" : 3,
+          "shouldAutogenerateLabel" : true
+          },
+        "91" : {
+          "kind" : "Polygon",
+          "genus" : "Quadrilateral",
+          "parents" : {
+            "source" : "27",
+            "p0" : "73",
+            "p1" : "88"
+            },
+          "constraint" : "TranslateVector",
+          "shouldAutogenerateLabel" : true,
+          "style" : {
+            "layerOrder" : 15
+            }
+          },
+        "92" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "59",
+            "1" : "63",
+            "2" : "67",
+            "3" : "80",
+            "4" : "89"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -305,
+              "y" : 186
+              }
+            },
+          "label" : "RUN",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonPresentSequentially",
+          "messages" : [
+            "RUN"
+            ],
+          "waitTime" : 0.20000000000000001
+          },
+        "93" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "90",
+            "1" : "81",
+            "2" : "68",
+            "3" : "64",
+            "4" : "60"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -158,
+              "y" : 187
+              }
+            },
+          "label" : "Reset",
+          "style" : {
+            "hidden" : true
+            },
+          "constraint" : "ActionButtonPresentSequentially",
+          "messages" : [
+            "Reset"
+            ],
+          "waitTime" : 1
+          },
+        "94" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "92",
+            "1" : "93"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : -266,
+              "y" : -61
+              }
+            },
+          "label" : "Perigal's Disection",
+          "constraint" : "ActionButtonPresentSequentially",
+          "messages" : [
+            "Perigal's Disection"
+            ],
+          "waitTime" : 5
+          },
+        "95" : {
+          "kind" : "AngleMarker",
+          "genus" : "AngleMarker",
+          "parents" : {
+            "p0" : "5",
+            "p1" : "1",
+            "p2" : "2"
+            },
+          "constraint" : "AngleMarker_Simple",
+          "style" : {
+            "show-angle-direction" : true
+            }
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    

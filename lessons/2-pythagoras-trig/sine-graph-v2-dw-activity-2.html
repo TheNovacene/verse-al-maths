@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1318,
+    "height" : 855,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "Tidal Model",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : -5,
+          "left" : -191,
+          "bottom" : 850,
+          "right" : 1127
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "rad"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "Plot" : {
+            "color" : "blue"
+            },
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 36
+              },
+            "Caption" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24,
+              "font-weight" : "bold",
+              "font-style" : "italic",
+              "color" : "blue"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 24,
+              "font-weight" : "bold",
+              "color" : "blue"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 18
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "OriginPoint",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : -157,
+              "y" : 518
+              }
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "origin" : "1"
+            },
+          "value" : 127.34645669291342,
+          "constraint" : "HorizontalUnitPoint"
+          },
+        "3" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "2"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "horizontal",
+          "label" : "x",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -4,
+              "labelOffsetY" : 5,
+              "labelParam" : -3.3934984232980887
+              },
+            "width" : 1,
+            "tickNumbering" : "trigonometric"
+            }
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "unitPoint" : "2"
+            },
+          "constraint" : "UnitPointInternalSquare",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "5" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "4"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "vertical",
+          "label" : "y",
+          "style" : {
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "6" : {
+          "kind" : "CoordSys",
+          "genus" : "CoordSys",
+          "parents" : {
+            "axisX" : "3",
+            "axisY" : "5"
+            },
+          "constraint" : "CoordSys",
+          "shape" : "square",
+          "style" : {
+            "grid" : "gridlines"
+            }
+          },
+        "7" : {
+          "kind" : "Expression",
+          "genus" : "Function",
+          "parents" : {},
+          "constraint" : "Function",
+          "geom" : {
+            "loc" : {
+              "x" : 10,
+              "y" : 5
+              }
+            },
+          "expressionType" : "YofX_FunctionExprType",
+          "functionExpr" : {
+            "notation" : "dependentVariable",
+            "name" : "f",
+            "dependentVar" : "y",
+            "independentVar" : "x"
+            },
+          "expression" : "sin(x)",
+          "label" : "f",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "8" : {
+          "kind" : "Expression",
+          "genus" : "ScalarParameter",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 712,
+              "y" : 53
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "1",
+          "label" : "b",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel",
+            "contenteditable" : true
+            }
+          },
+        "9" : {
+          "kind" : "Expression",
+          "genus" : "ScalarParameter",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 712,
+              "y" : 97
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "0",
+          "label" : "k",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel",
+            "contenteditable" : true
+            }
+          },
+        "10" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "8"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 824,
+              "y" : 56
+              }
+            },
+          "label" : "Change the value of b",
+          "constraint" : "ActionButtonAnimate",
+          "messages" : [
+            "Change the value of b"
+            ],
+          "animationStates" : [
+            {
+              "rate" : 1,
+              "timeInterval" : 2,
+              "repeat" : true,
+              "motionType" : "both",
+              "lowerParamBound" : 0.10000000149011612,
+              "upperParamBound" : 3,
+              "discrete" : false
+              }
+            ]
+          },
+        "11" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "9"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 830,
+              "y" : 104
+              }
+            },
+          "label" : "Change the value of k",
+          "constraint" : "ActionButtonAnimate",
+          "messages" : [
+            "Change the value of k"
+            ],
+          "animationStates" : [
+            {
+              "rate" : 1,
+              "timeInterval" : 3,
+              "repeat" : true,
+              "motionType" : "both",
+              "lowerParamBound" : -3,
+              "upperParamBound" : 3,
+              "discrete" : false
+              }
+            ]
+          },
+        "12" : {
+          "kind" : "Expression",
+          "genus" : "ScalarParameter",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 711,
+              "y" : 8
+              }
+            },
+          "expressionType" : "UniMeasure_ExprType",
+          "expression" : "1",
+          "label" : "a",
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromLabel",
+            "contenteditable" : true
+            }
+          },
+        "13" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "12"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 826,
+              "y" : 12
+              }
+            },
+          "label" : "Change the value of a",
+          "constraint" : "ActionButtonAnimate",
+          "messages" : [
+            "Change the value of a"
+            ],
+          "animationStates" : [
+            {
+              "rate" : 1,
+              "timeInterval" : 2,
+              "repeat" : true,
+              "motionType" : "both",
+              "lowerParamBound" : -3,
+              "upperParamBound" : 3,
+              "discrete" : false
+              }
+            ]
+          },
+        "14" : {
+          "kind" : "Expression",
+          "genus" : "Function",
+          "parents" : {
+            "0" : "12",
+            "1" : "8",
+            "2" : "9"
+            },
+          "constraint" : "Function",
+          "geom" : {
+            "loc" : {
+              "x" : 374,
+              "y" : 421
+              }
+            },
+          "expressionType" : "YofX_FunctionExprType",
+          "functionExpr" : {
+            "notation" : "dependentVariable",
+            "name" : "g",
+            "dependentVar" : "y",
+            "independentVar" : "x"
+            },
+          "expression" : "@0*sin(@1*x)+@2",
+          "label" : "g"
+          },
+        "15" : {
+          "kind" : "Sampler",
+          "genus" : "FunctionPlot",
+          "parents" : {
+            "function" : "14",
+            "coordSys" : "6"
+            },
+          "constraint" : "FunctionPlot",
+          "style" : {
+            "line-style" : "solid",
+            "width" : 3,
+            "endpointRadius" : 2.5,
+            "arrowheadRadius" : 8
+            },
+          "numSamples" : 750,
+          "isDiscrete" : false,
+          "showEndpoints" : true,
+          "driverDomain" : {
+            "low" : -3.9734124775860993,
+            "high" : 23.43111490711118
+            }
+          },
+        "16" : {
+          "kind" : "Point",
+          "genus" : "PointOnPath",
+          "parents" : {
+            "path" : "15"
+            },
+          "value" : 0.010968109299974903,
+          "constraint" : "PointOnPath",
+          "label" : "A",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 8,
+              "labelOffsetY" : 5
+              }
+            }
+          },
+        "17" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "point" : "16",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementAbscissa",
+          "geom" : {
+            "loc" : {
+              "x" : -89,
+              "y" : 612
+              }
+            },
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "18" : {
+          "kind" : "Measure",
+          "genus" : "ScalarMeasure",
+          "parents" : {
+            "point" : "16",
+            "coordSys" : "6"
+            },
+          "constraint" : "MeasurementOrdinate",
+          "geom" : {
+            "loc" : {
+              "x" : 42,
+              "y" : 612
+              }
+            },
+          "style" : {
+            "precision" : 2,
+            "nameOrigin" : "namedFromTemplate"
+            }
+          },
+        "19" : {
+          "kind" : "Table",
+          "genus" : "UserEditableTable",
+          "parents" : {
+            "0" : "17",
+            "1" : "18"
+            },
+          "constraint" : "UserTabulation",
+          "geom" : {
+            "loc" : {
+              "x" : 171,
+              "y" : 584
+              }
+            }
+          },
+        "20" : {
+          "kind" : "Expression",
+          "genus" : "Function",
+          "parents" : {},
+          "constraint" : "Function",
+          "geom" : {
+            "loc" : {
+              "x" : 1197,
+              "y" : 225
+              }
+            },
+          "expressionType" : "YofX_FunctionExprType",
+          "functionExpr" : {
+            "notation" : "dependentVariable",
+            "name" : "h",
+            "dependentVar" : "y",
+            "independentVar" : "x"
+            },
+          "expression" : "1.25*sin(π\/6*x)+1.75",
+          "label" : "h",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "21" : {
+          "kind" : "Sampler",
+          "genus" : "FunctionPlot",
+          "parents" : {
+            "function" : "20",
+            "coordSys" : "6"
+            },
+          "constraint" : "FunctionPlot",
+          "label" : "y = h(x)",
+          "style" : {
+            "color" : "red",
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -1,
+              "labelOffsetY" : 3,
+              "labelParam" : 20.127567099372587
+              },
+            "line-style" : "solid",
+            "width" : 5,
+            "endpointRadius" : 3.5,
+            "arrowheadRadius" : 12
+            },
+          "numSamples" : 750,
+          "isDiscrete" : false,
+          "showEndpoints" : true,
+          "driverDomain" : {
+            "low" : -4.2718110430965179,
+            "high" : 22.020820894945864
+            }
+          },
+        "22" : {
+          "kind" : "Text",
+          "genus" : "Caption",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 372,
+              "y" : 93
+              }
+            },
+          "textMFS" : "<T'Tidal Graph'>"
+          },
+        "23" : {
+          "kind" : "Button",
+          "genus" : "Action",
+          "parents" : {
+            "0" : "16"
+            },
+          "geom" : {
+            "loc" : {
+              "x" : 169,
+              "y" : 678
+              }
+            },
+          "label" : "Change the position of A.",
+          "constraint" : "ActionButtonAnimate",
+          "messages" : [
+            "Change the position of A."
+            ],
+          "animationStates" : [
+            {
+              "rate" : 1,
+              "timeInterval" : 0,
+              "repeat" : true,
+              "motionType" : "both"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    

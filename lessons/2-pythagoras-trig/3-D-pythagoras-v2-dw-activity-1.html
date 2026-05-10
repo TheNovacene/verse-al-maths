@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+    <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <title>Web Sketchpad</title>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/jquery-2.1.0.min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-min.js"></script>
+            <script charset="utf-8" type="text/javascript" src="https://gsptest.scratchconsortium.com/wsp/gsphost_v1/js/wsp-runner.js"></script>
+            <script charset="utf-8" type="text/javascript">
+                var sketch = {
+  "metadata" : {
+    "width" : 1009,
+    "height" : 886,
+    "wsp-version" : "4.8.0",
+    "exporter-version" : "5.10",
+    "exporter-build" : "3058",
+    "exporter-debug" : false,
+    "original-document-name" : "3-D Pythagoras",
+    "start-page" : "1"
+    },
+  "resources" : {
+    "fontList" : [
+      "\"Times New Roman\", serif",
+      "\"Arial\", sans-serif"
+      ]
+    },
+  "pages" : [
+    {
+      "metadata" : {
+        "title" : "1",
+        "id" : "1",
+        "sketchRect" : {
+          "top" : 18,
+          "left" : 34,
+          "bottom" : 904,
+          "right" : 1043
+          }
+        },
+      "preferences" : {
+        "units" : {
+          "length" : "cm",
+          "angle" : "deg"
+          },
+        "precision" : {
+          "length" : 2,
+          "angle" : 0,
+          "scalar" : 2
+          },
+        "colorableComponents" : {
+          "ActionButton" : {
+            "color" : "rgb(255,128,0)"
+            }
+          },
+        "text" : {
+          "mathItalicization" : true,
+          "textTypes" : {
+            "Label" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-size" : 36
+              },
+            "Caption" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24,
+              "font-weight" : "bold",
+              "font-style" : "italic"
+              },
+            "Measurement" : {
+              "font-family" : "\"Times New Roman\", serif",
+              "font-weight" : "bold"
+              },
+            "Action" : {
+              "label" : {
+                "font-family" : "\"Arial\", sans-serif",
+                "font-size" : 24
+                }
+              },
+            "Table" : {
+              "font-family" : "\"Arial\", sans-serif",
+              "font-size" : 24
+              },
+            "AxisTicksAndOptionalLabel" : {
+              "font-family" : "\"Arial\", sans-serif"
+              }
+            }
+          }
+        },
+      "objects" : {
+        "1" : {
+          "kind" : "Point",
+          "genus" : "OriginPoint",
+          "constraint" : "Free",
+          "geom" : {
+            "loc" : {
+              "x" : 296,
+              "y" : 545
+              }
+            },
+          "label" : "A",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 1,
+              "labelOffsetY" : -2
+              }
+            }
+          },
+        "2" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "origin" : "1"
+            },
+          "value" : 62.346456692913421,
+          "constraint" : "HorizontalUnitPoint"
+          },
+        "3" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "2"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "horizontal",
+          "label" : "x",
+          "style" : {
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "4" : {
+          "kind" : "Point",
+          "genus" : "UnitPoint",
+          "parents" : {
+            "unitPoint" : "2"
+            },
+          "constraint" : "UnitPointInternalSquare",
+          "style" : {
+            "hidden" : true
+            }
+          },
+        "5" : {
+          "kind" : "Axis",
+          "genus" : "Axis",
+          "parents" : {
+            "origin" : "1",
+            "unitPoint" : "4"
+            },
+          "constraint" : "AxisInternalDist",
+          "orientation" : "vertical",
+          "label" : "y",
+          "style" : {
+            "label" : {
+              "showLabel" : false
+              },
+            "width" : 1
+            }
+          },
+        "6" : {
+          "kind" : "CoordSys",
+          "genus" : "CoordSys",
+          "parents" : {
+            "axisX" : "3",
+            "axisY" : "5"
+            },
+          "constraint" : "CoordSys",
+          "shape" : "square",
+          "style" : {
+            "grid" : "gridlines"
+            }
+          },
+        "7" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 5,
+          "coordY" : 0,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "D",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -3,
+              "labelOffsetY" : 1
+              }
+            }
+          },
+        "8" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 5,
+          "coordY" : 3,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "H",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 7,
+              "labelOffsetY" : -14
+              }
+            }
+          },
+        "9" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 0,
+          "coordY" : 3,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "E",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -37,
+              "labelOffsetY" : -25
+              }
+            }
+          },
+        "10" : {
+          "kind" : "Point",
+          "genus" : "PlottedPoint",
+          "parents" : {
+            "coordSys" : "6"
+            },
+          "coordX" : 1,
+          "coordY" : 2,
+          "constraint" : "PlotFixedXFixedY",
+          "label" : "B",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -36,
+              "labelOffsetY" : -25
+              }
+            }
+          },
+        "11" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "10"
+            },
+          "constraint" : "Segment"
+          },
+        "12" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "9",
+            "p0" : "1",
+            "p1" : "10"
+            },
+          "constraint" : "TranslateVector",
+          "label" : "F",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : -29,
+              "labelOffsetY" : -40
+              }
+            }
+          },
+        "13" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "8",
+            "p0" : "1",
+            "p1" : "10"
+            },
+          "constraint" : "TranslateVector",
+          "label" : "G",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 0,
+              "labelOffsetY" : -37
+              }
+            }
+          },
+        "14" : {
+          "kind" : "Point",
+          "genus" : "Point",
+          "parents" : {
+            "source" : "7",
+            "p0" : "1",
+            "p1" : "10"
+            },
+          "constraint" : "TranslateVector",
+          "label" : "C",
+          "style" : {
+            "label" : {
+              "showLabel" : true,
+              "labelOffsetX" : 7,
+              "labelOffsetY" : -14
+              }
+            }
+          },
+        "15" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "7"
+            },
+          "constraint" : "Segment"
+          },
+        "16" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "7",
+            "p1" : "8"
+            },
+          "constraint" : "Segment"
+          },
+        "17" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "8",
+            "p1" : "9"
+            },
+          "constraint" : "Segment"
+          },
+        "18" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "9",
+            "p1" : "1"
+            },
+          "constraint" : "Segment"
+          },
+        "19" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "10",
+            "p1" : "14"
+            },
+          "constraint" : "Segment"
+          },
+        "20" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "14",
+            "p1" : "13"
+            },
+          "constraint" : "Segment"
+          },
+        "21" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "13",
+            "p1" : "12"
+            },
+          "constraint" : "Segment"
+          },
+        "22" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "12",
+            "p1" : "10"
+            },
+          "constraint" : "Segment"
+          },
+        "23" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "9",
+            "p1" : "12"
+            },
+          "constraint" : "Segment"
+          },
+        "24" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "7",
+            "p1" : "14"
+            },
+          "constraint" : "Segment"
+          },
+        "25" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "13",
+            "p1" : "8"
+            },
+          "constraint" : "Segment"
+          },
+        "26" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "13"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "line-style" : "dashed"
+            }
+          },
+        "27" : {
+          "kind" : "Straight",
+          "genus" : "Segment",
+          "parents" : {
+            "p0" : "1",
+            "p1" : "14"
+            },
+          "constraint" : "Segment",
+          "style" : {
+            "line-style" : "dashed"
+            }
+          }
+        }
+      }
+    ]
+  };
+            </script>
+            <style type="text/css">
+                .sketch_canvas {border: medium solid lightgray; display: inline-block;}
+            </style>
+        </head>
+        <body role="main">
+            <div class="sketch_canvas" data-var="sketch" >&nbsp;</div>
+            
+        </body>
+    </html>
+    
