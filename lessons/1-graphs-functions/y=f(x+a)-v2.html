@@ -1,208 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Y=f(x+a) - Verse-al Maths</title>
-  <style>
-  /* Verse-al Maths Navigation & Footer Styles */
-
-  .versal-nav {
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-    background-color: #f5f1e8;
-    border-bottom: 2px solid #1a4a4a;
-    padding: 1rem 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  }
-
-  .versal-nav-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .versal-nav-left a,
-  .versal-nav-right a {
-    color: #1a4a4a;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-  }
-
-  .versal-nav-left a:hover,
-  .versal-nav-right a:hover {
-    color: #2a6a6a;
-    text-decoration: underline;
-  }
-
-  .versal-nav-left {
-    font-size: 1.1rem;
-  }
-
-  .versal-nav-right {
-    font-size: 0.95rem;
-  }
-
-  .versal-footer {
-    background-color: #f5f1e8;
-    border-top: 2px solid #1a4a4a;
-    padding: 2rem;
-    margin-top: 3rem;
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #333;
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  .versal-footer a {
-    color: #1a4a4a;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-  }
-
-  .versal-footer a:hover {
-    color: #2a6a6a;
-    text-decoration: underline;
-  }
-
-  .versal-lesson-content {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-  }
-
-  .versal-lesson-content details {
-    margin-bottom: 1.5rem;
-  }
-
-  .versal-lesson-content details summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: #1a4a4a;
-    padding: 0.5rem 0;
-  }
-
-  .versal-lesson-content details summary:hover {
-    color: #2a6a6a;
-  }
-</style>
-
-</head>
-<body>
-<!-- versal-nav -->
-<nav class="versal-nav">
-  <div class="versal-nav-content">
-    <div class="versal-nav-left">
-      <a href="/verse-al-maths/">The Novacene · Verse-al Maths</a>
-    </div>
-    <div class="versal-nav-right">
-      <a href="/verse-al-maths/">← Back to Verse-al Maths</a>
-    </div>
-  </div>
-</nav>
-
-  <main class="versal-lesson-content">
 <details>
     <summary style="font-size: 24px; font-family: sans-serif;">🧠 The Knowing World</summary>
     <div>
-        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;How do graphs shift left or right?&rdquo;</em></p>
-        <p style="font-family: sans-serif; font-size: 16px;">In this lesson, we&rsquo;ll explore what happens when a graph is translated <strong>horizontally</strong> by changing the input variable inside the function:</p>
+        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;What happens when we lift or lower a graph?&rdquo;</em></p>
+        <p style="font-family: sans-serif; font-size: 16px;">In this lesson, we&rsquo;ll explore what happens when we shift a graph <strong>up or down</strong> by adding or subtracting a number to the function:</p>
         <ul style="font-family: sans-serif; font-size: 16px;">
-            <li><strong>y = f(x + a)</strong> &mdash; the graph shifts <strong>left</strong> by a units</li>
-            <li><strong>y = f(x - a)</strong> &mdash; the graph shifts <strong>right</strong> by a units</li>
+            <li><strong>y = f(x) + a</strong> &mdash; the graph shifts <strong>up</strong> by a units</li>
+            <li><strong>y = f(x) - a</strong> &mdash; the graph shifts <strong>down</strong> by a units</li>
         </ul>
         <h4 style="font-family: sans-serif; font-size: 16px;">🧾 Glossary:</h4>
         <ul style="font-family: sans-serif; font-size: 16px;">
-            <li><strong>Translation:</strong> Moving a shape or graph without rotation or resizing</li>
-            <li><strong>Input:</strong> The x-value of a function</li>
-            <li><strong>f(x + a):</strong> Function shifted in the horizontal (x) direction</li>
-            <li><strong>Horizontal shift:</strong> A movement of a graph left or right</li>
+            <li><strong>Translation:</strong> A shift in position (without changing shape)</li>
+            <li><strong>Function:</strong> A rule that assigns each input (x) a single output (y)</li>
+            <li><strong>f(x):</strong> Function notation, read as &ldquo;f of x&rdquo;</li>
+            <li><strong>Vertical shift:</strong> Moving a graph up or down</li>
         </ul>
     </div>
 </details>
 <details>
     <summary style="font-size: 24px; font-family: sans-serif;">🌍 The Human Story</summary>
     <div>
-        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;What does it mean to shift our path &mdash; to adjust our direction?&rdquo;</em></p>
-        <p style="font-family: sans-serif; font-size: 16px;">Horizontal translations help model delays, phase shifts, and time changes. Whether scheduling a train, adjusting a sound wave, or modelling daylight hours, these shifts are part of life.</p>
-        <p style="font-family: sans-serif; font-size: 16px;"><strong>Guest Voice:</strong> Sound engineers and urban planners use horizontal shifts to adjust signals, design roadways, and plan accessible transport. Can you think of something in your world that was delayed &mdash; but still arrived?</p>
-        <p style="font-family: sans-serif; font-size: 16px;"><strong>🌱 SDG 11 &ndash; Sustainable Cities:</strong> When we understand how things move in time and space, we build smarter, fairer systems for everyone.</p>
+        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;In a changing world, what must rise &mdash; and what must hold steady?&rdquo;</em></p>
+        <p style="font-family: sans-serif; font-size: 16px;">Vertical shifts help us understand elevation, signal strength, prices, or population growth &mdash; concepts that change over time but follow predictable paths.</p>
+        <p style="font-family: sans-serif; font-size: 16px;"><strong>Guest Voice:</strong> Urban designers use vertical translations to model flood defenses, building heights, and transport ramps. What if we didn&rsquo;t think mathematically about what needs to be raised?</p>
+        <p style="font-family: sans-serif; font-size: 16px;"><strong>🌿 SDG 11 &ndash; Sustainable Cities and Communities:</strong> Understanding vertical change helps us plan inclusive, accessible, and resilient environments.</p>
     </div>
 </details>
 <details>
     <summary style="font-size: 24px; font-family: sans-serif;">🗣️ The Expressive Self</summary>
     <div>
-        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;To shift a graph is to shift a story.&rdquo;</em></p>
+        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;To shift a graph is to shift a view &mdash; to see from higher or lower ground.&rdquo;</em></p>
+        <p style="font-family: sans-serif; font-size: 16px;">Try one:</p>
         <ul style="font-family: sans-serif; font-size: 16px;">
-            <li>Write or sketch a scene where a person&rsquo;s path changes &mdash; just like a graph</li>
-            <li>What does it feel like to be &ldquo;shifted left&rdquo; &mdash; or &ldquo;shifted right&rdquo;?</li>
-            <li>Create a metaphor for a graph that slides: &ldquo;Like time, like tide, like...&rdquo;</li>
+            <li>Sketch a graph being lifted like a balloon 🎈</li>
+            <li>Describe what part of life feels like <strong>rising</strong> or <strong>sinking</strong></li>
+            <li>Write a metaphor: &ldquo;The graph rose like...&rdquo;</li>
         </ul>
     </div>
 </details>
 <details>
     <summary style="font-size: 24px; font-family: sans-serif;">🔧 The Designed World</summary>
     <div>
-        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;What shifts left or right in the world around us?&rdquo;</em></p>
-        <p style="font-family: sans-serif; font-size: 16px;">Explore how the function changes as we adjust the input value using this interactive Web Sketchpad tool:</p>
-        <iframe style="border: 1px solid #ccc; border-radius: 8px; margin-top: 1em;" src="https://canvas.instructure.com/courses/12822206/files/314020080/download" width="100%" height="500px" loading="lazy" data-api-endpoint="https://canvas.instructure.com/api/v1/courses/12822206/files/314020080" data-api-returntype="File"></iframe>
-        <h4 style="font-family: sans-serif; font-size: 16px;">🧪 Try This:</h4>
+        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;We model what moves, to design what stands.&rdquo;</em></p>
+        <p style="font-family: sans-serif; font-size: 16px;">Use this interactive Web Sketchpad activity to explore how changing the value of <strong>a</strong> in \( y = f(x) + a \) moves the graph:</p>
+        <iframe style="border: 1px solid #ccc; border-radius: 8px; margin-top: 1em;" src="https://thenovacene.github.io/verse-al-maths/lessons/1-graphs-functions/y=f(x+a)-dw-activity-1.html" width="100%" height="500px" loading="lazy"></iframe>
+        <h4 style="font-family: sans-serif; font-size: 16px;">🔍 Try this:</h4>
         <ul style="font-family: sans-serif; font-size: 16px;">
-            <li>Set f(x) = x&sup2;, then adjust values of a to shift it left or right</li>
-            <li>Watch how the turning point moves along the x-axis.</li>
+            <li>Set <strong>f(x) = x&sup2;</strong> and try values of a = 2, 5, -3</li>
+            <li>What happens to the vertex of the parabola?</li>
         </ul>
-        <h4 style="font-family: sans-serif; font-size: 16px;">🛠️ Ethical Design Prompt:</h4>
-        <p style="font-family: sans-serif; font-size: 16px;">Imagine designing a schedule or sensor that must shift based on time of day or environment. How would horizontal translations help you design for fairness?</p>
+        <h4 style="font-family: sans-serif; font-size: 16px;">📐 Ethical Design Prompt:</h4>
+        <p style="font-family: sans-serif; font-size: 16px;">Imagine designing a ramp for a building where each height increase needs to be fair for different users. How would understanding vertical shifts help?</p>
     </div>
 </details>
 <details>
     <summary style="font-size: 24px; font-family: sans-serif;">🌿 The Living Body</summary>
     <div>
-        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;Feel your weight shift gently left, gently right.&rdquo;</em></p>
+        <p style="font-family: sans-serif; font-size: 16px;"><em>&ldquo;When graphs rise, we pause to breathe. When they fall, we ground again.&rdquo;</em></p>
+        <p style="font-family: sans-serif; font-size: 16px;">Try this brief body check:</p>
         <ul style="font-family: sans-serif; font-size: 16px;">
-            <li>Sit comfortably with both feet on the ground</li>
-            <li>Sway slightly to the left &mdash; then to the right &mdash; and notice the balance</li>
-            <li>Let your breath follow: in on the left, out on the right</li>
+            <li>Sit tall. As you breathe in, imagine a graph rising.</li>
+            <li>As you breathe out, imagine it slowly lowering.</li>
+            <li>Repeat three times, visualising each shift as steady and calm.</li>
         </ul>
-        <p style="font-family: sans-serif; font-size: 16px;">Even graphs need room to shift. So do we.</p>
+        <p style="font-family: sans-serif; font-size: 16px;">💭 A graph&rsquo;s movement mirrors our own &mdash; we all have highs and lows.</p>
     </div>
 </details>
 <details>
-    <summary style="font-size: 24px; font-family: sans-serif;">🎯 Final Task &ndash; Shift Your Thinking</summary>
+    <summary style="font-size: 24px; font-family: sans-serif;">🎯 Final Task &ndash; Lift the Graph, Lift the World</summary>
     <div>
         <p style="font-family: sans-serif; font-size: 16px;"><strong>Choose one:</strong></p>
         <ul style="font-family: sans-serif; font-size: 16px;">
-            <li>Create a visual model of a function with a horizontal shift and explain its rule</li>
-            <li>Find a real-life application (transport, design, or scheduling) that uses horizontal translation</li>
-            <li>Write a creative short story based on a graph that shifts direction</li>
+            <li>Create your own vertical translation sketch and describe its transformation</li>
+            <li>Find a real-world example of something that rises and model it with a function</li>
+            <li>Design a poster or video explaining how vertical translations help us design better environments</li>
         </ul>
-        <p style="font-family: sans-serif; font-size: 16px;"><strong>🌍 SDG 11 Link:</strong> Shifting patterns in time and space help cities and communities stay adaptable and resilient. How can you apply this to make systems more inclusive?</p>
-        <h4 style="font-family: sans-serif; font-size: 16px;">🎯 GCSE Rubric Focus:</h4>
+        <p style="font-family: sans-serif; font-size: 16px;"><strong>🌍 SDG 11 Link:</strong> How can understanding elevation and vertical change help us design more accessible, resilient, and inclusive spaces?</p>
+        <h4 style="font-family: sans-serif; font-size: 16px;">🔍 GCSE Rubric Focus:</h4>
         <ul style="font-family: sans-serif; font-size: 16px;">
-            <li><strong>Conceptual Understanding</strong> &ndash; Identifies correct shift direction and form</li>
-            <li><strong>Fluency &amp; Accuracy</strong> &ndash; Applies function rules with accuracy</li>
-            <li><strong>Application to Problems</strong> &ndash; Links graph changes to real-world shifts</li>
-            <li><strong>Independence &amp; Reflection</strong> &ndash; Shows unique voice and personal meaning</li>
+            <li><strong>Conceptual Understanding</strong> &ndash; Clear explanation of transformation rules</li>
+            <li><strong>Fluency &amp; Accuracy</strong> &ndash; Correct sketching and language</li>
+            <li><strong>Application to Problems</strong> &ndash; Real-life or design scenario connected</li>
+            <li><strong>Independence &amp; Reflection</strong> &ndash; Unique interpretation and voice</li>
         </ul>
         <h4 style="font-family: sans-serif; font-size: 16px;">👭 Buddy Challenge:</h4>
-        <p style="font-family: sans-serif; font-size: 16px;">Work in pairs: One of you creates a graph with a horizontal shift. The other guesses the transformation and explains why. Then switch!</p>
+        <p style="font-family: sans-serif; font-size: 16px;">Each person creates a transformation. Swap and explain it back. What does their transformation &ldquo;feel&rdquo; like to you?</p>
     </div>
 </details>
-  </main>
-<!-- versal-footer -->
-<footer class="versal-footer">
-  <p>made with verse-al ❤️ by <a href="https://thenovacene.com">The Novacene</a></p>
-  <p>If you'd like to customise this for your school or learning community, please contact <a href="mailto:info@thenovacene.com">info@thenovacene.com</a></p>
-</footer>
-
-</body>
-</html>
