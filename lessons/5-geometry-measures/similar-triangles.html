@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Similar Triangle Dilation Explorer</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFontSegoe UI, Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 900px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      margin: 0 0 12px 0;
+      color: #2d3748;
+      font-size: 28px;
+      text-align: center;
+    }
+
+    .instruction {
+      text-align: center;
+      color: #4a5568;
+      margin-bottom: 24px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .canvas-container {
+      position: relative;
+      margin-bottom: 24px;
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: move;
+    }
+
+    .controls {
+      background: #edf2f7;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      height: 8px;
+      border-radius: 4px;
+      background: #cbd5e0;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s;
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .scale-value {
+      font-weight: 700;
+      color: #667eea;
+      min-width: 40px;
+      text-align: right;
+      font-size: 16px;
+    }
+
+    .toggles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #667eea;
+    }
+
+    .toggle-label {
+      font-weight: 500;
+      color: #4a5568;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #5a67d8;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .info-panel {
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .info-section {
+      margin-bottom: 16px;
+    }
+
+    .info-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-title {
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .info-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .info-item {
+      background: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #4a5568;
+      border-left: 4px solid #667eea;
+    }
+
+    .info-item.dilated {
+      border-left-color: #f56565;
+    }
+
+    .ratio-highlight {
+      background: #fef5e7;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 700;
+      color: #d97706;
+      font-size: 15px;
+      border: 2px solid #fbbf24;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <h1 id="page-title">Similar Triangle Dilation Explorer</h1>
+   <p class="instruction" id="instruction-text">Use the slider to change the scale factor. What do you notice about the side ratios and angles between the two triangles?</p>
+   <div class="canvas-container">
+    <canvas id="triangleCanvas" width="800" height="500"></canvas>
+   </div>
+   <div class="controls">
+    <div class="control-group"><label for="scaleSlider">Scale Factor</label>
+     <div class="slider-container"><input type="range" id="scaleSlider" min="0.5" max="3.0" step="0.1" value="1.5"> <span class="scale-value" id="scaleValue">1.5</span>
+     </div>
+    </div>
+    <div class="control-group"><label>Display Options</label>
+     <div class="toggles">
+      <div class="toggle-item"><input type="checkbox" id="showLengths" checked> <label for="showLengths" class="toggle-label">Side Lengths</label>
+      </div>
+      <div class="toggle-item"><input type="checkbox" id="showAngles" checked> <label for="showAngles" class="toggle-label">Angle Measures</label>
+      </div>
+      <div class="toggle-item"><input type="checkbox" id="showRatios" checked> <label for="showRatios" class="toggle-label">Side Ratios</label>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="button-container"><button id="resetBtn">Reset</button>
+   </div>
+   <div class="info-panel" id="infoPanel">
+    <div class="info-section" id="lengthsSection">
+     <div class="info-title">
+      Side Lengths
+     </div>
+     <div class="info-content">
+      <div class="info-item">
+       AB: <span id="ab-length">0</span>
+      </div>
+      <div class="info-item">
+       BC: <span id="bc-length">0</span>
+      </div>
+      <div class="info-item">
+       AC: <span id="ac-length">0</span>
+      </div>
+      <div class="info-item dilated">
+       A'B': <span id="ab-dilated-length">0</span>
+      </div>
+      <div class="info-item dilated">
+       B'C': <span id="bc-dilated-length">0</span>
+      </div>
+      <div class="info-item dilated">
+       A'C': <span id="ac-dilated-length">0</span>
+      </div>
+     </div>
+    </div>
+    <div class="info-section" id="anglesSection">
+     <div class="info-title">
+      Angle Measures
+     </div>
+     <div class="info-content">
+      <div class="info-item">
+       ∠A: <span id="angle-a">0</span>°
+      </div>
+      <div class="info-item">
+       ∠B: <span id="angle-b">0</span>°
+      </div>
+      <div class="info-item">
+       ∠C: <span id="angle-c">0</span>°
+      </div>
+      <div class="info-item dilated">
+       ∠A': <span id="angle-a-dilated">0</span>°
+      </div>
+      <div class="info-item dilated">
+       ∠B': <span id="angle-b-dilated">0</span>°
+      </div>
+      <div class="info-item dilated">
+       ∠C': <span id="angle-c-dilated">0</span>°
+      </div>
+     </div>
+    </div>
+    <div class="info-section" id="ratiosSection">
+     <div class="info-title">
+      Side Ratios (Dilated ÷ Original)
+     </div>
+     <div class="ratio-highlight" id="ratioDisplay">
+      Ratio = 1.50
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      page_title: "Similar Triangle Dilation Explorer",
+      instruction_text: "Use the slider to change the scale factor. What do you notice about the side ratios and angles between the two triangles?",
+      reset_button_text: "Reset",
+      background_color: "#667eea",
+      surface_color: "#ffffff",
+      text_color: "#2d3748",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#4a5568",
+      font_family: "sans-serif",
+      font_size: 16
+    };
+
+    const canvas = document.getElementById('triangleCanvas');
+    const ctx = canvas.getContext('2d');
+    const scaleSlider = document.getElementById('scaleSlider');
+    const scaleValue = document.getElementById('scaleValue');
+    const showLengths = document.getElementById('showLengths');
+    const showAngles = document.getElementById('showAngles');
+    const showRatios = document.getElementById('showRatios');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let isDragging = false;
+    let scaleFactor = 1.5;
+
+    const originalTriangle = {
+      A: { x: 150, y: 350 },
+      B: { x: 400, y: 100 },
+      C: { x: 600, y: 350 }
+    };
+
+    let triangle = {
+      A: { x: 150, y: 350 },
+      B: { x: 400, y: 100 },
+      C: { x: 600, y: 350 }
+    };
+
+    function distance(p1, p2) {
+      return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
+    }
+
+    function calculateAngle(p1, vertex, p2) {
+      const v1 = { x: p1.x - vertex.x, y: p1.y - vertex.y };
+      const v2 = { x: p2.x - vertex.x, y: p2.y - vertex.y };
+      const dot = v1.x * v2.x + v1.y * v2.y;
+      const mag1 = Math.sqrt(v1.x ** 2 + v1.y ** 2);
+      const mag2 = Math.sqrt(v2.x ** 2 + v2.y ** 2);
+      const angle = Math.acos(dot / (mag1 * mag2));
+      return (angle * 180 / Math.PI).toFixed(1);
+    }
+
+    function dilatePoint(point, center, scale) {
+      return {
+        x: center.x + (point.x - center.x) * scale,
+        y: center.y + (point.y - center.y) * scale
+      };
+    }
+
+    function drawTriangle(t, color, label, isDilated = false) {
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3;
+
+      ctx.beginPath();
+      ctx.moveTo(t.A.x, t.A.y);
+      ctx.lineTo(t.B.x, t.B.y);
+      ctx.lineTo(t.C.x, t.C.y);
+      ctx.closePath();
+      ctx.stroke();
+
+      const labelSuffix = isDilated ? "'" : "";
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillText(`A${labelSuffix}`, t.A.x - 20, t.A.y + 20);
+      ctx.fillText(`B${labelSuffix}`, t.B.x - 10, t.B.y - 10);
+      ctx.fillText(`C${labelSuffix}`, t.C.x + 10, t.C.y + 20);
+
+      ctx.beginPath();
+      ctx.arc(t.A.x, t.A.y, 6, 0, 2 * Math.PI);
+      ctx.arc(t.B.x, t.B.y, 6, 0, 2 * Math.PI);
+      ctx.arc(t.C.x, t.C.y, 6, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    function drawCenterMarker(point) {
+      ctx.strokeStyle = '#2d3748';
+      ctx.fillStyle = '#fbbf24';
+      ctx.lineWidth = 2;
+      
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, 10, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#2d3748';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('Center', point.x + 15, point.y + 5);
+    }
+
+    function updateDisplay() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawTriangle(triangle, '#3182ce', 'ABC', false);
+
+      const dilatedTriangle = {
+        A: triangle.A,
+        B: dilatePoint(triangle.B, triangle.A, scaleFactor),
+        C: dilatePoint(triangle.C, triangle.A, scaleFactor)
+      };
+
+      drawTriangle(dilatedTriangle, '#f56565', "A'B'C'", true);
+      drawCenterMarker(triangle.A);
+
+      const ab = distance(triangle.A, triangle.B);
+      const bc = distance(triangle.B, triangle.C);
+      const ac = distance(triangle.A, triangle.C);
+
+      const abDilated = distance(dilatedTriangle.A, dilatedTriangle.B);
+      const bcDilated = distance(dilatedTriangle.B, dilatedTriangle.C);
+      const acDilated = distance(dilatedTriangle.A, dilatedTriangle.C);
+
+      document.getElementById('ab-length').textContent = ab.toFixed(1);
+      document.getElementById('bc-length').textContent = bc.toFixed(1);
+      document.getElementById('ac-length').textContent = ac.toFixed(1);
+      document.getElementById('ab-dilated-length').textContent = abDilated.toFixed(1);
+      document.getElementById('bc-dilated-length').textContent = bcDilated.toFixed(1);
+      document.getElementById('ac-dilated-length').textContent = acDilated.toFixed(1);
+
+      const angleA = calculateAngle(triangle.B, triangle.A, triangle.C);
+      const angleB = calculateAngle(triangle.A, triangle.B, triangle.C);
+      const angleC = calculateAngle(triangle.A, triangle.C, triangle.B);
+
+      const angleADilated = calculateAngle(dilatedTriangle.B, dilatedTriangle.A, dilatedTriangle.C);
+      const angleBDilated = calculateAngle(dilatedTriangle.A, dilatedTriangle.B, dilatedTriangle.C);
+      const angleCDilated = calculateAngle(dilatedTriangle.A, dilatedTriangle.C, dilatedTriangle.B);
+
+      document.getElementById('angle-a').textContent = angleA;
+      document.getElementById('angle-b').textContent = angleB;
+      document.getElementById('angle-c').textContent = angleC;
+      document.getElementById('angle-a-dilated').textContent = angleADilated;
+      document.getElementById('angle-b-dilated').textContent = angleBDilated;
+      document.getElementById('angle-c-dilated').textContent = angleCDilated;
+
+      const ratio1 = (abDilated / ab).toFixed(2);
+      const ratio2 = (bcDilated / bc).toFixed(2);
+      const ratio3 = (acDilated / ac).toFixed(2);
+
+      document.getElementById('ratioDisplay').textContent = 
+        `A'B'/AB = ${ratio1}  |  B'C'/BC = ${ratio2}  |  A'C'/AC = ${ratio3}`;
+
+      updateVisibility();
+    }
+
+    function updateVisibility() {
+      document.getElementById('lengthsSection').style.display = showLengths.checked ? 'block' : 'none';
+      document.getElementById('anglesSection').style.display = showAngles.checked ? 'block' : 'none';
+      document.getElementById('ratiosSection').style.display = showRatios.checked ? 'block' : 'none';
+    }
+
+    scaleSlider.addEventListener('input', (e) => {
+      scaleFactor = parseFloat(e.target.value);
+      scaleValue.textContent = scaleFactor.toFixed(1);
+      updateDisplay();
+    });
+
+    showLengths.addEventListener('change', updateDisplay);
+    showAngles.addEventListener('change', updateDisplay);
+    showRatios.addEventListener('change', updateDisplay);
+
+    resetBtn.addEventListener('click', () => {
+      triangle = {
+        A: { x: originalTriangle.A.x, y: originalTriangle.A.y },
+        B: { x: originalTriangle.B.x, y: originalTriangle.B.y },
+        C: { x: originalTriangle.C.x, y: originalTriangle.C.y }
+      };
+      scaleFactor = 1.5;
+      scaleSlider.value = 1.5;
+      scaleValue.textContent = '1.5';
+      updateDisplay();
+    });
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const mouseX = (e.clientX - rect.left) * scaleX;
+      const mouseY = (e.clientY - rect.top) * scaleY;
+
+      const distToA = distance({ x: mouseX, y: mouseY }, triangle.A);
+
+      if (distToA < 20) {
+        isDragging = true;
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const mouseX = (e.clientX - rect.left) * scaleX;
+      const mouseY = (e.clientY - rect.top) * scaleY;
+
+      const deltaX = mouseX - triangle.A.x;
+      const deltaY = mouseY - triangle.A.y;
+
+      triangle.A.x = mouseX;
+      triangle.A.y = mouseY;
+      triangle.B.x += deltaX;
+      triangle.B.y += deltaY;
+      triangle.C.x += deltaX;
+      triangle.C.y += deltaY;
+
+      updateDisplay();
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      isDragging = false;
+    });
+
+    async function onConfigChange(config) {
+      const pageTitle = document.getElementById('page-title');
+      const instructionText = document.getElementById('instruction-text');
+      const resetButton = document.getElementById('resetBtn');
+
+      pageTitle.textContent = config.page_title || defaultConfig.page_title;
+      instructionText.textContent = config.instruction_text || defaultConfig.instruction_text;
+      resetButton.textContent = config.reset_button_text || defaultConfig.reset_button_text;
+
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
+      const fontFamily = `${customFont}, ${baseFontStack}`;
+      document.body.style.fontFamily = fontFamily;
+
+      const baseSize = config.font_size || defaultConfig.font_size;
+      pageTitle.style.fontSize = `${baseSize * 1.75}px`;
+      instructionText.style.fontSize = `${baseSize * 0.9375}px`;
+
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, #764ba2 100%)`;
+
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      document.querySelector('.container').style.background = surfaceColor;
+
+      const textColor = config.text_color || defaultConfig.text_color;
+      pageTitle.style.color = textColor;
+      document.querySelectorAll('label, .info-title').forEach(el => el.style.color = textColor);
+
+      const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+      resetButton.style.background = primaryActionColor;
+      document.querySelectorAll('input[type="range"]::-webkit-slider-thumb').forEach(el => {
+        el.style.background = primaryActionColor;
+      });
+
+      const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+      instructionText.style.color = secondaryActionColor;
+      document.querySelectorAll('.toggle-label, .info-item').forEach(el => el.style.color = secondaryActionColor);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["page_title", config.page_title || defaultConfig.page_title],
+          ["instruction_text", config.instruction_text || defaultConfig.instruction_text],
+          ["reset_button_text", config.reset_button_text || defaultConfig.reset_button_text]
+        ])
+      });
+    }
+
+    updateDisplay();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d8932d7212568b8',t:'MTc3Mjg4MjI5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1219 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compound Shape Builder &amp; Area Self-Check</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 32px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .header h1 {
+      margin: 0 0 8px 0;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .header p {
+      margin: 0;
+      font-size: 16px;
+      opacity: 0.7;
+    }
+
+    .instructions {
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      border-left: 4px solid #667eea;
+    }
+
+    .instructions p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .shapes-panel {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .shapes-panel h3 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .shape-option {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      cursor: grab;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .shape-option:hover {
+      border-color: #667eea;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+
+    .shape-option:active {
+      cursor: grabbing;
+    }
+
+    .shape-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shape-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .canvas-area {
+      background: white;
+      border: 2px dashed #ccc;
+      border-radius: 12px;
+      min-height: 400px;
+      position: relative;
+      background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 19px, #f0f0f0 19px, #f0f0f0 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 19px, #f0f0f0 19px, #f0f0f0 20px);
+      background-size: 20px 20px;
+    }
+
+    .placed-shape {
+      position: absolute;
+      cursor: move;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      user-select: none;
+      transition: box-shadow 0.2s;
+    }
+
+    .placed-shape:hover {
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    }
+
+    .placed-shape.selected {
+      box-shadow: 0 0 0 3px #667eea;
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 24px;
+      height: 24px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+      z-index: 10;
+    }
+
+    .placed-shape:hover .remove-btn,
+    .placed-shape.selected .remove-btn {
+      display: flex;
+    }
+
+    .shape-controls {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      gap: 4px;
+      z-index: 10;
+    }
+
+    .placed-shape:hover .shape-controls,
+    .placed-shape.selected .shape-controls {
+      display: flex;
+    }
+
+    .control-btn {
+      width: 28px;
+      height: 28px;
+      background: white;
+      border: 2px solid #667eea;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: #667eea;
+      color: white;
+    }
+
+    .controls-section {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .dimension-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .control-group {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .control-group h4 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dimension-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .dimension-input label {
+      font-size: 13px;
+      min-width: 60px;
+    }
+
+    .dimension-input input[type="number"] {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .dimension-input input[type="range"] {
+      flex: 1;
+    }
+
+    .formula {
+      font-size: 12px;
+      color: #666;
+      font-style: italic;
+      margin-top: 8px;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+
+    .answer-section {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .answer-input-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .answer-input-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .answer-input-group input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 18px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .answer-input-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 120px;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .btn-hint {
+      background: #17a2b8;
+      color: white;
+    }
+
+    .btn-hint:hover {
+      background: #138496;
+    }
+
+    .feedback {
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: #d4edda;
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
+
+    .feedback.incorrect {
+      background: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+
+    .breakdown {
+      background: white;
+      border: 2px solid #667eea;
+      border-radius: 12px;
+      padding: 24px;
+      display: none;
+    }
+
+    .breakdown.show {
+      display: block;
+    }
+
+    .breakdown h3 {
+      margin: 0 0 16px 0;
+      font-size: 20px;
+      color: #667eea;
+    }
+
+    .breakdown-item {
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .breakdown-item .label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .breakdown-item .value {
+      font-size: 16px;
+      color: #667eea;
+      font-weight: 700;
+    }
+
+    .breakdown-total {
+      padding: 16px;
+      background: #667eea;
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 16px;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      color: #999;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .empty-state svg {
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+
+    .empty-state p {
+      margin: 0;
+      font-size: 16px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <div class="header">
+    <h1 id="main-title">Compound Shape Builder &amp; Area Self-Check</h1>
+    <p id="subtitle">Build compound shapes and test your area calculation skills</p>
+   </div>
+   <div class="instructions">
+    <p id="instruction-text">Drag shapes onto the canvas, adjust their dimensions, calculate the total area manually, then check your answer!</p>
+   </div>
+   <div class="main-grid">
+    <div class="shapes-panel">
+     <h3>Available Shapes</h3>
+     <div class="shape-option" draggable="true" data-shape="rectangle">
+      <div class="shape-icon">
+       <svg width="40" height="30" viewbox="0 0 40 30"><rect x="2" y="2" width="36" height="26" fill="#3b82f6" stroke="#1e40af" stroke-width="2" />
+       </svg>
+      </div><span class="shape-label">Rectangle</span>
+     </div>
+     <div class="shape-option" draggable="true" data-shape="triangle">
+      <div class="shape-icon">
+       <svg width="40" height="30" viewbox="0 0 40 30"><polygon points="20,2 38,28 2,28" fill="#10b981" stroke="#059669" stroke-width="2" />
+       </svg>
+      </div><span class="shape-label">Triangle</span>
+     </div>
+     <div class="shape-option" draggable="true" data-shape="semicircle">
+      <div class="shape-icon">
+       <svg width="40" height="30" viewbox="0 0 40 30"><path d="M 2 28 A 18 18 0 0 1 38 28 Z" fill="#f59e0b" stroke="#d97706" stroke-width="2" />
+       </svg>
+      </div><span class="shape-label">Semicircle</span>
+     </div>
+     <div class="shape-option" draggable="true" data-shape="quarter-circle">
+      <div class="shape-icon">
+       <svg width="40" height="30" viewbox="0 0 40 30"><path d="M 2 28 A 26 26 0 0 1 28 2 L 28 28 Z" fill="#ec4899" stroke="#db2777" stroke-width="2" />
+       </svg>
+      </div><span class="shape-label">Quarter Circle</span>
+     </div>
+    </div>
+    <div class="canvas-area" id="canvas">
+     <div class="empty-state" id="empty-state">
+      <svg width="80" height="80" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" /> <rect x="14" y="3" width="7" height="7" /> <rect x="14" y="14" width="7" height="7" /> <rect x="3" y="14" width="7" height="7" />
+      </svg>
+      <p>Drag shapes here to start building</p>
+     </div>
+    </div>
+   </div>
+   <div class="controls-section">
+    <h3 style="margin: 0 0 16px 0; font-size: 18px;">Shape Dimensions</h3>
+    <div class="dimension-controls" id="dimension-controls"></div>
+   </div>
+   <div class="feedback" id="feedback"></div>
+   <div class="answer-section">
+    <div class="answer-input-group"><label for="answer-input">Your Calculated Total Area (units²):</label> <input type="number" id="answer-input" placeholder="Enter your answer" step="0.01">
+    </div>
+    <div class="button-group"><button class="btn btn-primary" id="check-btn">Check Answer</button> <button class="btn btn-secondary" id="reset-btn">Reset</button> <button class="btn btn-hint" id="hint-btn">Show Breakdown</button>
+    </div>
+   </div>
+   <div class="breakdown" id="breakdown">
+    <h3>Area Breakdown</h3>
+    <div id="breakdown-content"></div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "Compound Shape Builder & Area Self-Check",
+      subtitle: "Build compound shapes and test your area calculation skills",
+      instruction_text: "Drag shapes onto the canvas, adjust their dimensions, calculate the total area manually, then check your answer!",
+      check_button_text: "Check Answer",
+      reset_button_text: "Reset",
+      hint_button_text: "Show Breakdown",
+      background_color: "#667eea",
+      surface_color: "#f8f9fa",
+      text_color: "#1f2937",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#6c757d",
+      font_family: "Segoe UI",
+      font_size: 16
+    };
+
+    let shapes = [];
+    let shapeIdCounter = 0;
+    let selectedShape = null;
+    let draggedElement = null;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    const shapeDefaults = {
+      rectangle: { width: 100, height: 60, color: '#3b82f6', rotation: 0, flipH: false, flipV: false },
+      triangle: { base: 100, height: 80, color: '#10b981', rotation: 0, flipH: false, flipV: false },
+      semicircle: { radius: 50, color: '#f59e0b', rotation: 0, flipH: false, flipV: false },
+      'quarter-circle': { radius: 60, color: '#ec4899', rotation: 0, flipH: false, flipV: false }
+    };
+
+    function initApp() {
+      document.querySelectorAll('.shape-option').forEach(option => {
+        option.addEventListener('dragstart', handleDragStart);
+        option.addEventListener('dragend', handleDragEnd);
+      });
+
+      const canvas = document.getElementById('canvas');
+      canvas.addEventListener('dragover', handleDragOver);
+      canvas.addEventListener('drop', handleDrop);
+
+      document.getElementById('check-btn').addEventListener('click', checkAnswer);
+      document.getElementById('reset-btn').addEventListener('click', resetCanvas);
+      document.getElementById('hint-btn').addEventListener('click', toggleBreakdown);
+
+      document.getElementById('answer-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          checkAnswer();
+        }
+      });
+
+      updateDimensionControls();
+    }
+
+    function handleDragStart(e) {
+      const shapeType = e.target.closest('.shape-option').dataset.shape;
+      e.dataTransfer.setData('shapeType', shapeType);
+      e.dataTransfer.effectAllowed = 'copy';
+    }
+
+    function handleDragEnd(e) {
+      e.target.style.opacity = '1';
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      const shapeType = e.dataTransfer.getData('shapeType');
+      if (!shapeType) return;
+
+      const canvas = document.getElementById('canvas');
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      addShape(shapeType, x, y);
+    }
+
+    function addShape(type, x, y) {
+      const defaults = shapeDefaults[type];
+      const shape = {
+        id: shapeIdCounter++,
+        type: type,
+        x: x,
+        y: y,
+        ...defaults
+      };
+
+      shapes.push(shape);
+      renderShape(shape);
+      updateDimensionControls();
+      hideEmptyState();
+    }
+
+    function renderShape(shape) {
+      const canvas = document.getElementById('canvas');
+      const shapeDiv = document.createElement('div');
+      shapeDiv.className = 'placed-shape';
+      shapeDiv.dataset.shapeId = shape.id;
+      shapeDiv.style.left = shape.x + 'px';
+      shapeDiv.style.top = shape.y + 'px';
+      shapeDiv.style.background = shape.color;
+
+      const controlsDiv = document.createElement('div');
+      controlsDiv.className = 'shape-controls';
+
+      const rotateBtn = document.createElement('button');
+      rotateBtn.className = 'control-btn';
+      rotateBtn.innerHTML = '↻';
+      rotateBtn.title = 'Rotate 90°';
+      rotateBtn.onclick = (e) => {
+        e.stopPropagation();
+        rotateShape(shape.id);
+      };
+
+      const flipHBtn = document.createElement('button');
+      flipHBtn.className = 'control-btn';
+      flipHBtn.innerHTML = '↔';
+      flipHBtn.title = 'Flip Horizontal';
+      flipHBtn.onclick = (e) => {
+        e.stopPropagation();
+        flipShape(shape.id, 'horizontal');
+      };
+
+      const flipVBtn = document.createElement('button');
+      flipVBtn.className = 'control-btn';
+      flipVBtn.innerHTML = '↕';
+      flipVBtn.title = 'Flip Vertical';
+      flipVBtn.onclick = (e) => {
+        e.stopPropagation();
+        flipShape(shape.id, 'vertical');
+      };
+
+      controlsDiv.appendChild(rotateBtn);
+      controlsDiv.appendChild(flipHBtn);
+      controlsDiv.appendChild(flipVBtn);
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove-btn';
+      removeBtn.innerHTML = '×';
+      removeBtn.onclick = (e) => {
+        e.stopPropagation();
+        removeShape(shape.id);
+      };
+
+      if (shape.type === 'rectangle') {
+        shapeDiv.style.width = shape.width + 'px';
+        shapeDiv.style.height = shape.height + 'px';
+        shapeDiv.style.borderRadius = '4px';
+      } else if (shape.type === 'triangle') {
+        shapeDiv.style.width = '0';
+        shapeDiv.style.height = '0';
+        shapeDiv.style.borderLeft = (shape.base / 2) + 'px solid transparent';
+        shapeDiv.style.borderRight = (shape.base / 2) + 'px solid transparent';
+        shapeDiv.style.borderBottom = shape.height + 'px solid ' + shape.color;
+        shapeDiv.style.background = 'transparent';
+      } else if (shape.type === 'semicircle') {
+        shapeDiv.style.width = (shape.radius * 2) + 'px';
+        shapeDiv.style.height = shape.radius + 'px';
+        shapeDiv.style.borderRadius = shape.radius + 'px ' + shape.radius + 'px 0 0';
+      } else if (shape.type === 'quarter-circle') {
+        shapeDiv.style.width = shape.radius + 'px';
+        shapeDiv.style.height = shape.radius + 'px';
+        shapeDiv.style.borderRadius = '0 0 0 ' + shape.radius + 'px';
+      }
+
+      shapeDiv.appendChild(controlsDiv);
+      shapeDiv.appendChild(removeBtn);
+      
+      applyTransform(shapeDiv, shape);
+      
+      shapeDiv.addEventListener('mousedown', startDrag);
+      shapeDiv.addEventListener('click', () => selectShape(shape.id));
+
+      canvas.appendChild(shapeDiv);
+    }
+
+    function startDrag(e) {
+      if (e.target.classList.contains('remove-btn')) return;
+      
+      draggedElement = e.currentTarget;
+      const rect = draggedElement.getBoundingClientRect();
+      const canvas = document.getElementById('canvas');
+      const canvasRect = canvas.getBoundingClientRect();
+      
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('mouseup', stopDrag);
+      
+      e.preventDefault();
+    }
+
+    function drag(e) {
+      if (!draggedElement) return;
+      
+      const canvas = document.getElementById('canvas');
+      const canvasRect = canvas.getBoundingClientRect();
+      
+      let newX = e.clientX - canvasRect.left - offsetX;
+      let newY = e.clientY - canvasRect.top - offsetY;
+      
+      newX = Math.max(0, Math.min(newX, canvasRect.width - draggedElement.offsetWidth));
+      newY = Math.max(0, Math.min(newY, canvasRect.height - draggedElement.offsetHeight));
+      
+      draggedElement.style.left = newX + 'px';
+      draggedElement.style.top = newY + 'px';
+      
+      const shapeId = parseInt(draggedElement.dataset.shapeId);
+      const shape = shapes.find(s => s.id === shapeId);
+      if (shape) {
+        shape.x = newX;
+        shape.y = newY;
+      }
+    }
+
+    function stopDrag() {
+      draggedElement = null;
+      document.removeEventListener('mousemove', drag);
+      document.removeEventListener('mouseup', stopDrag);
+    }
+
+    function selectShape(id) {
+      selectedShape = id;
+      document.querySelectorAll('.placed-shape').forEach(el => {
+        el.classList.remove('selected');
+      });
+      document.querySelector(`[data-shape-id="${id}"]`)?.classList.add('selected');
+    }
+
+    function removeShape(id) {
+      shapes = shapes.filter(s => s.id !== id);
+      document.querySelector(`[data-shape-id="${id}"]`)?.remove();
+      updateDimensionControls();
+      if (shapes.length === 0) {
+        showEmptyState();
+      }
+    }
+
+    function updateDimensionControls() {
+      const container = document.getElementById('dimension-controls');
+      container.innerHTML = '';
+
+      if (shapes.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Add shapes to adjust dimensions</p>';
+        return;
+      }
+
+      shapes.forEach(shape => {
+        const controlGroup = document.createElement('div');
+        controlGroup.className = 'control-group';
+
+        const shapeIcon = getShapeIcon(shape.type);
+        const title = document.createElement('h4');
+        title.innerHTML = `${shapeIcon} ${capitalizeFirst(shape.type)} #${shape.id}`;
+        controlGroup.appendChild(title);
+
+        if (shape.type === 'rectangle') {
+          controlGroup.appendChild(createDimensionInput(shape, 'width', 'Width:', 20, 200));
+          controlGroup.appendChild(createDimensionInput(shape, 'height', 'Height:', 20, 200));
+          const formula = document.createElement('div');
+          formula.className = 'formula';
+          formula.textContent = `Area = width × height`;
+          controlGroup.appendChild(formula);
+        } else if (shape.type === 'triangle') {
+          controlGroup.appendChild(createDimensionInput(shape, 'base', 'Base:', 20, 200));
+          controlGroup.appendChild(createDimensionInput(shape, 'height', 'Height:', 20, 200));
+          const formula = document.createElement('div');
+          formula.className = 'formula';
+          formula.textContent = `Area = (base × height) ÷ 2`;
+          controlGroup.appendChild(formula);
+        } else if (shape.type === 'semicircle') {
+          controlGroup.appendChild(createDimensionInput(shape, 'radius', 'Radius:', 20, 100));
+          const formula = document.createElement('div');
+          formula.className = 'formula';
+          formula.textContent = `Area = (π × r²) ÷ 2`;
+          controlGroup.appendChild(formula);
+        } else if (shape.type === 'quarter-circle') {
+          controlGroup.appendChild(createDimensionInput(shape, 'radius', 'Radius:', 20, 120));
+          const formula = document.createElement('div');
+          formula.className = 'formula';
+          formula.textContent = `Area = (π × r²) ÷ 4`;
+          controlGroup.appendChild(formula);
+        }
+
+        container.appendChild(controlGroup);
+      });
+    }
+
+    function createDimensionInput(shape, property, label, min, max) {
+      const container = document.createElement('div');
+      container.className = 'dimension-input';
+
+      const labelEl = document.createElement('label');
+      labelEl.textContent = label;
+      container.appendChild(labelEl);
+
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.value = shape[property];
+      input.min = min;
+      input.max = max;
+      input.step = 1;
+      input.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value) || min;
+        shape[property] = Math.max(min, Math.min(max, value));
+        updateShapeVisual(shape);
+        updateDimensionControls();
+      });
+      container.appendChild(input);
+
+      return container;
+    }
+
+    function updateShapeVisual(shape) {
+      const shapeDiv = document.querySelector(`[data-shape-id="${shape.id}"]`);
+      if (!shapeDiv) return;
+
+      if (shape.type === 'rectangle') {
+        shapeDiv.style.width = shape.width + 'px';
+        shapeDiv.style.height = shape.height + 'px';
+      } else if (shape.type === 'triangle') {
+        shapeDiv.style.borderLeft = (shape.base / 2) + 'px solid transparent';
+        shapeDiv.style.borderRight = (shape.base / 2) + 'px solid transparent';
+        shapeDiv.style.borderBottom = shape.height + 'px solid ' + shape.color;
+      } else if (shape.type === 'semicircle') {
+        shapeDiv.style.width = (shape.radius * 2) + 'px';
+        shapeDiv.style.height = shape.radius + 'px';
+        shapeDiv.style.borderRadius = shape.radius + 'px ' + shape.radius + 'px 0 0';
+      } else if (shape.type === 'quarter-circle') {
+        shapeDiv.style.width = shape.radius + 'px';
+        shapeDiv.style.height = shape.radius + 'px';
+        shapeDiv.style.borderRadius = '0 0 0 ' + shape.radius + 'px';
+      }
+      
+      applyTransform(shapeDiv, shape);
+    }
+
+    function applyTransform(element, shape) {
+      let transforms = [];
+      
+      if (shape.rotation !== 0) {
+        transforms.push(`rotate(${shape.rotation}deg)`);
+      }
+      
+      let scaleX = shape.flipH ? -1 : 1;
+      let scaleY = shape.flipV ? -1 : 1;
+      
+      if (scaleX !== 1 || scaleY !== 1) {
+        transforms.push(`scale(${scaleX}, ${scaleY})`);
+      }
+      
+      element.style.transform = transforms.join(' ');
+    }
+
+    function rotateShape(id) {
+      const shape = shapes.find(s => s.id === id);
+      if (!shape) return;
+      
+      shape.rotation = (shape.rotation + 90) % 360;
+      updateShapeVisual(shape);
+    }
+
+    function flipShape(id, direction) {
+      const shape = shapes.find(s => s.id === id);
+      if (!shape) return;
+      
+      if (direction === 'horizontal') {
+        shape.flipH = !shape.flipH;
+      } else if (direction === 'vertical') {
+        shape.flipV = !shape.flipV;
+      }
+      
+      updateShapeVisual(shape);
+    }
+
+    function calculateTotalArea() {
+      let total = 0;
+      shapes.forEach(shape => {
+        if (shape.type === 'rectangle') {
+          total += shape.width * shape.height;
+        } else if (shape.type === 'triangle') {
+          total += (shape.base * shape.height) / 2;
+        } else if (shape.type === 'semicircle') {
+          total += (Math.PI * shape.radius * shape.radius) / 2;
+        } else if (shape.type === 'quarter-circle') {
+          total += (Math.PI * shape.radius * shape.radius) / 4;
+        }
+      });
+      return total;
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseFloat(document.getElementById('answer-input').value);
+      const correctAnswer = calculateTotalArea();
+      const feedback = document.getElementById('feedback');
+
+      if (isNaN(userAnswer)) {
+        feedback.className = 'feedback incorrect show';
+        feedback.textContent = 'Please enter a numerical answer';
+        return;
+      }
+
+      const tolerance = correctAnswer * 0.01;
+      const isCorrect = Math.abs(userAnswer - correctAnswer) <= tolerance;
+
+      if (isCorrect) {
+        feedback.className = 'feedback correct show';
+        feedback.textContent = '✓ Correct — Well done! Your calculation is accurate!';
+      } else {
+        feedback.className = 'feedback incorrect show';
+        const hint = generateHint();
+        feedback.textContent = `✗ Try again. ${hint}`;
+      }
+    }
+
+    function generateHint() {
+      const shapeTypes = [...new Set(shapes.map(s => s.type))];
+      if (shapeTypes.length > 1) {
+        return `Hint: Your compound shape includes ${shapeTypes.length} different shape types. Did you calculate all of them?`;
+      }
+      return 'Hint: Double-check your formula and calculations.';
+    }
+
+    function toggleBreakdown() {
+      const breakdown = document.getElementById('breakdown');
+      const isVisible = breakdown.classList.contains('show');
+      
+      if (!isVisible) {
+        showBreakdown();
+      }
+      
+      breakdown.classList.toggle('show');
+    }
+
+    function showBreakdown() {
+      const content = document.getElementById('breakdown-content');
+      content.innerHTML = '';
+
+      let total = 0;
+
+      shapes.forEach((shape, index) => {
+        const item = document.createElement('div');
+        item.className = 'breakdown-item';
+
+        let area = 0;
+        let formula = '';
+
+        if (shape.type === 'rectangle') {
+          area = shape.width * shape.height;
+          formula = `${shape.width} × ${shape.height}`;
+        } else if (shape.type === 'triangle') {
+          area = (shape.base * shape.height) / 2;
+          formula = `(${shape.base} × ${shape.height}) ÷ 2`;
+        } else if (shape.type === 'semicircle') {
+          area = (Math.PI * shape.radius * shape.radius) / 2;
+          formula = `(π × ${shape.radius}²) ÷ 2`;
+        } else if (shape.type === 'quarter-circle') {
+          area = (Math.PI * shape.radius * shape.radius) / 4;
+          formula = `(π × ${shape.radius}²) ÷ 4`;
+        }
+
+        total += area;
+
+        item.innerHTML = `
+          <div class="label">${capitalizeFirst(shape.type)} #${shape.id}: ${formula}</div>
+          <div class="value">${area.toFixed(2)} units²</div>
+        `;
+        content.appendChild(item);
+      });
+
+      const totalItem = document.createElement('div');
+      totalItem.className = 'breakdown-total';
+      totalItem.innerHTML = `
+        <div>Total Area:</div>
+        <div>${total.toFixed(2)} units²</div>
+      `;
+      content.appendChild(totalItem);
+    }
+
+    function resetCanvas() {
+      shapes = [];
+      document.getElementById('canvas').querySelectorAll('.placed-shape').forEach(el => el.remove());
+      document.getElementById('answer-input').value = '';
+      document.getElementById('feedback').classList.remove('show');
+      document.getElementById('breakdown').classList.remove('show');
+      updateDimensionControls();
+      showEmptyState();
+    }
+
+    function hideEmptyState() {
+      document.getElementById('empty-state').style.display = 'none';
+    }
+
+    function showEmptyState() {
+      document.getElementById('empty-state').style.display = 'flex';
+    }
+
+    function getShapeIcon(type) {
+      const icons = {
+        'rectangle': '▭',
+        'triangle': '△',
+        'semicircle': '◠',
+        'quarter-circle': '◜'
+      };
+      return icons[type] || '●';
+    }
+
+    function capitalizeFirst(str) {
+      return str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
+
+    async function onConfigChange(config) {
+      const baseFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'system-ui, -apple-system, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, #764ba2 100%)`;
+      document.body.style.fontFamily = `${baseFont}, ${baseFontStack}`;
+
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('main-title').style.color = config.text_color || defaultConfig.text_color;
+      document.getElementById('main-title').style.fontSize = `${baseSize * 2}px`;
+
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+      document.getElementById('subtitle').style.color = config.text_color || defaultConfig.text_color;
+      document.getElementById('subtitle').style.fontSize = `${baseSize}px`;
+
+      document.getElementById('instruction-text').textContent = config.instruction_text || defaultConfig.instruction_text;
+      document.getElementById('instruction-text').style.fontSize = `${baseSize * 0.94}px`;
+      document.getElementById('instruction-text').style.color = config.text_color || defaultConfig.text_color;
+
+      document.querySelectorAll('.instructions').forEach(el => {
+        el.style.background = config.surface_color || defaultConfig.surface_color;
+        el.style.borderLeftColor = config.primary_action_color || defaultConfig.primary_action_color;
+      });
+
+      document.querySelectorAll('.shapes-panel, .controls-section').forEach(el => {
+        el.style.background = config.surface_color || defaultConfig.surface_color;
+      });
+
+      document.querySelectorAll('h3, h4, label, .shape-label, .dimension-input label').forEach(el => {
+        el.style.color = config.text_color || defaultConfig.text_color;
+      });
+
+      document.querySelectorAll('h3').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.125}px`;
+      });
+
+      document.querySelectorAll('h4').forEach(el => {
+        el.style.fontSize = `${baseSize * 0.875}px`;
+      });
+
+      document.querySelectorAll('label').forEach(el => {
+        el.style.fontSize = `${baseSize * 0.875}px`;
+      });
+
+      document.querySelectorAll('.formula').forEach(el => {
+        el.style.fontSize = `${baseSize * 0.75}px`;
+      });
+
+      document.querySelectorAll('p').forEach(el => {
+        el.style.fontSize = `${baseSize}px`;
+        el.style.color = config.text_color || defaultConfig.text_color;
+      });
+
+      const checkBtn = document.getElementById('check-btn');
+      checkBtn.textContent = config.check_button_text || defaultConfig.check_button_text;
+      checkBtn.style.background = config.primary_action_color || defaultConfig.primary_action_color;
+      checkBtn.style.fontSize = `${baseSize}px`;
+
+      const resetBtn = document.getElementById('reset-btn');
+      resetBtn.textContent = config.reset_button_text || defaultConfig.reset_button_text;
+      resetBtn.style.background = config.secondary_action_color || defaultConfig.secondary_action_color;
+      resetBtn.style.fontSize = `${baseSize}px`;
+
+      const hintBtn = document.getElementById('hint-btn');
+      hintBtn.textContent = config.hint_button_text || defaultConfig.hint_button_text;
+      hintBtn.style.fontSize = `${baseSize}px`;
+
+      document.querySelectorAll('input').forEach(el => {
+        el.style.fontSize = `${baseSize}px`;
+      });
+
+      document.querySelectorAll('.breakdown h3').forEach(el => {
+        el.style.color = config.primary_action_color || defaultConfig.primary_action_color;
+        el.style.fontSize = `${baseSize * 1.25}px`;
+      });
+
+      document.querySelectorAll('.breakdown-total').forEach(el => {
+        el.style.background = config.primary_action_color || defaultConfig.primary_action_color;
+        el.style.fontSize = `${baseSize * 1.125}px`;
+      });
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => {
+              config.primary_action_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => {
+              config.secondary_action_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            if (window.elementSdk) {
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            if (window.elementSdk) {
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["main_title", config.main_title || defaultConfig.main_title],
+        ["subtitle", config.subtitle || defaultConfig.subtitle],
+        ["instruction_text", config.instruction_text || defaultConfig.instruction_text],
+        ["check_button_text", config.check_button_text || defaultConfig.check_button_text],
+        ["reset_button_text", config.reset_button_text || defaultConfig.reset_button_text],
+        ["hint_button_text", config.hint_button_text || defaultConfig.hint_button_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: onConfigChange,
+        mapToCapabilities: mapToCapabilities,
+        mapToEditPanelValues: mapToEditPanelValues
+      });
+    }
+
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d892f79d5d9c546',t:'MTc3Mjg4MjE1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

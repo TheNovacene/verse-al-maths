@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journey Builder &amp; Distance-Time Graph Maker</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      margin: 0 0 12px 0;
+      font-size: 28px;
+      color: #2d3748;
+    }
+
+    .header p {
+      margin: 0;
+      color: #4a5568;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      flex: 1;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel h2 {
+      margin: 0 0 20px 0;
+      font-size: 20px;
+      color: #2d3748;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #48bb78;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #38a169;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: #f56565;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #e53e3e;
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .segments-list {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+
+    .segment-item {
+      background: #f7fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .segment-item.moving {
+      border-color: #4299e1;
+      background: #ebf8ff;
+    }
+
+    .segment-item.resting {
+      border-color: #a0aec0;
+      background: #edf2f7;
+    }
+
+    .segment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .segment-label {
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 15px;
+    }
+
+    .segment-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-group label {
+      font-size: 13px;
+      color: #4a5568;
+      font-weight: 500;
+    }
+
+    .input-group input,
+    .input-group select {
+      padding: 8px;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .btn-small {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    .graph-container {
+      flex: 1;
+      position: relative;
+      min-height: 400px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      background: #f9fafb;
+    }
+
+    .canvas-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      pointer-events: none;
+      z-index: 1000;
+      display: none;
+      max-width: 250px;
+    }
+
+    .tooltip.show {
+      display: block;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90%;
+      overflow-y: auto;
+    }
+
+    .modal-content h3 {
+      margin: 0 0 20px 0;
+      color: #2d3748;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-buttons .btn {
+      flex: 1;
+    }
+
+    .question-section {
+      background: #fff5f5;
+      border: 2px solid #fc8181;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .question-section h3 {
+      margin: 0 0 12px 0;
+      color: #c53030;
+      font-size: 16px;
+    }
+
+    .question {
+      margin-bottom: 16px;
+    }
+
+    .question p {
+      margin: 0 0 8px 0;
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 14px;
+    }
+
+    .question input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: #c6f6d5;
+      color: #22543d;
+      border: 1px solid #9ae6b4;
+    }
+
+    .feedback.incorrect {
+      background: #fed7d7;
+      color: #742a2a;
+      border: 1px solid #fc8181;
+    }
+
+    @media (max-width: 968px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .segment-controls {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <div class="header">
+    <h1 id="app-title">Journey Builder &amp; Distance-Time Graph Maker</h1>
+    <p id="instructions">Use the 'Add Segment' button to build a journey. Choose your speed and duration. Then press 'Simulate' to watch the motion and view the corresponding distance-time graph. Use the interpretation tools to answer questions about the journey.</p>
+   </div>
+   <div class="main-content">
+    <div class="panel">
+     <h2>Journey Track</h2>
+     <div class="controls"><button id="add-segment-btn" class="btn btn-primary">Add Segment</button> <button id="simulate-btn" class="btn btn-secondary">Simulate Journey</button> <button id="reset-btn" class="btn btn-danger">Reset</button>
+     </div>
+     <div class="segments-list" id="segments-list">
+      <p style="color: #718096; text-align: center; margin-top: 40px;">No segments yet. Click "Add Segment" to start building your journey!</p>
+     </div>
+     <div class="question-section">
+      <h3>Interpretation Questions</h3>
+      <div class="question">
+       <p>1. Which segment shows rest (no movement)?</p><input type="text" id="q1-answer" placeholder="Enter segment number (e.g., 1, 2, 3...)">
+       <div class="feedback" id="q1-feedback"></div>
+      </div>
+      <div class="question">
+       <p>2. What was the fastest speed? (m/s)</p><input type="number" id="q2-answer" placeholder="Enter speed">
+       <div class="feedback" id="q2-feedback"></div>
+      </div>
+      <div class="question">
+       <p>3. What was the total distance traveled? (m)</p><input type="number" id="q3-answer" placeholder="Enter distance">
+       <div class="feedback" id="q3-feedback"></div>
+      </div><button id="check-answers-btn" class="btn btn-primary" style="margin-top: 12px; width: 100%;">Check Answers</button>
+     </div>
+    </div>
+    <div class="panel">
+     <h2>Distance-Time Graph</h2>
+     <div class="graph-container">
+      <canvas id="graph-canvas"></canvas>
+      <div class="tooltip" id="tooltip"></div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="modal" id="segment-modal">
+   <div class="modal-content">
+    <h3>Add Motion Segment</h3>
+    <form id="segment-form">
+     <div class="form-group"><label for="segment-type">Motion Type:</label> <select id="segment-type" required> <option value="moving">Moving</option> <option value="rest">Rest (Speed = 0)</option> </select>
+     </div>
+     <div class="form-group" id="speed-group"><label for="segment-speed">Speed (m/s):</label> <input type="number" id="segment-speed" min="0" step="0.1" value="5" required>
+     </div>
+     <div class="form-group"><label for="segment-duration">Duration (seconds):</label> <input type="number" id="segment-duration" min="0.1" step="0.1" value="2" required>
+     </div>
+     <div class="modal-buttons"><button type="button" class="btn btn-danger" id="cancel-segment-btn">Cancel</button> <button type="submit" class="btn btn-primary">Add Segment</button>
+     </div>
+    </form>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      app_title: "Journey Builder & Distance-Time Graph Maker",
+      instructions_text: "Use the 'Add Segment' button to build a journey. Choose your speed and duration. Then press 'Simulate' to watch the motion and view the corresponding distance-time graph. Use the interpretation tools to answer questions about the journey.",
+      add_segment_button: "Add Segment",
+      simulate_button: "Simulate Journey",
+      reset_button: "Reset",
+      background_color: "#667eea",
+      surface_color: "#ffffff",
+      text_color: "#2d3748",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#48bb78",
+      font_family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif",
+      font_size: 15
+    };
+
+    let segments = [];
+    let isSimulating = false;
+    let animationFrame = null;
+
+    const modal = document.getElementById('segment-modal');
+    const segmentForm = document.getElementById('segment-form');
+    const segmentType = document.getElementById('segment-type');
+    const speedGroup = document.getElementById('speed-group');
+    const segmentSpeed = document.getElementById('segment-speed');
+    const canvas = document.getElementById('graph-canvas');
+    const ctx = canvas.getContext('2d');
+    const tooltip = document.getElementById('tooltip');
+
+    function resizeCanvas() {
+      const container = canvas.parentElement;
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+      drawGraph();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    segmentType.addEventListener('change', (e) => {
+      if (e.target.value === 'rest') {
+        speedGroup.style.display = 'none';
+        segmentSpeed.value = 0;
+      } else {
+        speedGroup.style.display = 'block';
+        segmentSpeed.value = 5;
+      }
+    });
+
+    document.getElementById('add-segment-btn').addEventListener('click', () => {
+      modal.classList.add('show');
+    });
+
+    document.getElementById('cancel-segment-btn').addEventListener('click', () => {
+      modal.classList.remove('show');
+      segmentForm.reset();
+    });
+
+    segmentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = segmentType.value;
+      const speed = type === 'rest' ? 0 : parseFloat(segmentSpeed.value);
+      const duration = parseFloat(document.getElementById('segment-duration').value);
+
+      segments.push({ type, speed, duration });
+      modal.classList.remove('show');
+      segmentForm.reset();
+      renderSegments();
+      drawGraph();
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      segments = [];
+      isSimulating = false;
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+      renderSegments();
+      drawGraph();
+      clearFeedback();
+    });
+
+    document.getElementById('simulate-btn').addEventListener('click', () => {
+      if (segments.length === 0) return;
+      animateJourney();
+    });
+
+    document.getElementById('check-answers-btn').addEventListener('click', () => {
+      checkAnswers();
+    });
+
+    function renderSegments() {
+      const list = document.getElementById('segments-list');
+      if (segments.length === 0) {
+        list.innerHTML = '<p style="color: #718096; text-align: center; margin-top: 40px;">No segments yet. Click "Add Segment" to start building your journey!</p>';
+        return;
+      }
+
+      list.innerHTML = segments.map((seg, idx) => `
+        <div class="segment-item ${seg.type === 'rest' ? 'resting' : 'moving'}">
+          <div class="segment-header">
+            <span class="segment-label">Segment ${idx + 1}</span>
+            <button class="btn btn-danger btn-small" onclick="deleteSegment(${idx})">Delete</button>
+          </div>
+          <div class="segment-controls">
+            <div class="input-group">
+              <label>Type:</label>
+              <select onchange="updateSegmentType(${idx}, this.value)">
+                <option value="moving" ${seg.type === 'moving' ? 'selected' : ''}>Moving</option>
+                <option value="rest" ${seg.type === 'rest' ? 'selected' : ''}>Rest</option>
+              </select>
+            </div>
+            <div class="input-group" ${seg.type === 'rest' ? 'style="display:none;"' : ''} id="speed-group-${idx}">
+              <label>Speed (m/s):</label>
+              <input type="number" value="${seg.speed}" min="0" step="0.1" onchange="updateSegmentSpeed(${idx}, this.value)">
+            </div>
+            <div class="input-group">
+              <label>Duration (s):</label>
+              <input type="number" value="${seg.duration}" min="0.1" step="0.1" onchange="updateSegmentDuration(${idx}, this.value)">
+            </div>
+            <div class="input-group">
+              <label>Distance:</label>
+              <input type="text" value="${(seg.speed * seg.duration).toFixed(1)} m" readonly style="background: #f7fafc;">
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    window.deleteSegment = function(idx) {
+      segments.splice(idx, 1);
+      renderSegments();
+      drawGraph();
+      clearFeedback();
+    };
+
+    window.updateSegmentType = function(idx, type) {
+      segments[idx].type = type;
+      segments[idx].speed = type === 'rest' ? 0 : 5;
+      renderSegments();
+      drawGraph();
+      clearFeedback();
+    };
+
+    window.updateSegmentSpeed = function(idx, speed) {
+      segments[idx].speed = parseFloat(speed);
+      renderSegments();
+      drawGraph();
+      clearFeedback();
+    };
+
+    window.updateSegmentDuration = function(idx, duration) {
+      segments[idx].duration = parseFloat(duration);
+      renderSegments();
+      drawGraph();
+      clearFeedback();
+    };
+
+    function drawGraph(currentTime = null) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const padding = 60;
+      const graphWidth = canvas.width - padding * 2;
+      const graphHeight = canvas.height - padding * 2;
+
+      const totalTime = segments.reduce((sum, seg) => sum + seg.duration, 0) || 10;
+      const maxDistance = calculateMaxDistance() || 100;
+
+      ctx.strokeStyle = '#cbd5e0';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(padding, padding);
+      ctx.lineTo(padding, canvas.height - padding);
+      ctx.lineTo(canvas.width - padding, canvas.height - padding);
+      ctx.stroke();
+
+      ctx.fillStyle = '#4a5568';
+      ctx.font = '14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Time (s)', canvas.width / 2, canvas.height - 10);
+
+      ctx.save();
+      ctx.translate(15, canvas.height / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText('Distance (m)', 0, 0);
+      ctx.restore();
+
+      for (let i = 0; i <= 5; i++) {
+        const x = padding + (graphWidth / 5) * i;
+        const time = (totalTime / 5) * i;
+        ctx.fillStyle = '#718096';
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(time.toFixed(1), x, canvas.height - padding + 20);
+
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, padding);
+        ctx.lineTo(x, canvas.height - padding);
+        ctx.stroke();
+      }
+
+      for (let i = 0; i <= 5; i++) {
+        const y = canvas.height - padding - (graphHeight / 5) * i;
+        const distance = (maxDistance / 5) * i;
+        ctx.fillStyle = '#718096';
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(distance.toFixed(0), padding - 10, y + 4);
+
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(canvas.width - padding, y);
+        ctx.stroke();
+      }
+
+      let time = 0;
+      let distance = 0;
+      ctx.strokeStyle = '#3182ce';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+
+      const startX = padding + (time / totalTime) * graphWidth;
+      const startY = canvas.height - padding - (distance / maxDistance) * graphHeight;
+      ctx.moveTo(startX, startY);
+
+      segments.forEach((seg, idx) => {
+        const endTime = time + seg.duration;
+        const endDistance = distance + (seg.speed * seg.duration);
+
+        if (currentTime === null || currentTime >= endTime) {
+          const x = padding + (endTime / totalTime) * graphWidth;
+          const y = canvas.height - padding - (endDistance / maxDistance) * graphHeight;
+          ctx.lineTo(x, y);
+        } else if (currentTime > time && currentTime < endTime) {
+          const partialDuration = currentTime - time;
+          const partialDistance = distance + (seg.speed * partialDuration);
+          const x = padding + (currentTime / totalTime) * graphWidth;
+          const y = canvas.height - padding - (partialDistance / maxDistance) * graphHeight;
+          ctx.lineTo(x, y);
+        }
+
+        time = endTime;
+        distance = endDistance;
+      });
+
+      ctx.stroke();
+    }
+
+    function calculateMaxDistance() {
+      let distance = 0;
+      let maxDist = 0;
+      segments.forEach(seg => {
+        distance += seg.speed * seg.duration;
+        maxDist = Math.max(maxDist, distance);
+      });
+      return maxDist;
+    }
+
+    function animateJourney() {
+      const totalTime = segments.reduce((sum, seg) => sum + seg.duration, 0);
+      const startTime = Date.now();
+      const duration = totalTime * 500;
+
+      function animate() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const currentTime = progress * totalTime;
+
+        drawGraph(currentTime);
+
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(animate);
+        }
+      }
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+      animate();
+    }
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const padding = 60;
+      const graphWidth = canvas.width - padding * 2;
+      const totalTime = segments.reduce((sum, seg) => sum + seg.duration, 0) || 10;
+
+      if (x < padding || x > canvas.width - padding || y < padding || y > canvas.height - padding) {
+        tooltip.classList.remove('show');
+        return;
+      }
+
+      const clickedTime = ((x - padding) / graphWidth) * totalTime;
+      let time = 0;
+      let foundSegment = null;
+
+      for (let i = 0; i < segments.length; i++) {
+        const seg = segments[i];
+        if (clickedTime >= time && clickedTime <= time + seg.duration) {
+          foundSegment = { segment: seg, index: i, startTime: time };
+          break;
+        }
+        time += seg.duration;
+      }
+
+      if (foundSegment) {
+        const seg = foundSegment.segment;
+        const distance = seg.speed * seg.duration;
+        tooltip.innerHTML = `
+          <strong>Segment ${foundSegment.index + 1}</strong><br>
+          Type: ${seg.type === 'rest' ? 'Rest' : 'Moving'}<br>
+          Speed: ${seg.speed.toFixed(1)} m/s<br>
+          Duration: ${seg.duration.toFixed(1)} s<br>
+          Distance: ${distance.toFixed(1)} m
+        `;
+        tooltip.style.left = (e.clientX + 10) + 'px';
+        tooltip.style.top = (e.clientY + 10) + 'px';
+        tooltip.classList.add('show');
+      } else {
+        tooltip.classList.remove('show');
+      }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('show');
+    });
+
+    function checkAnswers() {
+      const restSegments = segments
+        .map((seg, idx) => seg.type === 'rest' ? idx + 1 : null)
+        .filter(x => x !== null);
+      const q1Answer = document.getElementById('q1-answer').value.trim();
+      const q1Feedback = document.getElementById('q1-feedback');
+
+      if (restSegments.length === 0) {
+        if (q1Answer.toLowerCase() === 'none' || q1Answer === '') {
+          q1Feedback.textContent = '✓ Correct! There are no rest segments.';
+          q1Feedback.className = 'feedback correct show';
+        } else {
+          q1Feedback.textContent = '✗ Incorrect. There are no rest segments in this journey.';
+          q1Feedback.className = 'feedback incorrect show';
+        }
+      } else {
+        const userAnswers = q1Answer.split(',').map(x => parseInt(x.trim()));
+        const isCorrect = userAnswers.length === restSegments.length && 
+                         userAnswers.every(x => restSegments.includes(x));
+        
+        if (isCorrect) {
+          q1Feedback.textContent = '✓ Correct! Those segments show rest (flat line on graph).';
+          q1Feedback.className = 'feedback correct show';
+        } else {
+          q1Feedback.textContent = `✗ Incorrect. Hint: Look for segments with speed = 0 (flat lines on the graph). The correct answer is: ${restSegments.join(', ')}`;
+          q1Feedback.className = 'feedback incorrect show';
+        }
+      }
+
+      const maxSpeed = Math.max(...segments.map(seg => seg.speed));
+      const q2Answer = parseFloat(document.getElementById('q2-answer').value);
+      const q2Feedback = document.getElementById('q2-feedback');
+
+      if (Math.abs(q2Answer - maxSpeed) < 0.1) {
+        q2Feedback.textContent = '✓ Correct! That was the fastest speed.';
+        q2Feedback.className = 'feedback correct show';
+      } else {
+        q2Feedback.textContent = `✗ Incorrect. Hint: The steepest line on the graph shows the fastest speed. The correct answer is: ${maxSpeed.toFixed(1)} m/s`;
+        q2Feedback.className = 'feedback incorrect show';
+      }
+
+      const totalDistance = segments.reduce((sum, seg) => sum + (seg.speed * seg.duration), 0);
+      const q3Answer = parseFloat(document.getElementById('q3-answer').value);
+      const q3Feedback = document.getElementById('q3-feedback');
+
+      if (Math.abs(q3Answer - totalDistance) < 0.1) {
+        q3Feedback.textContent = '✓ Correct! That is the total distance traveled.';
+        q3Feedback.className = 'feedback correct show';
+      } else {
+        q3Feedback.textContent = `✗ Incorrect. Hint: The final height on the graph shows total distance. The correct answer is: ${totalDistance.toFixed(1)} m`;
+        q3Feedback.className = 'feedback incorrect show';
+      }
+    }
+
+    function clearFeedback() {
+      document.getElementById('q1-answer').value = '';
+      document.getElementById('q2-answer').value = '';
+      document.getElementById('q3-answer').value = '';
+      document.getElementById('q1-feedback').classList.remove('show');
+      document.getElementById('q2-feedback').classList.remove('show');
+      document.getElementById('q3-feedback').classList.remove('show');
+    }
+
+    async function onConfigChange(config) {
+      const baseFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      document.body.style.fontFamily = `${baseFont}, ${baseFontStack}`;
+      document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.primary_action_color || defaultConfig.primary_action_color} 100%)`;
+
+      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+      document.getElementById('app-title').style.fontSize = `${baseSize * 1.87}px`;
+      document.getElementById('app-title').style.color = config.text_color || defaultConfig.text_color;
+
+      document.getElementById('instructions').textContent = config.instructions_text || defaultConfig.instructions_text;
+      document.getElementById('instructions').style.fontSize = `${baseSize}px`;
+      document.getElementById('instructions').style.color = config.text_color || defaultConfig.text_color;
+
+      document.getElementById('add-segment-btn').textContent = config.add_segment_button || defaultConfig.add_segment_button;
+      document.getElementById('add-segment-btn').style.background = config.primary_action_color || defaultConfig.primary_action_color;
+      document.getElementById('add-segment-btn').style.fontSize = `${baseSize}px`;
+
+      document.getElementById('simulate-btn').textContent = config.simulate_button || defaultConfig.simulate_button;
+      document.getElementById('simulate-btn').style.background = config.secondary_action_color || defaultConfig.secondary_action_color;
+      document.getElementById('simulate-btn').style.fontSize = `${baseSize}px`;
+
+      document.getElementById('reset-btn').textContent = config.reset_button || defaultConfig.reset_button;
+      document.getElementById('reset-btn').style.fontSize = `${baseSize}px`;
+
+      document.querySelectorAll('.panel').forEach(panel => {
+        panel.style.background = config.surface_color || defaultConfig.surface_color;
+      });
+
+      document.querySelectorAll('.panel h2').forEach(h2 => {
+        h2.style.fontSize = `${baseSize * 1.33}px`;
+        h2.style.color = config.text_color || defaultConfig.text_color;
+        h2.style.borderBottomColor = config.primary_action_color || defaultConfig.primary_action_color;
+      });
+
+      document.querySelectorAll('p, label, .segment-label').forEach(el => {
+        el.style.fontSize = `${baseSize}px`;
+      });
+
+      drawGraph();
+    }
+
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange,
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              window.elementSdk.setConfig({ surface_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => {
+              config.primary_action_color = value;
+              window.elementSdk.setConfig({ primary_action_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => {
+              config.secondary_action_color = value;
+              window.elementSdk.setConfig({ secondary_action_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ["app_title", config.app_title || defaultConfig.app_title],
+        ["instructions_text", config.instructions_text || defaultConfig.instructions_text],
+        ["add_segment_button", config.add_segment_button || defaultConfig.add_segment_button],
+        ["simulate_button", config.simulate_button || defaultConfig.simulate_button],
+        ["reset_button", config.reset_button || defaultConfig.reset_button]
+      ])
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d892dc6757ac546',t:'MTc3Mjg4MjA5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

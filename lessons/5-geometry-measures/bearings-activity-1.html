@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass Bearing Explorer</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 90%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .instructions {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .compass-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .compass-wrapper {
+            position: relative;
+            width: 360px;
+            height: 360px;
+        }
+
+        .compass {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #f7fafc 0%, #edf2f7 100%);
+            border: 8px solid #2d3748;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .compass-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #2d3748;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .cardinal-marks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .cardinal {
+            position: absolute;
+            font-weight: 700;
+            font-size: 28px;
+            color: #2d3748;
+            transform-origin: center;
+        }
+
+        .degree-marks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.3s;
+        }
+
+        .degree-marks.hidden {
+            opacity: 0;
+        }
+
+        .degree-mark {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 50%;
+            transform-origin: center bottom;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .degree-mark .tick {
+            width: 2px;
+            height: 12px;
+            background: #718096;
+        }
+
+        .degree-mark.major .tick {
+            width: 3px;
+            height: 20px;
+            background: #2d3748;
+        }
+
+        .degree-label {
+            font-size: 12px;
+            color: #4a5568;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .grid-overlay.visible {
+            opacity: 1;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 45%;
+            background: linear-gradient(to top, #e53e3e 0%, #fc8181 100%);
+            transform-origin: center bottom;
+            cursor: grab;
+            border-radius: 3px 3px 0 0;
+            z-index: 5;
+        }
+
+        .arrow:active {
+            cursor: grabbing;
+        }
+
+        .arrow.locked {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .arrow::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 15px solid #e53e3e;
+        }
+
+        .current-bearing {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: #e53e3e;
+            margin: 10px 0;
+        }
+
+        .bearing-label {
+            text-align: center;
+            font-size: 14px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .control-section {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0 0 15px 0;
+        }
+
+        .button {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .button-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .button-secondary {
+            background: #48bb78;
+            color: white;
+        }
+
+        .button-secondary:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
+
+        .button-tertiary {
+            background: #ed8936;
+            color: white;
+        }
+
+        .button-tertiary:hover {
+            background: #dd6b20;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(237, 137, 54, 0.4);
+        }
+
+        .target-display {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 10px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .target-label {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+
+        .target-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .input-group {
+            margin-top: 15px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            box-sizing: border-box;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 2px solid #48bb78;
+        }
+
+        .feedback.incorrect {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 2px solid #e53e3e;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .compass-wrapper {
+                width: 300px;
+                height: 300px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <h1 id="app-title">Compass Bearing Explorer</h1>
+   <p class="instructions" id="instructions">Drag the red arrow to explore bearings, or practice with random targets!</p>
+   <div class="main-content">
+    <div class="compass-container">
+     <div class="compass-wrapper">
+      <div class="compass">
+       <div class="cardinal-marks">
+        <div class="cardinal" style="top: 8px; left: 50%; transform: translateX(-50%);">
+         N
+        </div>
+        <div class="cardinal" style="right: 8px; top: 50%; transform: translateY(-50%);">
+         E
+        </div>
+        <div class="cardinal" style="bottom: 8px; left: 50%; transform: translateX(-50%);">
+         S
+        </div>
+        <div class="cardinal" style="left: 8px; top: 50%; transform: translateY(-50%);">
+         W
+        </div>
+       </div>
+       <div class="degree-marks" id="degree-marks"></div>
+       <svg class="grid-overlay" id="grid-overlay" viewbox="0 0 360 360"><circle cx="180" cy="180" r="160" fill="none" stroke="#cbd5e0" stroke-width="1" opacity="0.5" /> <circle cx="180" cy="180" r="120" fill="none" stroke="#cbd5e0" stroke-width="1" opacity="0.5" /> <circle cx="180" cy="180" r="80" fill="none" stroke="#cbd5e0" stroke-width="1" opacity="0.5" /> <circle cx="180" cy="180" r="40" fill="none" stroke="#cbd5e0" stroke-width="1" opacity="0.5" /> <line x1="180" y1="20" x2="180" y2="340" stroke="#cbd5e0" stroke-width="1" opacity="0.5" /> <line x1="20" y1="180" x2="340" y2="180" stroke="#cbd5e0" stroke-width="1" opacity="0.5" /> <line x1="67" y1="67" x2="293" y2="293" stroke="#cbd5e0" stroke-width="1" opacity="0.5" /> <line x1="293" y1="67" x2="67" y2="293" stroke="#cbd5e0" stroke-width="1" opacity="0.5" />
+       </svg>
+       <div class="arrow" id="arrow"></div>
+       <div class="compass-center"></div>
+      </div>
+     </div>
+     <div id="bearing-display-container">
+      <div class="current-bearing" id="current-bearing">
+       000°
+      </div>
+      <div class="bearing-label">
+       Current Bearing
+      </div>
+      <div class="bearing-label" id="practice-hint" style="display: none; color: #667eea; font-weight: 600; margin-top: 10px;">
+       Estimate this bearing!
+      </div>
+     </div>
+    </div>
+    <div class="controls-panel">
+     <div class="control-section">
+      <h3 class="section-title">Visual Estimation Practice</h3>
+      <p style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">Estimate the bearing shown by the arrow position</p><button class="button button-primary" id="set-target-btn">New Random Position</button>
+      <div class="input-group" style="margin-top: 15px;"><label class="input-label" for="answer-input">Enter your bearing estimate (0-360°)</label> <input type="number" class="input-field" id="answer-input" min="0" max="360" placeholder="000">
+      </div><button class="button button-secondary" id="check-answer-btn" style="margin-top: 15px;">Check Answer</button>
+      <div class="feedback" id="feedback"></div>
+     </div>
+     <div class="control-section">
+      <h3 class="section-title">Display Options</h3><button class="button button-tertiary" id="toggle-grid-btn">Toggle Grid</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            app_title: "Compass Bearing Explorer",
+            instructions_text: "Drag the red arrow to explore bearings, or practice with random targets!",
+            set_target_button: "Set Random Target",
+            check_answer_button: "Check Answer",
+            toggle_grid_button: "Toggle Grid"
+        };
+
+        let currentBearing = 0;
+        let targetBearing = null;
+        let isDragging = false;
+        let practiceMode = false;
+
+        const arrow = document.getElementById('arrow');
+        const bearingDisplay = document.getElementById('current-bearing');
+        const practiceHint = document.getElementById('practice-hint');
+        const setTargetBtn = document.getElementById('set-target-btn');
+        const checkAnswerBtn = document.getElementById('check-answer-btn');
+        const toggleGridBtn = document.getElementById('toggle-grid-btn');
+        const answerInput = document.getElementById('answer-input');
+        const feedback = document.getElementById('feedback');
+        const gridOverlay = document.getElementById('grid-overlay');
+        const degreeMarks = document.getElementById('degree-marks');
+
+        // Create degree marks
+        for (let i = 0; i < 360; i += 15) {
+            const mark = document.createElement('div');
+            mark.className = 'degree-mark' + (i % 30 === 0 ? ' major' : '');
+            mark.style.transform = `rotate(${i}deg)`;
+            
+            const tick = document.createElement('div');
+            tick.className = 'tick';
+            mark.appendChild(tick);
+            
+            if (i % 30 === 0 && i !== 0 && i !== 90 && i !== 180 && i !== 270) {
+                const label = document.createElement('div');
+                label.className = 'degree-label';
+                label.textContent = i + '°';
+                mark.appendChild(label);
+            }
+            
+            degreeMarks.appendChild(mark);
+        }
+
+        function updateArrow(angle) {
+            currentBearing = Math.round(angle) % 360;
+            if (currentBearing < 0) currentBearing += 360;
+            // No rotation adjustment needed - 0° is already at North
+            arrow.style.transform = `translate(-50%, -100%) rotate(${currentBearing}deg)`;
+            // Format bearing with leading zeros (e.g., 030°)
+            const formattedBearing = currentBearing.toString().padStart(3, '0');
+            bearingDisplay.textContent = formattedBearing + '°';
+        }
+
+        function getAngleFromEvent(e) {
+            const rect = arrow.parentElement.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const x = (e.clientX || e.touches[0].clientX) - centerX;
+            const y = (e.clientY || e.touches[0].clientY) - centerY;
+            return Math.atan2(x, -y) * (180 / Math.PI);
+        }
+
+        arrow.addEventListener('mousedown', () => {
+            if (!practiceMode) isDragging = true;
+        });
+        arrow.addEventListener('touchstart', () => {
+            if (!practiceMode) isDragging = true;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging && !practiceMode) {
+                updateArrow(getAngleFromEvent(e));
+            }
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging && !practiceMode) {
+                e.preventDefault();
+                updateArrow(getAngleFromEvent(e));
+            }
+        });
+
+        document.addEventListener('mouseup', () => isDragging = false);
+        document.addEventListener('touchend', () => isDragging = false);
+
+        setTargetBtn.addEventListener('click', () => {
+            // Generate random bearing
+            targetBearing = Math.floor(Math.random() * 360);
+            updateArrow(targetBearing);
+            
+            // Enter practice mode
+            practiceMode = true;
+            arrow.classList.add('locked');
+            degreeMarks.classList.add('hidden');
+            bearingDisplay.textContent = '???';
+            bearingDisplay.style.color = '#a0aec0';
+            practiceHint.style.display = 'block';
+            
+            // Reset input and feedback
+            feedback.classList.remove('show');
+            answerInput.value = '';
+            answerInput.focus();
+        });
+
+        checkAnswerBtn.addEventListener('click', () => {
+            if (!practiceMode || targetBearing === null) {
+                feedback.textContent = 'Please click "New Random Position" first!';
+                feedback.className = 'feedback incorrect show';
+                return;
+            }
+
+            const userAnswer = parseInt(answerInput.value);
+            if (isNaN(userAnswer) || userAnswer < 0 || userAnswer > 360) {
+                feedback.textContent = 'Please enter a valid bearing (0-360°)';
+                feedback.className = 'feedback incorrect show';
+                return;
+            }
+
+            const difference = Math.abs(userAnswer - targetBearing);
+            const adjustedDiff = Math.min(difference, 360 - difference);
+
+            // Reveal the answer
+            const formattedTarget = targetBearing.toString().padStart(3, '0');
+            bearingDisplay.textContent = formattedTarget + '°';
+            bearingDisplay.style.color = '#e53e3e';
+            practiceHint.style.display = 'none';
+            degreeMarks.classList.remove('hidden');
+
+            if (adjustedDiff <= 5) {
+                feedback.textContent = `🎉 Perfect! The bearing is ${formattedTarget}°. You were spot on!`;
+                feedback.className = 'feedback correct show';
+            } else if (adjustedDiff <= 15) {
+                feedback.textContent = `👍 Close! The bearing is ${formattedTarget}°. You were ${adjustedDiff}° off.`;
+                feedback.className = 'feedback correct show';
+            } else {
+                feedback.textContent = `📐 The bearing is ${formattedTarget}°. You were ${adjustedDiff}° off. Try another!`;
+                feedback.className = 'feedback incorrect show';
+            }
+            
+            // Exit practice mode
+            practiceMode = false;
+            arrow.classList.remove('locked');
+        });
+
+        toggleGridBtn.addEventListener('click', () => {
+            gridOverlay.classList.toggle('visible');
+        });
+
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkAnswerBtn.click();
+            }
+        });
+
+        updateArrow(0);
+
+        async function onConfigChange(config) {
+            document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+            document.getElementById('instructions').textContent = config.instructions_text || defaultConfig.instructions_text;
+            document.getElementById('set-target-btn').textContent = config.set_target_button || defaultConfig.set_target_button;
+            document.getElementById('check-answer-btn').textContent = config.check_answer_button || defaultConfig.check_answer_button;
+            document.getElementById('toggle-grid-btn').textContent = config.toggle_grid_button || defaultConfig.toggle_grid_button;
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig: defaultConfig,
+                onConfigChange: onConfigChange,
+                mapToCapabilities: (config) => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ["app_title", config.app_title || defaultConfig.app_title],
+                    ["instructions_text", config.instructions_text || defaultConfig.instructions_text],
+                    ["set_target_button", config.set_target_button || defaultConfig.set_target_button],
+                    ["check_answer_button", config.check_answer_button || defaultConfig.check_answer_button],
+                    ["toggle_grid_button", config.toggle_grid_button || defaultConfig.toggle_grid_button]
+                ])
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d892bfdc7b668b8',t:'MTc3Mjg4MjAxNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
